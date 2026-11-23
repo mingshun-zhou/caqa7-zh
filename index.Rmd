@@ -1,0 +1,14 @@
+---
+title: "计算机体系结构：量化研究方法"
+subtitle: "第 7 版"
+author:
+  - John L. Hennessy\ David A. Patterson\ Christos Kozyrakis
+date: "`r Sys.Date()`"
+documentclass: ctexbook
+site: bookdown::bookdown_site
+description: "Computer Architecture: A Quantitative Approach, 7th Edition 中文重译稿"
+---
+
+# 说明 {-}
+
+本稿是 *Computer Architecture: A Quantitative Approach*（第 7 版，Morgan Kaufmann / Elsevier）的中文重译稿，仅供个人学习，未经授权不得公开发布。章节、图号、公式和习题编号与原书一致。

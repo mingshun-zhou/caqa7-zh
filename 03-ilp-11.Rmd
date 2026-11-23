@@ -1,0 +1,74 @@
+3.17　[10] <3.4> 一台深度流水的处理器只为条件转移设置了转移目标缓冲。已知：预测错误开销总是 4 个周期，缓冲失效开销总是 3 个周期；缓冲命中率为 90%，预测准确率为 90%，转移指令占 15%；不计转移停顿时，基本 CPI 为 1。另有一台处理器，转移开销固定为 2 个周期。前者的速度是后者的多少倍？
+
+3.18　[10/5] <3.4> 某转移目标缓冲在三种情况下的开销是：条件转移预测正确，0 个时钟周期；预测错误，2 个时钟周期；缓冲失效，2 个时钟周期。现在改用一种区分条件转移和无条件转移的设计：条件转移在缓冲中存放目标地址，无条件转移则存放目标指令。
+
+a.　[10] <3.9> 无条件转移在缓冲中命中时，开销是多少个时钟周期？
+
+b.　[10] <3.9> 对无条件转移采用转移折叠，求由此带来的改进。假设命中率为 90%，无条件转移占 5%，缓冲失效开销为 2 个周期。性能能提高多少？命中率至少要多高，这项改进才会提高性能？
+
+3.19　[10] <3.2, 3.7> 下面的代码计算稀疏矩阵 A 与稠密向量 x 的乘积。稀疏矩阵按「压缩稀疏行（CSR）」格式存放：所有非零元素按行主序存放在一块连续的内存中。第 *i* 个非零元素的值存放在 `val[i]` 中，列号存放在 `col[i]` 中；它位于第 `n` 行，`n` 满足 `ptr[n]` <= *i* < `ptr[n+1]`，也就是说，`ptr` 数组存放的是每一行第一个元素的下标。
+
+```asm
+loop:  fld f0,0(x1)       # load val[i]
+       lw x3,0(x2)        # load col[i]
+       slli x3,x3,3       # temp=col[i] * 8
+       add x4,x10,x3      # compute eff. address (&x[0]+temp)
+       fld f2,0(x4)       # load x[col[i]]
+       fmac.d f4,f0,f2    # multiply-accumulate
+       addi x1,x1,8       # increment &val[i]
+       addi x2,x2,8       # increment &col[i]
+       addi x5,x5,1       # increment i
+       bne x5,x11,skip    # check for end of row (i!=ptr[i])
+       fsd f4,0(x6)       # store dot product
+       addi x7,x7,8       # increment &ptr[row]
+       beq x7,x12,done    # check if last row was processed
+       addi x6,x6,8       # increment &x[row]
+       lw x11,(x7)        # load ptr[row]
+       fli f4,0           # clear accumulator
+       skip:
+       b loop
+```
+
+a.　[5] <3.7> 哪些 load 指令可能要用到推测式存储器消歧？有没有可能出现经由存储器的 RAW 相关？
+
+b.　[5] <3.2> 第 10 条指令是一条转移指令，你预计转移预测器对它的预测效果如何？
+
+3.20　[10] <3.2, 3.5> 下面的代码用 Horner 方法计算一个多项式在两个输入值处的值，这两个值分别存放在寄存器 `f6` 和 `f8` 中。
+
+```asm
+loop:  fld f0,0(x1)       # load coefficient
+       fmul.d f2,f6,f10   # temp = x1 * accum
+       fadd.d f10,f2,f0   # accum=temp+coeff (f10 is loop-carried)
+       fmul.d f2,f8,f12   # temp = x2 * accum
+       fadd.d f12,f2,f0   # accum=temp2+coeff(f12 is loop-carried)
+       addi x1,x1,8
+       bne x1,x2,loop
+```
+
+把循环展开 2 次，并对浮点寄存器重新命名，以免名相关造成性能损失。最后给出寄存器映射表。
+
+3.21　[5] <3.7> 分别求下面这段代码在两种 CPU 上的执行周期数：一种 CPU 没有 load 旁路和推测式存储器消歧，另一种两者都有。假设 store 指令与 load 指令之间不存在相关。
+
+流水线为单发射、乱序（OOO）执行，有一个整数部件，延迟为 3 个周期；有一个 load/store 部件，延迟为 4 个周期。一条指令所依赖的最后一条指令在哪个周期完成，这条指令就可以在同一周期发射。如果还需要其他假设，请说明。
+
+```asm
+add x8,x10,x11
+add x6,x8,x9
+add x3,x6,x7
+sw x2,0(x3)
+lw x4,0(x5)
+```
+
+## 补充参考文献 {- #sec-3-additional-references}
+
+Boggs, D., Weiss, S., Kyker, A., 2004. Branch Reorder Buffer. US Patent 6,799,268.
+
+Hu, G., He, Z., Lee, R.B., 2021. SoK: hardware defenses against speculative execution attacks. In: Proceedings of the 2021 International Symposium on Secure and Private Execution Environment Design (SEED), pp. 108–120. <https://doi.org/10.1109/SEED51797.2021.00023>.
+
+Kocher, P., Horn, J., Fogh, A., Genkin, D., Gruss, D., Haas, W., et al., 2019. Spectre attacks: exploiting speculative execution. In: The Proceedings of the 40^th^ IEEE Symposium on Security and Privacy.
+
+Lipp, M., Schwarz, M., Gruss, D., Prescher, T., Haas, W., Fogh, A., et al., 2018. Meltdown: reading kernel memory from user space. In: Proceedings of the 27^th^ USENIX Security Symposium.
+
+Moshovos, A., Breach, S.E., Vijaykumar, T.N., Sohi, G.S., 1997. Dynamic speculation and synchronization of data dependences. In: Proceedings of the 24th Annual International Symposium on Computer Architecture (ISCA '97). Association for Computing Machinery, New York, NY, USA, pp. 181–193. <https://doi.org/10.1145/264107.264189>.
+
+Rotem, E., et al., 2022. Intel Alder Lake CPU Architectures. in IEEE Micro 42 (3), 13–19. <https://doi.org/10.1109/MM.2022.3164338>.

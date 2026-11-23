@@ -1,0 +1,203 @@
+### 案例研究 3：数值表示 {-}
+
+*本案例研究涉及的概念*
+
+* 数值表示
+* 浮点运算
+
+矩阵乘法是当今神经网络中最关键的大规模运算。要在可以承受的芯片面积和功耗下达到每秒万亿次乃至千万亿次运算，必须*降低精度*。AlexNet 按 32 位浮点数编写，在 GPU 上运行；TPUv1 的运算次数之所以高，一部分原因就是它采用了 8 位定点运算。为了便于做习题，下面只讨论 4 位的数值表示，这样每种格式能表示的值都可以一一列举出来。
+
+#### 整数 {-}
+
+无符号整数就是一个 n 位的位串，每一位的权值是对应的 2 的幂。把 4 个位从最高位到最低位依次记为 a、b、c、d，4 位无符号整数的值为：
+
+$$
+\textit{uint}4 = 8a + 4b + 2c + d
+$$
+
+这 4 位能表示的整数范围是 0..15。
+
+**补码。** 表示有符号整数时，*二进制补码格式*把最高位的权值看作 −8 而不是 8，公式为：
+
+$$
+\textit{int}4 = -8a + 4b + 2c + d
+$$
+
+这时 4 位能表示的整数范围变为 −8..7。最高位也称为*符号位*。
+
+**Excess-k。** 第三种格式用得较少，称为 *Excess-k*（偏移 k 码）。它的二进制表示与无符号整数的公式相同，只是多了一个「偏置」项 k，用来改变这些位的解释方式：
+
+$$
+\textit{excessk} = 8a + 4b + 2c + d + k
+$$
+
+偏置项不一定在硬件中表示出来，也可以完全交给软件管理，由软件决定怎样解释这个值。无符号整数就相当于 excess-0 的值。
+
+**原码。** 更少见的是用原码（sign-magnitude）表示整数：第一位表示符号，其余各位照常表示数值：
+
+$$
+\textit{signmag} = (-1)^{a} \cdot (4b + 2c + d)
+$$
+
+4 位原码表示有一个有趣的性质：零有两种表示，相当于正零和负零。这给比较操作带来了麻烦：两个零的位模式不同，比较时却应当判为相等。
+
+7.6　[5/10/10/10/20] <7.4, 7.5>
+
+a.　[5] 列出所有 4 位整数在无符号和有符号两种表示下的值。列成一张表即可，最好把各种表示写成二进制形式。
+
+b.　[10] 原码取负很容易，只要把符号位取反。对于有符号值（补码），x 与 −x 之间有没有共同的规律或公式？−8 不必考虑，因为它的相反数 8 无法用 4 位有符号数表示。
+
+c.　[10] 对每种格式，两个 4 位值相加，和需要多少位才能表示？
+
+d.　[10] 两个 4 位无符号值相乘，需要多少位才能精确表示无符号乘积？
+
+e.　[20] 假设要设计一个乘法器，接受两个 4 位输入，输入可以都是无符号数、都是有符号数，或者一个有符号一个无符号。为了在这三种情况下都得到正确的输出，需要做些什么？
+
+#### 浮点 {-}
+
+读者在高中化学课上学过科学计数法。阿伏伽德罗常数（1 摩尔物质所含的原子或分子数）用科学计数法写出来，是 6.02 × 10^23^ 这样的形式。浮点表示其实就是计算机上的科学计数法，只不过有效数字和指数用的不是十进制数，而是可以用位表示的整数。
+
+浮点值由三部分组成：
+
+* 一个*符号位*，与原码整数表示中的符号位一样。
+* 0 个或多个*尾数位*（fraction bit），对应阿伏伽德罗常数中的「.02」部分。尾数位表示小数点右边的值，这里是二进制小数点，科学计数法中则是十进制小数点。整体来看，尾数位很像一个无符号整数。那么 6.02 中的 6 到哪里去了？这恰恰是浮点格式能高效表示实数的关键，下面还会进一步讨论。
+* 0 个或多个*指数位*。指数位多数情况下以 excess-k 格式表示一个以 2 为底的指数，不过也可能有一些特殊值，用来处理这种格式的边界情况。
+
+**规格化数。** 所谓*规格化*浮点数，它所表示的值由下式给出：
+
+$$
+(-1)^{\textit{sign}} \times 1.\textit{fraction} \times 2^{\textit{exponent}}
+$$
+
+符号项只决定整个表达式的正负。注意，中间一项在尾数各位之前有一个「隐含的前导 1」。有了这个隐含的前导 1，中间一项表示的就是数轴上半开区间 [1.0, 2.0) 中的值。受尾数位格式所限，2.0 永远表示不出来；不过尾数位很多时（IEEE 双精度格式有 53 位），可以非常接近 2.0。隐含的前导 1 与指数项结合起来，使浮点格式具有极大的动态范围：指数每增加 1，在实数轴上覆盖的跨度就是原来的 2 倍。
+
+**零与次正规数。** 读者可能会问：浮点格式怎样表示零？这要用到一个特殊的指数值，通常是全 0 的指数位模式。遇到这个特殊模式时，改用下面的公式：
+
+$$
+(-1)^{\textit{sign}} \times 0.\textit{fraction} \times 2^{\textit{minexp}}
+$$
+
+其中 *minexp* 是最小的规格化浮点数的指数值。除此之外，唯一的变化是隐含的前导 1 变成了隐含的前导 0。尾数不为零时，这种格式的值称为*次正规数*（subnormal）或*非规格化数*（denormal）。次正规数对浮点数的数值稳定性和误差分析起着关键作用。
+
+7.7　[20/20/20/5/10] <7.4, 7.5>
+
+a.　[20] 一种 4 位格式有 1 个符号位、1 个尾数位和 2 个指数位。列出全部 16 种 4 位取值在实数轴上各对应什么值。假设指数采用 excess-(−2) 格式，即指数为 0 表示次正规数范围，为 1 表示指数 −1，为 2 表示指数 0，为 3 表示指数 1。
+
+b.　[20] 在实数轴上画出这 16 个值（由于正负对称，只画正半轴或负半轴即可）。次正规数在数轴上起什么作用？
+
+c.　[20] 画出 1 个符号位、没有尾数位、3 个指数位的格式能表示的值。这些值是怎样分布的？对这种格式，乘法应当怎样实现？
+
+d.　[5] 画出 1 个符号位、3 个尾数位、没有指数位的格式能表示的值。这种格式看起来像什么？
+
+e.　[10] 1 个符号位、2 个尾数位、1 个指数位的格式又怎样？这时唯一的指数位起什么作用？这种格式与上一种有什么不同？
+
+### 案例研究 4：速度、馈送与规模 {-}
+
+*本案例研究涉及的概念*
+
+* 一个简单神经网络模型的存储容量和计算速率（「速度与馈送」）
+* 面向 DNN 的 DSA 的构造
+
+论单位篇幅所含的系统设计智慧，最好的文章大概要数 Jon Bentley 的 *The Back of the Envelope*（「信封背面」）（Bentley，1999）。Bentley 在文中介绍了一种计算机系统设计风格：只用纸笔（或者真的就是一个旧信封的背面）和高中代数，快速检验一个设计是否合理，甚至是否可行。计算机体系结构设计者有时把这类分析称为「速度与馈送」（Speeds and Feeds）。本节给出若干这样的例子。
+
+谷歌的第一代张量处理单元（TPU）有一个 256×256 的脉动阵列矩阵乘法器，峰值达到每秒 92 万亿次运算。这个数字在当时令人震惊：它是同时代双芯片 K80 GPU 的 30 倍，是同时代超大规模数据中心所用 CPU 的 90 倍。介绍 TPU 的论文（Jouppi，2017）还指出，存储带宽是 TPU 的关键瓶颈：TPU 只有两个 DDR3 存储通道，加载单字节权重的速率只有约 30 GB/s。
+
+7.8　[10/10/10/10] <7.3, 7.4, 7.5>
+
+a.　[10] 假设脉动阵列的每个单元每个周期完成一次乘累加，一次乘累加算作两次运算，计算 TPU 的时钟频率。
+
+b.　[10] TPU 加载一个 64 KiB 权重的权重块（tile）需要多长时间？
+
+c.　[10] *运算强度*（arithmetic intensity）定义为加载的一个值被重复使用的次数（通常是作为许多不同 ALU 运算的操作数）。在稳态运行时，权重的运算强度要达到多高，TPU 才能同时达到存储带宽峰值和每秒运算次数峰值？
+
+后来的 TPUv4 lite 用两个 HBM 堆叠实现了 614 GB/s 的存储带宽（Jouppi，2021）。TPUv4 lite 实际有四个 128×128 的脉动阵列，但这里不考虑这一点，把计算资源看作一个整体的 256×256 脉动阵列。
+
+d.　[10] 权重采用 bf16 格式，每个权重 2 字节（TPUv1 每个权重只有 1 字节）。TPUv4 lite 加载 64 KiB 权重需要多长时间？要同时达到计算峰值和存储峰值，需要多高的运算强度？
+
+根据 <https://www.nvidia.com/en-us/data-center/h100/> 上的规格，最快版本的 H100 GPU（SXM 规格）峰值性能为：fp64 32 TFLOPS，fp32 367 TFLOPS，张量核上的 bf16 1979 TFLOPS，张量核上 fp8 或 int8 模式 3958 TFLOPS。据报道，H100 有 132 个流式多处理器（SM），时钟频率介于约 1 GHz 的基础频率和约 2 GHz 的加速频率之间。
+
+另一种面向 DNN 的 DSA 是 Cerebras WSE-2，它堪称工程上的奇迹：用一整片晶圆构成一个计算单元，面积约相当于 50 个常规最大尺寸的晶片（单个晶片面积最大约 800 mm^2^）。WSE-2 的片上规格令人印象深刻：片上 SRAM 有 40 GB，带宽 20 PB/s，功耗 20 kW。这些庞大的资源通过 12 条 100 Gb 以太网链路与外界相连。
+
+7.9　[10/10/10] <7.3, 7.4, 7.5>
+
+a.　[10] 考虑 fp32 的峰值 TFLOPS，这个值很可能是在 GPU 的峰值时钟频率下测得的。每个 SM 大约有多少个 fp32 功能部件？整个 H100 芯片大约有多少个？
+
+b.　[10] H100 张量核每秒的 bf16 运算次数高出这么多，你认为张量核功能部件与 SIMD 核功能部件的数量之比是多少？
+
+c.　[10] GPT-3 有 1750 亿个参数，即使每个权重只用 1 字节，一个 GPT-3 实例光参数就需要 175 GB。把这些参数从 WSE 之外的一个存储系统流式传送到晶圆上，需要多长时间？
+
+### 习题 {-}
+
+7.10　[5/5/10/10/10/10/15] <7.9>
+
+2024 年，在云中租用一块 NVIDIA H100 GPU 每小时要 2～4 美元。据媒体报道，购买价格（CAPEX）约为 30,000 美元。OPEX 的一部分是电费：H100 的 TDP 为 700 W；2023 年美国的零售电价随地区不同，在每千瓦时 0.10～0.20 美元之间。
+
+a.　[5] 假设这块 GPU 一直在出租，H100 每年的租金收入是多少？
+
+b.　[5] 如果购买价格是云服务商为这块 H100 付出的唯一成本，需要多长时间才能收回购买成本？
+
+c.　[10] 这样一台机器运行 1 年，电费在最坏情况下是多少？
+
+d.　[10] 考虑电费后，回收期会怎样变化？还有哪些因素可能影响一块 GPU 在整个使用寿命内的总拥有成本？
+
+e.　[10] 假设这些其他因素带来的运营支出与电费相等，回收期现在是多少？
+
+f.　[10] 假设这块 GPU 的有效使用寿命约为 8 年，云服务商可能获利多少？如果每隔 2 年新一代 GPU 上市时，H100 的租金大约减半，利润会怎样变化？
+
+g.　[15] 前面忽略了影响 H100 出租盈利能力的一些实际问题。收入方面，我们假设硬件在多年中 100% 的时间都能租出去。更现实的比例可能是多少？H100 用于推理和用于训练时，这个比例会有什么不同？支出方面，我们漏掉了三项：容纳 H100 的 CPU 主机的 CAPEX 和 OPEX；出租这些 H100 的公司的人员成本；*资金成本*，即持有现金而不拿去投资的机会成本。估计这些因素对预期利润有什么影响。如果修正后的利润估计在经济上说不通，可能的合理解释是什么？
+
+7.11　[10/10/10/10] <7.2>
+
+第一台 Anton 分子动力学超级计算机通常模拟一个边长 64 埃的水盒子，计算机本身可以近似看作一个边长 1 米的盒子。一个模拟步代表 2.5 飞秒的模拟时间，需要约 10 微秒的挂钟时间。在分子动力学所用的物理模型中，系统中的每个粒子在每个（「外层」）时间步都要对所有其他粒子施加作用力，因此每一步都相当于在整台计算机上做一次全局同步。
+
+a.　[10] 计算从模拟空间到实际空间中硬件的空间放大系数。
+
+b.　[10] 计算从模拟时间到挂钟时间的时间减慢系数。
+
+c.　[10] 前两问的答案出乎意料地接近。这只是巧合，还是有某种别的极限在约束它们？（提示：光速既适用于被模拟的化学系统，也适用于执行模拟的硬件。）
+
+d.　[10] 在这些极限下，要用一台仓库级规模的超级计算机以 Anton 的速率做分子动力学模拟，需要什么条件？也就是说，一台边长 10^2^ 米或 10^3^ 米的机器，能达到的最短模拟步时间是多少？如果在遍布全球的云服务上做模拟，又会怎样？
+
+## 参考文献 {- #sec-7-references}
+
+Bentley, J., 1999. The back of the envelope. IEEE Software 16 (5), 121.
+
+Brown, T., Mann, B., Ryder, N., Subbiah, M., Kaplan, J.D., Dhariwal, P., et al., 2020. Language models are few-shot learners. Adv. Neural Inf. Process. Syst. 33, 1877–1901.
+
+Choquette, J., Giroux, O., Foley, D., 2018. Volta: performance and programmability. IEEE Micro 38 (2), 42–52.
+
+Dean, J., 2022. A golden decade of deep learning: computing systems & applications. Daedalus 151 (2), 58–74.
+
+Devlin, J., Chang, M.W., Lee, K., Toutanova, K., 2018. BERT: pre-training of deep bidirectional transformers for language understanding. In: Proceedings of the Annual Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (NAACL-HLT), pp. 4171–4186.
+
+Fedus, W., Zoph, B., Shazeer, N., 2022. Switch transformers: scaling to trillion parameter models with simple and efficient sparsity. J. Mach. Learn Res. 23 (120), 1–39.
+
+Jouppi, N.P., Young, C., Patil, N., Patterson, D., Agrawal, G., Bajwa, R., et al., 2017. In-datacenter performance analysis of a tensor processing unit. In: Proceedings of the 44th Annual International Symposium on Computer Architecture, pp. 1–12.
+
+Jouppi, N.P., Yoon, D.H., Kurian, G., Li, S., Patil, N., Laudon, J., et al., 2020. A domain-specific supercomputer for training deep neural networks. Commun. ACM 63 (7), 67–78.
+
+Jouppi, N.P., Yoon, D.H., Ashcraft, M., Gottscho, M., Jablin, T.B., Kurian, G., et al., 2021. Ten lessons from three generations shaped Google's TPU v4. In: 2021 ACM/IEEE 48th Annual International Symposium on Computer Architecture (ISCA), pp. 1–14.
+
+Jouppi, N., Kurian, G., Li, S., Ma, P., Nagarajan, R., Nai, L., et al., 2023. TPU v4: an optically reconfigurable supercomputer for machine learning with hardware support for embeddings. In: Proceedings of the 50th Annual International Symposium on Computer Architecture, pp. 1–14.
+
+Jumper, J., Evans, R., Pritzel, A., Green, T., Figurnov, M., Ronneberger, O., et al., 2021. Highly accurate protein structure prediction with AlphaFold. Nature 596 (7873), 583–589.
+
+Krizhevsky, A., Sutskever, I., Hinton, G.E., 2012. Imagenet classification with deep convolutional neural networks. Adv. Neural Inf. Process. Syst. 25.
+
+Paszke, A., Gross, S., Massa, F., Lerer, A., Bradbury, J., Chanan, G., et al., 2019. Pytorch: an imperative style, high-performance deep learning library. Adv. Neural Inf. Process. Syst. 32.
+
+Patterson, D., Gonzalez, J., Hölzle, U., Le, Q., Liang, C., Munguia, L.M., et al., 2022. The carbon footprint of machine learning training will plateau, then shrink. Computer 55 (7), 18–28.
+
+Raihan, M.A., Goli, N., Aamodt, T.M., 2019. Modeling deep learning accelerator enabled GPUs. In: 2019 IEEE International Symposium on Performance Analysis of Systems and Software (ISPASS). IEEE, pp. 79–92.
+
+Rombach, R., Blattmann, A., Lorenz, D., Esser, P., Ommer, B., 2022. High-resolution image synthesis with latent diffusion models. In: Proceedings of the IEEE/CVF Conference On Computer Vision and Pattern Recognition, pp. 10684–10695.
+
+So, D., Le, Q., Liang, C., 2019. The evolved transformer. In: International Conference on Machine Learning, pp. 5877–5886.
+
+So, D., Mańke, W., Liu, H., Dai, Z., Shazeer, N., Le, Q.V., 2021. Searching for efficient transformers for language modeling. Adv. Neural Inf. Process. Syst. 34, 6010–6022.
+
+Strubell, E., Ganesh, A., McCallum, A., 2019. Energy and policy considerations for deep learning in NLP. Annual Meeting of the Association for Computational Linguistics.
+
+Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A.N., et al., 2017. Attention is all you need. Adv. Neural Inf. Process. Syst. 30.
+
+Zhao, M., Agarwal, N., Basant, A., Gedik, B., Pan, S., Ozdal, M., et al., 2022. Understanding data storage and ingestion for large-scale deep recommendation model training: industrial product. In: Proceedings of the 49th Annual International Symposium on Computer Architecture, pp. 1042–1057.

@@ -1,0 +1,204 @@
+IBM 360 及其指令测量方面已有好几项研究。其中最有名、最完整的，是 Shustek 研究 360/370 体系结构的学位论文 [1978]。他对指令系统的复杂性提出了几点看法，过了若干年这些看法才得到充分重视。关于 360 的另一项重要研究是 Alexander 和 Wortman [1975] 的多伦多研究，他们在一台 IBM 360 上使用了 19 个 XPL 程序。
+
+### System/360 指令系统 {-}
+
+下面各表按指令类型和格式列出了 360 的指令系统。System/370 另外增加了 15 条用户指令。
+
+#### 整数/逻辑和浮点 R-R 指令 {-}
+
+带 \* 的是浮点指令，\* 可以是 D（双精度）或 E（单精度）。
+
+| 指令 | 说明 |
+|---|---|
+| `ALR` | 寄存器逻辑加（Add logical register） |
+| `AR` | 寄存器加（Add register） |
+| `A*R` | 浮点加（FP addition） |
+| `CLR` | 寄存器逻辑比较（Compare logical register） |
+| `CR` | 寄存器比较（Compare register） |
+| `C*R` | 浮点比较（FP compare） |
+| `DR` | 寄存器除（Divide register） |
+| `D*R` | 浮点除（FP divide） |
+| `H*R` | 浮点减半（FP halve） |
+| `LCR` | 取补码装入寄存器（Load complement register） |
+| `LC*R` | 取补码装入（Load complement） |
+| `LNR` | 取负值装入寄存器（Load negative register） |
+| `LN*R` | 取负值装入（Load negative） |
+| `LPR` | 取正值装入寄存器（Load positive register） |
+| `LP*R` | 取正值装入（Load positive） |
+| `LR` | 装入寄存器（Load register） |
+| `L*R` | 装入浮点寄存器（Load FP register） |
+| `LTR` | 装入并测试寄存器（Load and test register） |
+| `LT*R` | 装入并测试浮点寄存器（Load and test FP register） |
+| `MR` | 寄存器乘（Multiply register） |
+| `M*R` | 浮点乘（FP multiply） |
+| `NR` | 寄存器与（And register） |
+| `OR` | 寄存器或（Or register） |
+| `SLR` | 寄存器逻辑减（Subtract logical register） |
+| `SR` | 寄存器减（Subtract register） |
+| `S*R` | 浮点减（FP subtraction） |
+| `XR` | 寄存器异或（Exclusive or register） |
+
+#### 转移和设置状态的 R-R 指令 {-}
+
+这些 R-R 格式指令用于转移或设置某种系统状态，其中几条是特权指令，只能在管态下合法执行。
+
+| 指令 | 说明 |
+|---|---|
+| `BALR` | 转移并链接（Branch and link） |
+| `BCTR` | 按计数转移（Branch on count） |
+| `BCR` | 按条件转移（Branch/condition） |
+| `ISK` | 读取存储键（Insert key） |
+| `SPM` | 设置程序屏蔽（Set program mask） |
+| `SSK` | 设置存储键（Set storage key） |
+| `SVC` | 管理程序调用（Supervisor call） |
+
+#### 转移/逻辑和浮点指令：RX 格式 {-}
+
+这些都是 RX 格式指令。符号「+」表示字操作（这时它不代表任何字母）或 H（表示半字），例如 `A+` 代表 `A` 和 `AH` 两个操作码。「\*」代表 `D` 或 `E`，分别表示双精度和单精度浮点。
+
+| 指令 | 说明 |
+|---|---|
+| `A+` | 加（Add） |
+| `A*` | 浮点加（FP add） |
+| `AL` | 逻辑加（Add logical） |
+| `C+` | 比较（Compare） |
+| `C*` | 浮点比较（FP compare） |
+| `CL` | 逻辑比较（Compare logical） |
+| `D` | 除（Divide） |
+| `D*` | 浮点除（FP divide） |
+| `L+` | 装入（Load） |
+| `L*` | 装入浮点寄存器（Load FP register） |
+| `M+` | 乘（Multiply） |
+| `M*` | 浮点乘（FP multiply） |
+| `N` | 与（And） |
+| `O` | 或（Or） |
+| `S+` | 减（Subtract） |
+| `S*` | 浮点减（FP subtract） |
+| `SL` | 逻辑减（Subtract logical） |
+| `ST+` | 存储（Store） |
+| `ST*` | 存储浮点寄存器（Store FP register） |
+| `X` | 异或（Exclusive or） |
+
+#### 转移和特殊的装入、存储指令：RX 格式 {-}
+
+| 指令 | 说明 |
+|---|---|
+| `BAL` | 转移并链接（Branch and link） |
+| `BC` | 按条件转移（Branch condition） |
+| `BCT` | 按计数转移（Branch on count） |
+| `CVB` | 转换为二进制（Convert-binary） |
+| `CVD` | 转换为十进制（Convert-decimal） |
+| `EX` | 执行（Execute） |
+| `IC` | 插入字符（Insert character） |
+| `LA` | 装入地址（Load address） |
+| `STC` | 存储字符（Store character） |
+
+#### RS 和 SI 格式指令 {-}
+
+下面是 RS 和 SI 格式的指令。符号「\*」可以是 `A`（算术）或 `L`（逻辑）。
+
+| 指令 | 说明 |
+|---|---|
+| `BXH` | 按索引高转移（Branch/high） |
+| `BXLE` | 按索引低或相等转移（Branch/low-equal） |
+| `CLI` | 立即数逻辑比较（Compare logical immediate） |
+| `HIO` | 停止 I/O（Halt I/O） |
+| `LPSW` | 装入 PSW（Load PSW） |
+| `LM` | 多寄存器装入（Load multiple） |
+| `MVI` | 立即数传送（Move immediate） |
+| `NI` | 立即数与（And immediate） |
+| `OI` | 立即数或（Or immediate） |
+| `RDD` | 直接读（Read direct） |
+| `SIO` | 启动 I/O（Start I/O） |
+| `SL*` | 算术/逻辑左移（Shift left A/L） |
+| `SLD*` | 算术/逻辑双字左移（Shift left double A/L） |
+| `SR*` | 算术/逻辑右移（Shift right A/L） |
+| `SRD*` | 算术/逻辑双字右移（Shift right double A/L） |
+| `SSM` | 设置系统屏蔽（Set system mask） |
+| `STM` | 多寄存器存储（Store multiple） |
+| `TCH` | 测试通道（Test channel） |
+| `TIO` | 测试 I/O（Test I/O） |
+| `TM` | 按屏蔽测试（Test under mask） |
+| `TS` | 测试并置位（Test-and-set） |
+| `WRD` | 直接写（Write direct） |
+| `XI` | 立即数异或（Exclusive or immediate） |
+
+#### SS 格式指令 {-}
+
+这些是十进制加法指令或字符串指令。
+
+| 指令 | 说明 |
+|---|---|
+| `AP` | 压缩十进制加（Add packed） |
+| `CLC` | 字符逻辑比较（Compare logical chars） |
+| `CP` | 压缩十进制比较（Compare packed） |
+| `DP` | 压缩十进制除（Divide packed） |
+| `ED` | 编辑（Edit） |
+| `EDMK` | 编辑并标记（Edit and mark） |
+| `MP` | 压缩十进制乘（Multiply packed） |
+| `MVC` | 字符传送（Move character） |
+| `MVN` | 数字位传送（Move numeric） |
+| `MVO` | 带偏移传送（Move with offset） |
+| `MVZ` | 区位传送（Move zone） |
+| `NC` | 字符与（And characters） |
+| `OC` | 字符或（Or characters） |
+| `PACK` | 压缩（字符 → 十进制）（Pack） |
+| `SP` | 压缩十进制减（Subtract packed） |
+| `TR` | 翻译（Translate） |
+| `TRT` | 翻译并测试（Translate and test） |
+| `UNPK` | 解压缩（Unpack） |
+| `XC` | 字符异或（Exclusive or characters） |
+| `ZAP` | 清零并加压缩十进制数（Zero and add packed） |
+
+### 360 的详细测量结果 {-}
+
+[图 K.59](#fig-k-59) 给出了四个 IBM 360 程序的指令使用频率。
+
+[图 K.59　四个 360 程序的指令执行频率分布。表中列出了执行频率大于 1.5% 的全部指令。立即数指令只对单个字节操作，它们按所做的操作归类，而不与同一操作的长字符串版本放在一起。作为比较，VAX 各主要指令类的平均频率为：控制 23%，算术 28%，数据传送 29%，浮点 7%，十进制 9%。和前面一样，平均值一列中某项为 1%，可能是由各组成列中的项造成的。这几个程序是 PL-I 程序设计语言的编译器，以及 FORTRAN、PL/I 和 Cobol 程序设计语言的运行时系统]{#fig-k-59 .caption}
+
+| 指令 | PLIC | FORTGO | PLIGO | COBOLGO | 平均 |
+|---|--:|--:|--:|--:|--:|
+| **控制** | **32%** | **13%** | **5%** | **16%** | **16%** |
+| `BC, BCR` | 28% | 13% | 5% | 14% | 15% |
+| `BAL, BALR` | 3% | | | 2% | 1% |
+| **算术/逻辑** | **29%** | **35%** | **29%** | **9%** | **26%** |
+| `A, AR` | 3% | 17% | 21% | | 10% |
+| `SR` | 3% | 7% | | | 3% |
+| `SLL` | | 6% | 3% | | 2% |
+| `LA` | 8% | 1% | 1% | | 2% |
+| `CLI` | 7% | | | | 2% |
+| `NI` | | | | 7% | 2% |
+| `C` | 5% | 4% | 4% | 0% | 3% |
+| `TM` | 3% | 1% | | 3% | 2% |
+| `MH` | | | 2% | | 1% |
+| **数据传送** | **17%** | **40%** | **56%** | **20%** | **33%** |
+| `L, LR` | 7% | 23% | 28% | 19% | 19% |
+| `MVI` | 2% | | 16% | 1% | 5% |
+| `ST` | 3% | | 7% | | 3% |
+| `LD` | | 7% | 2% | | 2% |
+| `STD` | | 7% | 2% | | 2% |
+| `LPDR` | | 3% | | | 1% |
+| `LH` | 3% | | | | 1% |
+| `IC` | 2% | | | | 1% |
+| `LTR` | | 1% | | | 0% |
+| **浮点** | | **7%** | | | **2%** |
+| `AD` | | 3% | | | 1% |
+| `MDR` | | 3% | | | 1% |
+| **十进制、字符串** | **4%** | | | **40%** | **11%** |
+| `MVC` | 4% | | | 7% | 3% |
+| `AP` | | | | 11% | 3% |
+| `ZAP` | | | | 9% | 2% |
+| `CVD` | | | | 5% | 1% |
+| `MP` | | | | 3% | 1% |
+| `CLC` | | | | 3% | 1% |
+| `CP` | | | | 2% | 1% |
+| `ED` | | | | 1% | 0% |
+| **合计** | **82%** | **95%** | **90%** | **85%** | **88%** |
+
+## 历史回顾与参考文献 {#sec-k-6}
+
+[附录 M](#app-m) 的 M.4 节讨论指令系统的演变，并给出参考文献，供读者进一步阅读和探索相关主题。
+
+### 致谢 {-}
+
+感谢以下各位对本综述的初稿提出意见：曼彻斯特大学的 Steven B. Furber 教授，Intel 公司的 Dileep Bhandarkar 博士，Silicon Graphics/MIPS 的 Earl Killian 博士，以及三菱电机公司的 Hiokazu Takata 博士。

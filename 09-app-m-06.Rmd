@@ -1,0 +1,171 @@
+现代向量化编译技术的基础和数据相关的概念，是由伊利诺伊大学的 Kuck 及其同事［1974］建立的。Padua 和 Wolfe［1986］对向量化编译技术作了很好的综述。
+
+### 多媒体 SIMD 指令扩展 {-}
+
+> 一家计算机硬件公司……和迪斯科舞能有什么共同之处？如果看看世界上最大的微处理器公司……Intel 在 1997 年推出的一场广告宣传，共同之处可就多了。
+>
+> ——IBS 管理研究中心，《一路舞向领先地位》（2002）
+
+翻翻史书就会发现，1957 年的 TX-2 已经有了可分割的 ALU，用来支持当时的媒体数据。但这些想法后来销声匿迹，直到 30 年后的个人计算机时代才被重新发现。台式微处理器按定义都有自己的图形显示，因此，晶体管预算增加以后，加入对图形运算的支持是必然的事。在许多图形系统中，一个像素的三种原色各用 8 位表示，透明度再用 8 位表示。后来，为了电话会议和电子游戏又加上了扬声器和麦克风，于是声音也需要支持。音频采样需要的精度超过 8 位，但 16 位就够了。
+
+每种微处理器都有专门的支持，让字节和半字在内存中占用较少的空间。但典型的整数程序很少对这两种宽度的数据做算术运算，所以除了数据传送，处理器对它们几乎没有别的支持。Intel i860 在公司内部是以图形加速器的名义立项的。i860 的设计者认识到，许多图形和音频应用要对由这类数据组成的向量执行相同的运算［Atkins 1991；Kohn 1989］。1989 年，i860 的晶体管预算还容不下一个向量部件，但设计者把 64 位 ALU 内部的进位链分割开，ALU 于是能同时对短向量做运算：8 个 8 位操作数、4 个 16 位操作数，或者 2 个 32 位操作数。这种可分割 ALU 的成本很小。适合使用这种支持的应用有 MPEG（视频）、电子游戏（三维图形）、数码摄影和电话会议（音频和图像处理）。
+
+这种多媒体支持像病毒一样，随着时间推移扩散到了几乎所有台式微处理器。HP 是第一家在台式 RISC 中加入这种支持并取得成功的厂商。进入 20 世纪 90 年代，其他厂商很快也都推出了各自的做法。
+
+这类扩展最初称为*子字并行*（subword parallelism）或*向量*。1996 年 Intel 发布 80x86 的 MMX 扩展时，市场部门用 SIMD 来描述它，SIMD 于是成了流行的叫法。这在一定程度上要归功于一场成功的电视广告：广告里跳迪斯科的舞者，穿的是仿照半导体生产线上的洁净服做的衣服。
+
+### 图形处理器 {-}
+
+> 2007 年 9 月 NVIDIA 推出 CUDA API，GPU 计算由此进入 HPC 的主流，至今已近三年。此后，这项技术的普及速度快得出人意料，而且十分稳定。许多机构一两年前还只是做小规模试点项目，现在已经转入企业级部署；在 TOP500 榜单上，从第二名开始就有了 GPU 加速的机器。高性能计算界向来不以接受新东西快而著称，却相当快地接受了 CUDA，这是一个值得注意的信号。人们普遍认为 GPU 计算更难，我却认为，它迄今的成功表明，它并不比良好的 CPU 编程更复杂。而且，对一大类问题来说，它能更清楚、更简洁地表达其中的并行性，写出的代码更容易维护，可扩展性更好，将来映射到众核体系结构上也更有利。
+>
+> ——Vincent Natol，《为 CUDA 喝彩》，HPCwire（2010）
+
+三维图形流水线硬件经历了这样的演变：20 世纪 80 年代初是大型的昂贵系统，后来变成小型工作站，到 90 年代中后期又变成 PC 上的加速卡。在这段时间里，发生了三大转变：
+
+* 性能领先的图形子系统，价格从 50 000 美元降到 200 美元；
+* 性能从每秒 5000 万像素提高到每秒 10 亿像素，从每秒 10 万个顶点提高到每秒 1000 万个顶点；
+* 硬件原生具备的能力，从线框（多边形轮廓）发展到平面着色（单一颜色）的填充多边形，再到平滑着色（插值颜色）的填充多边形，最后到带纹理映射和初步多重纹理的全场景反走样。
+
+#### 可扩展的 GPU {-}
+
+可扩展性从一开始就是图形系统吸引人的一个特点。工作站图形系统可以安装数目不等的像素处理器电路板，由用户选择需要多大的像素处理能力。20 世纪 90 年代中期以前，PC 图形几乎谈不上扩展，只有一种选择：VGA 控制器。能做三维的加速卡出现以后，市场上才容得下一系列不同档次的产品。3dfx 在它的 Voodoo2 上首先推出了多板扩展，即最初的 SLI（Scan Line Interleave，扫描行交错）；Voodoo2 是当时（1998 年）的性能冠军。同样在 1998 年，NVIDIA 在同一体系结构上推出了不同的产品变体：Riva TNT Ultra（高性能）和 Vanta（低成本）。起初靠按速度分档和封装来区分，后来改用各自独立的芯片设计（GeForce 2 GTS 和 GeForce 2 MX）。现在，同一代体系结构需要四五种不同的 GPU 芯片设计，才能覆盖台式 PC 的各个性能和价格档次。此外，笔记本和工作站系统还各有自己的细分市场。NVIDIA 收购 3dfx 之后，于 2004 年从 GeForce 6800 开始延续了多 GPU 的 SLI 概念，提供的多 GPU 可扩展性对程序员和用户都是透明的。在整个扩展范围内，功能行为完全相同；一个应用不加修改，就能在同一体系结构系列的任何实现上运行。
+
+#### 图形流水线 {-}
+
+早期的图形硬件可以配置，但应用开发者不能对它编程。每一代产品都有一些渐进的改进，但开发者越来越老练，要求的新功能已经多到无法合理地全部做成内置的固定功能。Lindholm 等［2001］介绍的 NVIDIA GeForce 3 迈出了走向真正通用着色器可编程性的第一步：它把浮点顶点引擎原本私有的内部指令系统开放给了应用开发者。这与微软 DirectX 8 和 OpenGL 顶点着色器扩展的发布正好同时。后来，到了 DirectX 9 的时代，GPU 把通用可编程性和浮点能力扩展到了像素片段阶段，并让顶点阶段也能使用纹理。2002 年推出的 ATI Radeon 9700 有一个可编程的 24 位浮点像素片段处理器，用 DirectX 9 和 OpenGL 编程。GeForce FX 加入了 32 位浮点像素处理器。这些改进都属于同一个总趋势：把不同阶段的功能统一起来，至少在应用程序员看来是统一的。NVIDIA 的 GeForce 6800 和 7800 系列，为顶点处理和片段处理分别采用了独立的处理器设计和专用硬件。2005 年，XBox 360 推出了一种早期的统一处理器 GPU，顶点着色器和像素着色器可以在同一个处理器上执行。
+
+#### GPGPU：一个过渡阶段 {-}
+
+支持 DirectX 9 的 GPU 上市后，一些研究人员注意到 GPU 原始性能的增长势头，开始探索用 GPU 求解复杂的并行问题。但 DirectX 9 GPU 的设计目标只是提供图形 API 要求的功能，程序员要使用其中的计算资源，必须把自己的问题改写成原生的图形操作。例如，要同时运行一个像素着色器的许多实例，就得向 GPU 发出一个三角形（如果需要的是矩形，还要把它裁剪成矩形）。着色器没有办法对存储器做任意的分散写。把结果写入存储器的唯一办法，是把它当作像素颜色值输出，并配置帧缓冲操作阶段，把结果写入（如果需要，也可以混合到）一个二维帧缓冲中。而且，要把一趟计算的结果交给下一趟，唯一的办法是把所有并行结果写进一个像素帧缓冲，再把这个帧缓冲当作纹理映射，作为下一阶段计算中像素片段着色器的输入。在那个时代，把通用计算映射到 GPU 上十分别扭。尽管如此，一些勇于尝试的研究人员还是下了很大工夫，展示了少数几个有用的应用。这个领域称为「GPGPU」，即在 GPU 上做通用计算（general-purpose computing on GPUs）。
+
+#### GPU 计算 {-}
+
+NVIDIA 在为 GeForce 8800 开发 Tesla 体系结构时认识到，如果程序员能把 GPU 看作一个处理器，它的用处会大得多。NVIDIA 选择了这样一种编程方式：由程序员显式声明工作负载中数据并行的部分。为了 DirectX 10 这一代产品，NVIDIA 已经开始研制一种高效的浮点和整数处理器，它能同时运行多种工作负载，以支持逻辑上的图形流水线。这种处理器的设计着眼于一种常见情形：一组线程执行同一条代码路径。为了满足编译后的 C 程序的需要，NVIDIA 加入了按字节寻址、使用整数地址的存储器 load 和 store 指令；为了分派和管理高度并行的计算工作，又引入了线程块（协作线程阵列）、线程块组成的网格和栅障同步。原子存储器操作也加了进来。NVIDIA 还开发了 CUDA C/C++ 编译器、库和运行时软件，让程序员能方便地使用这种新的数据并行计算模型来开发应用。
+
+为了有一种不依附于某家厂商的 GPU 编程语言，许多公司正在为 OpenCL 语言开发编译器。OpenCL 具备 CUDA 的许多特性，但能在多得多的平台上运行。2011 年，为 GPU 编写 CUDA 代码，性能要比编写 OpenCL 代码高得多。
+
+AMD 收购了排名第二的 GPU 厂商 ATI，这预示着 GPU 计算将进一步普及。AMD Fusion 体系结构恰好在本版即将完稿时发布，它是传统 GPU 与传统 CPU 的初步融合。NVIDIA 也发布了 Denver 项目，把一个 ARM 标量处理器和 NVIDIA GPU 结合在同一个地址空间中。等这些系统上市之后，看看它们究竟集成得有多紧密，以及集成对数据并行应用和图形应用的性能和能耗有什么影响，将是一件很有意思的事。
+
+### 参考文献 {- #sec-m-6-references}
+
+#### SIMD 超级计算机 {-}
+
+Bouknight, W. J., S. A. Deneberg, D. E. McIntyre, J. M. Randall, A. H. Sameh, and D. L. Slotnick [1972]. "The Illiac IV system," Proc. IEEE 60:4, 369–379. Also appears in D. P. Siewiorek, C. G. Bell, and A. Newell, Computer Structures: Principles and Examples, McGraw-Hill, New York, 1982, 306–316.
+
+Hillis, W. D. [1985]. The Connection Multiprocessor, MIT Press, Cambridge, Mass.
+
+Hord, R. M. [1982]. The Illiac-IV, The First Supercomputer, Computer Science Press, Rockville, Md.
+
+Slotnick, D. L., W. C. Borck, and R. C. McReynolds [1962]. "The Solomon computer," Proc. AFIPS Fall Joint Computer Conf., December 4–6, 1962, Philadelphia, Penn., 97–107.
+
+Unger, S. H. [1958]. "A computer oriented towards spatial problems," Proc. Institute of Radio Engineers 46:10 (October), 1744–1750.
+
+#### 向量体系结构 {-}
+
+Asanovic, K. [1998]. "Vector Microprocessors," Ph.D. thesis, Computer Science Division, University of California, Berkeley.
+
+Baskett, F., and T. W. Keller [1977]. "An Evaluation of the Cray-1 Processor," in High Speed Computer and Algorithm Organization, D. J. Kuck, D. H. Lawrie, and A. H. Sameh, eds., Academic Press, San Diego, Calif., 71–84.
+
+Chen, S. [1983]. "Large-scale and high-speed multiprocessor system for scientific applications," Proc. NATO Advanced Research Workshop on High Speed Computing, June 20–22, Julich, West Germany. Also in K. Hwang, ed., "Superprocessors: Design and applications," IEEE, August, 59–73, 1984.
+
+Flynn, M. J. [1966]. "Very high-speed computing systems," Proc. IEEE 54:12 (December), 1901–1909.
+
+Gebis, J. and Patterson, D. [2007]. "Embracing and extending 20th-century instruction set architectures," IEEE Computer, 40:4 (April), 68–75.
+
+Hintz, R. G., and D. P. Tate [1972]. "Control data STAR-100 processor design," Proc. IEEE COMPCON, September 12–14, 1972, San Francisco, 1–4.
+
+Kitagawa, K., S. Tagaya, Y. Hagihara, and Y. Kanoh [2003]. "A hardware overview of SX-6 and SX-7 supercomputer," NEC Research and Development Journal 44:1 (January), 2–7.
+
+Kozyrakis, C., and D. Patterson [2002]. "Vector vs. superscalar and VLIW architectures for embedded multimedia benchmarks," Proc. 35th Annual Intl. Symposium on Microarchitecture (MICRO), November 18–22, 2002, Istanbul, Turkey.
+
+Kuck, D., P. P. Budnik, S.-C. Chen, D. H. Lawrie, R. A. Towle, R. E. Strebendt, E. W. Davis, Jr., J. Han, P. W. Kraska, and Y. Muraoka [1974]. "Measurements of parallelism in ordinary Fortran programs," Computer 7:1 (January), 37–46.
+
+Lincoln, N. R. [1982]. "Technology and design trade offs in the creation of a modern supercomputer," IEEE Trans. on Computers C-31:5 (May), 363–376.
+
+Miura, K., and K. Uchida [1983]. "FACOM vector processing system: VP100/200," Proc. NATO Advanced Research Workshop on High Speed Computing, June 20–22, Julich, West Germany. Also in K. Hwang, ed., "Superprocessors: Design and applications," IEEE, August, 59–73, 1984.
+
+Padua, D., and M. Wolfe [1986]. "Advanced compiler optimizations for supercomputers," Communications of the ACM 29:12 (December), 1184–1201.
+
+Russell, R. M. [1978]. "The Cray-1 processor system," Communications of the ACM 21:1 (January), 63–72.
+
+Vajapeyam, S. [1991]. "Instruction-Level Characterization of the Cray Y-MP Processor," Ph.D. thesis, Computer Sciences Department, University of Wisconsin–Madison.
+
+Watanabe, T. [1987]. "Architecture and performance of the NEC supercomputer SX system," Parallel Computing 5, 247–255.
+
+Watson, W. J. [1972]. "The TI ASC—a highly modular and flexible super processor architecture," Proc. AFIPS Fall Joint Computer Conf., December 5–7, 1972, Anaheim, Calif., 221–228.
+
+#### 多媒体 SIMD {-}
+
+Atkins, M. [1991]. "Performance and the i860 Microprocessor," IEEE Micro, 11:5 (September), 24–27, 72–78.
+
+Kohn, L., and N. Margulis [1989]. "Introducing the Intel i860 64-Bit Microprocessor," IEEE Micro, 9:4 (July), 15–30.
+
+#### GPU {-}
+
+Akeley, K., and T. Jermoluk [1988]. "High-performance polygon rendering," Proc. SIGGRAPH 88, August 1–5, 1988, Atlanta, Ga., 239–46.
+
+Hillis, W. D., and G. L. Steele [1986]. "Data parallel algorithms," Communications of the ACM 29:12 (December), 1170–1183 (http://doi.acm.org/10.1145/7902.7903).
+
+IEEE 754-2008 Working Group. [2006]. DRAFT Standard for Floating-Point Arithmetic, 754-2008 (https://doi.org/10.1109/IEEESTD.2008.4610935).
+
+Lee, W. V., et al. [2010]. "Debunking the 100X GPU vs. CPU myth: an evaluation of throughput computing on CPU and GPU," Proc. ISCA '10, June 19–23, 2010, Saint-Malo, France.
+
+Lindholm, E., M. J. Kligard, and H. Moreton [2001]. A user-programmable vertex engine. In SIGGRAPH '01: Proceedings of the 28th annual conference on Computer graphics and interactive techniques, 149–158.
+
+Moore, G. E. [1965]. "Cramming more components onto integrated circuits," Electronics 38:8 (April 19), 114–117.
+
+Williams, S., A. Waterman, and D. Patterson [2009]. "Roofline: An insightful visual performance model for multicore architectures," Communications of the ACM, 52:4 (April), 65–76.
+
+## 多处理器与并行处理的历史（第 5 章和附录 F、G、I） {#sec-m-7}
+
+多处理器的历史内容非常丰富。本节既按时期、也按体系结构来组织讨论。我们先从 SIMD 方法和 Illiac IV 讲起，然后简要介绍其他一些早期的实验性多处理器，接着讨论并行处理领域的几场大争论。再往后，我们讨论当今多处理器的历史渊源，最后介绍近年来的进展。
+
+### SIMD 计算机：想法诱人，尝试很多，没有持久的成功 {-}
+
+> 然而，通用多处理器的成本非常高，于是人们又考虑了其他一些设计方案，希望在不严重降低系统能力和效率的前提下降低成本。这些方案就是把三大部件之一重新集中起来。……把［控制部件］集中起来，就得到……像 Illiac IV 这样的阵列处理器的基本组织。
+>
+> ——Bouknight 等［1972］
+
+SIMD 模型是最早的并行计算模型之一，可以追溯到第一台大规模多处理器 Illiac IV。Illiac IV 和后来的 SIMD 多处理器一样，关键思想是让一条指令借助许多功能部件，同时操作许多数据项。
+
+SIMD 式计算机最早的想法出自 Unger［1958］以及 Slotnick、Borck 和 McReynolds［1962］。Slotnick 的 Solomon 设计是 Illiac IV 的基础，而 Illiac IV 大概是名声最差的超级计算机项目。这个项目推动了几项技术的发展，这些技术后来在别的项目中证明是有用的；但作为一台计算机，Illiac IV 是失败的。它只建成了计划规模的四分之一，成本却从 1966 年估计的 800 万美元一路攀升到 1972 年的 3100 万美元。最初预测完整系统能达到 1000 MFLOPS，实际性能最多只有 15 MFLOPS［Hord 1982］。这台计算机于 1972 年交付 NASA 艾姆斯研究中心，又经过三年的工程调试才能使用。这些事件延缓了对 SIMD 的研究。后来 Danny Hillis［1985］在 Connection Machine 上复兴了这种风格，Connection Machine 有 65 636 个 1 位处理器。
+
+真正的 SIMD 计算机需要混合使用 SISD 指令和 SIMD 指令。它有一台 SISD 主机，负责执行转移、地址计算这类不需要并行的操作。SIMD 指令则广播给所有执行部件，每个执行部件都有自己的一组寄存器。为了灵活，在执行一条 SIMD 指令时，可以禁止个别执行部件工作。此外，大规模并行的 SIMD 多处理器依靠互连网络或通信网络在处理单元之间交换数据。
+
+SIMD 最擅长处理 for 循环中的数组。因此，SIMD 要有大规模并行的机会，就必须有海量的数据，即数据并行。SIMD 最不擅长的是 case 语句，因为这时每个执行部件要根据自己手上的数据，对数据执行不同的操作。持有「错误」数据的执行部件要被禁止，让应当执行的部件继续执行。这种情况下的性能基本上只有 1/n，其中 n 是 case 分支的个数。
+
+SIMD 多处理器的基本权衡，是在单个处理器的性能和处理器的数目之间取舍。近来的多处理器更看重并行度，而不是单个处理器的性能。例如，Connection Multiprocessor 2 有 65 536 个 1 位宽的处理器，而 Illiac IV 只有 64 个 64 位的处理器。
+
+SIMD 模型在 20 世纪 80 年代先后由 Thinking Machines 和 MasPar 复活，之后作为通用多处理器体系结构又一次被搁置了。主要原因有两个。一是它太不灵活。许多重要的问题无法使用这种风格的多处理器，而且这种体系结构缩小规模后缺乏竞争力，也就是说，小规模 SIMD 多处理器的性价比往往不如其他方案。二是 SIMD 无法享受微处理器技术在性能和成本上的巨大优势。SIMD 多处理器的设计者不能利用这种低成本技术，而必须为自己的多处理器定制处理器。
+
+SIMD 计算机虽然已经作为通用方案退出了舞台，但这种风格的体系结构在专用设计中仍将发挥作用。许多专用任务的数据并行程度很高，而且只需要有限的几种功能部件。因此，设计者可以为某些操作提供专门的支持，并在功能部件之间设置硬连线的互连通路。这样的组织通常称为*阵列处理器*，适用于图像处理、信号处理这类任务。
+
+### 其他早期实验 {-}
+
+第一台 MIMD 多处理器是哪一台，很难说清。例如，出人意料的是，Eckert-Mauchly 公司的第一台计算机就有重复的部件，用来提高可用性。Holland［1959］很早就提出了支持多处理器的论点。在文档记录最完整的多处理器项目中，有两个是 20 世纪 70 年代在卡内基梅隆大学开展的。第一个是 C.mmp［Wulf and Bell 1972；Wulf and Harbison 1978］，它由 16 台 PDP-11 通过一个交叉开关连到 16 个存储器部件组成。它是最早拥有不止几个处理器的多处理器之一，采用共享存储的编程模型。C.mmp 项目的研究重点大多在软件上，尤其是操作系统方面。后来的多处理器 Cm*［Swan et al. 1977］是基于集群的多处理器，采用分布式存储器，访问时间不均匀。由于没有 Cache，而且远程访问延迟很长，数据的放置位置至关重要。Gehringer、Siewiorek 和 Segall［1987］对这台多处理器和一系列应用实验作了很好的介绍。到了 20 世纪 80 年代，微处理器让多处理器的制造成本大大降低，这些多处理器中的许多想法又重新得到采用。
+
+### 并行处理的大争论 {-}
+
+> 20 世纪 60 年代中期，人们在努力提高计算机运算速度时开始遇到收益递减规律，于是开始背离传统的组织方式。……电子电路的工作速度最终受光速的限制……而许多电路的工作速度已经达到了纳秒级。
+>
+> ——Bouknight 等［1972］
+
+> ……顺序计算机的潜在计算能力正在逼近一个基本的物理极限。这个极限就是光速……
+>
+> ——Angel L. DeCegama，《并行处理技术（第一卷）》（1989）
+
+> ……随着工艺逼近光速，今天的多处理器……正面临绝境。即使顺序处理器的部件能做到这么快，最多也只能指望每秒几百万条指令。
+>
+> ——David Mitchell，《Transputer：时机已到》（1989）
+
+上面这几段引语给出了主张放弃现有计算形式的经典论据，而 Amdahl［1967］则给出了经典的回应，支持继续专注于 IBM 360 体系结构。主张并行执行有优势的论点，可以一直追溯到 19 世纪［Menabrea 1842］！然而，多处理器在缩短单个重要程序的延迟方面究竟有多大效果，至今仍在探索之中。除了争论并行性的优势和局限，还有几场激烈的争论集中在如何构造多处理器上。
+
+未来很难预测，但 1989 年 Gordon Bell 对 1995 年作了两个预测。我们在本书第 1 版中收录了这两个预测，当时结果完全不明朗。本节讨论这两个预测，并评估它们的准确程度。
+
+第一个预测是：到 1995 年，将会造出一台能持续达到 1 TFLOPS（即 100 万 MFLOPS）的计算机，它要么是一台有 4K 到 32K 个节点的多计算机，要么是一台有几百万个处理单元的 Connection Multiprocessor［Bell 1989］。为了看清这个预测的分量，可以参照戈登·贝尔奖。这个奖每年表彰并行性方面的进展，其中包括最快的实际程序（MFLOPS 最高）。1989 年的获奖者用一台 8 处理器的 Cray Y-MP 达到了 1680 MFLOPS。按这些数字计算，多处理器和程序必须每年提高到上一年的 3.6 倍，最快的程序才能在 1995 年达到 1 TFLOPS。实际上，到 1999 年才第一次有戈登·贝尔奖获奖者突破 1 TFLOPS 大关。他们使用一台专门为利弗莫尔实验室设计的 5832 处理器 IBM RS/6000 SST 系统，在一个激波模拟程序上达到了 1.18 TFLOPS。这相当于每年提高到上一年的 1.93 倍，仍然相当可观。
+
+20 世纪 90 年代以来，人们逐渐认识到：我们也许有能力造出 TFLOPS 级的多处理器，但这样的机器在成本上是否值得并不清楚，也许只有少数几种与国家安全有关、非常专门而又极其重要的应用例外。我们在 1990 年估计，要达到 1 TFLOPS，需要一台大约 5000 个处理器的机器，成本约 1 亿美元。利弗莫尔那台 5832 处理器的 IBM 系统花了 1.1 亿美元。可以预料，单个微处理器在成本和性能上的改进，会直接影响大规模多处理器的成本和性能；但是，一个 5000 处理器的系统，价格要超过使用同样处理器的台式系统的 5000 倍。从那以后，人们造出了快得多的多处理器，但在过去五年里，主要的改进越来越多地来自处理器本身，而不是并行体系结构的根本突破。
+
+Bell 的第二个预测涉及 1995 年交付的超级计算机中的数据流数目。Danny Hillis 认为，虽然数据流较少的超级计算机可能卖得最多，但最大的多处理器将是有许多数据流的多处理器，而且大部分计算将由它们完成。Bell 和 Hillis 打赌：在 1995 年第四季度，交付的持续 MFLOPS 中，使用少量数据流（≤ 100）的多处理器所占的份额，将多于使用大量数据流（≥ 1000）的多处理器。这个赌只针对超级计算机，即价格在 100 万美元以上、用于科学计算的多处理器。在这次打赌中，持续 MFLOPS 定义为每*月*的浮点运算次数，因此多处理器的可用性会影响它的得分。
+
+1989 年打这个赌的时候，谁会赢完全不清楚。1995 年，一项针对当时公开已知的超级计算机的调查表明，世界上拥有 1000 个以上数据流的多处理器只有 6 台，Bell 的预测显然胜出。事实上，到了 1995 年，规模小得多的基于微处理器的多处理器（≤ 20 个处理器）正在成为主流。1995 年还有一项调查，统计在用的性能最高的 500 台多处理器（按 Linpack 成绩排名），称为 TOP500。这项调查显示，数量最多的多处理器竟然是基于总线的共享存储多处理器！到 2005 年，各种集群或多计算机发挥了重要作用。例如，前 25 个系统中，11 个是定制的集群，如 IBM Blue Gene 系统和 Cray XT3；10 个是由共享存储多处理器组成的集群（分布式存储和集中式存储两种都有）；其余 4 个是用 PC 和现成的互连网络搭建的集群。

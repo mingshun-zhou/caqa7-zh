@@ -1,0 +1,177 @@
+# 历史回顾与参考文献 {#app-m}
+
+> 如果说历史……能给我们什么启示的话，那就是：人类对知识和进步的追求是坚定的，不会被阻挡。
+>
+> ——John F. Kennedy，在莱斯大学的演讲（1962）
+
+> 不能铭记过去的人，注定要重蹈覆辙。
+>
+> ——George Santayana，《理性的生活》（1905），第 2 卷第 3 章
+
+## 引言 {#sec-m-1}
+
+本附录介绍前面各章中一些关键思想的历史背景。有时我们沿着一系列机器追溯某种思想的发展，有时介绍一些重要的项目。每节末尾都附有参考文献，想了解某种思想或某台机器最初怎样发展起来，或者想进一步阅读的读者，可以查阅。
+
+各节与正文的对应关系如下：
+
+* [M.2 节](#sec-m-2)从数字计算机的发明讲起，对应第 1 章；
+* [M.3 节](#sec-m-3)讲存储层次，对应第 2 章和[附录 B](#app-b)；
+* [M.4 节](#sec-m-4)讲指令系统结构，涵盖[附录 A](#app-a)、[附录 J](#app-j) 和[附录 K](#app-k)；
+* [M.5 节](#sec-m-5)讲流水线和指令级并行，对应第 3 章以及[附录 C](#app-c) 和[附录 H](#app-h)；
+* [M.6 节](#sec-m-6)讲向量、SIMD 和 GPU 体系结构中的数据级并行，对应第 4 章；
+* [M.7 节](#sec-m-7)讲多处理器和并行程序设计，涵盖第 5 章以及[附录 F](#app-f)、[附录 G](#app-g) 和[附录 I](#app-i)；
+* [M.8 节](#sec-m-8)讲集群的发展，涵盖第 6 章；
+* 最后，[M.9 节](#sec-m-9)讲 I/O，对应[附录 D](#app-d)。
+
+## 计算机的早期发展（第 1 章） {#sec-m-2}
+
+本节讨论数字计算机的早期发展，以及性能测量方法的发展。
+
+### 第一批通用电子计算机 {-}
+
+宾夕法尼亚大学摩尔学院的 J. Presper Eckert 和 John Mauchly 造出了世界上第一台能够完整运行的通用电子计算机，名为 ENIAC（Electronic Numerical Integrator and Calculator，电子数字积分计算机）。ENIAC 由美国陆军资助，在第二次世界大战期间就已投入运行，但直到 1946 年才公之于众。它的用途是计算火炮射击表。这台机器体积庞大：长 100 英尺，高 8½ 英尺，宽好几英尺；20 个 10 位十进制寄存器，每个长 2 英尺；电子管总共有 18 000 个。
+
+ENIAC 的体积比今天的一般机器大三个数量级，速度却慢五个数量级以上，做一次加法要 200 微秒。ENIAC 提供条件跳转，并且可以编程，这使它与早先的计算器明显区别开来。编程要靠手工插接电缆、设置开关，编一次程序需要半小时到一整天。数据由穿孔卡片输入。ENIAC 的局限主要有两点：一是存储容量小，二是编程繁琐。
+
+1944 年，ENIAC 项目吸引了 John von Neumann。项目组希望改进程序的输入方式，讨论过把程序作为数存储起来。von Neumann 帮助理清了这些想法，并写了一份备忘录，提出一种存储程序计算机，名为 EDVAC（Electronic Discrete Variable Automatic Computer，电子离散变量自动计算机）。Herman Goldstine 分发这份备忘录时署上了 von Neumann 的名字，却漏掉了 Eckert 和 Mauchly，令两人大为不满。常用的「冯·诺依曼计算机」一词就源于这份备忘录。计算机领域的几位早期发明者认为，这个名称给 von Neumann 的功劳太多，给 Eckert 和 Mauchly 的太少：von Neumann 提出了概念，并把想法写成文字；Eckert 和 Mauchly 则是实际研制机器的工程师。本书作者（2000 年 IEEE 冯·诺依曼奖章获得者）与多数史学家看法相同，认为三个人在存储程序计算机的发展中都起了关键作用。von Neumann 把这些想法写成文字、加以推广，并思考了编程方面的问题，这对于把这些想法传播给更多的人至关重要。
+
+1946 年，剑桥大学的 Maurice Wilkes 访问摩尔学院，听了电子计算机进展系列讲座的后半部分。回到剑桥后，Wilkes 决定开展一个项目，建造一台存储程序计算机，名为 EDSAC（Electronic Delay Storage Automatic Calculator，电子延迟存储自动计算器）。（EDSAC 用水银延迟线做存储器，名字里因此有「延迟存储」一词。）EDSAC 于 1949 年投入运行，是世界上第一台全规模、可实际运行的存储程序计算机 [Wilkes, Wheeler, and Gill 1951; Wilkes 1985, 1995]。（曼彻斯特大学造过一台名为 Mark I 的小型原型机，1948 年就已运行，也可以说它是第一台可运行的存储程序机器。）EDSAC 采用基于累加器的体系结构，这种风格的指令系统结构一直流行到 20 世纪 70 年代初。（[附录 A](#app-a) 开头简要介绍了 EDSAC 的指令系统。）
+
+1947 年，Mauchly 抽出时间参与创建了美国计算机协会（Association for Computing Machinery，ACM），并担任 ACM 的第一任副主席和第二任主席。同年，Eckert 和 Mauchly 申请了电子计算机专利。摩尔学院院长要求他们把专利交给学校，这可能促使两人下定决心离开。两人离开后，EDVAC 项目元气大伤，直到 1952 年才投入运行。
+
+1946 年，Goldstine 前往普林斯顿高等研究院，与 von Neumann 会合。他们和 Arthur Burks 一起，以 1944 年那份备忘录为基础发表了一份报告 [Burks, Goldstine, and von Neumann 1946]。这篇报告促成了 IAS 机，IAS 机由 Julian Bigelow 在普林斯顿高等研究院建造，共有 1024 个 40 位的字，速度大约是 ENIAC 的 10 倍。项目组研究了这台机器的各种用途，发表了一系列报告，并欢迎外界来访。这些报告和来访者推动了许多新计算机的研制，其中包括 IBM 的第一台计算机 701，它就是以 IAS 机为基础的。在当时，Burks、Goldstine 和 von Neumann 的这篇文章是了不起的成就。今天读它，你绝想不到这篇里程碑式的文章写于 50 多年前，因为现代计算机中的大多数体系结构概念它都已讨论过（例如第 2 章开头的引语）。
+
+与 ENIAC 同一时期，Howard Aiken 在哈佛大学设计了一台机电式计算机 Mark-I，由 IBM 的一个工程师团队建造。此后，Aiken 又研制了一台继电器机器 Mark-II，以及两台电子管机器 Mark-III 和 Mark-IV。Mark-III 和 Mark-IV 建成时，第一批存储程序机器已经问世。这两台机器的指令和数据分别存放在不同的存储器中，所以存储程序计算机的拥护者认为它们是开倒车。*哈佛结构*一词就是为描述这类机器而创造的。今天这个词的含义显然与原意不同，指的是只有一个主存、但指令 Cache 和数据 Cache 分开的机器。
+
+旋风（Whirlwind）项目 [Redmond and Smith 1980] 于 1947 年在 MIT 启动，面向实时雷达信号处理应用。这个项目带来了好几项发明，其中最重要的是磁芯存储器，这是第一种既可靠又便宜的存储技术。旋风机有 2048 个 16 位的磁芯存储字。此后近 30 年，磁芯一直是主存的主流技术。
+
+### 重要的专用机器 {-}
+
+第二次世界大战期间，英国和美国的主要计算力量都集中在破译密码的专用计算机上。英国的目标是破译德国 Enigma 密码机加密的电文。这项工作在一个叫布莱切利园（Bletchley Park）的地方进行，造出了两台重要的机器：
+
+* 第一台是机电式机器，由 Alan Turing 构想，名为 BOMB [见 Metropolis, Howlett, and Rota 1980 中 Good 的文章]；
+* 第二台规模大得多，是电子式机器，由 Newman 和 Flowers 构想和设计，名为 COLOSSUS [见 Metropolis, Howlett, and Rota 1980 中 Randall 的文章]。
+
+这两台都是高度专用的密码分析机器。它们能够解读加密电文，特别是发给 U 型潜艇的电文，因而在战争中起了至关重要的作用。布莱切利园的工作高度机密（事实上，其中一部分至今仍未解密），因此很难追溯它对 ENIAC、EDSAC 等计算机的发展有什么直接影响；但可以肯定，它在推进技术、加深对相关问题的认识上起了间接作用。
+
+美国也开展了类似的密码分析专用计算机研究。这项工作最直接的后继者是工程研究协会公司（Engineering Research Associates，ERA）[见 Metropolis, Howlett, and Rota 1980 中 Thomash 的文章]。ERA 在战后成立，想把其中的关键思想商业化。它造了好几台机器，卖给政府的秘密机构，最终被 Sperry-Rand 公司收购；Sperry-Rand 在此之前已经收购了 Eckert-Mauchly 计算机公司。
+
+另一批值得一提的早期机器，是 Konrad Zuse 于 20 世纪 30 年代末到 40 年代初在德国建造的一组专用机器 [见 Metropolis, Howlett, and Rota 1980 中 Bauer 和 Zuse 的文章]。Zuse 不仅造出了能运行的机器，还第一个实现了浮点运算，而 von Neumann 曾声称浮点是不必要的！Zuse 早期的机器采用机械式存储器，体积比当时其他机电式方案小。他的最后一台机器是机电式的，但由于战争，始终没有完成。
+
+John Atanasoff 是电子计算机早期发展中的一位重要贡献者，他在 20 世纪 40 年代初造了一台小规模的电子计算机 [Atanasoff 1940]。这台机器是在艾奥瓦州立大学设计的专用计算机，称为 ABC（Atanasoff Berry Computer），始终没有完全运行起来。Mauchly 在建造 ENIAC 之前曾短暂拜访过 Atanasoff，Atanasoff 的一些想法（例如采用二进制表示）很可能影响了 Mauchly。后来推翻 Eckert-Mauchly 专利 [Larson 1973] 的依据有三条：一是 Atanasoff 的机器早已存在；二是 ENIAC 的专利申请推迟了（这项工作属于机密，战后才能申请专利）；三是 von Neumann 的 EDVAC 文章已经流传开来。围绕 Atanasoff 的作用至今仍有激烈争论，但人们通常认为是 Eckert 和 Mauchly 造出了第一台可运行的通用电子计算机 [Stern 1980]。不过，Atanasoff 展示了后来计算机所采用的几项重要创新。他的工作值得高度肯定；说他造出了世界上第一台专用电子计算机，并且可能影响了 Eckert 和 Mauchly，也是公允的。
+
+### 商业发展 {-}
+
+1947 年 12 月，Eckert 和 Mauchly 创办了 Eckert-Mauchly 计算机公司。公司的第一台机器 BINAC 是为诺斯罗普公司制造的，1949 年 8 月展出。经历了一些财务困难之后，Eckert-Mauchly 计算机公司被 Remington-Rand 公司（后来改称 Sperry-Rand）收购。Sperry-Rand 把收购来的 Eckert-Mauchly 公司、ERA 和自己的制表机业务合并，组成专门的计算机部门 UNIVAC。1951 年 6 月，UNIVAC 交付了第一台计算机 UNIVAC I。UNIVAC I 售价 25 万美元，是第一台在商业上取得成功的计算机，一共造了 48 台！今天，这台早期机器和许多引人入胜的计算机历史文物一起，陈列在加利福尼亚州山景城的计算机历史博物馆。可以参观早期计算系统的地方还有慕尼黑的德意志博物馆、华盛顿特区的史密森学会，以及众多在线虚拟博物馆。
+
+IBM 早先经营穿孔卡片和办公自动化业务，直到 1950 年才开始制造计算机。IBM 的第一台计算机 IBM 701 以 von Neumann 的 IAS 机为基础，1952 年发货，最终卖出 19 台 [见 Metropolis, Howlett, and Rota 1980 中 Hurd 的文章]。20 世纪 50 年代初，很多人对计算机的前途感到悲观，认为这种「高度专门化」的机器市场和机会都相当有限。尽管如此，IBM 很快成了最成功的计算机公司，关键在于它重视可靠性，并采取以客户和市场为导向的策略。701 和 702 只取得了有限的成功，而随后推出的 650、704 和 705（1954 年和 1955 年交付）都非常成功，每种卖出 132 台到 1800 台不等。
+
+计算机先驱们写过几本描述计算机早期历史的书 [Goldstine 1972; Wilkes 1985, 1995]；Metropolis、Howlett 和 Rota ［1980］ 编的书则汇集了早期先驱者的回忆。此外还有许多独立撰写的历史著作，往往围绕相关人物展开 [Slater 1987]；还有一份专门研究计算机历史的期刊《*计算机历史年鉴*》（*Annals of the History of Computing*）。
+
+### 定量性能度量的发展：成功与失败 {-}
+
+计算机刚出现时，设计者就定下了性能目标：ENIAC 的速度要达到哈佛 Mark-I 的 1000 倍，IBM Stretch（7030）的速度要达到当时最快机器的 100 倍。但这些性能该怎样测量，当时并不清楚。回顾这些年的历史，有一点始终不变：每一代计算机都会使上一代的性能评价技术过时。
+
+最初的性能度量是执行单个操作（例如加法）所需的时间。当时大多数指令的执行时间相同，知道一条指令的时间，也就大致知道了其他指令的时间。后来，一台机器中各条指令的执行时间差别越来越大，单个操作的时间就不能再用来比较了。为了把这些差别考虑进去，人们在许多程序中测量一台计算机各种指令出现的相对频率，由此得出*指令混合比*（instruction mix）。Gibson 混合比 ［Gibson 1970］ 是早期流行的一种指令混合比。把每条指令的时间乘以它在混合比中的权重，再累加起来，用户就得到了*平均指令执行时间*。（如果以时钟周期为单位测量，平均指令执行时间就等于平均每条指令周期数。）由于当时各种指令系统大同小异，这种比较比只比加法时间更准确。从平均指令执行时间再往前一小步就是 MIPS（前面讲过，两者互为倒数）。MIPS 的好处是外行也容易理解。
+
+后来，CPU 越来越复杂，并且依赖存储层次和流水线，每条指令不再只有一个确定的执行时间，也就无法再根据指令混合比和手册算出 MIPS。下一步是用核心程序（kernel）和合成程序做基准测试。Curnow 和 Wichmann ［1976］ 测量了用 Algol 60 编写的科学计算程序，据此编写了合成程序 Whetstone。这个程序后来改写成 FORTRAN 版本，广泛用来刻画科学计算程序的性能。McMahon ［1986］ 和劳伦斯·利弗莫尔实验室的研究人员开发了利弗莫尔 FORTRAN 核心程序（Livermore FORTRAN Kernels），目标与 Whetstone 相近，想为超级计算机建立一套基准测试程序。不过，这些核心程序由真实程序中的循环组成。
+
+人们逐渐认识到，用 MIPS 比较指令系统不同的体系结构是行不通的，于是提出了*相对 MIPS* 的概念。1977 年 VAX-11/780 准备发布时，DEC 运行了一些小型基准测试程序，这些程序也在 IBM 370/158 上运行过。IBM 的市场部门把 370/158 称为 1 MIPS 的计算机；这些程序在两台机器上运行速度相同，于是 DEC 的市场部门也把 VAX-11/780 称为 1 MIPS 的计算机。以某台参考机器为基准，机器 M 的相对 MIPS 定义为：
+
+$$
+\text{MIPS}_M = \frac{\text{性能}_M}{\text{性能}_{\text{参考}}} \times \text{MIPS}_{\text{参考}}
+$$
+
+VAX-11/780 很受欢迎，因此成了计算相对 MIPS 时常用的参考机器；而且以 1 MIPS 的计算机为参考，相对 MIPS 很容易算：一台机器在某个基准测试程序上的速度是 VAX-11/780 的 5 倍，它在这个程序上的评分就是 5 个相对 MIPS。VAX-11/780 的 1 MIPS 评分 4 年间无人质疑，直到 DEC 的 Joel Emer 在分时负载下测量了 VAX-11/780，发现它的原生 MIPS 只有 0.5。因此，后来有些 VAX 机器在一些基准测试程序上的原生 MIPS 为 3，却被称为 6 MIPS 的机器，因为它们的速度是 VAX-11/780 的 6 倍。到 20 世纪 80 年代初，MIPS 一词几乎都用来指相对 MIPS。
+
+20 世纪 70 年代和 80 年代，超级计算机产业发展起来。这个产业以浮点密集型程序上的高性能为标志。平均指令时间和 MIPS 显然不适合作为这个产业的度量，于是人们发明了 MFLOPS（millions of floating-point operations per second，每秒百万次浮点运算）。MFLOPS 实际上衡量的是某个基准测试程序执行时间的倒数。遗憾的是，客户很快就会忘记评分用的是哪个程序；在超级计算机的性能大战中，各家的市场部门干脆开始报峰值 MFLOPS。
+
+SPEC（System Performance and Evaluation Cooperative，系统性能评价合作组织）成立于 20 世纪 80 年代末，目的是改善基准测试的状况，为比较提供更可靠的依据。SPEC 最初关注 UNIX 市场上的工作站和服务器，今天这些机器仍是 SPEC 基准测试程序的主要对象。SPEC 基准测试程序的第一版现在称为 SPEC89，它采用了更贴近实际的基准测试程序，是一次重大进步。将近二十年后，SPEC2006 仍在处理器基准测试中占据主导地位。
+
+### 参考文献 {- #sec-m-2-references}
+
+Amdahl, G. M. [1967]. "Validity of the single processor approach to achieving large scale computing capabilities," Proc. AFIPS Spring Joint Computer Conf., April 18–20, 1967, Atlantic City, N.J., 483–485.
+
+Atanasoff, J. V. [1940]. "Computing machine for the solution of large systems of linear equations," Internal Report, Iowa State University, Ames.
+
+Azizi, O., Mahesri, A., Lee, B. C., Patel, S. J., & Horowitz, M. [2010]. Energy-performance tradeoffs in processor architecture and circuit design: a marginal cost analysis. Proc. International Symposium on Computer Architecture, 26-36.
+
+Bell, C. G. [1984]. "The mini and micro industries," IEEE Computer 17:10 (October), 14–30.
+
+Bell, C. G., J. C. Mudge, and J. E. McNamara [1978]. A DEC View of Computer Engineering, Digital Press, Bedford, Mass.
+
+Burks, A. W., H. H. Goldstine, and J. von Neumann [1946]. "Preliminary discussion of the logical design of an electronic computing instrument," Report to the U.S. Army Ordnance Department, p. 1; also appears in Papers of John von Neumann, W. Aspray and A. Burks, eds., MIT Press, Cambridge, Mass., and Tomash Publishers, Los Angeles, Calif., 1987, 97–146.
+
+Curnow, H. J., and B. A. Wichmann [1976]. "A synthetic benchmark," The Computer J. 19:1, 43–49.
+
+Dally, William J., "High Performance Hardware for Machine Learning," Cadence Embedded Neural Network Summit, February 9, 2016. <http://ip.cadence.com/uploads/presentations/1000AM_Dally_Cadence_ENN.pdf>
+
+Flemming, P. J., and J. J. Wallace [1986]. "How not to lie with statistics: The correct way to summarize benchmarks results," Communications of the ACM 29:3 (March), 218–221.
+
+Fuller, S. H., and W. E. Burr [1977]. "Measurement and evaluation of alternative computer architectures," Computer 10:10 (October), 24–35.
+
+Gibson, J. C. [1970]. "The Gibson mix," Rep. TR. 00.2043, IBM Systems Development Division, Poughkeepsie, N.Y. (research done in 1959).
+
+Goldstine, H. H. [1972]. The Computer: From Pascal to von Neumann, Princeton University Press, Princeton, N.J.
+
+Gray, J., and C. van Ingen [2005]. Empirical Measurements of Disk Failure Rates and Error Rates, MSR-TR-2005-166, Microsoft Research, Redmond, Wash.
+
+Jain, R. [1991]. The Art of Computer Systems Performance Analysis: Techniques for Experimental Design, Measurement, Simulation, and Modeling, Wiley, New York.
+
+Kembel, R. [2000]. "Fibre Channel: A comprehensive introduction," Internet Week (April).
+
+Larson, E. R. [1973]. "Findings of fact, conclusions of law, and order for judgment," File No. 4-67, Civ. 138, Honeywell v. Sperry-Rand and Illinois Scientific Development, U.S. District Court for the State of Minnesota, Fourth Division (October 19).
+
+Lubeck, O., J. Moore, and R. Mendez [1985]. "A benchmark comparison of three supercomputers: Fujitsu VP-200, Hitachi S810/20, and Cray X-MP/2," Computer 18:12 (December), 10–24.
+
+Landstrom, B. [2014]. "The Cost Of Downtime," <http://www.interxion.com/blogs/2014/07/the-cost-of-downtime/>
+
+McMahon, F. M. [1986]. The Livermore FORTRAN Kernels: A Computer Test of Numerical Performance Range, Tech. Rep. UCRL-55745, Lawrence Livermore National Laboratory, University of California, Livermore.
+
+Metropolis, N., J. Howlett, and G. C. Rota, eds. [1980]. A History of Computing in the Twentieth Century, Academic Press, New York.
+
+Mukherjee S. S., C. Weaver, J. S. Emer, S. K. Reinhardt, and T. M. Austin [2003]. "Measuring architectural vulnerability factors," IEEE Micro 23:6, 70–75.
+
+Oliker, L., A. Canning, J. Carter, J. Shalf, and S. Ethier [2004]. "Scientific computations on modern parallel vector systems," Proc. ACM/IEEE Conf. on Supercomputing, November 6–12, 2004, Pittsburgh, Penn., 10.
+
+Patterson, D. [2004]. "Latency lags bandwidth," Communications of the ACM 47:10 (October), 71–75.
+
+Redmond, K. C., and T. M. Smith [1980]. Project Whirlwind—The History of a Pioneer Computer, Digital Press, Boston.
+
+Shurkin, J. [1984]. Engines of the Mind: A History of the Computer, W. W. Norton, New York.
+
+Slater, R. [1987]. Portraits in Silicon, MIT Press, Cambridge, Mass.
+
+Smith, J. E. [1988]. "Characterizing computer performance with a single number," Communications of the ACM 31:10 (October), 1202–1206.
+
+SPEC. [1989]. SPEC Benchmark Suite Release 1.0 (October 2).
+
+SPEC. [1994]. SPEC Newsletter (June).
+
+Stern, N. [1980]. "Who invented the first electronic digital computer?" Annals of the History of Computing 2:4 (October), 375–376.
+
+Touma, W. R. [1993]. The Dynamics of the Computer Industry: Modeling the Supply of Workstations and Their Components, Kluwer Academic, Boston.
+
+Weicker, R. P. [1984]. "Dhrystone: A synthetic systems programming benchmark," Communications of the ACM 27:10 (October), 1013–1030.
+
+Wilkes, M. V. [1985]. Memoirs of a Computer Pioneer, MIT Press, Cambridge, Mass.
+
+Wilkes, M. V. [1995]. Computing Perspectives, Morgan Kaufmann, San Francisco.
+
+Wilkes, M. V., D. J. Wheeler, and S. Gill [1951]. The Preparation of Programs for an Electronic Digital Computer, Addison-Wesley, Cambridge, Mass.
+
+## 存储层次与保护的发展（第 2 章和附录 B） {#sec-m-3}
+
+计算机先驱们早就知道需要存储层次，「存储层次」这个词也是他们创造的；但自动管理两级存储的想法，最早是 Kilburn 等人 ［1962］ 提出的，并在曼彻斯特大学的 Atlas 计算机上得到验证。Atlas 问世比 IBM 360 发布早一年。IBM 原计划在下一代产品（System/370）中引入虚拟存储，但 1970 年时操作系统 TSS 还无法胜任。1972 年，IBM 宣布 370 系列支持虚拟存储，*TLB*（translation lookaside buffer）这个术语就是为这款计算机创造的 [Case and Padegs 1978]。今天，只有少数超级计算机、嵌入式处理器和老式个人计算机没有虚拟存储。
+
+Atlas 和 IBM 360 都提供以页为单位的保护，GE 645 则是第一个提供段页式管理的系统。更早的 Burroughs 计算机用分段方式实现虚拟存储，与 Intel 8086 的分段地址方案类似。80286 是第一款具备[附录 C](#app-c) 所述保护机制的 80x86 处理器，它的设计借鉴了 GE 645 上运行的 Multics 保护软件。后来，计算机的保护机制越来越复杂，其中最复杂的是*权能*（capability），它在 20 世纪 70 年代末和 80 年代初最受关注 [Fabry 1974; Wulf, Levin, and Harbison 1981]。Wilkes [1982] 是最早研究权能的人之一，他这样写道：
+
+> 凡是参与过刚才描述的那类［权能系统］的实现、或者试图向别人解释过这类系统的人，都可能觉得复杂性已经失控了。尤其令人失望的是，把权能看作可以自由传递的票证，这个诱人的想法已经丢失了……
+>
+> 与传统的计算机系统相比，要提供保护域既小又频繁变换的系统，必然要付出代价。这种代价表现为硬件增加、运行速度降低和内存占用增加。采用权能方法能否把这种代价降到合理的程度，目前还是一个悬而未决的问题。［第 112 页］
+
+今天，尽管人们越来越关注保护和安全，但无论操作系统界还是计算机体系结构界，对权能都没有多少兴趣了。
+
+Bell 和 Strecker [1976] 回顾 PDP-11 时指出，地址空间太小是唯一难以挽回的体系结构错误。设计 PDP-11 的时候，磁芯存储器的容量增长得很慢；另外，DEC 要和 100 家其他小型机公司竞争，如果每个地址都要在 16 位数据通路上传送两次，DEC 的产品在成本上可能就没有竞争力。因此，架构师决定只比 PDP-11 的前身多加 4 位地址。
+
+IBM 360 的架构师们知道地址长度的重要性，计划让这一体系结构将来能扩展到 32 位地址。但在 1964 年，如果加长地址，低端 360 机型还会更慢，所以 IBM 360 只用了 24 位。遗憾的是，架构师们没有把这个计划告诉软件人员，有些程序员把额外的信息存放在高 8 位「没用到的」地址位里，地址扩展的努力因此落空。（20 年后，苹果在 Motorola 68000 的 24 位地址上犯了类似的错误：后来的 68000 系列处理器用上了完整的 32 位虚拟地址，Macintosh 不得不用一套专门的流程来判定哪些程序是「32 位干净」的。）从那以后，几乎所有计算机都会检查未用的地址位是否保持未用，一旦这些位的值不对就产生陷阱。

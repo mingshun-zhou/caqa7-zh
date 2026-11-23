@@ -1,0 +1,243 @@
+## 习题 {- #sec-g-exercises}
+
+做这些习题时，假设 VMIPS 的时钟频率为 500 MHz，$T_{\text{loop}} = 15$。启动时间采用[图 G.2](#fig-g-2) 中的数值，并假设运行时间总是包含 store 延迟。
+
+G.1　[10] <G.1, G.2> 写一段 VMIPS 向量指令序列，使处理器达到峰值 MFLOPS 性能（功能部件和指令的说明见 [G.2 节](#sec-g-2)）。假设时钟频率为 500 MHz，峰值 MFLOPS 是多少？
+
+G.2　[20/15/15] <G.1–G.6> 下面的向量代码在 500 MHz 的 VMIPS 上运行，向量长度固定为 64：
+
+```
+LV       V1,Ra
+MULV.D   V2,V1,V3
+ADDV.D   V4,V1,V3
+SV       Rb,V2
+SV       Rc,V4
+```
+
+不计任何分段开采开销，但执行这个循环的时间必须计入 store 延迟。整个序列产生 64 个结果。
+
+a. [20] <G.1–G.4> 假设没有链接，只有一条存储流水线，需要多少个钟鸣？算上启动开销，这个向量序列每个结果需要多少个时钟周期（两次 store 合算一个结果）？
+
+b. [15] <G.1–G.4> 如果向量序列采用链接，算上开销，每个结果需要多少个时钟周期？
+
+c. [15] <G.1–G.6> 假设 VMIPS 有三条存储流水线，并采用链接。如果上面循环的访存没有存储体冲突，这个序列每个结果需要多少个时钟周期？
+
+G.3　[20/20/15/15/20/20/20] <G.2–G.6> 考虑下面的 FORTRAN 代码：
+
+```
+      do 10 i = 1,n
+         A(i) = A(i) + B(i)
+         B(i) = x * B(i)
+10    continue
+```
+
+本题各小题都用 [G.6 节](#sec-g-6)的方法估算性能，假设 VMIPS 的时钟频率为 500 MHz。
+
+a. [20] <G.2–G.6> 为循环的内层部分写出最好的 VMIPS 向量代码。假设 x 在 F0 中，A 和 B 的地址分别在 Ra 和 Rb 中。
+
+b. [20] <G.2–G.6> 求这个循环在 VMIPS 上的总时间（$T_{100}$）。这个循环的 MFLOPS 值（$R_{100}$）是多少？
+
+c. [15] <G.2–G.6> 求这个循环的 $R_\infty$。
+
+d. [15] <G.2–G.6> 求这个循环的 $N_{1/2}$。
+
+e. [20] <G.2–G.6> 求这个循环的 $N_v$。假设标量代码已经过流水线调度，每次访存需要 6 个周期，每个浮点操作需要 3 个周期；标量开销也是 $T_{\text{loop}}$。
+
+f. [20] <G.2–G.6> 假设 VMIPS 有两条存储流水线。写出利用第二条存储流水线的向量代码，并给出护航指令组的划分。
+
+g. [20] <G.2–G.6> 对有两条存储流水线的 VMIPS，计算 $T_{100}$ 和 $R_{100}$。
+
+G.4　[20/10] <G.2> 假设某种 VMIPS 有 8 个存储体（每个存储体宽一个双字），访存时间为 8 个周期。
+
+a. [20] <G.2> 如果执行一条长度为 64、步长为 20 个双字的向量 load，完成这次 load 需要多少个周期？
+
+b. [10] <G.2> 取 64 个元素时，步长为 20 与步长为 1 相比，能达到存储器带宽的百分之多少？
+
+G.5　[12/12] <G.5–G.6> 考虑下面的循环：
+
+```
+      C = 0.0
+      do 10 i = 1,64
+         A(i) = A(i) + B(i)
+         C = C + A(i)
+10    continue
+```
+
+a. [12] <G.5–G.6> 把这个循环拆成两个循环，一个没有相关，一个有相关。用 FORTRAN 写出这两个循环，即做一次源到源的变换。这种优化称为*循环分裂*（loop fission）。
+
+b. [12] <G.5–G.6> 为没有相关的那个循环写出 VMIPS 向量代码。
+
+G.6　[20/15/20/20] <G.5–G.6> Cray-1 于 1976 年设计，1989 年换用一个更好的编译器后，编译出的 Linpack 性能几乎提高到原来的 2 倍。我们用一个简单的例子看看这可能是怎样做到的。考虑下面这个类似 DAXPY 的循环（k 是包含该循环的过程的参数）：
+
+```
+      do 10 i = 1,64
+        do 10 j = 1,64
+        Y(k,j) = a*X(i,j) + Y(k,j)
+10    continue
+```
+
+a. [20] <G.5–G.6> 只针对内层循环，用 VMIPS 向量指令写出*直截了当*的代码序列。
+
+b. [15] <G.5–G.6> 用 [G.6 节](#sec-g-6)的方法求出以时钟周期计的 $T_{64}$，以此估算这段代码在 VMIPS 上的性能。可以假设外层循环每次迭代产生 $T_{\text{loop}}$ 的开销。是什么限制了性能？
+
+c. [20] <G.5–G.6> 改写 VMIPS 代码，减轻这一性能限制，用 VMIPS 向量指令给出改写后的内层循环。（*提示*：想一想 $T_{\text{chime}}$ 由什么决定，你能否改变它？）求出改写后序列的总时间。
+
+d. [20] <G.5–G.6> 用 [G.6 节](#sec-g-6)的方法求出 $T_{64}$，估算新版本的性能。
+
+G.7　[15/15/25] <G.4> 考虑下面的代码：
+
+```
+      do 10 i = 1,64
+        if (B(i) .ne. 0) then
+          A(i) = A(i)/B(i)
+10    continue
+```
+
+假设 A 和 B 的地址分别在 Ra 和 Rb 中，F0 中为 0。
+
+a. [15] <G.4> 用向量掩码功能为这个循环写出 VMIPS 代码。
+
+b. [15] <G.4> 用集中—分散为这个循环写出 VMIPS 代码。
+
+c. [25] <G.4> 假设除法延迟为 20 个周期，估算这两个向量循环的性能（以时钟周期计的 $T_{100}$）。假设无论向量掩码寄存器怎样设置，所有向量指令都是每个时钟产生一个结果，B 中有 50% 的元素为 0。如果上面的循环具有代表性，考虑到硬件成本，你会选择实现哪一种？
+
+G.8　[15/20/15/15] <G.1–G.6> 峰值性能与持续性能可能相差很大。在一个问题上，Hitachi S810 的峰值速度是 Cray X-MP 的 2 倍；而在另一个更接近实际的问题上，Cray X-MP 的速度是这台 Hitachi 处理器的 2 倍。下面用两种 VMIPS 和两段代码序列，分析为什么可能出现这种情况：
+
+```
+C         Code sequence 1
+      do 10 i = 1,10000
+          A(i) = x * A(i) + y * A(i)
+10    continue
+C         Code sequence 2
+      do 10 i = 1,100
+          A(i) = x * A(i)
+10    continue
+```
+
+假设有一种 VMIPS（称为 VMIPS-II），每个浮点功能部件都有两份，并且它们之间可以完全链接。假设 VMIPS 和 VMIPS-II 都有两个 load/store 部件。由于 VMIPS-II 多了功能部件，把操作分配给功能部件也更复杂，所以它的各项开销（$T_{\text{loop}}$ 和 $T_{\text{start}}$）都是 VMIPS 的 2 倍。
+
+a. [15] <G.1–G.6> 求代码序列 1 在 VMIPS 上的时钟周期数。
+
+b. [20] <G.1–G.6> 求代码序列 1 在 VMIPS-II 上的时钟周期数。与 VMIPS 相比如何？
+
+c. [15] <G.1–G.6> 求代码序列 2 在 VMIPS 上的时钟周期数。
+
+d. [15] <G.1–G.6> 求代码序列 2 在 VMIPS-II 上的时钟周期数。与 VMIPS 相比如何？
+
+G.9　[20] <G.5> 下面是一段使用二维数组、颇为棘手的代码。这个循环有没有相关？这些循环能不能改写成并行的？如果能，怎样改写？如果可以，请改写*源*代码，让人一眼看出这个循环可以向量化。
+
+```
+      do 290 j = 2,n
+        do 290 i = 2,j
+          aa(i,j) = aa(i-1,j)*aa(i-1,j) + bb(i,j)
+290   continue
+```
+
+G.10　[12/15] <G.5> 考虑下面的循环：
+
+```
+      do 10 i = 2,n
+        A(i) = B
+10      C(i) = A(i - 1)
+```
+
+a. [12] <G.5> 说明这段代码中存在循环携带相关。
+
+b. [15] <G.5> 用 FORTRAN 改写这段代码，使它能够向量化为两个独立的向量序列。
+
+G.11　[15/25/25] <G.5> 我们在 [G.5 节](#sec-g-5)看到，有些循环结构不容易向量化。其中常见的一种是*归约*，即反复执行同一种操作、把一个数组归结为一个值的循环。归约是递推的一种特例，点积就是常见的例子：
+
+```
+      dot = 0.0
+      do 10 i = 1,64
+10      dot = dot + A(i) * B(i)
+```
+
+这个循环有明显的循环携带相关（相关在 dot 上），不能直接向量化。好的向量化编译器首先会把循环拆开，把可向量化的部分和递推部分分离，可能把循环改写成：
+
+```
+      do 10 i = 1,64
+10      dot(i) = A(i) * B(i)
+      do 20 i = 2,64
+20      dot(1) = dot(1) + dot(i)
+```
+
+变量 dot 扩展成了一个向量，这种变换称为*标量扩展*（scalar expansion）。对第二个循环，我们可以尝试完全依靠编译器来向量化（小题 a），也可以再借助硬件支持（小题 b）。用向量技术做归约有一点必须注意：归约之所以可行，依靠的是归约所用运算符满足结合律。然而，由于存在舍入，表示范围也有限，浮点运算并不严格满足结合律。因此，大多数编译器要求程序员指明能否利用结合律来更高效地编译归约。
+
+a. [15] <G.5> 编译这个带递推的循环，有一种简单的方案：把长度逐次减半的向量两两相加，先加两个 32 元素的向量，再加两个 16 元素的向量，依此类推。这种技术称为*递归倍增*（recursive doubling），比全部用标量方式执行要快。用递归倍增执行上面代码片段中的第二个循环，写出相应的 FORTRAN 代码。
+
+b. [25] <G.5> 有些向量处理器的向量寄存器可以寻址，一次向量操作的两个操作数可以取自同一个向量寄存器的两个不同部分。这样，归约就有了另一种解法，称为*部分和*（partial sums）。部分和的关键思想是把向量归约成 *m* 个和，其中 *m* 是经过向量功能部件的总延迟，包括读操作数和写结果的时间。假设 VMIPS 的向量寄存器可以寻址（例如，可以用操作数 V1(16) 启动一次向量操作，表示输入操作数从第 16 个元素开始），并假设加法的总延迟（包括读操作数和写结果）为 8 个周期。写一段 VMIPS 代码序列，把 V1 的内容归约成 8 个部分和。用一条向量操作就能做到。
+
+c. [25] <G.5> 讨论增加小题 b 中的扩展，会对有多条车道的机器产生什么影响。
+
+G.12　[40] <G.3–G.4> 把 MIPS 模拟器扩展成 VMIPS 模拟器，要能统计时钟周期数。用 MIPS 和 VMIPS 汇编语言写几个简短的基准测试程序，测出 VMIPS 上的加速比、向量化百分比和各功能部件的使用情况。
+
+G.13　[50] <G.5> 修改 MIPS 编译器，加入一个相关检查器。用它处理一些科学计算代码和循环，测出有百分之多少的语句可以向量化。
+
+G.14　[Discussion] 向量处理器的一些支持者也许会说，向量处理器把注意力集中在提高峰值向量性能上，为不断提高处理器的计算能力提供了最好的途径。另一些人则会说，强调峰值性能是找错了方向，因为越来越多的程序，性能主要取决于非向量部分。（还记得 Amdahl 定律吗？）支持者会回应说，程序员应当努力让自己的程序能够向量化。你怎么看这场争论？
+
+## 参考文献 {- #sec-g-references}
+
+Alliant Computer Systems Corp, 1987. Alliant FX/Series: Product Summary. Mass, Acton (June).
+
+Asanovic, K., 1998. Vector microprocessors, Ph.D. thesis, Computer Science Division. University of California at Berkeley (May).
+
+Bailey, D.H., Barszcz, E., Barton, J.T., Browning, D.S., Carter, R.L., Dagum, L., Fatoohi, R.A., Frederickson, P.O., Lasinski, T.A., Schreiber, R.S., Simon, H.D., Venkatakrishnan, V., Weeratunga, S.K., 1991. The NAS parallel benchmarks. Int'l. J. Supercomputing Applications 5, 63–73.
+
+Banerjee, U., 1979. Speedup of ordinary programs, Ph.D. thesis, Department of Computer Science. University of Illinois at Urbana-Champaign (October).
+
+Baskett, F., Keller, T.W., 1977. An Evaluation of the Cray-1 Processor. In: Kuck, D.J., Lawrie, D.H., Sameh, A.H. (Eds.), High Speed Computer and Algorithm Organization. Academic Press, San Diego, pp. 71–84.
+
+Brandt, M., Brooks, J., Cahir, M., Hewitt, T., Lopez-Pineda, E., Sandness, D., 2000. The Benchmarker's Guide for Cray SV1 Systems. Cray Inc., Seattle, Wash.
+
+Bucher, I.Y., 1983. The computational speed of supercomputers. In: Proc. ACM SIGMETRICS Conf. on Measurement and Modeling of Computer Systems, August 29–31, 1983, Minneapolis, Minn, pp. 151–165.
+
+Callahan, D., Dongarra, J., Levine, D., 1988. Vectorizing compilers: A test suite and results. In: Supercomputing '88: Proceedings of the 1988 ACM/IEEE Conference on Supercomputing, November 12–17, pp. 98–105. Orlando, FL.
+
+Chen, S., 1983. Large-scale and high-speed multiprocessor system for scientific applications. In: Hwang, K. (Ed.), Superprocessors: Design and applications. Proc. NATO Advanced Research Workshop on High-Speed Computing, June 20–22, 1983, Julich, Kernforschungsanlage, Federal Republic of Germany, IEEE (August), 1984.
+
+Dongarra, J.J., 1986. A survey of high performance processors. COMPCON, IEEE 8–11 (March).
+
+Dunnigan, T.H., Vetter, J.S., White III, J.B., Worley, P.H., 2005. Performance evaluation of the Cray X1 distributed shared-memory architecture. IEEE Micro 25 (1 (January–February)), 30–40.
+
+Fazio, D., 1987. It's really much more fun building a supercomputer than it is simply inventing one. COMPCON, IEEE 102–105 (February).
+
+Flynn, M.J., 1966. Very high-speed computing systems. In: Proc. IEEE 54:12 (December), pp. 1901–1909.
+
+Hintz, R.G., Tate, D.P., 1972. Control data STAR-100 processor design. COMPCON, IEEE 1–4 (September).
+
+Jordan, K.E., 1987. Performance comparison of large-scale scientific processors: Scalar mainframes, mainframes with vector facilities, and supercomputers. Computer 20 (3 (March)), 10–23.
+
+Kitagawa, K., Tagaya, S., Hagihara, Y., Kanoh, Y., 2003. A hardware overview of SX-6 and SX-7 supercomputer. NEC Research & Development J 44 (1 (January)), 2–7.
+
+Kuck, D., Budnik, P.P., Chen, S.-C., Lawrie, D.H., Towle, R.A., Strebendt, R.E., Davis Jr., E.W., Han, J., Kraska, P.W., Muraoka, Y., 1974. Measurements of parallelism in ordinary FORTRAN programs. Computer 7 (1 (January)), 37–46.
+
+Lincoln, N.R., 1982. Technology and design trade offs in the creation of a modern supercomputer. IEEE Trans. on Computers 363–376. C-31:5 (May).
+
+Lubeck, O., Moore, J., Mendez, R., 1985. A benchmark comparison of three supercomputers: Fujitsu VP-200, Hitachi S810/20, and Cray X-MP/2. Computer 18 (1 (January)), 10–29.
+
+Luszczek, P., Dongarra, J.J., Koester, D., Rabenseifner, R., Lucas, B., Kepner, J., McCalpin, J., Bailey, D., Takahashi, D., 2005. In: Introduction to the HPC challenge benchmark suite, Lawrence Berkeley National Laboratory, Paper LBNL-57493 (April 25). http://repositories.cdlib.org/lbnl/LBNL-57493.
+
+Miranker, G.S., Rubenstein, J., Sanguinetti, J., 1988. Squeezing a Cray-class supercomputer into a single-user package. COMPCON, IEEE 452–456 (March).
+
+Miura, K., Uchida, K., 1983. FACOM vector processing system: VP100/200. In: Proc. NATO Advanced Research Workshop on High-Speed Computing. June 20–22, 1983, Julich, Kernforschungsanlage, Federal Republic of Germany; also in K. Hwang, ed., "Superprocessors: Design and applications," IEEE (August), 1984, 59–73.
+
+Moore, B., Padegs, A., Smith, R., Bucholz, W., 1987. Concepts of the System/370 vector architecture. In: Proc. 14th Int'l. Symposium on Computer Architecture, June 3–6, 1987, Pittsburgh, Penn, pp. 282–292.
+
+Padua, D., Wolfe, M., 1986. Advanced compiler optimizations for supercomputers. Comm. ACM 29 (12 (December)), 1184–1201.
+
+Russell, R.M., 1978. The Cray-1 processor system. Comm. of the ACM 21 (1 (January)), 63–72.
+
+Schneck, P.B., 1987. Superprocessor Architecture. Kluwer Academic Publishers, Norwell, Mass.
+
+Smith, B.J., 1981. Architecture and applications of the HEP multiprocessor system. Real-Time Signal Processing IV 298, 241–248. August.
+
+Sporer, M., Moss, F.H., Mathais, C.J., 1988. An introduction to the architecture of the Stellar Graphics supercomputer. COMPCON, IEEE 464 (March).
+
+Tanqueray, D., 2002. The Cray X1 and supercomputer road map. In: Proc. 13th Daresbury Machine Evaluation Workshop, December 11–12, Cheshire, England.
+
+Vajapeyam, S., 1991. Instruction-level characterization of the Cray Y-MP processor. Ph.D. thesis, Computer Sciences Department. University of Wisconsin-Madison.
+
+Watanabe, T., 1987. Architecture and performance of the NEC supercomputer SX system. Parallel Computing 5, 247–255.
+
+Watson, W.J., 1972. The TI ASC—a highly modular and flexible super processor architecture. In: Proc. AFIPS Fall Joint Computer Conf, pp. 221–228.

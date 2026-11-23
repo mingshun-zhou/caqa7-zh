@@ -1,0 +1,182 @@
+### 近年来的进展 {-}
+
+近年来的 MIMD 计算机，除了并行向量多处理器（见[附录 G](#app-g)）这一主要例外和较晚出现的 IBM Blue Gene 设计，其余都是用现成的微处理器搭建的，组织方式有两种：一种是总线加逻辑上集中的存储器，另一种是互连网络加分布式存储器。20 世纪 80 年代造出的一批实验性多处理器，进一步完善和充实了许多概念，今天的很多多处理器正是以这些概念为基础的。
+
+#### 基于总线的一致性多处理器的发展 {-}
+
+20 世纪 60 年代和 70 年代，人们已经造出了带多个处理器的超大型主机，但多处理器直到 20 世纪 80 年代才取得很大的成功。Bell［1985］认为关键有两点：一是微处理器体积变小，于是可以用存储总线代替互连网络硬件；二是有了可移植的操作系统，多处理器项目不必再专门发明一个新的操作系统。Bell 在这篇论文中定义了*多处理器*和*多计算机*这两个术语，为构造更大规模多处理器的两条不同途径奠定了基础。
+
+第一台使用监听 Cache 的总线式多处理器是 Synapse N + 1，Frank［1984］对它作了介绍。Goodman［1983］写了最早描述监听 Cache 的论文之一。20 世纪 80 年代后期，出现了许多基于总线、采用监听 Cache 的商用体系结构，包括 Silicon Graphics 4D/240［Baskett, Jermoluk, and Solomon 1988］、Encore Multimax［Wilson 1987］和 Sequent Symmetry［Lovett and Thakkar 1988］。20 世纪 80 年代中期，各种 Cache 一致性协议层出不穷，Archibald 和 Baer［1986］对这些协议作了很好的综述和分析，并给出了原始论文的出处。[图 M.2](#fig-m-2) 归纳了几种监听式 Cache 一致性协议，并列出了用过或正在使用这些协议的一些多处理器。
+
+[图 M.2　五种监听协议汇总。Archibald 和 Baer［1986］用这些名字来称呼这五种协议，Eggers［1989］则像本图这样归纳了它们的异同。Firefly 协议得名于首先采用它的实验性多处理器 DEC Firefly。各协议的另一套名字来自它们所支持的状态：M = 已修改（Modified），E = 独占（Exclusive，私有且干净），S = 共享（Shared），I = 无效（Invalid），O = 拥有者（Owner，共享且脏）。]{#fig-m-2 .caption}
+
+| 名称 | 协议类型 | 存储器写策略 | 特有之处 | 使用该协议的多处理器 |
+|---|---|---|---|---|
+| Write Once | 写作废 | 第一次写之后写回 | 文献中描述的第一个监听协议 | |
+| Synapse N+1 | 写作废 | 写回 | 有一个显式状态表示存储器是拥有者 | Synapse 多处理器；最早可以买到的 Cache 一致性多处理器 |
+| Berkeley（MOESI） | 写作废 | 写回 | 有「拥有且共享」状态 | Berkeley SPUR 多处理器；Sun Enterprise 服务器 |
+| Illinois（MESI） | 写作废 | 写回 | 有「干净且私有」状态；任何持有干净副本的 Cache 都可以提供数据 | SGI Power 和 Challenge 系列 |
+| 「Firefly」 | 写广播 | 私有时写回，共享时写直达 | 广播时更新存储器 | 目前没有多处理器使用；最接近的是 SPARCCenter 2000 |
+
+20 世纪 90 年代初，这类系统开始向更大规模扩展。起初采用很宽的高速总线，例如 SGI Challenge 系统使用一条 256 位、面向分组的总线，最多支持 8 块处理器板、32 个处理器；后来又采用多条总线和交叉开关互连，例如 Sun 的 SPARCCenter 和 Enterprise 系统（Charlesworth［1998］讨论了这些多处理器的互连结构）。2001 年，在仍在使用的大规模（多于 16 个处理器）对称多处理器中，Sun Enterprise 服务器是主要代表。今天，大多数基于总线的机器只提供 4 个左右的处理器；8 个或更多处理器的机器则采用交换开关或其他设计。
+
+#### 走向大规模多处理器 {-}
+
+构造大规模多处理器有两个不同的探索方向：一是消息传递多计算机，二是可扩展的共享存储多处理器。用网格和超立方体连接多处理器的尝试有过很多，而最早把各个部分成功整合起来的多处理器之一，是加州理工学院造的 Cosmic Cube［Seitz 1985］。Cosmic Cube 在路由和互连技术上取得了重要进展，大幅降低了互连的成本，从而帮助多计算机走向实用。Intel iPSC 860 就以这些思想为基础，它是用超立方体连接起来的一组 i860。后来的多处理器（如 Intel Paragon）采用维数较低的网络，但单条链路的能力更强。Paragon 还在每个节点中用一个单独的 i860 作通信控制器，不过不少用户发现，让两个 i860 都既做计算又做通信，效果更好。Thinking Machines 的 CM-5 使用现成的微处理器和胖树互连（见[附录 F](#app-f)）。CM-5 允许用户级程序直接访问通信通道，因此通信延迟大大缩短。1995 年，这两台多处理器代表了消息传递多计算机的最高水平。
+
+早期构造可扩展共享存储多处理器的尝试，有 IBM RP3［Pfister et al. 1985］、纽约大学的 Ultracomputer［Elder et al. 1985；Schwartz 1980］、伊利诺伊大学的 Cedar 项目［Gajksi et al. 1983］，以及 BBN 的 Butterfly 和 Monarch［BBN Laboratories 1986；Rettberg et al. 1990］。这些多处理器提供的都是某种形式的非均匀分布式存储模型，因此属于分布式共享存储（DSM）多处理器；但它们不支持 Cache 一致性，编程因此复杂得多。RP3 和 Ultracomputer 两个项目都探索了同步方面的新思路（fetch-and-operate，取数并操作），也探索了在网络中合并访存请求的思路。这四台多处理器的互连网络最后都比处理节点还贵，于是规模较小的机型就成了问题。Cray T3D/E 以这些思想为基础（Arpaci et al.［1995］评测了 T3D，Scott［1996］介绍了 T3E 的改进），采用不保证一致性的共享地址空间，同时借鉴了多计算机领域在互连技术上取得的进展（见 Scott and Thorson［1996］）。
+
+共享存储模型加上可扩展的 Cache 一致性，靠的是把多种思想结合起来。基于目录的 Cache 一致性技术，其实比监听 Cache 技术出现得还早。最早的 Cache 一致性协议用的就是目录，Tang［1976］对它作了描述，IBM 3081 实现了它。Censier 和 Feautrier［1978］描述了一种在存储器中保存 tag 的目录一致性方案。把目录随存储器一起分布，以可扩展的方式实现 Cache 一致性，这一思想最早由 Agarwal et al.［1988］提出，后来成为斯坦福 DASH 多处理器的基础（见 Lenoski et al.［1990，1992］）。DASH 是第一台投入运行的 Cache 一致的 DSM 多处理器。它是一种「胖」节点的 cc-NUMA 机器，以 4 处理器的 SMP 为节点。节点的互连方式与 Wildfire 相似，但用的是可扩展性更好的二维网格，而不是交叉开关。
+
+Kendall Square Research 公司的 KSR-1［Burkhardt et al. 1992］是可扩展一致性共享存储的第一个商业实现。KSR-1 扩展了基本的 DSM 方法，实现了一种称为*唯 Cache 存储结构*（cache-only memory architecture，COMA）的概念，也就是把主存当作 Cache 来用。在 KSR-1 中，存储块可以复制到各个节点的主存中，这些复制块带来的额外一致性要求由硬件支持来处理。（严格说来，KSR-1 不是纯粹的 COMA，因为它不迁移数据项的宿主位置，而是始终在宿主处保留一个副本。从本质上说，它只实现了复制。）此后还出现了许多研究方案，有的是 COMA 式的体系结构［Falsafi and Wood 1997；Hagersten, Landin, and Haridi 1992；Saulsbury et al. 1995；Stenström, Joe, and Gupta 1992］，有的是通过迁移来减轻非均匀存储访问负担的类似方法［Chandra et al. 1994；Soundararajan et al. 1998］，但再也没有出现过商业实现。
+
+Convex Exemplar 用两级结构实现了可扩展的一致性共享存储：在最低一级，用交叉开关构成 8 处理器的模块；再用一个环把最多 32 个这样的模块连起来，总共 256 个处理器（评测见 Thekkath et al.［1997］）。Laudon 和 Lenoski［1997］介绍了 SGI Origin。Origin 于 1996 年首次交付，它以最初的斯坦福 DASH 机器为蓝本，同时加入了许多提高可扩展性、方便编程的创新。Origin 的目录结构采用位向量，长 16 位或 32 位。每一位代表一个节点，每个节点有两个处理器；采用粗粒度的位向量表示时，每一位最多可代表 8 个节点，总共可达 1024 个处理器。据 Galles［1996］介绍，Origin 的全局互连采用高性能的胖超立方体。Hristea、Lenoski 和 Keen［1997］全面评测了 Origin 存储系统的性能。
+
+人们还做了几台研究原型，用来探索带或不带多线程的可扩展一致性，包括 MIT 的 Alewife 机器［Agarwal et al. 1995］和斯坦福的 FLASH 多处理器［Gibson et al. 2000；Kuskin et al. 1994］。
+
+#### 集群 {-}
+
+集群大概是 20 世纪 60 年代由用户「发明」的：有的用户无法把全部工作放在一台计算机上完成，有的用户需要一台备份机，以防主机发生故障［Pfister 1998］。Tandem 在 1975 年推出了 16 节点的集群，Digital 随后在 1984 年推出了 VAX 集群。VAX 集群最初是一些共享 I/O 设备的独立计算机，需要一个分布式操作系统来协调各机的活动。不久，各计算机之间有了通信链路，部分原因是让计算机可以分布在不同地点，一旦某个地点发生灾难，系统仍然可用。用户登录到集群上，并不知道自己的程序运行在哪台机器上。到 1993 年，DEC（现在属于 HP）已经卖出 25 000 多套集群。较早做集群的公司还有 Tandem（现在属于 HP）和 IBM（仍是 IBM）。今天，几乎每家公司都有集群产品。这些产品大多以可用性为目标，性能的扩展只是附带的好处。
+
+集群上的科学计算逐渐兴起，成为 MPP 的竞争对手。1993 年，Beowulf 项目启动，目标是满足 NASA 的愿望：造一台价格低于 50 000 美元、性能达到 1 GFLOPS 的计算机。1994 年，一个用现成的 80486 PC 搭成的 16 节点集群实现了这个目标［Bell and Gray 2001］。由于重视这类用途，人们开发了各种软件接口，让大型程序或大量独立程序的提交、协调和调试变得更容易。
+
+人们一方面设法缩短集群的通信延迟，另一方面设法提高通信带宽，有好几个研究项目专门研究这个问题。（低延迟研究的一项商业成果是 VI 接口标准，Infiniband 采纳了这一标准，下文还会讲到 Infiniband。）后来，低延迟在其他应用中也派上了用场。例如，1997 年，加州大学伯克利分校用 100 台 UltraSPARC 台式计算机组成一个集群，以每条链路 160 MB/s 的 Myrinet 交换机互连，创造了两项世界纪录：一是数据库排序，在 1 分钟内把原先存在磁盘上的 8.6 GB 数据排好序；二是破解加密消息，只用 3.5 小时就破译了一个 40 位的 DES 密钥。
+
+这个研究项目称为工作站网络（Network of Workstations）［Anderson, Culler, and Patterson 1995］，它还开发了 Inktomi 搜索引擎，并由此诞生了一家同名的初创公司。谷歌效仿 Inktomi，用台式计算机组成的集群来构建搜索引擎，而不用大规模 SMP。大规模 SMP 是当时领先的搜索引擎 AltaVista 所采用的策略，后来谷歌超越了 AltaVista［Brin and Page 1998］。2011 年，几乎所有互联网服务都依靠集群为数以百万计的用户提供服务。
+
+集群也很受科学家欢迎。原因之一是成本低，单个科学家或小型研究组也能拥有一个专门运行自己程序的集群。超级计算中心共享的 MPP 作业队列很长，有时要排上几周；用这样的集群，得到结果比排队等待更快。想进一步了解集群的读者，可以读 Pfister［1998］写的一本很有趣的书。
+
+#### 大规模多处理器的最新趋势 {-}
+
+到 20 世纪 90 年代中后期，人们已经看清楚：超大规模并行计算市场原先期望的增长不大可能出现。市场不增长，高端并行计算市场就越来越明显地负担不起高度定制的硬件和软件，因为这些软硬件只是为一个小市场设计的。由此产生的最重要的趋势，也许就是用集群来达到最高水平的性能。现在的大规模多处理器大致分为四类：
+
+* 集群，用 Myrinet 或 Infiniband 这类互连技术，把标准的台式机主板集成起来。
+* 多计算机，用标准微处理器构成处理单元，再用定制的互连网络连接。这一类包括 Cray XT3（使用较早版本的 Cray 互连网络，采用简单的集群结构）和 IBM Blue Gene（下面马上介绍这台独特的机器）。
+* 小规模共享存储计算机组成的集群，可能带向量支持。地球模拟器（Earth Simulator）就属于这一类（它有自己的在线期刊）。
+* 大规模共享存储多处理器，如 Cray X1［Dunigan et al. 2005］以及 SGI 的 Origin 和 Altix 系统。SGI 的系统也配置成集群，以提供 512 个以上的处理器，不过集群之间只支持消息传递。
+
+这些设计中最有意思的是 IBM Blue Gene，因为它的设计思路，与近年来单处理器体系结构转向多核的根本原因是一致的。Blue Gene 最初是 IBM 内部的一个研究项目，针对的是蛋白质测序和折叠问题。Blue Gene 的设计者注意到两点：一是在大规模多处理器中，功耗越来越成为一个问题；二是嵌入式领域的处理器，每瓦性能比高端单处理器领域的处理器好得多。既然并行是通向高性能的道路，为什么不从效率最高的构件出发，只是多用一些这样的构件呢？
+
+于是，Blue Gene 采用一种定制芯片构建，芯片中包含一个嵌入式 PowerPC 微处理器，性能是高端 PowerPC 的一半，面积和功耗却只占后者很小的一部分。这样，包括全局互连在内的更多系统功能就可以集成到同一块晶片上，得到一种可以大量复制、效率很高的构件，Blue Gene 因此能以更高的效率达到多得多的处理器数目。Blue Gene 用作构件的不是独立的微处理器，也不是标准的台式机主板，而是处理器核。毫无疑问，这种方法的效率要高得多。至于市场能否负担定制设计和专用软件的成本，目前仍是一个悬而未决的问题。
+
+2006 年，劳伦斯·利弗莫尔实验室的一台 Blue Gene 拥有 32K 个处理器（计划在 2005 年底扩充到 65K 个），Linpack 性能是排名第三的系统的 2.6 倍。排名第三的系统由 20 台 512 处理器的 SGI Altix 系统组成，用 Infiniband 互连成一个集群。
+
+Blue Gene 的前身是实验性机器 QCDOD。QCDOD 率先提出了这样的构想：用低功耗的嵌入式微处理器和紧密集成的互连，降低每个节点的成本和功耗。
+
+#### 同步与一致性模型的发展 {-}
+
+人们为共享存储多处理器提出了各种各样的同步原语。Mellor-Crummey 和 Scott［1991］概述了其中的问题，并给出了锁、栅障等重要原语的高效实现。文中附有详尽的参考文献，列出了其他重要成果的出处，包括自旋锁、排队锁和栅障方面的进展。Lamport［1979］提出了顺序一致性的概念，并说明了怎样才算并行程序的正确执行。Dubois、Scheurich 和 Briggs［1988］提出了弱序（weak ordering）的思想（最早在 1986 年提出）。1990 年，Adve 和 Hill 给出了弱序的一个更好的定义，还定义了无数据竞争（data-race-free）的概念；在同一次会议上，Gharachorloo 和他的同事［1990］提出了释放一致性，并首次给出了宽松一致性模型的性能数据。更宽松的一致性模型已经在微处理器体系结构中广泛采用，包括 Sun SPARC、Alpha 和 IA-64。Adve 和 Gharachorloo［1996］写了一篇出色的教程，介绍存储一致性以及这些模型之间的差别。
+
+#### 其他参考文献 {-}
+
+利用虚拟存储在不同机器之间实现共享地址空间，这一概念最早由 Kai Li 在 1988 年的 Ivy 系统中提出。此后有一系列论文探讨了硬件支持、软件机制和编程方面的问题。Amza et al.［1996］介绍了一个在工作站上搭建、采用一种新一致性模型的系统；Kontothanassis et al.［1997］介绍了一种利用远程写的软件共享存储方案；Erlichson et al.［1996］介绍了以 SMP 为节点、用共享虚拟存储构建大规模多处理器的方法。
+
+关于多处理器和多计算机的资料几乎无穷无尽：会议论文、期刊论文乃至书籍出现的速度，似乎比任何一个人吸收其中思想的速度都快。毫无疑问，其中许多论文会无人问津，过去也是如此。大多数主要的体系结构会议都有多处理器方面的论文。一年一度的 Supercomputing XY 会议（X 和 Y 是年份的最后两位数字）把用户、体系结构设计者、软件开发者和厂商聚到一起，会议论文集以书籍、CD-ROM 和在线（见 www.scXY.org）等形式出版。两份主要期刊 *Journal of Parallel and Distributed Computing* 和 *IEEE Transactions on Parallel and Distributed Systems* 刊登并行处理各个方面的论文。下面的参考文献中列出了几本专讲并行处理的书，其中 Culler、Singh 和 Gupta［1999］是最新的一部大部头著作。多年来，NASA 艾姆斯研究中心的 Eugene Miya 一直在收集并行处理论文，编成在线文献目录。这份目录现在已有 35 000 多条，可以在 liinwww.ira.uka.de/bibliography/Parallel/Eugene/index.html 上查到。
+
+这些参考文献记录了如今在实践中使用的各种概念是怎样发现的；此外，它们还介绍了许多已经探索过但被证明有所不足的思想，以及许多时机尚未成熟的思想。多核和多处理器已经成为高性能计算机体系结构的发展方向，因此我们预计，未来几年还会有许多新方法得到探索。其中会有少数几种方法能够解决硬件和软件问题，而在过去 40 年里，这些问题一直是利用多处理的关键！
+
+### 参考文献 {- #sec-m-7-references}
+
+Adve, S. V., and K. Gharachorloo [1996]. "Shared memory consistency models: A tutorial," IEEE Computer 29:12 (December), 66–76.
+
+Adve, S. V., and M. D. Hill [1990]. "Weak ordering—a new definition," Proc. 17th Annual Int'l. Symposium on Computer Architecture (ISCA), May 28–31, 1990, Seattle, Wash., 2–14.
+
+Agarwal, A., R. Bianchini, D. Chaiken, K. Johnson, and D. Kranz [1995]. "The MIT Alewife machine: Architecture and performance," 22nd Annual Int'l. Symposium on Computer Architecture (ISCA), June 22–24, 1995, Santa Margherita, Italy, 2–13.
+
+Agarwal, A., J. L. Hennessy, R. Simoni, and M. A. Horowitz [1988]. "An evaluation of directory schemes for cache coherence," Proc. 15th Annual Int'l. Symposium on Computer Architecture, May 30–June 2, 1988, Honolulu, Hawaii, 280–289.
+
+Agarwal, A., J. Kubiatowicz, D. Kranz, B.-H. Lim, D. Yeung, G. D'Souza, and M. Parkin [1993]. "Sparcle: An evolutionary processor design for large-scale multiprocessors," IEEE Micro 13 (June), 48–61.
+
+Alles, A. [1995]. "ATM Internetworking," White Paper (May), Cisco Systems, Inc., San Jose, Calif. (www.cisco.com/warp/public/614/12.html).
+
+Almasi, G. S., and A. Gottlieb [1989]. Highly Parallel Computing, Benjamin/Cummings, Redwood City, Calif.
+
+Alverson, G., R. Alverson, D. Callahan, B. Koblenz, A. Porterfield, and B. Smith [1992]. "Exploiting heterogeneous parallelism on a multithreaded multiprocessor," Proc. ACM/IEEE Conf. on Supercomputing, November 16–20, 1992, Minneapolis, Minn., 188–197.
+
+Amdahl, G. M. [1967]. "Validity of the single processor approach to achieving large scale computing capabilities," Proc. AFIPS Spring Joint Computer Conf., April 18–20, 1967, Atlantic City, N.J., 483–485.
+
+Amza C., A. L. Cox, S. Dwarkadas, P. Keleher, H. Lu, R. Rajamony, W. Yu, and W. Zwaenepoel [1996]. "Treadmarks: Shared memory computing on networks of workstations," IEEE Computer 29:2 (February), 18–28.
+
+Anderson, T. E., D. E. Culler, and D. Patterson [1995]. "A case for NOW (networks of workstations)," IEEE Micro 15:1 (February), 54–64.
+
+Ang, B., D. Chiou, D. Rosenband, M. Ehrlich, L. Rudolph, and Arvind [1998]. "StarT-Voyager: A flexible platform for exploring scalable SMP issues," Proc. ACM/IEEE Conf. on Supercomputing, November 7–13, 1998, Orlando, FL.
+
+Archibald, J., and J.-L. Baer [1986]. "Cache coherence protocols: Evaluation using a multiprocessor simulation model," ACM Trans. on Computer Systems 4:4 (November), 273–298.
+
+Arpaci, R. H., D. E. Culler, A. Krishnamurthy, S. G. Steinberg, and K. Yelick [1995]. "Empirical evaluation of the CRAY-T3D: A compiler perspective," Proc. 22nd Annual Int'l. Symposium on Computer Architecture (ISCA), June 22–24, 1995, Santa Margherita, Italy.
+
+Baer, J.-L., and W.-H. Wang [1988]. "On the inclusion properties for multi-level cache hierarchies," Proc. 15th Annual Int'l. Symposium on Computer Architecture, May 30–June 2, 1988, Honolulu, Hawaii, 73–80.
+
+Balakrishnan, H. V., N. Padmanabhan, S. Seshan, and R. H. Katz [1997]. "A comparison of mechanisms for improving TCP performance over wireless links," IEEE/ACM Trans. on Networking 5:6 (December), 756–769.
+
+Barroso, L. A., K. Gharachorloo, and E. Bugnion [1998]. "Memory system characterization of commercial workloads," Proc. 25th Annual Int'l. Symposium on Computer Architecture (ISCA), July 3–14, 1998, Barcelona, Spain, 3–14.
+
+Baskett, F., T. Jermoluk, and D. Solomon [1988]. "The 4D-MP graphics superworkstation: Computing + graphics = 40 MIPS + 40 MFLOPS and 10,000 lighted polygons per second," Proc. IEEE COMPCON, February 29–March 4, 1988, San Francisco, 468–471.
+
+BBN Laboratories. [1986]. Butterfly Parallel Processor Overview, Tech. Rep. 6148, BBN Laboratories, Cambridge, Mass.
+
+Bell, C. G. [1985]. "Multis: A new class of multiprocessor computers," Science 228 (April 26), 462–467.
+
+Bell, C. G. [1989]. "The future of high performance computers in science and engineering," Communications of the ACM 32:9 (September), 1091–1101.
+
+Bell, C. G., and J. Gray [2001]. Crays, Clusters and Centers, Tech. Rep. MSR-TR-2001-76, Microsoft Research, Redmond, Wash.
+
+Bell, C. G., and J. Gray [2002]. "What's next in high performance computing," CACM, 45:2 (February), 91–95.
+
+Bouknight, W. J., S. A. Deneberg, D. E. McIntyre, J. M. Randall, A. H. Sameh, and D. L. Slotnick [1972]. "The Illiac IV system," Proc. IEEE 60:4, 369–379. Also appears in D. P. Siewiorek, C. G. Bell, and A. Newell, Computer Structures: Principles and Examples, McGraw-Hill, New York, 1982, 306–316.
+
+Brain, M. [2000]. Inside a Digital Cell Phone, www.howstuffworks.com/inside-cell-phone.htm.
+
+Brewer, E. A., and B. C. Kuszmaul [1994]. "How to get good performance from the CM-5 data network," Proc. Eighth Int'l. Parallel Processing Symposium (IPPS), April 26–29, 1994, Cancun, Mexico.
+
+Brin, S., and L. Page [1998]. "The anatomy of a large-scale hypertextual Web search engine," Proc. 7th Int'l. World Wide Web Conf., April 14–18, 1998, Brisbane, Queensland, Australia, 107–117.
+
+Burkhardt III, H., S. Frank, B. Knobe, and J. Rothnie [1992]. Overview of the KSR1 Computer System, Tech. Rep. KSR-TR-9202001, Kendall Square Research, Boston.
+
+Censier, L., and P. Feautrier [1978]. "A new solution to coherence problems in multicache systems," IEEE Trans. on Computers C-27:12 (December), 1112–1118.
+
+Chandra, R., S. Devine, B. Verghese, A. Gupta, and M. Rosenblum [1994]. "Scheduling and page migration for multiprocessor compute servers," Proc. Sixth Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 4–7, 1994, San Jose, Calif., 12–24.
+
+Charlesworth, A. [1998]. "Starfire: Extending the SMP envelope," IEEE Micro 18:1 (January/February), 39–49.
+
+Clark, W. A. [1957]. "The Lincoln TX-2 computer development," Proc. Western Joint Computer Conference, February 26–28, 1957, Los Angeles, 143–145.
+
+Comer, D. [1993]. Internetworking with TCP/IP, 2nd ed., Prentice Hall, Englewood Cliffs, N.J.
+
+Culler, D. E., J. P. Singh, and A. Gupta [1999]. Parallel Computer Architecture: A Hardware/Software Approach, Morgan Kaufmann, San Francisco.
+
+Dally, W. J., and C. I. Seitz [1986]. "The torus routing chip," Distributed Computing 1:4, 187–196.
+
+Davie, B. S., L. L. Peterson, and D. Clark [1999]. Computer Networks: A Systems Approach, 2nd ed., Morgan Kaufmann, San Francisco.
+
+Desurvire, E. [1992]. "Lightwave communications: The fifth generation," Scientific American (International Edition) 266:1 (January), 96–103.
+
+Dongarra, J., T. Sterling, H. Simon, and E. Strohmaier [2005]. "High-performance computing: Clusters, constellations, MPPs, and future directions," Computing in Science & Engineering, 7:2 (March/April), 51–59.
+
+Dubois, M., C. Scheurich, and F. Briggs [1988]. "Synchronization, coherence, and event ordering," IEEE Computer 21:2 (February), 9–21.
+
+Dunigan, W., K. Vetter, K. White, and P. Worley [2005]. "Performance evaluation of the Cray X1 distributed shared memory architecture," IEEE Micro, January/February, 30–40.
+
+Eggers, S. [1989]. "Simulation Analysis of Data Sharing in Shared Memory Multiprocessors," Ph.D. thesis, Computer Science Division, University of California, Berkeley.
+
+Elder, J., A. Gottlieb, C. K. Kruskal, K. P. McAuliffe, L. Randolph, M. Snir, P. Teller, and J. Wilson [1985]. "Issues related to MIMD shared-memory computers: The NYU Ultracomputer approach," Proc. 12th Annual Int'l. Symposium on Computer Architecture (ISCA), June 17–19, 1985, Boston, Mass., 126–135.
+
+Erlichson, A., N. Nuckolls, G. Chesson, and J. L. Hennessy [1996]. "SoftFLASH: Analyzing the performance of clustered distributed virtual shared memory," Proc. Seventh Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 1–5, 1996, Cambridge, Mass., 210–220.
+
+Falsafi, B., and D. A. Wood [1997]. "Reactive NUMA: A design for unifying S-COMA and CC-NUMA," Proc. 24th Annual Int'l. Symposium on Computer Architecture (ISCA), June 2–4, 1997, Denver, Colo., 229–240.
+
+Flynn, M. J. [1966]. "Very high-speed computing systems," Proc. IEEE 54:12 (December), 1901–1909.
+
+Forgie, J. W. [1957]. "The Lincoln TX-2 input-output system," Proc. Western Joint Computer Conference, February 26–28, 1957, Los Angeles, 156–160.
+
+Frank, S. J. [1984]. "Tightly coupled multiprocessor systems speed memory access time," Electronics 57:1 (January), 164–169.
+
+Gajski, D., D. Kuck, D. Lawrie, and A. Sameh [1983]. "CEDAR—a large scale multiprocessor," Proc. Int'l. Conf. on Parallel Processing (ICPP), August, Columbus, Ohio, 524–529.
+
+Galles, M. [1996]. "Scalable pipelined interconnect for distributed endpoint routing: The SGI SPIDER chip," Proc. IEEE HOT Interconnects '96, August 15–17, 1996, Stanford University, Palo Alto, Calif.
+
+Gehringer, E. F., D. P. Siewiorek, and Z. Segall [1987]. Parallel Processing: The Cm* Experience, Digital Press, Bedford, Mass.
+
+Gharachorloo, K., A. Gupta, and J. L. Hennessy [1992]. "Hiding memory latency using dynamic scheduling in shared-memory multiprocessors," Proc. 19th Annual Int'l. Symposium on Computer Architecture (ISCA), May 19–21, 1992, Gold Coast, Australia.
+
+Gharachorloo, K., D. Lenoski, J. Laudon, P. Gibbons, A. Gupta, and J. L. Hennessy [1990]. "Memory consistency and event ordering in scalable shared-memory multiprocessors," Proc. 17th Annual Int'l. Symposium on Computer Architecture (ISCA), May 28–31, 1990, Seattle, Wash., 15–26.

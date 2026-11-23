@@ -1,0 +1,261 @@
+✪ F.2　[10] <F.2, F.3> 假设条件与习题 F.1 相同。用隔夜快递运送一个 1000 GB 的包裹，带宽是多少？
+
+✪ F.3　[10] <F.2, F.3> 假设条件与习题 F.1 相同。要比隔夜快递更快，最慢链路的带宽至少要多大？哪些标准网络能达到这个速度？
+
+✪ F.4　[15] <F.2, F.3> 最初的以太网标准规定速率为 10 Mbit/s、最大距离为 2.5 km。在最初的以太网中，最多可以有多少字节处于飞行中？假设可以使用峰值带宽的 90%。
+
+✪ F.5　[15] <F.2, F.3> 如第 F-14 页的例题所示，WAN 的飞行时间很长，流量控制因此成为 WAN 的难题。以太网最初按 10 Mbit/s 标准化时，没有包括流量控制。假设可以使用峰值带宽的 90%，计算 10 Gbit/s 以太网在一条 100 米长的链路上处于飞行中的字节数。这个答案对网络设计者意味着什么？
+
+✪ F.6　[15] <F.2, F.3> 假设在以太网上发送一个数据长度为零的包，总开销为 100 μs；空载网络能以额定峰值 1000 Mbit/s 的 90% 传输。在本题中，假设以太网的包头和包尾共 56 字节，并假设连续发送大小相同的包。有效载荷数据的大小从 32 字节开始，以 32 字节为步长，一直增加到最大值 1500 字节，画出用户数据的有效带宽（Mbit/s）随之变化的曲线。
+
+✪ F.7　[10] <F.2, F.3> 从习题 F.6 可以看出，单个用户得到的以太网有效带宽可能令人失望。假设条件与习题 F.6 相同，最大有效载荷要增大多少，才能达到峰值带宽的一半？
+
+✪ F.8　[10] <F.2, F.3> ATM 采用固定传输大小，原因之一是：一条短消息排在一条长消息后面时，节点可能要等整个传输完成。语音、视频传输这类对时间敏感的应用，如果传输大小过大，传输延迟就可能长到应用无法接受。在空载的互连网络上，节点必须等待一个最大长度的以太网包时，最坏情况的延迟是多少微秒？等待一次 ATM 传输时又是多少？包的大小见[图 F.30](#fig-f-30)（第 F-78 页）。本题假设 622 Mbit/s 的 ATM 网络和 1000 Mbit/s 的以太网都能以 100% 的速率传输。
+
+✪ F.9　[10] <F.2, F.3> 习题 F.7 说明，要提高有效带宽，需要增大最大有效载荷；习题 F.8 则说明，载荷加长会影响最坏情况的延迟。如果按习题 F.7 的答案增大最大有效载荷，对延迟有什么影响？
+
+✪ F.10　[12/12/20] <F.4> 第 F-31 页[图 F.11](#fig-f-11) 所示的 Omega 网络由三列交换机组成，每列 4 个，每个交换机有两个输入、两个输出。每个交换机可以设成两种状态：一是*直通*，把上输入接到上输出、下输入接到下输出；二是*交换*，把上输入接到下输出，下输入则反过来接到上输出。对每一列交换机，把输入和输出从上到下标为 0, 1, …, 7，与处理器的编号相对应。
+
+a.　[12] <F.4> 一条消息穿过设成交换状态的交换机时，它所用的输入标号与输出标号之间有什么关系？（*提示*：从标号的二进制表示上各位的运算来考虑。）
+
+b.　[12] <F.4> 相邻两列中任取两个由链路相连的交换机，链路一端的输出标号与另一端的输入标号之间有什么关系？
+
+c.　[20] <F.4> 根据 (a)、(b) 两小题的结果，为 Omega 网络设计并描述一种简单的分布式控制路由方案。消息携带一个由发送处理器计算出来的*路由 tag*。说明处理器怎样计算这个 tag，每个交换机又怎样通过检查路由 tag 的某一位来设置自身状态。
+
+✪ F.11　[12/12/12/12/12/12] <F.4> 对第 F-31 页[图 F.11](#fig-f-11) 所示的 8 节点 Omega 网络，证明能否实现下列置换（即通信模式）：
+
+a.　[12] <F.4> 位反转置换：二进制坐标为 $a_{n-1}, a_{n-2}, \ldots, a_1, a_0$ 的节点与节点 $a_0, a_1, \ldots, a_{n-2}, a_{n-1}$ 通信。
+
+b.　[12] <F.4> 完全混洗置换：二进制坐标为 $a_{n-1}, a_{n-2}, \ldots, a_1, a_0$ 的节点与节点 $a_{n-2}, a_{n-3}, \ldots, a_0, a_{n-1}$ 通信（即循环左移 1 位）。
+
+c.　[12] <F.4> 位取反置换：二进制坐标为 $a_{n-1}, a_{n-2}, \ldots, a_1, a_0$ 的节点与节点 $\bar{a}_{n-1}, \bar{a}_{n-2}, \ldots, \bar{a}_1, \bar{a}_0$ 通信（即每一位取反）。
+
+d.　[12] <F.4> 蝶形置换：二进制坐标为 $a_{n-1}, a_{n-2}, \ldots, a_1, a_0$ 的节点与节点 $a_0, a_{n-2}, \ldots, a_1, a_{n-1}$ 通信（即交换最高位和最低位）。
+
+e.　[12] <F.4> 矩阵转置置换：二进制坐标为 $a_{n-1}, a_{n-2}, \ldots, a_1, a_0$ 的节点与节点 $a_{n/2-1}, \ldots, a_0, a_{n-1}, \ldots, a_{n/2}$ 通信（即以大约一半位置为界，把两半的位对调）。
+
+f.　[12] <F.4> 桶形移位置换：节点 $i$ 与节点 $(i + 1) \bmod (N - 1)$ 通信，其中 $N$ 为节点总数，$0 \le i$。
+
+✪ F.12　[12] <F.4> 用 18 端口交叉开关交换机连接 64 个节点，设计一种所用交换机数最少的网络拓扑。每个交换机端口支持与一台设备之间的双向通信。
+
+✪ F.13　[15] <F.4> 用 18 端口交叉开关交换机连接 64 个节点，设计一种穿过交换机的延迟最小的网络拓扑。假设每个交换机的延迟为一个单位，连线延迟为零。
+
+✪ F.14　[15] <F.4> 用 18 端口交叉开关交换机连接 64 个节点，设计一种交换机拓扑，使各条链路所需的带宽相互均衡。假设流量模式是均匀的。
+
+✪ F.15　[15] <F.4> 比较 8 个节点的交叉开关、Omega 网络和胖树的互连延迟，参考第 F-31 页的[图 F.11](#fig-f-11)、第 F-33 页的[图 F.12](#fig-f-12) 和第 F-37 页的[图 F.14](#fig-f-14)。假设胖树完全由两输入、两输出的交换机搭成，这样它的硬件资源与 Omega 网络更有可比性；每个交换机的延迟记为一个单位时间；胖树随机选择路径，因此每个例子都要给出最好情况和最坏情况。从节点 0 向节点 6 发送一条消息需要多长时间？节点 1 与节点 7 通信需要多长时间？
+
+✪ F.16　[15] <F.4> 仿照第 F-37 页[图 F.14](#fig-f-14) 中 4 维立方体的画法，画出 6 维立方体的拓扑。假设包的目的端均匀分布，包所需的最大跳数和平均跳数各是多少？
+
+✪ F.17　[15] <F.4> 仿照第 F-40 页的[图 F.15](#fig-f-15) 完成一张表，列出各种网络拓扑的性能和成本。不过这里不针对 64 个节点这一具体情形，而是针对用 $k \times k$ 交换机连接 $N$ 个节点的一般情形。
+
+✪ F.18　[20] <F.4> 重做第 F-41 页的例题，但把 NEWS 通信换成习题 F.11 给出的位取反通信模式。
+
+✪ F.19　[15] <F.5> 给出互连网络中出现死锁所必需的四个具体条件。维序路由消除了其中哪些条件？使用「逃逸」路由路径的自适应路由消除了哪些条件？采用死锁恢复技术（退行式或进行式）的自适应路由又消除了哪些条件？说明理由。
+
+✪ F.20　[12/12/12/12] <F.5> 下面几种路由算法都基于禁止某些维间转弯。分析它们是否既连通又无死锁，从而证明它们能否用作二维网格的逃逸路径，并说明理由。（*提示*：可以参考转向模型（Turn Model）算法；也可以为 $4 \times 4$ 网格画出描述通道之间依赖关系的有向图，验证这个通道依赖图没有环，以此证明你的答案。）路由算法用以下缩写表示：W = 西，E = 东，N = 北，S = 南。
+
+a.　[12] <F.5> 允许的转弯为：从 W 转向 N、从 E 转向 N、从 S 转向 W、从 S 转向 E。
+
+b.　[12] <F.5> 允许的转弯为：从 W 转向 S、从 E 转向 S、从 N 转向 E、从 S 转向 E。
+
+c.　[12] <F.5> 允许的转弯为：从 W 转向 S、从 E 转向 S、从 N 转向 W、从 S 转向 E、从 W 转向 N、从 S 转向 W。
+
+d.　[12] <F.5> 允许的转弯为：从 S 转向 E、从 E 转向 S、从 S 转向 W、从 N 转向 W、从 N 转向 E、从 E 转向 N。
+
+✪ F.21　[15] <F.5> 假设在 64 节点的二维网格网络上流量均匀分布，计算并比较维序路由和 up\*/down\* 路由的效率因子 $\rho$ 的上限。对 up\*/down\* 路由，假设根节点放在最佳位置（即靠近网格中央的某个节点）。（*提示*：需要求出跨越网络对分界面的链路上的负载，这些链路承载着由路由算法决定的全局负载。）
+
+✪ F.22　[15] <F.5> 假设条件与习题 F.21 相同，求用 $4 \times 4$ 交换机构成的 64 节点胖树网络上 up\*/down\* 路由的效率因子。把这个结果与二维网格上 up\*/down\* 路由的 $\rho$ 作比较，并加以解释。
+
+✪ F.23　[15] <F.5> 假设各输出端口收到的请求和发出的授权都均匀分布。一个交换机的全部 $k$ 个输入端口都发出两阶段仲裁请求，计算这些请求同时与 $k$ 个输出端口匹配成功的概率。在三阶段仲裁中，$k$ 个输入端口每个都可以同时发出两个请求（同样假设请求和授权均匀随机分布）。两阶段仲裁的匹配概率与三阶段仲裁相比如何？
+
+✪ F.24　[15] <F.5> 第 F-52 页的公式说明了直通交换的价值。用来搭建机群的以太网交换机往往不支持直通交换。对一个 64 节点的机群，比较在 1000 Mbit/s 以太网上传送 1500 字节时，采用和不采用直通交换所需的时间。假设每个以太网交换机耗时 1.0 μs，一条消息要经过 7 个中间交换机。
+
+✪ F.25　[15] <F.5> 假设条件与习题 F.24 相同。对 32 字节的消息，直通交换与存储转发交换相差多少？
+
+✪ F.26　[15] <F.5> 降低延迟的一个办法是采用更大的交换机。与习题 F.24 不同，假设连接机群中任意两个节点只需要 3 个中间交换机，其余参数与习题 F.24 的假设相同。对 1500 字节的消息，直通交换与存储转发交换相差多少？对 32 字节的消息呢？
+
+✪ F.27　[20] <F.5> 使用 FlexSim 1.2（*http://ceng.usc.edu/smart/FlexSim/flexsim.html*）或其他周期精确的网络模拟器，模拟一个 256 节点的二维环面网络，假设采用虫孔路由、32 flit 的包、均匀（随机）通信模式和 4 个虚通道。比较三种路由的性能：采用 DOR 的确定性路由，采用逃逸路径的自适应路由（即 Duato 协议），以及采用进行式死锁恢复的真正完全自适应路由（即 Disha 路由）。比较的方法是：仿照第 F-53 页例题中的[图 F.19](#fig-f-19)，为每种路由画出延迟随施加负载变化的曲线，以及吞吐率随施加负载变化的曲线。再对每种路由分别用 2 个和 8 个虚通道做模拟，并画出结果。比较并解释这些结果，说明各种路由算法所用虚通道的数量和使用方式如何影响网络性能，以及为什么。（*提示*：收集结果之前，一定要先留出几千个网络周期的预热期，让模拟进入稳态。）
+
+✪ F.28　[20] <F.5> 把均匀随机通信模式换成位反转通信，重做习题 F.27。比较并解释结果，说明通信模式如何影响网络性能，以及为什么。
+
+✪ F.29　[40] <F.5> 改用 16 flit 和 128 flit 的包，重做习题 F.27 和 F.28。比较并解释结果，说明包的大小与其他设计参数一起如何影响网络性能，以及为什么。
+
+F.30　[20] <F.2, F.4, F.5, F.8> [图 F.7](#fig-f-7)、[图 F.16](#fig-f-16) 和[图 F.20](#fig-f-20) 按机器类型列出了截至第 4 版出版时 TOP500 中若干台超级计算机的互连网络特性。用最新的 TOP500 更新该图。与原图中的数据相比，这些系统及其网络有了哪些变化？再用[图 F.29](#fig-f-29) 和[图 F.31](#fig-f-31)，对微处理器中使用的 OCN 和面向机群的 SAN 作类似的比较。
+
+✪ F.31　[12/12/12/15/15/18] <F.8> 用 M/M/1 排队模型回答本题。对一个网桥的测量表明，包以每秒 200 个的速率到达，网关转发每个包约需 2 ms。
+
+a.　[12] <F.8> 网关的利用率是多少？
+
+b.　[12] <F.8> 网关中的平均包数是多少？
+
+c.　[12] <F.8> 包在网关中的平均停留时间是多少？
+
+d.　[15] <F.8> 改变到达率，画出响应时间随利用率变化的曲线。
+
+e.　[15] <F.8> 对 M/M/1 队列，系统中有 $n$ 个或更多任务的概率为 $\text{利用率}^n$。如果 FIFO 能容纳 10 条消息，FIFO 溢出的概率是多少？
+
+f.　[18] <F.8> 要使 FIFO 溢出造成的丢包少于百万分之一，网关要有多大？
+
+✪ F.32　[20] <F.8> 发送时间与接收时间不平衡，会造成网络性能问题。发送得太快，接收方来不及取走消息，网络就会堵塞，消息的延迟随之增大。一种称为*带宽匹配*的技术给出了一个简单的解决办法：让发送方慢下来，与接收方的性能相匹配 [Brewer and Kuszmaul 1994]。两台机器用 UDP 之类的协议交换数目相等的消息时，一台会领先于另一台，于是先把自己的消息全部发完；接收方把这些消息全部收好之后，才发送自己的消息。估算这种情况下的性能，并与带宽匹配的情况作比较。假设发送开销为 200 μs，接收开销为 300 μs，飞行时间为 5 μs，延迟为 10 μs，两台机器要交换 100 条消息。
+
+F.33　[40] <F.8> 按带宽匹配的建议 [Brewer and Kuszmaul 1994]，放慢 UDP 发送代码，使之与接收代码相匹配，比较采用和不采用带宽匹配时 UDP 的性能。设计一个实验，看看性能因此改变了多少。两个节点向同一个目的端发送时，应当怎样改变发送速率？一个发送方向两个目的端发送时又该怎样？
+
+✪ F.34　[40] <F.6, F.8> 如果你能使用一台 SMP 和一个机群，编写一个程序，测量处理器之间的通信延迟和通信带宽，就像第 F-80 页[图 F.32](#fig-f-32) 画出的那样。
+
+F.35　[20/20/20] <F.9> 如果你能使用 UNIX 系统，用 ping 探索 Internet。先读一读手册页，然后不带选项标志运行 ping，确认能够到达以下站点。它应当显示 X is alive（X 是活动的）。根据你所用的系统，可以把标志设成详细模式（-v）和路由跟踪模式（-R），查看你的机器与示例机器之间的路径；也可能要用 trace route 程序来查看路径，这时可以看看它的手册页。不妨用 UNIX 命令 script 把这次会话记录下来。
+
+a.　[20] <F.9> 跟踪到同一局域网上另一台机器的路由。延迟是多少？
+
+b.　[20] <F.9> 跟踪到校园内另一台不在同一局域网上的机器的路由。延迟是多少？
+
+c.　[20] <F.9> 跟踪到校外另一台机器的路由。例如，如果你有一位常通电子邮件的朋友，可以试着跟踪到他那里的路由。看看能否弄清这条路由沿途用了哪些类型的网络。延迟是多少？
+
+F.36　[15] <F.9> 用 FTP 从远程站点传送一个文件，再在同一 LAN 上的本地站点之间传送。两种传送的带宽相差多少？在一天中的不同时刻或一周中的不同日子再试一试。瓶颈是 WAN 还是 LAN？
+
+✪ F.37　[10/10] <F.9, F.11> 第 F-93 页的[图 F.41](#fig-f-41) 针对不同大小的 TCP/IP 消息，比较了一个高带宽、高开销的网络和一个低带宽、低开销的网络的延迟。
+
+a.　[10] <F.9, F.11> 消息大小在什么范围时，高带宽网络的有效带宽更高？
+
+b.　[10] <F.9, F.11> 对 (a) 小题的答案，两个网络的有效带宽各是多少？
+
+✪ F.38　[15] <F.9, F.11> 用第 F-93 页[图 F.41](#fig-f-41) 中的统计数据，估算每个网络每条消息的开销。
+
+✪ F.39　[15] <F.9, F.11> 习题 F.37 针对开销和峰值带宽都不同的两个网络，算出了哪些大小的消息在哪个网络上传得更快。用第 F-93 页[图 F.41](#fig-f-41) 中的统计数据，在开销低、带宽低的网络上传得更快的消息占多大百分比？在开销高、带宽高的网络上传得更快的数据占多大百分比？
+
+✪ F.40　[15] <F.9, F.11> 衡量互连网络延迟和带宽的一个有趣指标，是达到峰值带宽一半所需的消息大小。这个中点有时记作 $n_{1/2}$，这一记法借自向量处理的术语。用第 F-93 页的[图 F.41](#fig-f-41)，估算 TCP/IP 消息在 155 Mbit/s ATM 和 10 Mbit/s 以太网上的 $n_{1/2}$。
+
+F.41　[讨论] <F.10> 谷歌机群过去用 1 个机架单元（RU）的 PC 搭建，每台 PC 有一个处理器和两个磁盘。如今已经有密度高得多的选择。如果用现代的替代产品换掉 1 RU 的 PC，占地面积能减少多少？到 Compaq 或 Dell 的网站上找出密度最高的替代产品。估计这对设备成本会有什么影响？对场地租金又会有什么影响？为了获得良好的功耗/性能效率，互连网络的设计会受到什么影响？
+
+F.42　[讨论] <F.13> 撰写第 4 版时，机房里以太网、InfiniBand 和高级交换（Advanced Switching）三者的前景还不明朗。它们各有哪些技术优势？各有哪些经济优势？维护系统的人为什么会偏爱其中一种？今天每种网络的普及程度如何？它们与 Myrinet、Quadrics 等专有商用网络相比如何？
+
+## 参考文献 {- #sec-f-references}
+
+Agarwal, A., 1991. Limits on interconnection network performance. IEEE Trans. on Parallel and Distributed Systems 2 (4 (April)), 398–412.
+
+Alles, A., 1995. "ATM internetworking" (May). www.cisco.com/warp/public/614/12.html.
+
+Anderson, T.E., Culler, D.E., Patterson, D., 1995. A case for NOW (networks of workstations). IEEE Micro 15 (1 (February)), 54–64.
+
+Anjan, K.V., Pinkston, T.M., 1995. An efficient, fully-adaptive deadlock recovery scheme: Disha. In: Proc. 22nd Annual Int'l. Symposium on Computer Architecture, June 22–24, 1995, Santa Margherita Ligure, Italy.
+
+Arpaci, R.H., Culler, D.E., Krishnamurthy, A., Steinberg, S.G., Yelick, K., 1995. Empirical evaluation of the Cray-T3D: A compiler perspective. In: Proc. 22nd Annual Int'l. Symposium on Computer Architecture, June 22–24, 1995, Santa Margherita Ligure, Italy.
+
+Bell, G., Gray, J., 2001. Crays, Clusters and Centers. Microsoft Corporation, Redmond, Wash. MSR-TR-2001-76.
+
+Benes, V.E., 1962. Rearrangeable three stage connecting networks. Bell Syst. Tech. J. 41, 1481–1492.
+
+Bertozzi, D., Jalabert, A., Murali, S., Tamhankar, R., Stergiou, S., Benini, L., De Micheli, G., 2005. NoC synthesis flow for customized domain specific multiprocessor systems-on-chip. IEEE Trans. on Parallel and Distributed Systems 16 (2 (February)), 113–130.
+
+Bhuyan, L.N., Agrawal, D.P., 1984. Generalized hypercube and hyperbus structures for a computer network. IEEE Trans. on Computers 32 (4 (April)), 322–333.
+
+Brewer, E.A., Kuszmaul, B.C., 1994. How to get good performance from the CM-5 data network. In: Proc. Eighth Int'l Parallel Processing Symposium, April 26–29, 1994, Cancun, Mexico.
+
+Clos, C., 1953. A study of non-blocking switching networks. Bell Systems Technical Journal 32 (March), 406–424.
+
+Dally, W.J., 1990. Performance analysis of k-ary n-cube interconnection networks. IEEE Trans. on Computers 39 (6 (June)), 775–785.
+
+Dally, W.J., 1992. Virtual channel flow control. IEEE Trans. on Parallel and Distributed Systems 3 (2 (March)), 194–205.
+
+Dally, W.J., 1999. Interconnect limited VLSI architecture. In: Proc. of the Int'l. Interconnect Technology Conference, May 24–26, 1999, San Francisco, Calif.
+
+Dally, W.J., Seitz, C.I., 1986. The torus routing chip. Distributed Computing 1 (4), 187–196.
+
+Dally, W.J., Towles, B., 2001. Route packets, not wires: On-chip interconnection networks. In: Proc. of the 38th Design Automation Conference, June 18–22, 2001. Las Vegas, Nev.
+
+Dally, W.J., Towles, B., 2004. Principles and Practices of Interconnection Networks. Morgan Kaufmann Publishers, San Francisco.
+
+Davie, B.S., Peterson, L.L., Clark, D., 1999. Computer Networks: A Systems Approach, second ed. Morgan Kaufmann Publishers, San Francisco.
+
+Duato, J., 1993. A new theory of deadlock-free adaptive routing in wormhole networks. IEEE Trans. on Parallel and Distributed Systems 4 (12 (December)), 1320–1331.
+
+Duato, J., Pinkston, T.M., 2001. A general theory for deadlock-free adaptive routing using a mixed set of resources. IEEE Trans. on Parallel and Distributed Systems 12 (12 (December)), 1219–1235.
+
+Duato, J., Yalamanchili, S., Ni, L., 2003. Interconnection Networks: An Engineering Approach. Morgan Kaufmann Publishers, San Francisco, 2nd printing.
+
+Duato, J., Johnson, I., Flich, J., Naven, F., Garcia, P., Nachiondo, T., 2005. A new scalable and cost-effective congestion management strategy for lossless multistage interconnection networks. In: Proc. 11th Int'l. Symposium on High Performance Computer Architecture, February 12–16, 2005. San Francisco.
+
+Duato, J., Lysne, O., Pang, R., Pinkston, T.M., 2005. Part I: A theory for deadlock-free dynamic reconfiguration of interconnection networks. IEEE Trans. on Parallel and Distributed Systems 16 (5 (May)), 412–427.
+
+Flich, J., Bertozzi, D., 2010. Designing Network-on-Chip Architectures in the Nanoscale Era. CRC Press, Boca Raton, FL.
+
+Glass, C.J., Ni, L.M., 1992. The Turn Model for adaptive routing. In: Proc. 19th Int'l. Symposium on Computer Architecture, May, Gold Coast, Australia.
+
+Gunther, K.D., 1981. Prevention of deadlocks in packet-switched data transport systems. IEEE Trans. on Communications 512–524. COM–29:4 (April).
+
+Ho, R., Mai, K.W., Horowitz, M.A., 2001. The future of wires. In: Proc. of the IEEE 89:4 (April), pp. 490–504.
+
+Holt, R.C., 1972. Some deadlock properties of computer systems. ACM Computer Surveys 4 (3 (September)), 179–196.
+
+Hoskote, Y., Vangal, S., Singh, A., Borkar, N., Borkar, S., 2007. A 5-ghz mesh interconnect for a teraflops processor. IEEE Micro 27 (5), 51–61.
+
+Howard, J., Dighe, S., Hoskote, Y., Vangal, S., Finan, S., Ruhl, G., Jenkins, D., Wilson, H., Borka, N., Schrom, G., Pailet, F., Jain, S., Jacob, T., Yada, S., Marella, S., Salihundam, P., Erraguntla, V., Konow, M., Riepen, M., Droege, G., Lindemann, J., Gries, M., Apel, T., Henriss, K., Lund-Larsen, T., Steibl, S., Borkar, S., De, V., Van Der Wijngaart, R., Mattson, T., 2010. A 48-core IA-32 message-passing processor with DVFS in 45 nm CMOS. In: IEEE International Solid-State Circuits Conference Digest of Technical Papers, pp. 58–59.
+
+InfiniBand Trade Association, 2001. InfiniBand Architecture Specifications Release 1.0.a. www.infinibandta.org.
+
+Jantsch, A., Tenhunen, H. (Eds.), 2003. Networks on Chips. Kluwer Academic Publishers, The Netherlands.
+
+Kahn, R.E., 1972. Resource-sharing computer communication networks. In: Proc. IEEE 60:11 (November), pp. 1397–1407.
+
+Kermani, P., Kleinrock, L., 1979. Virtual cut-through: A new computer communication switching technique. Computer Networks 3 (January), 267–286.
+
+Kurose, J.F., Ross, K.W., 2001. Computer Networking: A Top-Down Approach Featuring the Internet. Addison-Wesley, Boston.
+
+Leiserson, C.E., 1985. Fat trees: Universal networks for hardware-efficient supercomputing. IEEE Trans. on Computers 892–901. C–34:10 (October).
+
+Merlin, P.M., Schweitzer, P.J., 1980. Deadlock avoidance in store-and-forward networks. I. Store-and-forward deadlock. IEEE Trans. on Communications 345–354. COM–28:3 (March).
+
+Metcalfe, R.M., 1993. Computer/network interface design: Lessons from Arpanet and Ethernet. IEEE J. on Selected Areas in Communications 11 (2 (February)), 173–180.
+
+Metcalfe, R.M., Boggs, D.R., 1976. Ethernet: Distributed packet switching for local computer networks. Comm. ACM 19 (7 (July)), 395–404.
+
+Partridge, C., 1994. Gigabit Networking. Addison-Wesley, Reading, Mass.
+
+Peh, L.S., Dally, W.J., 2001. A delay model and speculative architecture for pipelined routers. In: Proc. 7th Int'l. Symposium on High Performance Computer Architecture, January 20–24, 2001, Monterrey, Mexico.
+
+Pfister, G.F., 1998. In Search of Clusters, second ed. Prentice Hall, Upper Saddle River, N.J.
+
+Pinkston, T.M., 2004. Deadlock characterization and resolution in interconnection networks. In: Zhu, M.C., Fanti, M.P. (Eds.), Deadlock Resolution in Computer-Integrated Systems. CRC Press, Boca Raton, Fl, pp. 445–492.
+
+Pinkston, T.M., Shin, J., 2005. Trends toward on-chip networked microsystems. Int'l. J. of High Performance Computing and Networking 3 (1), 3–18.
+
+Pinkston, T.M., Warnakulasuriya, S., 1997. On deadlocks in interconnection networks. In: Proc. 24th Int'l. Symposium on Computer Architecture, June 2–4, 1997. Denver, Colo.
+
+Pinkston, T.M., Benner, A., Krause, M., Robinson, I., Sterling, T., 2003. InfiniBand: The 'de facto' future standard for system and local area networks or just a scalable replacement for PCI buses?" Special Issue on Communication Architecture for Clusters 6:2 (April). Cluster Computing 95–104.
+
+Puente, V., Beivide, R., Gregorio, J.A., Prellezo, J.M., Duato, J., Izu, C., 1999. Adaptive bubble router: A design to improve performance in torus networks. In: Proc. 28th Int'l. Conference on Parallel Processing, September 21–24, 1999, Aizu-Wakamatsu, Japan.
+
+Rodrigo, S., Flich, J., Duato, J., Hummel, M., 2008. Efficient unicast and multicast support for CMPs. In: Proc. 41st Annual IEEE/ACM International Symposium on Microarchitecture (MICRO-41), November 8–12, 2008, Lake Como, Italy, pp. 364–375.
+
+Saltzer, J.H., Reed, D.P., Clark, D.D., 1984. End-to-end arguments in system design. ACM Trans. on Computer Systems 2 (4 (November)), 277–288.
+
+Satran, J., Smith, D., Meth, K., Sapuntzakis, C., Wakeley, M., Von Stamwitz, P., Haagens, R., Zeidner, E., Dalle Ore, L., Klein, Y., 2001. "iSCSI", IPS working group of IETF, Internet draft. www.ietf.org/internet-drafts/draft-ietf-ips-iscsi-07.txt.
+
+Scott, S.L., Goodman, J., 1994. The impact of pipelined channels on k-ary n-cube networks. IEEE Trans. on Parallel and Distributed Systems 5 (1 (January)), 1–16.
+
+Senior, J.M., 1993. Optical Fiber Commmunications: Principles and Practice, second ed. Prentice Hall, Hertfordshire, U.K.
+
+Spurgeon, C., 2006. Charles Spurgeon's Ethernet Web Site. www.ethermanage.com/ethernet/ethernet.html.
+
+Sterling, T., 2001. Beowulf PC Cluster Computing with Windows and Beowulf PC Cluster Computing with Linux. MIT Press, Cambridge, Mass.
+
+Stevens, W.R., 1994–1996. TCP/IP Illustrated (three volumes). Addison-Wesley, Reading, Mass.
+
+Tamir, Y., Frazier, G., 1992. Dynamically-allocated multi-queue buffers for VLSI communication switches. IEEE Trans. on Computers 41 (6 (June)), 725–734.
+
+Tanenbaum, A.S., 1988. Computer Networks, second ed. Prentice Hall, Englewood Cliffs, N.J.
+
+Taylor, M.B., Lee, W., Amarasinghe, S.P., Agarwal, A., 2005. Scalar operand networks. IEEE Trans. on Parallel and Distributed Systems 16 (2 (February)), 145–162.
+
+Thacker, C.P., McCreight, E.M., Lampson, B.W., Sproull, R.F., Boggs, D.R., 1982. Alto: A personal computer. In: Siewiorek, D.P., Bell, C.G., Newell, A. (Eds.), Computer Structures: Principles and Examples. McGraw-Hill, New York, pp. 549–572.
+
+TILE-GX, http://www.tilera.com/sites/default/files/productbriefs/PB025_TILE-Gx_Processor_A_v3.pdf.
+
+Vaidya, A.S., Sivasubramaniam, A., Das, C.R., 1997. Performance benefits of virtual channels and adaptive routing: An application-driven study. In: Proc. 11th ACM Int'l Conference on Supercomputing, July 7–11, 1997, Vienna, Austria.
+
+Van Leeuwen, J., Tan, R.B., 1987. Interval Routing. The Computer Journal 30 (4), 298–307.
+
+von Eicken, T., Culler, D.E., Goldstein, S.C., Schauser, K.E., 1992. Active messages: A mechanism for integrated communication and computation. In: Proc. 19th Annual Int'l. Symposium on Computer Architecture, May 19–21, 1992, Gold Coast, Australia.
+
+Waingold, E., Taylor, M., Srikrishna, D., Sarkar, V., Lee, W., Lee, V., Kim, J., Frank, M., Finch, P., Barua, R., Babb, J., Amarasinghe, S., Agarwal, A., 1997. Baring it all to software: Raw Machines. IEEE Computer 30 (September), 86–93.
+
+Yang, Y., Mason, G., 1991. Nonblocking broadcast switching networks. IEEE Trans. on Computers 40 (9 (September)), 1005–1015.

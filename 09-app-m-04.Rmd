@@ -1,0 +1,157 @@
+早期的一些 VLIW 处理器（如 AP-120B 和 i860）用过一种有意思的流水线组织：操作要「推」过功能部件，结果在流水线末端「接住」。在这类处理器中，一个操作只有在后面（按顺序）有另一个操作推它时才会前进。此外，一条指令要为一条较早发射的指令指定目的地：这条新操作推入流水线时，那条较早的指令就从流水线中推出。这种做法的好处是，操作刚发射时不指定结果的目的地，等到真正写结果寄存器时才指定。两者分开以后，硬件就不必检测写后写（WAW）冒险和读后写（WAR）冒险。缺点是代码会变长：如果某个操作依赖一个仍在流水线中的操作，而眼下又不需要同类的其他操作，就可能要插入空操作，把结果推出来。除了这两种处理器，几乎所有设计者都没有采用「推入接出」做法，而是选择了自排空的流水线：目的地在发射的指令中指定，指令发射后无须再做什么就能执行完。看来，自排空流水线在代码密度和简化代码生成方面的好处，超过了那种较为特殊的结构的好处。
+
+20 世纪 80 年代中期，几个研究项目引入了某种形式的多发射。例如，斯坦福的 MIPS 处理器能在一条指令中放两个操作，不过这种体系结构的商业版本去掉了这一功能，主要是出于性能上的考虑。Fisher［1983］和他在耶鲁的同事提出构造一种指令非常宽（512 位）的处理器，并把这类处理器命名为 VLIW。这种处理器的代码用踪迹调度生成；踪迹调度最初是 Fisher［1981］为生成水平型微代码而开发的。耶鲁处理器上踪迹调度的实现见 Fisher 等人［1984］和 Ellis［1986］。
+
+IBM 虽然取消了 ACS，但 20 世纪 80 年代这一领域的研究仍很活跃。ACS 取消 10 多年后，John Cocke 提出了一种新的超标量处理器方案，由硬件动态地作出发射决策。20 世纪 80 年代中期，他和 Tilak Agerwala 在几次报告中介绍了其中的关键思想，并创造了*超标量*（superscalar）一词。他把这个设计称为 America，Agerwala 和 Cocke［1987］对它作了介绍。IBM Power1 体系结构（RS/6000 系列）就以这些思想为基础（见 Bakoglu 等人［1989］）。
+
+J. E. Smith［1984］和他在威斯康星的同事提出了解耦方法，它包括多发射和有限的动态流水线调度。这种处理器的一个关键特点是用队列保持某一类指令（如访存指令）之间的顺序，同时允许这类指令落后或超前于另一类指令。Smith 等人［1987］介绍的 Astronautics ZS-1 体现了这种方法，它用队列连接 load-store 部件和运算部件。Power2 的设计也以类似的方式使用队列。J. E. Smith［1989］还阐述了动态调度的优点，并把它与静态调度作了比较。
+
+推测的概念源于最初的 360/91，它实现了一种非常有限的推测。近来的处理器把 360/91 的动态调度技术与一个缓冲结合起来，以支持按序提交。Smith 和 Pleszkun［1988］研究了用缓冲保持精确中断，并阐述了重排序缓冲的概念。Sohi［1990］在此基础上加入重命名和动态调度，于是这一机制可以用于推测。Patt 和他的同事很早就倡导激进的重排序和推测。他们着重研究检查点和重启机制，并开创了一种称为 HPSm 的方法；HPSm 也是 Tomasulo 算法的一种扩展［Hwu and Patt 1986］。
+
+Smith、Johnson 和 Horowitz［1989］用重排序缓冲技术评估了推测在多发射处理器中的作用，目的是研究在推测和多发射的条件下，非科学计算代码中有多少可用的 ILP。Johnson［1990］随后出版了一本书，介绍一种推测式超标量处理器的设计。后来 Johnson 主持了 AMD K-5 的设计，K-5 是最早的推测式超标量处理器之一。
+
+在超标量发展的同时，商业界对 VLIW 方法的兴趣也在增长。Multiflow 处理器（见 Colwell 等人［1987］）以耶鲁提出的概念为基础，同时作了许多重要改进，让这种方法更加实用，其中之一是可控的存储缓冲，用来支持某种形式的推测。Multiflow 处理器卖出了 100 多台，但 Multiflow 公司最终还是失败了。失败的原因有多方面，包括：一是小公司推出新的指令系统本来就很困难；二是商用 RISC 微处理器带来了竞争，改变了小型机市场的经济格局。
+
+Cydrome 公司与 Multiflow 差不多同时成立，开发一种 VLIW 风格的处理器（见 Rau 等人［1989］），在商业上也没有成功。Dehnert、Hsu 和 Bratt［1989］阐述了 Cydrome Cydra 5 的体系结构和性能。Cydra 5 采用宽指令字，提供动态寄存器重命名，并对软件流水提供了额外的支持。它把硬件和软件独特地结合在一起，包括条件指令和寄存器轮转，目的都是挖掘 ILP。与 Multiflow 处理器相比，Cydrome 依赖更多的硬件，主要在向量风格的代码上取得了有竞争力的性能。Cydrome 最终遇到了与 Multiflow 类似的问题，在商业上没有成功。Multiflow 和 Cydrome 作为公司虽然都不成功，却培养出一批在挖掘 ILP 和先进编译技术方面经验丰富的人才，其中许多人后来把自己的经验和部分技术用到了更新的处理器中。Fisher 和 Rau［1993］编辑了一部全面的论文集，涵盖这两种重要处理器的硬件和软件。
+
+Rau 还提出了一种称为多周期调度（polycyclic scheduling）的调度技术，大多数软件流水方案都以它为基础（见 Rau、Glaeser 和 Picard［1982］）。Rau 的工作建立在 Davidson 及其同事更早的工作之上，后者研究的是如何为流水线处理器设计最优的硬件调度器。历史上的 LIW 处理器还有 Apollo DN 10000 和 Intel i860，两者都能同时发射一个浮点操作和一个整数操作。
+
+### 编译技术和支持调度的硬件 {-}
+
+循环级并行和相关分析主要由伊利诺伊大学的 D. Kuck 和他的同事在 20 世纪 70 年代发展起来。他们还创造了「反相关」和「输出相关」这两个现在通用的术语，并提出了几种标准的相关测试，包括 GCD 测试和 Banerjee 测试。Banerjee 测试以 Uptal Banerjee 的名字命名，有多种变体。近来相关分析的研究集中于使用一系列精确测试，最后一步是一种称为 Fourier-Motzkin 的线性规划算法。D. Maydan 和 W. Pugh 都证明了，这样的精确测试序列是一种实用的解决办法。
+
+在发现和调度 ILP 方面，早期的许多工作都与前面介绍的 VLIW 处理器的发展有关。Lam［1988］提出了软件流水算法，并在 Warp 上评估了这些算法的效果；Warp 是一种为专用应用设计的宽指令字处理器。Weiss 和 Smith［1987］比较了在流水线处理器上调度代码的两种技术：软件流水和循环展开。Rau［1994］提出了模调度，用来解决软件流水循环中的问题，同时完成寄存器分配。
+
+对推测式代码调度的支持，人们在多种场合研究过。其中有几种处理器提供一种忽略异常的工作模式，于是可以更激进地调度 load 指令（如 MIPS TFP 处理器［Hsu 1994］）。有几个研究组探索了用硬件更积极地支持推测式代码调度。例如，Smith、Horowitz 和 Lam［1992］提出了 boosting 的概念：它包含支持推测的硬件设施，同时提供与 IA-64 和 Crusoe 中类似的检查和恢复机制。哨兵调度（sentinel scheduling）的思想由伊利诺伊大学和 HP 实验室的研究人员合作提出（见 Mahlke 等人［1992］），它也与 Crusoe 和 IA-64 体系结构都采用的「先推测、后检查」方法类似。
+
+20 世纪 90 年代初，伊利诺伊大学的 Wen-Mei Hwu 和他的同事开发了一个称为 IMPACT 的编译器框架（见 Chang 等人［1991］），用来研究多发射体系结构与编译技术之间的相互作用。这个项目产生了几项重要思想，包括：超块调度（见 Hwu 等人［1993］）；大量使用剖析信息来指导多种优化（如过程内联）；用一个专门的缓冲（类似于 ALAT 或程序控制的存储缓冲），在编译的辅助下检测访存冲突（见 Gallagher 等人［1994］）。他们还在 Mahlke 等人［1995］中研究了对谓词执行提供部分支持和完全支持在性能上的权衡。
+
+早期的 RISC 处理器都采用延迟转移。这种方案受微程序设计的启发，而延迟转移机制又启发了几项编译时转移预测的研究。McFarling 和 Hennessy［1986］定量比较了多种编译时和运行时转移预测方案。Fisher 和 Freudenberger［1992］以两次预测错误之间的距离为指标，评估了一系列编译时转移预测方案。Ball 和 Larus［1993］以及 Calder 等人［1997］介绍了根据收集到的程序行为进行静态预测的方案。
+
+### EPIC 和 IA-64 的发展 {-}
+
+EPIC 方法有两个源头：一是早先构造 LIW 和 VLIW 机器的尝试，特别是 Cydrome 和 Multiflow 的尝试；二是长期的编译器研究，这些公司失败以后，HP、伊利诺伊大学等地仍在继续这方面的工作。HP 的设计者从这些工作中得到启发，提出了一种 VLIW 风格的 64 位体系结构，作为 HP PA RISC 体系结构的后继。当时 Intel 正在寻找一种新的体系结构，以取代 x86（现在称为 IA-32）体系结构，并提供 64 位能力。1995 年，两家公司结成伙伴，共同设计一种新的体系结构 IA-64（见 Huck 等人［2000］），并开发基于它的处理器。第一款这样的处理器是 Itanium（见 Sharangpani 和 Arora［2000］）。2002 年，Intel 推出了第二代 IA-64 设计 Itanium 2（见 McNairy 和 Soltis［2003］，以及 McCormick 和 Knies［2002］）。
+
+### ILP 的研究和提高 ILP 的思路 {-}
+
+早期的一系列论文，包括 Tjaden 和 Flynn［1970］以及 Riseman 和 Foster［1972］，得出的结论是：如果不投入大量硬件，指令级能够得到的并行性很少。这些论文让多发射的吸引力在 10 多年里大打折扣。Nicolau 和 Fisher［1984］根据他们在踪迹调度方面的工作发表论文，断言科学计算程序中存在大量潜在的 ILP。
+
+此后，出现了许多研究可用 ILP 的工作。这些研究受到过批评，因为它们都预先假定了一定程度的硬件支持和编译技术。尽管如此，它们对确立预期、理解限制从何而来仍然有用。Wall 参与过几项这样的研究，包括 Jouppi 和 Wall［1989］以及 Wall［1991, 1993］。早期的研究被批评为过于保守（例如没有考虑推测），而最后这项研究是迄今为止对 ILP 最雄心勃勃的研究，也是 3.10 节数据的基础。Sohi 和 Vajapeyam［1989］测量了宽指令字处理器中可用的并行性。Smith、Johnson 和 Horowitz［1989］也用一种推测式超标量处理器研究了 ILP 的极限。他们在研究时预计，自己设定的处理器是合理设计的上限。然而，近来和即将推出的处理器可能至少和他们的处理器一样激进。Skadron 等人［1999］研究了一种与 2005 年最激进的处理器相当的处理器，分析了它的性能权衡和限制，得出的结论是：对整数程序而言，如果转移预测没有大幅改进，增大窗口没有意义。
+
+Lam 和 Wilson［1992］研究了推测带来的限制，并证明：如果允许处理器沿多个方向推测，还能获得额外的收益，但这需要不止一个 PC。（这类方案不可能超过完美推测所能达到的效果，但有助于缩小实际预测方案与完美预测之间的差距。）Wall 1993 年的研究对这种方法作了有限的评估（最多探索 8 条转移）。
+
+### 突破数据流极限 {-}
+
+文献中探索过的另一种方法是值预测。有了值预测，处理器就可以根据数据值进行推测。关于值预测的应用已有不少研究。Lipasti 和 Shen 1996 年发表了两篇论文，评估了值预测的概念及其对挖掘 ILP 可能产生的影响。Calder、Reinman 和 Tullsen［1999］探索了选择性值预测的思想。Sodani 和 Sohi［1997］从重用指令所产生的值的角度研究了同一问题。Moshovos 等人［1997］证明，要通过值推测提高性能，重要的是决定何时对值进行推测，办法是跟踪这类推测过去是否准确。Moshovos 和 Sohi［1997］以及 Chrysos 和 Emer［1998］着重研究预测存储相关，并利用这些信息消除经由存储器的相关。较新的值预测应用研究有 González 和 González［1998］、Babbay 和 Mendelson［1998］以及 Calder、Reinman 和 Tullsen［1999］。这一领域目前非常活跃，每次会议都有新的成果发表。
+
+### 近年来的先进微处理器 {-}
+
+1994 年和 1995 年，各大处理器厂商都发布了宽发射的超标量处理器（每个时钟发射 3 条或更多指令），包括：Intel Pentium Pro 和 Pentium II（这两种处理器的核心流水线结构相同，Colwell 和 Steck［1995］作了介绍）；AMD K-5、K-6 和 Athlon；Sun UltraSPARC（见 Lauterbach 和 Horel［1999］）；Alpha 21164（见 Edmondson 等人［1995］）和 21264（见 Kessler［1999］）；MIPS R10000 和 R12000（见 Yeager［1996］）；PowerPC 603、604 和 620（见 Diep、Nelson 和 Shen［1995］）；HP 8000（Kumar［1997］）。这十年的后期（1996—2000 年），其中许多处理器推出了第二代产品（如 Pentium III、AMD Athlon 和 Alpha 21264）。第二代产品的发射率与第一代相近，但能维持更低的 CPI，时钟频率也高得多。这些处理器都采用动态调度，而且几乎都支持推测。实际上，哪种方法最好取决于许多因素，包括实现工艺、存储层次、设计者的水平，以及用作基准测试的应用类型。
+
+2000 年到 2005 年，超标量处理器的发展以三种趋势为主：一是通过加深流水线获得更高的时钟频率（如 Pentium 4，见 Hinton 等人［2001］）；二是引入多线程，IBM 在 Power 4 中、Intel 在 Pentium 4 Extreme 中都引入了多线程；三是开始转向多核，先是 IBM 的 Power 4，然后是 AMD 的 Opteron（见 Keltcher 等人［2003］），最近是 Intel（见 Douglas［2005］）。
+
+### 多线程和同时多线程 {-}
+
+多线程的概念可以追溯到最早的晶体管计算机之一 TX-2。TX-2 出名还有一个原因：Ivan Sutherland 在它上面开发了第一个计算机图形系统 Sketchpad。TX-2 由 MIT 林肯实验室建造，1959 年投入运行，它用多个线程支持快速的上下文切换，以处理 I/O 功能。Clark［1957］介绍了它的基本体系结构，Forgie［1957］介绍了它的 I/O 体系结构。CDC 6600 也采用了多线程：它的 I/O 处理器的体系结构就是一种细粒度多线程方案，在各线程之间交替调度。HEP 处理器是 Denelcor 公司设计的一种流水线多处理器，1982 年交付。它用细粒度多线程隐藏流水线延迟，也隐藏访问所有处理器共享的大容量存储器的延迟。HEP 没有 Cache，因此隐藏访存延迟至关重要。HEP 的主要设计者之一 Burton Smith 在 1978 年的一篇论文中介绍了 HEP 的体系结构，Jordan［1983］发表了对它的性能评估。TERA 处理器扩展了多线程的思想，Alverson 等人在 1992 年的一篇论文中介绍了它。Niagara 的多线程方法与 HEP 和 TERA 系统相似，但 Niagara 采用了 Cache，减少了靠线程隐藏延迟的需要。
+
+20 世纪 80 年代末和 90 年代初，研究者探索了粗粒度多线程（也称块多线程），把它作为容忍延迟的一种手段，特别是在多处理器环境中。Alewife 系统中的 SPARCLE 处理器就采用了这种方案：每当发生长延迟的异常事件（如延迟很长的 Cache 失效），就切换线程。Agarwal 等人在 1993 年的一篇论文中介绍了 SPARCLE。IBM Pulsar 处理器也采用了类似的思想。
+
+到 20 世纪 90 年代初，几个研究组已经得到两点关键认识。一是要获得最大的性能收益，必须采用细粒度多线程，因为在粗粒度方法中，线程切换和线程启动（例如用新线程的指令填满流水线）的开销抵消了大部分性能优势（见 Laudon、Gupta 和 Horowitz［1994］）。二是要有效利用大量功能部件，既需要 ILP，也需要线程级并行（TLP）。这些认识催生了几种把多线程与多发射结合起来的体系结构。Wolfe 和 Shen［1991］介绍了一种称为 XIMD 的体系结构，它对为 VLIW 处理器调度好的线程进行静态交替。Hirata 等人［1992］提出了一种面向媒体应用的处理器方案，把静态超标量流水线与多线程支持结合起来；他们报告了同时利用这两种并行性得到的加速比。Keckler 和 Dally［1992］针对具有多个功能部件的处理器，把 ILP 的静态调度和线程的动态调度结合起来。如何在 ILP 和 TLP 之间平衡地分配功能部件，以及如何调度这两种形式的并行，当时仍是悬而未决的问题。
+
+20 世纪 90 年代中期，人们已经清楚，动态调度的超标量处理器很快就会问世。于是，几个研究组提出利用动态调度能力，在运行时混合执行来自多个线程的指令。Yamamoto 等人［1994］似乎最早发表了这样的方案，但他们对多线程超标量体系结构的模拟采用了过于简单的假设。紧接着，Tullsen、Eggers 和 Levy［1995］给出了第一个符合实际的模拟评估，并创造了*同时多线程*（simultaneous multithreading）一词。这个研究组随后与业界的合作者一起，解决了 SMT 的许多悬而未决的问题。例如，Tullsen 等人［1996］讨论了调度 ILP 与调度 TLP 所面临的挑战。Lo 等人［1997］深入讨论了 SMT 的概念，并评估了它的性能潜力；Lo 等人［1998］评估了 SMT 处理器上的数据库性能。Tuck 和 Tullsen［2003］考察了 SMT 在 Pentium 4 上的性能。
+
+IBM Power4 引入了多线程（见 Tendler 等人［2002］），Power5 则采用了同时多线程。Mathis 等人［2005］研究了 Power5 中 SMT 的性能，Sinharoy 等人［2005］介绍了它的系统体系结构。
+
+### 参考文献 {- #sec-m-5-references}
+
+Agarwal, A., J. Kubiatowicz, D. Kranz, B.-H. Lim, D. Yeung, G. D'Souza, and M. Parkin [1993]. "Sparcle: An evolutionary processor design for large-scale multiprocessors," IEEE Micro 13 (June), 48–61.
+
+Agerwala, T., and J. Cocke [1987]. High Performance Reduced Instruction Set Processors, Tech. Rep. RC12434, IBM Thomas Watson Research Center, Yorktown Heights, N.Y.
+
+Alverson, G., R. Alverson, D. Callahan, B. Koblenz, A. Porterfield, and B. Smith [1992]. "Exploiting heterogeneous parallelism on a multithreaded multiprocessor," Proc. ACM/IEEE Conf. on Supercomputing, November 16–20, 1992, Minneapolis, Minn., 188–197.
+
+Anderson, D. W., F. J. Sparacio, and R. M. Tomasulo [1967]. "The IBM 360 Model 91: Processor philosophy and instruction handling," IBM J. Research and Development 11:1 (January), 8–24.
+
+Austin, T. M., and G. Sohi [1992]. "Dynamic dependency analysis of ordinary programs," Proc. 19th Annual Int'l. Symposium on Computer Architecture (ISCA), May 19–21, 1992, Gold Coast, Australia, 342–351.
+
+Babbay, F., and A. Mendelson [1998]. "Using value prediction to increase the power of speculative execution hardware," ACM Trans. on Computer Systems 16:3 (August), 234–270.
+
+Bakoglu, H. B., G. F. Grohoski, L. E. Thatcher, J. A. Kaeli, C. R. Moore, D. P. Tattle, W. E. Male, W. R. Hardell, D. A. Hicks, M. Nguyen Phu, R. K. Montoye, W. T. Glover, and S. Dhawan [1989]. "IBM second-generation RISC processor organization," Proc. IEEE Int'l. Conf. on Computer Design, October, Rye Brook, N.Y., 138–142.
+
+Ball, T., and J. Larus [1993]. "Branch prediction for free," Proc. ACM SIGPLAN'93 Conference on Programming Language Design and Implementation (PLDI), June 23–25, 1993, Albuquerque, N.M., 300–313.
+
+Bhandarkar, D., and D. W. Clark [1991]. "Performance from architecture: Comparing a RISC and a CISC with similar hardware organizations," Proc. Fourth Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), April 8–11, 1991, Palo Alto, Calif., 310–319.
+
+Bhandarkar, D., and J. Ding [1997]. "Performance characterization of the Pentium Pro processor," Proc. Third Int'l. Symposium on High Performance Computer Architecture, February 1–5, 1997, San Antonio, Tex., 288–297.
+
+Bloch, E. [1959]. "The engineering design of the Stretch computer," Proc. Eastern Joint Computer Conf., December 1–3, 1959, Boston, Mass., 48–59.
+
+Bucholtz, W. [1962]. Planning a Computer System: Project Stretch, McGraw-Hill, New York.
+
+Calder, B., D. Grunwald, M. Jones, D. Lindsay, J. Martin, M. Mozer, and B. Zorn [1997]. "Evidence-based static branch prediction using machine learning," ACM Trans. Program. Lang. Syst. 19:1, 188–222.
+
+Calder, B., G. Reinman, and D. M. Tullsen [1999]. "Selective value prediction," Proc. 26th Annual Int'l. Symposium on Computer Architecture (ISCA), May 2–4, 1999, Atlanta, Ga.
+
+Chang, P. P., S. A. Mahlke, W. Y. Chen, N. J. Warter, and W. W. Hwu [1991]. "IMPACT: An architectural framework for multiple-instruction-issue processors," Proc. 18th Annual Int'l. Symposium on Computer Architecture (ISCA), May 27–30, 1991, Toronto, Canada, 266–275.
+
+Charlesworth, A. E. [1981]. "An approach to scientific array processing: The architecture design of the AP-120B/FPS-164 family," Computer 14:9 (September), 18–27.
+
+Chen, T. C. [1980]. "Overlap and parallel processing," in Introduction to Computer Architecture, H. Stone, ed., Science Research Associates, Chicago, 427–486.
+
+Chrysos, G. Z., and J. S. Emer [1998]. "Memory dependence prediction using store sets," Proc. 25th Annual Int'l. Symposium on Computer Architecture (ISCA), July 3–14, 1998, Barcelona, Spain, 142–153.
+
+Clark, D. W. [1987]. "Pipelining and performance in the VAX 8800 processor," Proc. Second Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 5–8, 1987, Palo Alto, Calif., 173–177.
+
+Clark, W. A. [1957]. "The Lincoln TX-2 computer development," Proc. Western Joint Computer Conference, February 26–28, 1957, Los Angeles, 143–145.
+
+Colwell, R. P., and R. Steck [1995]. "A 0.6 μm BiCMOS processor with dynamic execution." Proc. of IEEE Int'l. Symposium on Solid State Circuits (ISSCC), February 15–17, 1995, San Francisco, 176–177.
+
+Colwell, R. P., R. P. Nix, J. J. O'Donnell, D. B. Papworth, and P. K. Rodman [1987]. "A VLIW architecture for a trace scheduling compiler," Proc. Second Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 5–8, 1987, Palo Alto, Calif., 180–192.
+
+Cvetanovic, Z., and R. E. Kessler [2000]. "Performance analysis of the Alpha 21264-based Compaq ES40 system," 27th Annual Int'l. Symposium on Computer Architecture (ISCA), June 10–14, 2000, Vancouver, Canada, 192–202.
+
+Davidson, E. S. [1971]. "The design and control of pipelined function generators," Proc. IEEE Conf. on Systems, Networks, and Computers, January 19–21, 1971, Oaxtepec, Mexico, 19–21.
+
+Davidson, E. S., A. T. Thomas, L. E. Shar, and J. H. Patel [1975]. "Effective control for pipelined processors," Proc. IEEE COMPCON, February 25–27, 1975, San Francisco, 181–184.
+
+Dehnert, J. C., P. Y.-T. Hsu, and J. P. Bratt [1989]. "Overlapped loop support on the Cydra 5," Proc. Third Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), April 3–6, 1989, Boston, Mass., 26–39.
+
+Diep, T. A., C. Nelson, and J. P. Shen [1995]. "Performance evaluation of the PowerPC 620 microarchitecture," Proc. 22nd Annual Int'l. Symposium on Computer Architecture (ISCA), June 22–24, 1995, Santa Margherita, Italy.
+
+Ditzel, D. R., and H. R. McLellan [1987]. "Branch folding in the CRISP microprocessor: Reducing the branch delay to zero," Proc. 14th Annual Int'l. Symposium on Computer Architecture (ISCA), June 2–5, 1987, Pittsburgh, Penn., 2–7.
+
+Douglas, J. [2005]. "Intel 8xx series and Paxville Xeon-MP Microprocessors," paper presented at Hot Chips 17, August 14–16, 2005, Stanford University, Palo Alto, Calif.
+
+Eden, A., and T. Mudge [1998]. "The YAGS branch prediction scheme," Proc. of the 31st Annual ACM/IEEE Int'l. Symposium on Microarchitecture, November 30–December 2, 1998, Dallas, Tex., 69–80.
+
+Edmondson, J. H., P. I. Rubinfield, R. Preston, and V. Rajagopalan [1995]. "Superscalar instruction execution in the 21164 Alpha microprocessor," IEEE Micro 15:2, 33–43.
+
+Ellis, J. R. [1986]. Bulldog: A Compiler for VLIW Architectures, MIT Press, Cambridge, Mass.
+
+Emer, J. S., and D. W. Clark [1984]. "A characterization of processor performance in the VAX-11/780," Proc. 11th Annual Int'l. Symposium on Computer Architecture (ISCA), June 5–7, 1984, Ann Arbor, Mich., 301–310.
+
+Evers, M., S. J. Patel, R. S. Chappell, and Y. N. Patt [1998]. "An analysis of correlation and predictability: What makes two-level branch predictors work," Proc. 25th Annual Int'l. Symposium on Computer Architecture (ISCA), July 3–14, 1998, Barcelona, Spain, 52–61.
+
+Fisher, J. A. [1981]. "Trace scheduling: A technique for global microcode compaction," IEEE Trans. on Computers 30:7 (July), 478–490.
+
+Fisher, J. A. [1983]. "Very long instruction word architectures and ELI-512," 10th Annual Int'l. Symposium on Computer Architecture (ISCA), June 5–7, 1982, Stockholm, Sweden, 140–150.
+
+Fisher, J. A., and S. M. Freudenberger [1992]. "Predicting conditional branches from previous runs of a program," Proc. Fifth Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 12–15, 1992, Boston, 85–95.
+
+Fisher, J. A., and B. R. Rau [1993]. Journal of Supercomputing, January (special issue).
+
+Fisher, J. A., J. R. Ellis, J. C. Ruttenberg, and A. Nicolau [1984]. "Parallel processing: A smart compiler and a dumb processor," Proc. SIGPLAN Conf. on Compiler Construction, June 17–22, 1984, Montreal, Canada, 11–16.
+
+Forgie, J. W. [1957]. "The Lincoln TX-2 input-output system," Proc. Western Joint Computer Conference, February 26–28, 1957, Los Angeles, 156–160.
+
+Foster, C. C., and E. M. Riseman [1972]. "Percolation of code to enhance parallel dispatching and execution," IEEE Trans. on Computers C-21:12 (December), 1411–1415.
+
+Gallagher, D. M., W. Y. Chen, S. A. Mahlke, J. C. Gyllenhaal, and W.W. Hwu [1994]. "Dynamic memory disambiguation using the memory conflict buffer," Proc. Sixth Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 4–7, Santa Jose, Calif., 183–193.
+
+González, J., and A. González [1998]. "Limits of instruction level parallelism with data speculation," Proc. Vector and Parallel Processing (VECPAR) Conf., June 21–23, 1998, Porto, Portugal, 585–598.
+
+Heinrich, J. [1993]. MIPS R4000 User's Manual, Prentice Hall, Englewood Cliffs, N.J.
+
+Hinton, G., D. Sager, M. Upton, D. Boggs, D. Carmean, A. Kyker, and P. Roussel [2001]. "The microarchitecture of the Pentium 4 processor," Intel Technology Journal, February.
+
+Hirata, H., K. Kimura, S. Nagamine, Y. Mochizuki, A. Nishimura, Y. Nakase, and T. Nishizawa [1992]. "An elementary processor architecture with simultaneous instruction issuing from multiple threads," Proc. 19th Annual Int'l. Symposium on Computer Architecture (ISCA), May 19–21, 1992, Gold Coast, Australia, 136–145.

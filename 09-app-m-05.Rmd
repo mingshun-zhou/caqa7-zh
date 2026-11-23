@@ -1,0 +1,213 @@
+Hopkins, M. [2000]. "A critical look at IA-64: Massive resources, massive ILP, but can it deliver?" Microprocessor Report, February.
+
+Hsu, P. [1994]. "Designing the TFP microprocessor," IEEE Micro 18:2 (April), 2333.
+
+Huck, J. et al. [2000]. "Introducing the IA-64 Architecture" IEEE Micro, 20:5 (September–October), 12–23.
+
+Hwu, W.-M., and Y. Patt [1986]. "HPSm, a high performance restricted data flow architecture having minimum functionality," 13th Annual Int'l. Symposium on Computer Architecture (ISCA), June 2–5, 1986, Tokyo, 297–307.
+
+Hwu, W. W., S. A. Mahlke, W. Y. Chen, P. P. Chang, N. J. Warter, R. A. Bringmann, R. O. Ouellette, R. E. Hank, T. Kiyohara, G. E. Haab, J. G. Holm, and D. M. Lavery [1993]. "The superblock: An effective technique for VLIW and superscalar compilation," J. Supercomputing 7:1, 2 (March), 229–248.
+
+IBM. [1990]. "The IBM RISC System/6000 processor" (collection of papers), IBM J. Research and Development 34:1 (January).
+
+Jimenez, D. A., and C. Lin [2002]. "Neural methods for dynamic branch prediction," ACM Trans. Computer Sys 20:4 (November), 369–397.
+
+Johnson, M. [1990]. Superscalar Microprocessor Design, Prentice Hall, Englewood Cliffs, N.J.
+
+Jordan, H. F. [1983]. "Performance measurements on HEP—a pipelined MIMD computer," Proc. 10th Annual Int'l. Symposium on Computer Architecture (ISCA), June 5–7, 1982, Stockholm, Sweden, 207–212.
+
+Jouppi, N. P., and D. W. Wall [1989]. "Available instruction-level parallelism for superscalar and superpipelined processors," Proc. Third Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), April 3–6, 1989, Boston, 272–282.
+
+Kaeli, D. R., and P. G. Emma [1991]. "Branch history table prediction of moving target branches due to subroutine returns," Proc. 18th Annual Int'l. Symposium on Computer Architecture (ISCA), May 27–30, 1991, Toronto, Canada, 34–42.
+
+Keckler, S. W., and W. J. Dally [1992]. "Processor coupling: Integrating compile time and runtime scheduling for parallelism," Proc. 19th Annual Int'l. Symposium on Computer Architecture (ISCA), May 19–21, 1992, Gold Coast, Australia, 202–213.
+
+Keller, R. M. [1975]. "Look-ahead processors," ACM Computing Surveys 7:4 (December), 177–195.
+
+Keltcher, C. N., K. J. McGrath, A. Ahmed, and P. Conway [2003]. "The AMD Opteron processor for multiprocessor servers," IEEE Micro 23:2 (March–April), 66–76.
+
+Kessler, R. [1999]. "The Alpha 21264 microprocessor," IEEE Micro 19:2 (March/April) 24–36.
+
+Killian, E. [1991]. "MIPS R4000 technical overview—64 bits/100 MHz or bust," Hot Chips III Symposium Record, August 26–27, 1991, Stanford University, Palo Alto, Calif., 1.6–1.19.
+
+Kogge, P. M. [1981]. The Architecture of Pipelined Computers, McGraw-Hill, New York.
+
+Kumar, A. [1997]. "The HP PA-8000 RISC CPU," IEEE Micro 17:2 (March/April).
+
+Kunkel, S. R., and J. E. Smith [1986]. "Optimal pipelining in supercomputers," Proc. 13th Annual Int'l. Symposium on Computer Architecture (ISCA), June 2–5, 1986, Tokyo, 404–414.
+
+Lam, M. [1988]. "Software pipelining: An effective scheduling technique for VLIW processors," SIGPLAN Conf. on Programming Language Design and Implementation, June 22–24, 1988, Atlanta, Ga., 318–328.
+
+Lam, M. S., and R. P. Wilson [1992]. "Limits of control flow on parallelism," Proc. 19th Annual Int'l. Symposium on Computer Architecture (ISCA), May 19–21, 1992, Gold Coast, Australia, 46–57.
+
+Laudon, J., A. Gupta, and M. Horowitz [1994]. "Interleaving: A multithreading technique targeting multiprocessors and workstations," Proc. Sixth Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 4–7, San Jose, Calif., 308–318.
+
+Lauterbach, G., and T. Horel [1999]. "UltraSPARC-III: Designing third generation 64-bit performance," IEEE Micro 19:3 (May/June).
+
+Lipasti, M. H., and J. P. Shen [1996]. "Exceeding the dataflow limit via value prediction," Proc. 29th Int'l. Symposium on Microarchitecture, December 2–4, 1996, Paris, France.
+
+Lipasti, M. H., C. B. Wilkerson, and J. P. Shen [1996]. "Value locality and load value prediction," Proc. Seventh Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 1–5, 1996, Cambridge, Mass., 138–147.
+
+Lo, J., L. Barroso, S. Eggers, K. Gharachorloo, H. Levy, and S. Parekh [1998]. "An analysis of database workload performance on simultaneous multithreaded processors," Proc. 25th Annual Int'l. Symposium on Computer Architecture (ISCA), July 3–14, 1998, Barcelona, Spain, 39–50.
+
+Lo, J., S. Eggers, J. Emer, H. Levy, R. Stamm, and D. Tullsen [1997]. "Converting thread-level parallelism into instruction-level parallelism via simultaneous multithreading," ACM Trans. on Computer Systems 15:2 (August), 322–354.
+
+Mahlke, S. A., W. Y. Chen, W.-M. Hwu, B. R. Rau, and M. S. Schlansker [1992]. "Sentinel scheduling for VLIW and superscalar processors," Proc. Fifth Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 12–15, 1992, Boston, 238–247.
+
+Mahlke, S. A., R. E. Hank, J. E. McCormick, D. I. August, and W. W. Hwu [1995]. "A comparison of full and partial predicated execution support for ILP processors," Proc. 22nd Annual Int'l. Symposium on Computer Architecture (ISCA), June 22–24, 1995, Santa Margherita, Italy, 138–149.
+
+Mathis, H. M., A. E. Mercias, J. D. McCalpin, R. J. Eickemeyer, and S. R. Kunkel [2005]. "Characterization of the multithreading (SMT) efficiency in Power5," IBM J. of Research and Development, 49:4/5 (July/September), 555–564.
+
+McCormick, J., and A. Knies [2002]. "A brief analysis of the SPEC CPU2000 benchmarks on the Intel Itanium 2 processor," paper presented at Hot Chips 14, August 18–20, 2002, Stanford University, Palo Alto, Calif.
+
+McFarling, S. [1993]. Combining Branch Predictors, WRL Technical Note TN-36, Digital Western Research Laboratory, Palo Alto, Calif.
+
+McFarling, S., and J. Hennessy [1986]. "Reducing the cost of branches," Proc. 13th Annual Int'l. Symposium on Computer Architecture (ISCA), June 2–5, 1986, Tokyo, 396–403.
+
+McNairy, C., and D. Soltis [2003]. "Itanium 2 processor microarchitecture," IEEE Micro 23:2 (March–April), 44–55.
+
+Moshovos, A., and G. S. Sohi [1997]. "Streamlining inter-operation memory communication via data dependence prediction," Proc. 30th Annual Int'l. Symposium on Microarchitecture, December 1–3, Research Triangle Park, N.C., 235–245.
+
+Moshovos, A., S. Breach, T. N. Vijaykumar, and G. S. Sohi [1997]. "Dynamic speculation and synchronization of data dependences," Proc. 24th Annual Int'l. Symposium on Computer Architecture (ISCA), June 2–4, 1997, Denver, Colo.
+
+Nicolau, A., and J. A. Fisher [1984]. "Measuring the parallelism available for very long instruction word architectures," IEEE Trans. on Computers C-33:11 (November), 968–976.
+
+Pan, S.-T., K. So, and J. T. Rameh [1992]. "Improving the accuracy of dynamic branch prediction using branch correlation," Proc. Fifth Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 12–15, 1992, Boston, 76–84.
+
+Postiff, M.A., D. A. Greene, G. S. Tyson, and T. N. Mudge [1999]. "The limits of instruction level parallelism in SPEC95 applications," Computer Architecture News 27:1 (March), 31–40.
+
+Ramamoorthy, C. V., and H. F. Li [1977]. "Pipeline architecture," ACM Computing Surveys 9:1 (March), 61–102.
+
+Rau, B. R. [1994]. "Iterative modulo scheduling: An algorithm for software pipelining loops," Proc. 27th Annual Int'l. Symposium on Microarchitecture, November 30–December 2, 1994, San Jose, Calif., 63–74.
+
+Rau, B. R., C. D. Glaeser, and R. L. Picard [1982]. "Efficient code generation for horizontal architectures: Compiler techniques and architectural support," Proc. Ninth Annual Int'l. Symposium on Computer Architecture (ISCA), April 26–29, 1982, Austin, Tex., 131–139.
+
+Rau, B. R., D. W. L. Yen, W. Yen, and R. A. Towle [1989]. "The Cydra 5 departmental supercomputer: Design philosophies, decisions, and trade-offs," IEEE Computers 22:1 (January), 12–34.
+
+Riseman, E. M., and C. C. Foster [1972]. "Percolation of code to enhance paralleled dispatching and execution," IEEE Trans. on Computers C-21:12 (December), 1411–1415.
+
+Rymarczyk, J. [1982]. "Coding guidelines for pipelined processors," Proc. Symposium Architectural Support for Programming Languages and Operating Systems (ASPLOS), March 1–3, 1982, Palo Alto, Calif., 12–19.
+
+Sharangpani, H., and K. Arora [2000]. "Itanium Processor Microarchitecture," IEEE Micro, 20:5 (September–October), 24–43.
+
+Sinharoy, B., R. N. Koala, J. M. Tendler, R. J. Eickemeyer, and J. B. Joyner [2005]. "POWER5 system microarchitecture," IBM J. of Research and Development, 49:4–5, 505–521.
+
+Sites, R. [1979]. Instruction Ordering for the CRAY-1 Computer, Tech. Rep. 78-CS-023, Dept. of Computer Science, University of California, San Diego.
+
+Skadron, K., P. S. Ahuja, M. Martonosi, and D. W. Clark [1999]. "Branch prediction, instruction-window size, and cache size: Performance tradeoffs and simulation techniques," IEEE Trans. on Computers, 48:11 (November).
+
+Smith, A., and J. Lee [1984]. "Branch prediction strategies and branch-target buffer design," Computer 17:1 (January), 6–22.
+
+Smith, B. J. [1978]. "A pipelined, shared resource MIMD computer," Proc. Int'l. Conf. on Parallel Processing (ICPP), August, Bellaire, Mich., 6–8.
+
+Smith, J. E. [1981]. "A study of branch prediction strategies," Proc. Eighth Annual Int'l. Symposium on Computer Architecture (ISCA), May 12–14, 1981, Minneapolis, Minn., 135–148.
+
+Smith, J. E. [1984]. "Decoupled access/execute computer architectures," ACM Trans. on Computer Systems 2:4 (November), 289–308.
+
+Smith, J. E. [1989]. "Dynamic instruction scheduling and the Astronautics ZS-1," Computer 22:7 (July), 21–35.
+
+Smith, J. E., and A. R. Pleszkun [1988]. "Implementing precise interrupts in pipelined processors," IEEE Trans. on Computers 37:5 (May), 562–573. (This paper is based on an earlier paper that appeared in Proc. 12th Annual Int'l. Symposium on Computer Architecture (ISCA), June 17–19, 1985, Boston, Mass.)
+
+Smith, J. E., G. E. Dermer, B. D. Vanderwarn, S. D. Klinger, C. M. Rozewski, D. L. Fowler, K. R. Scidmore, and J. P. Laudon [1987]. "The ZS-1 central processor," Proc. Second Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 5–8, 1987, Palo Alto, Calif., 199–204.
+
+Smith, M. D., M. Horowitz, and M. S. Lam [1992]. "Efficient superscalar performance through boosting," Proc. Fifth Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 12–15, 1992, Boston, 248–259.
+
+Smith, M. D., M. Johnson, and M. A. Horowitz [1989]. "Limits on multiple instruction issue," Proc. Third Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), April 3–6, 1989, Boston, 290–302.
+
+Sodani, A., and G. Sohi [1997]. "Dynamic instruction reuse," Proc. 24th Annual Int'l. Symposium on Computer Architecture (ISCA), June 2–4, 1997, Denver, Colo.
+
+Sohi, G. S. [1990]. "Instruction issue logic for high-performance, interruptible, multiple functional unit, pipelined computers," IEEE Trans. on Computers 39:3 (March), 349–359.
+
+Sohi, G. S., and S. Vajapeyam [1989]. "Tradeoffs in instruction format design for horizontal architectures," Proc. Third Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), April 3–6, 1989, Boston, 15–25.
+
+Sussenguth, E. [1999]. "IBM's ACS-1 Machine," IEEE Computer 22:11 (November).
+
+Tendler, J. M., J. S. Dodson, J. S. Fields, Jr., H. Le, and B. Sinharoy [2002]. "Power4 system microarchitecture," IBM J. of Research and Development, 46:1, 5–26.
+
+Thorlin, J. F. [1967]. "Code generation for PIE (parallel instruction execution) computers," Proc. Spring Joint Computer Conf., April 18–20, 1967, Atlantic City, N.J., 27.
+
+Thornton, J. E. [1964]. "Parallel operation in the Control Data 6600," Proc. AFIPS Fall Joint Computer Conf., Part II, October 27–29, 1964, San Francisco, 26, 33–40.
+
+Thornton, J. E. [1970]. Design of a Computer, the Control Data 6600, Scott, Foresman, Glenview, Ill.
+
+Tjaden, G. S., and M. J. Flynn [1970]. "Detection and parallel execution of independent instructions," IEEE Trans. on Computers C-19:10 (October), 889–895.
+
+Tomasulo, R. M. [1967]. "An efficient algorithm for exploiting multiple arithmetic units," IBM J. Research and Development 11:1 (January), 25–33.
+
+Tuck, N., and D. Tullsen [2003]. "Initial observations of the simultaneous multithreading Pentium 4 processor," Proc. 12th Int. Conf. on Parallel Architectures and Compilation Techniques (PACT'03), September 27–October 1, New Orleans, La., 26–34.
+
+Tullsen, D. M., S. J. Eggers, and H. M. Levy [1995]. "Simultaneous multithreading: Maximizing on-chip parallelism," Proc. 22nd Annual Int'l. Symposium on Computer Architecture (ISCA), June 22–24, 1995, Santa Margherita, Italy, 392–403.
+
+Tullsen, D. M., S. J. Eggers, J. S. Emer, H. M. Levy, J. L. Lo, and R. L. Stamm [1996]. "Exploiting choice: Instruction fetch and issue on an implementable simultaneous multithreading processor," Proc. 23rd Annual Int'l. Symposium on Computer Architecture (ISCA), May 22–24, 1996, Philadelphia, Penn., 191–202.
+
+Wall, D. W. [1991]. "Limits of instruction-level parallelism," Proc. Fourth Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), April 8–11, 1991, Palo Alto, Calif., 248–259.
+
+Wall, D. W. [1993]. Limits of Instruction-Level Parallelism, Research Rep. 93/6, Western Research Laboratory, Digital Equipment Corp., Palo Alto, Calif.
+
+Weiss, S., and J. E. Smith [1984]. "Instruction issue logic for pipelined supercomputers," Proc. 11th Annual Int'l. Symposium on Computer Architecture (ISCA), June 5–7, 1984, Ann Arbor, Mich., 110–118.
+
+Weiss, S., and J. E. Smith [1987]. "A study of scalar compilation techniques for pipelined supercomputers," Proc. Second Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 5–8, 1987, Palo Alto, Calif., 105–109.
+
+Wilson, R. P., and M. S. Lam [1995]. "Efficient context-sensitive pointer analysis for C programs," Proc. ACM SIGPLAN'95 Conf. on Programming Language Design and Implementation, June 18–21, 1995, La Jolla, Calif., 1–12.
+
+Wolfe, A., and J. P. Shen [1991]. "A variable instruction stream extension to the VLIW architecture," Proc. Fourth Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), April 8–11, 1991, Palo Alto, Calif., 2–14.
+
+Yamamoto, W., M. J. Serrano, A. R. Talcott, R. C. Wood, and M. Nemirosky [1994]. "Performance estimation of multistreamed, superscalar processors," Proc. 27th Annual Hawaii Int'l. Conf. on System Sciences, January 4–7, 1994, Maui, 195–204.
+
+Yeager, K. [1996]. "The MIPS R10000 superscalar microprocessor," IEEE Micro 16:2 (April), 28–40.
+
+Yeh, T., and Y. N. Patt [1992]. "Alternative implementations of two-level adaptive branch prediction," Proc. 19th Annual Int'l. Symposium on Computer Architecture (ISCA), May 19–21, 1992, Gold Coast, Australia, 124–134.
+
+Yeh, T., and Y. N. Patt [1993]. "A comparison of dynamic branch predictors that use two levels of branch history," Proc. 20th Annual Int'l. Symposium on Computer Architecture (ISCA), May 16–19, 1993, San Diego, Calif., 257–266.
+
+## SIMD 超级计算机、向量计算机、多媒体 SIMD 指令扩展和图形处理器的发展（第 4 章） {#sec-m-6}
+
+本节的历史回顾从 Illiac IV 讲起。Illiac IV 也许是名声最差的超级计算机，我们把它作为早期 SIMD（Single Instruction, Multiple Data，单指令流多数据流）体系结构的代表。接下来讲 Cray-1，它也许是最有名的超级计算机，我们把它作为向量体系结构的代表。再往后是多媒体 SIMD 扩展。这类扩展之所以得名，部分要归功于一场广告宣传，广告里有一群「兔子人」（Bunny People），即半导体生产线上身穿洁净服、跳着迪斯科的工人。最后讲 GPU 的历史，这段历史就没有那么多彩了。
+
+### SIMD 超级计算机 {-}
+
+> 然而，通用多处理器的成本非常高，于是人们又考虑了其他设计方案，希望在不严重损害系统能力和效率的前提下降低成本。这些方案都是把三大部件中的某一个重新集中起来。……把［控制部件］集中起来，就得到了［一种］……阵列处理器的基本组成，Illiac IV 就是一例。
+>
+> ——Bouknight 等［1972］
+
+> ……Illiac IV 的编程非常困难，而且这种体系结构大概也不太适合我们当时想运行的某些应用。关键在于，我认为 Illiac IV 的应用和体系结构匹配得不是很好。
+>
+> ——David Kuck，Illiac IV 的软件设计者，并行软件的早期先驱。摘自 Andrew Goldstein 于 1991 年所做的口述历史，IEEE 历史中心，新泽西州新不伦瑞克
+
+SIMD 模型是最早的并行计算模型之一，可以追溯到第一台大规模多处理器 Illiac IV。这类机器不像向量体系结构那样把数据计算流水化，而是配备由多个功能部件组成的阵列，因此也可以看成阵列处理器。
+
+最早提出 SIMD 式计算机设想的是 Unger［1958］以及 Slotnick、Borck 和 McReynolds［1962］。Slotnick 的 Solomon 设计成了 Illiac IV 的基础。Illiac IV 也许是名声最差的超级计算机项目。它推动了几项技术的发展，这些技术后来在其他项目中证明是有用的；但作为一台计算机，它是失败的。1966 年估算成本为 800 万美元，到 1972 年增加到 3100 万美元，而这时只造出了计划中多处理器的四分之一。（折合成 2011 年的美元，成本从 5400 万美元增加到 1.52 亿美元。）整个系统最初预计性能为 1000 MFLOPS，实际性能最多只有 15 MFLOPS［Hord 1982］。这台计算机 1972 年交付 NASA 艾姆斯研究中心，又经过三年的工程调试才能使用。这些事件让 SIMD 的研究放慢了脚步，但后来 Danny Hillis［1985］在连接机（Connection Machine）中复兴了这种风格。连接机有 65 536 个 1 位处理器。
+
+SIMD 多处理器的基本权衡，是在单个处理器的性能和处理器的个数之间取舍。20 世纪 80 年代的 SIMD 超级计算机更看重高度并行，而不是单个处理器的性能。例如，连接多处理器 2（Connection Multiprocessor 2）有 65 536 个 1 位宽的处理器，而 Illiac IV 计划配备 64 个 64 位处理器。大规模并行 SIMD 多处理器依靠互连网络或通信网络在处理单元之间交换数据。
+
+20 世纪 80 年代，先是 Thinking Machines 公司，后是 MasPar 公司，让 SIMD 模型重获新生。但此后 SIMD 超级计算机逐渐销声匿迹，主要原因有两个。一是灵活性太差。许多重要问题并不是数据并行的，而且这种体系结构缩小规模后缺乏竞争力，也就是说，小规模 SIMD 多处理器的性价比往往不如其他方案。二是 SIMD 无法利用 20 世纪 80 年代 SISD（Single Instruction, Single Data，单指令流单数据流）微处理器技术在性能和成本上的巨大优势，当时微处理器的性能每 18 个月翻一番。SIMD 多处理器的设计者没能借助这种低成本的技术，只能为自己的多处理器定制处理器。
+
+### 向量计算机 {-}
+
+> 我当然不是在发明向量处理器。据我所知，现有的向量处理器有三种，代表分别是 Illiac-IV、（CDC 的）Star 处理器和 TI 的（ASC）处理器。这三种都是开拓性的处理器。……当开拓者的问题之一，是你总会犯错误，而我永远、永远不想当开拓者。最好是当第二个，这样就能看清开拓者犯了哪些错误。
+>
+> ——Seymour Cray，在劳伦斯利弗莫尔实验室介绍 Cray-1 的公开讲座（1976）
+
+最早的向量处理器是控制数据公司（CDC）的 STAR-100（见 Hintz 和 Tate［1972］）和德州仪器（Texas Instruments）的 ASC（见 Watson［1972］），两者都在 1972 年发布，都是存储器–存储器型向量处理器。它们的标量部件比较慢（STAR 的标量和向量用的是同一套部件），因此标量流水线非常深。两者的启动开销都很高，处理的向量长度从几百个元素到几千个元素不等。标量与向量性能的交叉点可能超过 50 个元素。看来这两种处理器的设计者对 Amdahl 定律的作用重视不够。
+
+Seymour Cray 曾在 CDC 参与 6600 和 7600 的研制。他创办了 Cray Research 公司，并在 1976 年推出了 Cray-1（见 Russell［1978］）。Cray-1 采用向量–寄存器体系结构，大大降低了启动开销，也降低了对存储器带宽的需求。Cray 还为非单位步长提供了高效的支持，并发明了链接（chaining）。最重要的是，Cray-1 是当时世界上最快的标量处理器。标量性能和向量性能兼优，大概是 Cray-1 获得成功的最重要因素。有些客户买这台机器，主要就是看中了它出色的标量性能。这是第一种在商业上取得成功的向量处理器，后来的许多向量处理器都以它的体系结构为基础。Baskett 和 Keller［1977］对 Cray-1 作了很好的评价。
+
+1981 年，CDC 开始交付 CYBER 205（见 Lincoln［1982］）。205 的基本体系结构与 STAR 相同，但性能全面提高，向量部件也可以扩展，最多四条车道（lane）。每条车道有多个功能部件，还有一条很宽的 load-store 流水线，每个时钟周期可以提供多个字。CYBER 205 的峰值性能远远超过 Cray-1，但在实际程序上，两者的性能差距要小得多。
+
+1983 年，Cray Research 交付了第一台 Cray X-MP（见 Chen［1983］）。这台处理器的时钟更快（时钟周期 9.5 ns，Cray-1 为 12.5 ns），对链接的支持更好（存在 RAW 相关的向量操作也能并行执行），并且有多条存储器流水线，因此保住了 Cray Research 在超级计算机领域的领先地位。后来推出的 Cray-2 是一种全新的设计，最多可配置四个处理器。Cray-2 的一大特点是采用 DRAM，因此能配置当时看来非常大的存储器。第一台 Cray-2 的存储器有 256M 字（每字 64 位），比此前交付的所有 Cray 机器的存储器加起来还要多！Cray-2 的时钟比 X-MP 快得多，但流水线也深得多；而且它没有链接，存储器延迟极大，每个处理器只有一条存储器流水线。总的来说，只有在需要超大主存的问题上，Cray-2 才比 Cray X-MP 快。
+
+同一年，日本的处理器厂商进入了超级计算机市场。最先推出的是富士通（Fujitsu）的 VP100 和 VP200（见 Miura 和 Uchida［1983］），后来又有日立（Hitachi）的 S810 和 NEC 的 SX/2（见 Watanabe［1987］）。事实证明，这几种处理器的性能与 Cray X-MP 相近。总的来说，这三种处理器的峰值性能比 Cray X-MP 高得多，但由于启动开销大，典型性能往往低于 Cray X-MP。Cray X-MP 偏向多处理器的路线，先推出双处理器版本，后来又推出四处理器版本；而这三种日本处理器则是在向量能力上可以扩展。
+
+1988 年，Cray Research 推出了 Cray Y-MP，这是 X-MP 的更大、更快的版本。Y-MP 最多可配置八个处理器，周期时间降到了 6 ns。配满八个处理器时，Y-MP 一般是最快的超级计算机，不过日本的单处理器超级计算机可能比单处理器的 Y-MP 快。1989 年末，Cray Research 一分为二，两家公司的目标都是制造 20 世纪 90 年代初上市的高端处理器。Seymour Cray 领导分出去的 Cray Computer 公司，直到这家公司 1995 年倒闭。他们的第一种处理器 Cray-3 原计划用砷化镓实现，但始终没能开发出可靠而又经济的实现工艺。1996 年，Seymour Cray 在一场车祸中不幸去世。去世前不久，他又创办了一家公司来开发高性能系统，不过这一次用的是商用部件。
+
+Cray Research 则专注于 C90。C90 是一种新的高端处理器，最多 16 个处理器，时钟频率 240 MHz，1991 年交付。1993 年，Cray Research 推出了他们的第一种高度并行的处理器 T3D，最多使用 2048 个 Digital Alpha 21064 微处理器。1995 年，他们宣布推出新的低端向量机 J90 和高端机器 T90。T90 与 C90 很像，但时钟频率是 C90 的 2 倍（460 MHz），并采用了三维封装和光时钟分配。
+
+1995 年，Silicon Graphics 收购了 Cray Research。1998 年发布的 SV1 系统把快得多的 CMOS 处理器嫁接到 J90 的存储系统上，还为每个 CPU 增加了一个面向向量的数据 Cache，以帮助满足更高的存储器带宽需求。2000 年，Silicon Graphics 把 Cray Research 卖给了 Tera Computer 公司，合并后的公司更名为 Cray Inc.。
+
+日本的超级计算机厂商也在不断改进设计。2001 年，人们普遍认为 NEC SX/5 是当时最快的向量超级计算机，它有 16 条车道，时钟频率 312 MHz，最多 16 个处理器共享同一个存储器。同样在 2001 年发布的 NEC SX/6 是第一种商用单芯片向量微处理器，在一个晶片上集成了一个乱序四发射超标量处理器、标量指令 Cache 和数据 Cache，以及一个八车道向量部件［Kitagawa et al. 2003］。地球模拟器（Earth Simulator）由 640 个节点组成，节点之间用全交叉开关连接，每个节点有 8 个 SX-6 向量微处理器，共享一个本地存储器。2004 年发布的 SX-8 把车道数减为四条，但向量时钟频率提高到 2 GHz。标量部件的时钟频率较低，只有 1 GHz。这是向量机的常见做法：向量部件中没有冒险，因此比较容易采用更深的流水线。
+
+2002 年，Cray Inc. 发布了 X1，它基于一种全新的向量 ISA。X1 的 SSP 处理器芯片集成了一个带标量 Cache 的乱序超标量处理器，运行频率 400 MHz，还有一个两车道向量部件，运行频率 800 MHz。四个 SSP 芯片组合在一起构成一个 MSP，向量峰值性能达到 12.8 GFLOPS，可以与同期的 NEC SX 机器相抗衡。2004 年交付的增强版 X1E 把两个时钟频率分别提高到 565 MHz 和 1130 MHz。X1 的许多思想借鉴了 Cray T3E 的设计。T3E 是一种 MIMD（Multiple Instruction, Multiple Data，多指令流多数据流）计算机，使用现成的微处理器。X1 采用新的指令系统，寄存器数量更多；存储器分布在各处理器本地，但处于同一个共享地址空间中。乱序标量部件与向量部件是解耦的，因此标量部件可以领先于向量部件执行。为了利用 MSP 的 Cache，数据要分块，分块后向量就变短了，与八车道的向量部件不太匹配。为了处理这些较短的向量，每个处理器只有两条向量车道，可以各自执行不同的循环。
+
+Cray X2 于 2007 年发布，可能是最后一种实际建造的 Cray 向量体系结构，因为就这样的市场规模而言，很难证明投资研制新芯片是值得的。这种处理器的时钟频率为 1.3 GHz，有 8 条向量车道，单个处理器的单精度峰值性能为 42 GFLOP/s。它有 L1 和 L2 两级 Cache。每个节点是一个 4 路 SMP，最多 128 GB DRAM，最大规模为 8K 个节点。
+
+NEC SX-9 于 2008 年发布，每个节点最多 16 个处理器，每个处理器有 8 条车道，运行频率 3.2 GHz。双精度向量峰值性能为 102 GFLOP/s。16 处理器的 SMP 最多可配置 1024 GB DRAM，最大规模为 512 个节点。

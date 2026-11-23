@@ -1,0 +1,259 @@
+Gibson, J., R. Kunz, D. Ofelt, M. Horowitz, J. Hennessy, and M. Heinrich [2000]. "FLASH vs. (simulated) FLASH: Closing the simulation loop," Proc. Ninth Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), November 12–15, Cambridge, Mass., 49–58.
+
+Goodman, J. R. [1983]. "Using cache memory to reduce processor memory traffic," Proc. 10th Annual Int'l. Symposium on Computer Architecture (ISCA), June 5–7, 1982, Stockholm, Sweden, 124–131.
+
+Goralski, W. [1997]. SONET: A Guide to Synchronous Optical Network, McGraw-Hill, New York.
+
+Grice, C., and M. Kanellos [2000]. "Cell phone industry at crossroads: Go high or low?" CNET News (August 31), technews.netscape.com/news/0-1004-201-2518386-0.html?tag=st.ne.1002.tgif.sf.
+
+Groe, J. B., and L. E. Larson [2000]. CDMA Mobile Radio Design, Artech House, Boston.
+
+Hagersten E., and M. Koster [1998]. "WildFire: A scalable path for SMPs," Proc. Fifth Int'l. Symposium on High-Performance Computer Architecture, January 9–12, 1999, Orlando, Fla.
+
+Hagersten, E., A. Landin, and S. Haridi [1992]. "DDM—a cache-only memory architecture," IEEE Computer 25:9 (September), 44–54.
+
+Hill, M. D. [1998]. "Multiprocessors should support simple memory consistency models," IEEE Computer 31:8 (August), 28–34.
+
+Hillis, W. D. [1985]. The Connection Multiprocessor, MIT Press, Cambridge, Mass.
+
+Hirata, H., K. Kimura, S. Nagamine, Y. Mochizuki, A. Nishimura, Y. Nakase, and T. Nishizawa [1992]. "An elementary processor architecture with simultaneous instruction issuing from multiple threads," Proc. 19th Annual Int'l. Symposium on Computer Architecture (ISCA), May 19–21, 1992, Gold Coast, Australia, 136–145.
+
+Hockney, R. W., and C. R. Jesshope [1988]. Parallel Computers 2: Architectures, Programming and Algorithms, Adam Hilger, Ltd., Bristol, England.
+
+Holland, J. H. [1959]. "A universal computer capable of executing an arbitrary number of subprograms simultaneously," Proc. East Joint Computer Conf. 16, 108–113.
+
+Hord, R. M. [1982]. The Illiac-IV, The First Supercomputer, Computer Science Press, Rockville, Md.
+
+Hristea, C., D. Lenoski, and J. Keen [1997]. "Measuring memory hierarchy performance of cache-coherent multiprocessors using micro benchmarks," Proc. ACM/IEEE Conf. on Supercomputing, November 15–21, 1997, San Jose, Calif.
+
+Hwang, K. [1993]. Advanced Computer Architecture and Parallel Programming, McGraw-Hill, New York.
+
+IBM. [2005]. "Blue Gene," IBM J. of Research and Development, 49:2/3 (special issue).
+
+Infiniband Trade Association. [2001]. InfiniBand Architecture Specifications Release 1.0.a, www.infinibandta.org.
+
+Jordan, H. F. [1983]. "Performance measurements on HEP—a pipelined MIMD computer," Proc. 10th Annual Int'l. Symposium on Computer Architecture (ISCA), June 5–7, 1982, Stockholm, Sweden, 207–212.
+
+Kahn, R. E. [1972]. "Resource-sharing computer communication networks," Proc. IEEE 60:11 (November), 1397–1407.
+
+Keckler, S. W., and W. J. Dally [1992]. "Processor coupling: Integrating compile time and runtime scheduling for parallelism," Proc. 19th Annual Int'l. Symposium on Computer Architecture (ISCA), May 19–21, 1992, Gold Coast, Australia, 202–213.
+
+Kontothanassis, L., G. Hunt, R. Stets, N. Hardavellas, M. Cierniak, S. Parthasarathy, W. Meira, S. Dwarkadas, and M. Scott [1997]. "VM-based shared memory on low-latency, remote-memory-access networks," Proc. 24th Annual Int'l. Symposium on Computer Architecture (ISCA), June 2–4, 1997, Denver, Colo.
+
+Kurose, J. F., and K. W. Ross [2001]. Computer Networking: A Top-Down Approach Featuring the Internet, Addison-Wesley, Boston.
+
+Kuskin, J., D. Ofelt, M. Heinrich, J. Heinlein, R. Simoni, K. Gharachorloo, J. Chapin, D. Nakahira, J. Baxter, M. Horowitz, A. Gupta, M. Rosenblum, and J. L. Hennessy [1994]. "The Stanford FLASH multiprocessor," Proc. 21st Annual Int'l. Symposium on Computer Architecture (ISCA), April 18–21, 1994, Chicago.
+
+Lamport, L. [1979]. "How to make a multiprocessor computer that correctly executes multiprocess programs," IEEE Trans. on Computers C-28:9 (September), 241–248.
+
+Laudon, J., A. Gupta, and M. Horowitz [1994]. "Interleaving: A multithreading technique targeting multiprocessors and workstations," Proc. Sixth Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 4–7, 1994, San Jose, Calif., 308–318.
+
+Laudon, J., and D. Lenoski [1997]. "The SGI Origin: A ccNUMA highly scalable server," Proc. 24th Annual Int'l. Symposium on Computer Architecture (ISCA), June 2–4, 1997, Denver, Colo., 241–251.
+
+Lenoski, D., J. Laudon, K. Gharachorloo, A. Gupta, and J. L. Hennessy [1990]. "The Stanford DASH multiprocessor," Proc. 17th Annual Int'l. Symposium on Computer Architecture (ISCA), May 28–31, 1990, Seattle, Wash., 148–159.
+
+Lenoski, D., J. Laudon, K. Gharachorloo, W.-D. Weber, A. Gupta, J. L. Hennessy, M. A. Horowitz, and M. Lam [1992]. "The Stanford DASH multiprocessor," IEEE Computer 25:3 (March), 63–79.
+
+Li, K. [1988]. "IVY: A shared virtual memory system for parallel computing," Proc. Int'l. Conf. on Parallel Processing (ICCP), August, The Pennsylvania State University, University Park, Penn.
+
+Lo, J., L. Barroso, S. Eggers, K. Gharachorloo, H. Levy, and S. Parekh [1998]. "An analysis of database workload performance on simultaneous multithreaded processors," Proc. 25th Annual Int'l. Symposium on Computer Architecture (ISCA), July 3–14, 1998, Barcelona, Spain, 39–50.
+
+Lo, J., S. Eggers, J. Emer, H. Levy, R. Stamm, and D. Tullsen [1997]. "Converting thread-level parallelism into instruction-level parallelism via simultaneous multithreading," ACM Trans. on Computer Systems 15:2 (August), 322–354.
+
+Lovett, T., and S. Thakkar [1988]. "The Symmetry multiprocessor system," Proc. Int'l. Conf. on Parallel Processing (ICCP), August, The Pennsylvania State University, University Park, Penn., 303–310.
+
+Mellor-Crummey, J. M., and M. L. Scott [1991]. "Algorithms for scalable synchronization on shared-memory multiprocessors," ACM Trans. on Computer Systems 9:1 (February), 21–65.
+
+Menabrea, L. F. [1842]. "Sketch of the analytical engine invented by Charles Babbage," Bibliothèque Universelle de Genève, 82 (October).
+
+Metcalfe, R. M. [1993]. "Computer/network interface design: Lessons from Arpanet and Ethernet." IEEE J. on Selected Areas in Communications 11:2 (February), 173–180.
+
+Metcalfe, R. M., and D. R. Boggs [1976]. "Ethernet: Distributed packet switching for local computer networks," Communications of the ACM 19:7 (July), 395–404.
+
+Mitchell, D. [1989]. "The Transputer: The time is now," Computer Design (RISC suppl.), 40–41.
+
+Miya, E. N. [1985]. "Multiprocessor/distributed processing bibliography," Computer Architecture News 13:1, 27–29.
+
+National Research Council. [1997]. The Evolution of Untethered Communications, Computer Science and Telecommunications Board, National Academy Press, Washington, D.C.
+
+Nikhil, R. S., G. M. Papadopoulos, and Arvind [1992]. "\*T: A multithreaded massively parallel architecture," Proc. 19th Annual Int'l. Symposium on Computer Architecture (ISCA), May 19–21, 1992, Gold Coast, Australia, 156–167.
+
+Noordergraaf, L., and R. van der Pas [1999]. "Performance experiences on Sun's WildFire prototype," Proc. ACM/IEEE Conf. on Supercomputing, November 13–19, 1999, Portland, Ore.
+
+Partridge, C. [1994]. Gigabit Networking, Addison-Wesley, Reading, Mass.
+
+Pfister, G. F. [1998]. In Search of Clusters, 2nd ed., Prentice Hall, Upper Saddle River, N.J.
+
+Pfister, G. F., W. C. Brantley, D. A. George, S. L. Harvey, W. J. Kleinfekder, K. P. McAuliffe, E. A. Melton, V. A. Norton, and J. Weiss [1985]. "The IBM research parallel processor prototype (RP3): Introduction and architecture," Proc. 12th Annual Int'l. Symposium on Computer Architecture (ISCA), June 17–19, 1985, Boston, Mass., 764–771.
+
+Reinhardt, S. K., J. R. Larus, and D. A. Wood [1994]. "Tempest and Typhoon: User-level shared memory," Proc. 21st Annual Int'l. Symposium on Computer Architecture (ISCA), April 18–21, 1994, Chicago, 325–336.
+
+Rettberg, R. D., W. R. Crowther, P. P. Carvey, and R. S. Towlinson [1990]. "The Monarch parallel processor hardware design," IEEE Computer 23:4 (April), 18–30.
+
+Rosenblum, M., S. A. Herrod, E. Witchel, and A. Gupta [1995]. "Complete computer simulation: The SimOS approach," in IEEE Parallel and Distributed Technology (now called Concurrency) 4:3, 34–43.
+
+Saltzer, J. H., D. P. Reed, and D. D. Clark [1984]. "End-to-end arguments in system design," ACM Trans. on Computer Systems 2:4 (November), 277–288.
+
+Satran, J., D. Smith, K. Meth, C. Sapuntzakis, M. Wakeley, P. Von Stamwitz, R. Haagens, E. Zeidner, L. Dalle Ore, and Y. Klein [2001]. "iSCSI," IPS Working Group of IETF, Internet draft www.ietf.org/internet-drafts/draft-ietf-ips-iscsi-07.txt.
+
+Saulsbury, A., T. Wilkinson, J. Carter, and A. Landin [1995]. "An argument for Simple COMA," Proc. First IEEE Symposium on High-Performance Computer Architectures, January 22–25, 1995, Raleigh, N.C., 276–285.
+
+Schwartz, J. T. [1980]. "Ultracomputers," ACM Trans. on Programming Languages and Systems 4:2, 484–521.
+
+Scott, S. L. [1996]. "Synchronization and communication in the T3E multiprocessor," Seventh Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 1–5, 1996, Cambridge, Mass., 26–36.
+
+Scott, S. L., and G. M. Thorson [1996]. "The Cray T3E network: Adaptive routing in a high-performance 3D torus," Proc. IEEE HOT Interconnects '96, August 15–17, 1996, Stanford University, Palo Alto, Calif., 14–156.
+
+Seitz, C. L. [1985]. "The Cosmic Cube (concurrent computing)," Communications of the ACM 28:1 (January), 22–33.
+
+Singh, J. P., J. L. Hennessy, and A. Gupta [1993]. "Scaling parallel programs for multiprocessors: Methodology and examples," Computer 26:7 (July), 22–33.
+
+Slotnick, D. L., W. C. Borck, and R. C. McReynolds [1962]. "The Solomon computer," Proc. AFIPS Fall Joint Computer Conf., December 4–6, 1962, Philadelphia, Penn., 97–107.
+
+Smith, B. J. [1978]. "A pipelined, shared resource MIMD computer," Proc. Int'l. Conf. on Parallel Processing (ICPP), August, Bellaire, Mich., 6–8.
+
+Soundararajan, V., M. Heinrich, B. Verghese, K. Gharachorloo, A. Gupta, and J. L. Hennessy [1998]. "Flexible use of memory for replication/migration in cache-coherent DSM multiprocessors," Proc. 25th Annual Int'l. Symposium on Computer Architecture (ISCA), July 3–14, 1998, Barcelona, Spain, 342–355.
+
+Spurgeon, C. [2001]. "Charles Spurgeon's Ethernet Web site," www.host.ots.utexas.edu/ethernet/ethernet-home.html.
+
+Stenström, P., T. Joe, and A. Gupta [1992]. "Comparative performance evaluation of cachecoherent NUMA and COMA architectures," Proc. 19th Annual Int'l. Symposium on Computer Architecture (ISCA), May 19–21, 1992, Gold Coast, Australia, 80–91.
+
+Sterling, T. [2001]. Beowulf PC Cluster Computing with Windows and Beowulf PC Cluster Computing with Linux, MIT Press, Cambridge, Mass.
+
+Stevens, W. R. [1994–1996]. TCP/IP Illustrated (three volumes), Addison-Wesley, Reading, Mass.
+
+Stone, H. [1991]. High Performance Computers, Addison-Wesley, New York.
+
+Swan, R. J., A. Bechtolsheim, K. W. Lai, and J. K. Ousterhout [1977]. "The implementation of the Cm\* multi-microprocessor," Proc. AFIPS National Computing Conf., June 13–16, 1977, Dallas, Tex., 645–654.
+
+Swan, R. J., S. H. Fuller, and D. P. Siewiorek [1977]. "Cm\*—a modular, multi-microprocessor," Proc. AFIPS National Computing Conf., June 13–16, 1977, Dallas, Tex., 637–644.
+
+Tanenbaum, A. S. [1988]. Computer Networks, 2nd ed., Prentice Hall, Englewood Cliffs, N.J.
+
+Tang, C. K. [1976]. "Cache design in the tightly coupled multiprocessor system," Proc. AFIPS National Computer Conf., June 7–10, 1976, New York, 749–753.
+
+Thacker, C. P., E. M. McCreight, B. W. Lampson, R. F. Sproull, and D. R. Boggs [1982]. "Alto: A personal computer," in D. P. Siewiorek, C. G. Bell, and A. Newell, eds., Computer Structures: Principles and Examples, McGraw-Hill, New York, 549–572.
+
+Thekkath, R., A. P. Singh, J. P. Singh, S. John, and J. L. Hennessy [1997]. "An evaluation of a commercial CC-NUMA architecture—the CONVEX Exemplar SPP1200," Proc. 11th Int'l. Parallel Processing Symposium (IPPS), April 1–7, 1997, Geneva, Switzerland.
+
+Tullsen, D. M., S. J. Eggers, J. S. Emer, H. M. Levy, J. L. Lo, and R. L. Stamm [1996]. "Exploiting choice: Instruction fetch and issue on an implementable simultaneous multithreading processor," Proc. 23rd Annual Int'l. Symposium on Computer Architecture (ISCA), May 22–24, 1996, Philadelphia, Penn., 191–202.
+
+Tullsen, D. M., S. J. Eggers, and H. M. Levy [1995]. "Simultaneous multithreading: Maximizing on-chip parallelism," Proc. 22nd Annual Int'l. Symposium on Computer Architecture (ISCA), June 22–24, 1995, Santa Margherita, Italy, 392–403.
+
+Unger, S. H. [1958]. "A computer oriented towards spatial problems," Proc. Institute of Radio Engineers 46:10 (October), 1744–1750.
+
+Walrand, J. [1991]. Communication Networks: A First Course, Aksen Associates: Irwin, Homewood, Ill.
+
+Wilson, A. W., Jr. [1987]. "Hierarchical cache/bus architecture for shared-memory multiprocessors," Proc. 14th Annual Int'l. Symposium on Computer Architecture (ISCA), June 2–5, 1987, Pittsburgh, Penn., 244–252.
+
+Wolfe, A., and J. P. Shen [1991]. "A variable instruction stream extension to the VLIW architecture." Proc. Fourth Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), April 8–11, 1991, Palo Alto, Calif., 2–14.
+
+Wood, D. A., and M. D. Hill [1995]. "Cost-effective parallel computing," IEEE Computer 28:2 (February), 69–72.
+
+Wulf, W., and C. G. Bell [1972]. "C.mmp—A multi-mini-processor," Proc. AFIPS Fall Joint Computer Conf., December 5–7, 1972, Anaheim, Calif., 765–777.
+
+Wulf, W., and S. P. Harbison [1978]. "Reflections in a pool of processors—an experience report on C.mmp/Hydra," Proc. AFIPS National Computing Conf. June 5–8, 1978, Anaheim, Calif., 939–951.
+
+Yamamoto, W., M. J. Serrano, A. R. Talcott, R. C. Wood, and M. Nemirosky [1994]. "Performance estimation of multistreamed, superscalar processors," Proc. 27th Hawaii Int'l. Conf. on System Sciences, January 4–7, 1994, Wailea, 195–204.
+
+## 集群的发展（第 6 章） {#sec-m-8}
+
+本节介绍集群的发展。仓库级计算机（WSC）和效用计算都是在集群的基础上发展起来的。（想进一步了解的读者，可以先读 Barroso 和 Hölzle［2009］，以及 James Hamilton 发表在 <http://perspectives.mvdirona.com> 上的博客文章和演讲。）
+
+### 集群：WSC 的先驱 {-}
+
+集群大概是 20 世纪 60 年代由用户「发明」的。这些用户有的是一台计算机容纳不下全部工作，有的是需要一台备用机，以便主机出故障时接替工作［Pfister 1998］。1975 年，Tandem 推出了 16 个节点的集群；1984 年，Digital 随后推出了 VAX 集群。早期的集群由若干台独立的计算机组成，这些计算机共享 I/O 设备，需要由分布式操作系统来协调它们的活动。不久，计算机之间加上了通信链路，原因之一是这样可以把计算机分散到不同的地点，某一地点发生灾难时系统仍然可用。用户登录到集群上，并不知道自己的程序在哪一台机器上运行。到 1993 年，DEC（现为 HP）已经售出 25 000 多套集群。其他早期的集群厂商还有 Tandem（现为 HP）和 IBM（至今仍是 IBM）。今天，几乎每家公司都有集群产品。这些产品大多以可用性为目标，性能的可扩展性只是附带的好处。
+
+后来，在集群上做科学计算成了 MPP 的竞争对手。1993 年，Beowulf 项目启动，目标是满足 NASA 的需求：用不到 50 000 美元造出一台 1 GFLOPS 的计算机。1994 年，一台由现成的 80486 PC 组成的 16 节点集群达到了这一目标［Bell and Gray 2001］。由于重视这类应用，人们开发了多种软件接口，使大型程序或大量独立程序的提交、协调和调试更加方便。
+
+人们一方面设法降低集群中的通信延迟，另一方面设法提高带宽，有好几个研究项目专门研究这个问题。（低延迟研究的一项商业成果是 VI 接口标准，下文介绍的 Infiniband 采用了这一标准。）后来，低延迟在其他应用中也证明是有用的。例如，1997 年，加州大学伯克利分校用 100 台 UltraSPARC 台式计算机组成一个集群，计算机之间通过 Myrinet 交换机连接，每条链路 160 MB/s。这个集群创造了两项世界纪录：一是数据库排序，1 分钟内把原先存放在磁盘上的 8.6 GB 数据排好序；二是破解加密消息，只用 3.5 小时就破译了一个 40 位的 DES 密钥。
+
+这个研究项目称为工作站网络（Network of Workstations，NOW）［Anderson, Culler, and Patterson 1995］。NOW 项目还开发了 Inktomi 搜索引擎，并由此创办了一家同名的初创公司。Eric Brewer 先在伯克利、后在这家公司领导 Inktomi 的工作，目的是证明互联网服务的计算基础设施可以用商品化硬件来搭建。Inktomi 在一个机架的 PC 服务器内部使用标准化网络，因此可扩展性更好。此前领先的搜索引擎 AltaVista 则相反，采用的是大规模 SMP。集群上的高性能计算工作关注的重点不同，NOW 和 Inktomi 强调的是使用数量较多的低成本节点，以及清晰的编程模型。因此，NOW 项目和 Inktomi 被看作 WSC 和云计算的基础。当年 Inktomi 从 AltaVista 手中接过领先搜索引擎的位置，后来谷歌又从 Inktomi 手中接过这一位置，谷歌沿用的正是 Inktomi 的技术路线［Brin and Page 1998］。（谷歌最初的创新在于搜索质量，WSC 方面的创新要晚得多。）多年来，所有互联网服务都依靠集群技术为数以百万计的用户提供服务。
+
+### 效用计算：云计算的先驱 {-}
+
+正文讲过，效用计算最早的形式是分时系统。后来出现了更小、更便宜的个人计算机，分时系统随之逐渐消失。过去十年里，有许多复兴效用计算的尝试，但都不算完全成功：2000 年，Sun 开始以每小时 1 美元的价格出售 Sun Cloud 上的机时；2001 年，HP 推出了 Utility Data Center；21 世纪初，Intel 也尝试出售内部超级计算机的机时。这些服务虽然都已商业化，使用的客户却很少。
+
+与此相关的一个话题是网格计算。发明网格计算，最初是为了让科学计算程序能够在地理上分散的多个计算设施上运行。当时就有人怀疑这个目标是否明智，更不用说实现它有多难了。网格计算往往要用非常大的系统运行非常大的程序，由多个数据中心共同完成任务。距离远，延迟就长，这是固有的，因此单个应用分散到不同地点运行，效果并不好。网格计算这第一步最终形成了一些数据访问方面的约定，但网格计算界没有开发出在高性能计算界之外也有用的 API，因此云计算与网格计算在代码和历史上几乎没有共同之处。
+
+Armbrust 等人［2009］认为，互联网服务公司解决了大规模运营中的问题以后，发现了显著的规模经济，成本因此降到小型数据中心之下。亚马逊意识到，如果这种成本优势确实存在，那么出售这种服务就应该能够盈利。2006 年，亚马逊发布了弹性云计算（Elastic Cloud Computing，EC2），价格为每个实例每小时 0.10 美元。EC2 随后大受欢迎，其他互联网公司也纷纷推出云计算服务，如 Google App Engine 和 Microsoft Azure，只是它们的抽象层次比 Amazon Web Services 的 x86 虚拟机更高。由此可见，按需付费计算如今流行起来，并不是因为最近有人想出了这个主意，而是因为技术和商业模式终于相互契合，公司提供一种很多人都想用的服务就能赚钱。将来是多种效用计算模式都能成功，还是整个行业统一到一个标准上，只有时间能给出答案。这一过程肯定很值得关注。
+
+### 集装箱 {-}
+
+2003 年秋，很多人都在考虑用集装箱来放置服务器。互联网档案馆（Internet Archive）的馆长兼创始人 Brewster Kahle 做过几次演讲，讲他怎样把整个档案馆装进一个 40 英尺的集装箱。他的想法是为档案馆制作多份副本，分散到世界各地，以确保档案馆能够长久留存，避免重蹈亚历山大图书馆的覆辙：那座图书馆在公元前 48 年毁于大火。2003 年 11 月，与 Kahle 共事的人根据他的演讲写了一份白皮书，更详细地说明了集装箱的设计应当是什么样子。
+
+同一年，谷歌的工程师也在研究用集装箱搭建数据中心，并于 2003 年 12 月就其中若干方面提交了专利申请。第一个用于数据中心的集装箱在 2005 年 1 月交付，谷歌在 2007 年 10 月获得专利，2009 年 4 月公开了使用集装箱的情况。
+
+Sun Microsystems 的 Greg Papadopolous 和 Applied Minds 的 Danny Hillis 听了 Kahle 的演讲，设计了一款名为 Sun 模块化数据中心（Sun Modular Datacenter）的产品，于 2006 年 10 月首次亮相。（项目代号是 Black Box，很多人至今仍这样称呼它。）这个半长（20 英尺）的集装箱可以容纳 280 台服务器。这款产品的发布，加上微软宣布正在建设一个可容纳 220 个 40 英尺集装箱的数据中心，促使许多其他公司推出了集装箱产品，以及专为放进集装箱而设计的服务器。
+
+事情的发展颇为巧合：2009 年，互联网档案馆把自己的数据迁移到了一台 Sun 模块化数据中心上。互联网档案馆的一份副本如今保存在埃及的新亚历山大图书馆，离古亚历山大图书馆的原址不远。
+
+### 参考文献 {- #sec-m-8-references}
+
+Anderson, T. E., D. E. Culler, and D. Patterson [1995]. "A case for NOW (networks of workstations)," IEEE Micro 15:1 (February), 54–64.
+
+Apache Software Foundation. [2011]. Apache Hadoop project, http://hadoop.apache.org.
+
+Armbrust, M., A. Fox, R. Griffith, A.D. Joseph, R. Katz, A. Konwinski, G. Lee, D. Patterson, A. Rabkin, I. Stoica, and M. Zaharia [2009]. Above the Clouds: A Berkeley View of Cloud Computing, Tech. Rep. UCB/EECS-2009-28, University of California, Berkeley (http://www.eecs.berkeley.edu/Pubs/TechRpts/2009/EECS-2009-28.html).
+
+Barroso, L. A. [2010]. "Warehouse scale computing [keynote address]," Proc. ACM SIG-MOD, June 8–10, 2010, Indianapolis, Ind.
+
+Barroso, L. A., and U. Hölzle [2007]. "The case for energy-proportional computing," IEEE Computer 40:12 (December), 33–37.
+
+Barroso, L.A., and U. Hölzle [2009]. "The datacenter as a computer: An introduction to the design of warehouse-scale machines," in M. D. Hill, ed., Synthesis Lectures on Computer Architecture, Morgan & Claypool, San Rafael, Calif.
+
+Barroso, L.A., Clidaras, J. and Hölzle, U., 2013. The datacenter as a computer: An introduction to the design of warehouse-scale machines. Synthesis lectures on computer architecture, 8(3), pp.1–154.
+
+Barroso, L.A., Marty, M., Patterson, D., and Ranganathan, P. 2017. Attack of the Killer Microseconds. Communications of the ACM, 56(2).
+
+Bell, C. G., and J. Gray [2002]. "What's next in high performance computing," Communications of the ACM 45:2 (February), 91–95.
+
+Brady, J.T., 1986. A theory of productivity in the creative process. IEEE Computer Graphics and Applications, 6(5), pp.25–34.
+
+Brin, S., and L. Page [1998]. "The anatomy of a large-scale hypertextual Web search engine," Proc. 7th Int'l. World Wide Web Conf., April 14–18, 1998, Brisbane, Queensland, Australia, 107–117.
+
+Carter, J., and K. Rajamani [2010]. "Designing energy-efficient servers and data centers," IEEE Computer 43:7 (July), 76–78.
+
+Chang, F., J. Dean, S. Ghemawat, W. C. Hsieh, D. A. Wallach, M. Burrows, T. Chandra, A. Fikes, and R. E. Gruber [2006]. "Bigtable: A distributed storage system for structured data," in Proc. Operating Systems Design and Implementation (OSDI '06), November 6–8, 2006, Seattle, Wash.
+
+Chang, J., J. Meza, P. Ranganathan, C. Bash, and A. Shah [2010]. "Green server design: Beyond operational energy to sustainability," Workshop on Power Aware Computing and Systems (HotPower '10), October 4–6, 2010, Vancouver, British Columbia.
+
+Clark, J., 2014 Five Numbers That Illustrate the Mind-Bending Size of Amazon's Cloud, Bloomberg, https://www.bloomberg.com/news/2014-11-14/5-numbers-that-illustrate-the-mind-bending-size-of-amazon-s-cloud.html.
+
+Clidaras, J., C. Johnson, and B. Felderman [2010]. Private communication.
+
+Climate Savers Computing. [2007]. Efficiency specs, http://www.climatesaverscomputing.org/.
+
+Clos, C., 1953. A Study of Non-Blocking Switching Networks. Bell Labs Technical Journal, 32(2), pp.406-424.
+
+Dean, J. [2009]. "Designs, lessons and advice from building large distributed systems [keynote address]," Proc. 3rd ACM SIGOPS International Workshop on Large Scale Distributed Systems and Middleware, Co-located with the 22nd ACM Symposium on Operating Systems Principles (SOSP 2009), October 10–11, 2009, Big Sky, Mont.
+
+Dean, J. and Barroso, L.A., 2013. The tail at scale. Communications of the ACM, 56(2), pp.74-80.
+
+Dean, J., and S. Ghemawat [2004]. "MapReduce: Simplified data processing on large clusters." In Proc. Operating Systems Design and Implementation (OSDI '04), December 6–8, 2004, San Francisco, 137–150.
+
+Dean, J., and S. Ghemawat [2008]. "MapReduce: simplified data processing on large clusters," Communications of the ACM 51:1, 107–113.
+
+DeCandia, G., D. Hastorun, M. Jampani, G. Kakulapati, A. Lakshman, A. Pilchin, S. Sivasubramanian, P. Vosshall, and W. Vogels [2007]. "Dynamo: Amazon's highly available key-value store," in Proc. 21st ACM Symposium on Operating Systems Principles, October 14–17, 2007, Stevenson, Wash.
+
+Doherty, W.J. and Thadhani, A.J., 1982. The economic value of rapid response time. IBM Report.
+
+Fan, X., W. Weber, and L. A. Barroso [2007]. "Power provisioning for a warehouse-sized computer," in Proc. 34th Annual Int'l. Symposium on Computer Architecture (ISCA), June 9–13, 2007, San Diego, Calif.
+
+A. Fikes, "Storage architecture and challenges," in Google Faculty Summit, 2010.
+
+Ghemawat, S., H. Gobioff, and S.-T. Leung (2003). "The Google file system," in Proc. 19th ACM Symposium on Operating Systems Principles, October 19–22, 2003, Lake George, N.Y.
+
+Greenberg, A., N. Jain, S. Kandula, C. Kim, P. Lahiri, D. Maltz, P. Patel, and S. Sengupta [2009]. "VL2: A scalable and flexible data center network," in Proc. SIGCOMM, August 17–21, Barcelona, Spain.
+
+González, A. and Day, M. April 27, 2016, "Amazon, Microsoft invest billions as computing shifts to cloud," The Seattle Times. http://www.seattletimes.com/business/technology/amazon-microsoft-invest-billions-as-computing-shifts-to-cloud/
+
+Hamilton, J. [2009]. "Data center networks are in my way," Stanford Clean Slate CTO Summit, October 23, 2009, http://mvdirona.com/jrh/TalksAndPapers/JamesHamilton_CleanSlateCTO2009.pdf.
+
+Hamilton, J. [2010]. "Cloud computing economies of scale," Proc. AWS Workshop on Genomics & Cloud Computing, June 8, 2010, Seattle, Wash. (http://mvdirona.com/jrh/TalksAndPapers/JamesHamilton_GenomicsCloud20100608.pdf).
+
+Hamilton, J., 2014. AWS Innovation at Scale, AWS Re-invent conference. https://www.youtube.com/watch?v=JIQETrFC_SQ
+
+Hamilton, J., May 2015. The Return to the Cloud, http://perspectives.mvdirona.com/2015/05/the-return-to-the-cloud//
+
+Hamilton, J., April 2017. How Many Data Centers Needed World-Wide, http://perspectives.mvdirona.com/2017/04/how-many-data-centers-needed-worldwide/

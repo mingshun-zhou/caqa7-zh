@@ -1,0 +1,17 @@
+# 生成物
+_book/
+_book.tmp/
+_book.old/
+_site/
+_site.tmp/
+_bookdown_files/
+_bookdown.site.yml
+*.rds
+preview.html
+# 出版社原书 PDF，不入库
+底本/
+# 临时文件
+*.tmp
+.Rhistory
+.DS_Store
+caqa7.html

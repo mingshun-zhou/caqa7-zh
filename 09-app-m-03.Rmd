@@ -1,0 +1,216 @@
+MIPS 这类简单的 load-store 型计算机，通常称为 RISC 体系结构。RISC 体系结构可以追溯到 6600 这样的计算机：当时 Thornton、Cray 等人就认识到，指令系统简单是造出快速计算机的关键。Cray 后来在 CRAY-1 上延续了让计算机保持简单的传统。商用 RISC 主要建立在三个研究项目的成果之上：伯克利的 RISC 处理器、IBM 801 和斯坦福的 MIPS 处理器。据称，在工艺相同的条件下，这些体系结构的性能是其他计算机的 2 到 5 倍，因此引起了工业界的极大兴趣。
+
+IBM 的项目始于 1975 年，开始得最早，公开得却最晚。IBM 的计算机设计成 24 位的 ECL 小型机，两个大学项目做的则都是基于 MOS 的 32 位微处理器。一般认为 John Cocke 是 801 设计之父，他因这一贡献获得了 Eckert-Mauchly 奖和图灵奖。Radin［1982］介绍了 801 体系结构的要点。801 是一个实验项目，从来没有打算做成产品。事实上，为了降低成本和复杂度，这台计算机的寄存器只有 24 位。
+
+1980 年，伯克利的 Patterson 和他的同事开始了一个项目，这种体系结构方法的名字就来自这个项目（见 Patterson and Ditzel［1980］）。他们造了两台计算机，即 RISC-I 和 RISC-II。IBM 的项目外界知道得不多，也很少有人讨论，因此伯克利小组对 RISC 方法的宣传推广，是这项技术得到认可的关键。伯克利小组还造出了最早支持混合格式 RISC 的指令 Cache 之一（见 Patterson et al.［1983］）：指令在存储器中有 16 位和 32 位两种，在 Cache 中一律是 32 位。此后，伯克利小组又造了面向 Smalltalk 的 RISC 计算机（Ungar et al.［1984］）和面向 LISP 的 RISC 计算机（Taylor et al.［1986］）。
+
+1981 年，斯坦福的 Hennessy 和他的同事发表了对斯坦福 MIPS 计算机的介绍。最初的 MIPS 设计有两个重要方面：一是流水线高效，二是由编译器辅助调度流水线。MIPS 是 Microprocessor without Interlocked Pipeline Stages（无互锁流水级的微处理器）的缩写，这个名字说明硬件不负责让流水线停顿，相关由编译器处理。
+
+早期的这几种 RISC 计算机，即 801、RISC-II 和 MIPS，有很多共同之处。两个大学项目都想设计一台简单的计算机，能在大学的条件下用 VLSI 做出来。三种计算机都采用简单的 load-store 体系结构和固定格式的 32 位指令，都强调流水线要高效。Patterson［1985］介绍了这三种计算机，以及后来成为 RISC 计算机标志的基本设计原则；Hennessy［1984］从另一个角度阐述了同样的思想，还讨论了 VLSI 处理器设计中的其他问题。
+
+1985 年，Hennessy 发表文章解释 RISC 的性能优势，认为根源在于 CPI 低得多：RISC 处理器的 CPI 不到 2，VAX-11/780 则超过 10（不过两者的负载并不完全相同）。Emer 和 Clark［1984］有一篇刻画 VAX-11/780 性能的论文，RISC 研究者正是借助这篇论文，才弄清了自己的计算机性能优势从何而来。
+
+两个大学项目在 1983–1984 年前后结束，此后工业界广泛采用了这项技术。许多早期计算机（1986 年以前制造的）的厂商都声称自己的产品是 RISC 计算机。但这些说法往往更多出于市场宣传的需要，而不是工程上的事实。
+
+1986 年，计算机工业界开始发布处理器，所用的技术来自三个 RISC 研究项目的探索。Moussouris et al.［1986］介绍了 MIPS R2000 整数处理器，Kane 的书［1986］则完整描述了它的体系结构。惠普把已有的小型机产品线转到了 RISC 体系结构上，Lee［1989］介绍了 HP Precision Architecture。IBM 始终没有把 801 直接做成产品，而是把其中的思想用在一种新的低端体系结构上。这种体系结构用在 IBM RT-PC 中，一组论文对它作了介绍［Waters 1986］。1990 年，IBM 发布了一种新的 RISC 体系结构（RS 6000），这是第一个超标量 RISC 处理器。1987 年，Sun Microsystems 开始交付基于 SPARC 体系结构的计算机。SPARC 由伯克利的 RISC-II 处理器衍生而来，Garner et al.［1988］对它作了介绍。PowerPC 则是苹果、IBM 和 Motorola 联手的产物。[附录 K](#app-k) 概括介绍了几种 RISC 体系结构。
+
+为了帮助平息 RISC 与传统设计之争，VAX 处理器的设计者后来选了两种组成相当的实现，对 VAX 和一种 RISC 处理器作了定量比较。他们选的是 VAX 8700 和 MIPS M2000。VAX 和 MIPS 的设计目标不同，两者的体系结构因此差别很大：
+
+* VAX 的目标是编译器简单、代码密度高，于是有了功能强大的寻址方式和指令、高效的指令编码，寄存器却很少；
+* MIPS 的目标是通过流水线获得高性能、硬件容易实现、能与高度优化的编译器配合，于是有了简单的指令、简单的寻址方式、定长的指令格式和大量的寄存器。
+
+[图 M.1](#fig-m-1) 给出了两者执行指令数之比、CPI 之比，以及以时钟周期数衡量的性能之比。两者的组成相近，因此假定时钟周期相同。MIPS 执行的指令数大约是 VAX 的 2 倍，VAX 的 CPI 则大约是 MIPS 的 6 倍。因此，MIPS M2000 的性能几乎是 VAX 8700 的 3 倍。而且，造 MIPS 处理器所需的硬件比 VAX 处理器少得多。正是因为性价比上有这样的差距，原来生产 VAX 的公司先是推出了基于 MIPS 的产品，后来干脆完全放弃 VAX，改用与 MIPS 十分相似的 Alpha。Bell 和 Strecker［1998］总结了该公司内部的这场争论。DEC 曾经是第二大计算机公司，也是小型机产业最成功的企业，今天却只剩下一些散落在 HP 和 Intel 内部的残余。
+
+![图 M.1　在 SPEC89 程序上，MIPS M2000 与 VAX 8700 执行指令数之比，以及以时钟周期数衡量的性能之比。平均而言，MIPS 执行的指令数比 VAX 的 2 倍略多，但 VAX 的 CPI 几乎是 MIPS 的 6 倍，因此 MIPS 的性能几乎是 VAX 的 3 倍。（数据来源：Bhandarkar and Clark［1991］。）图内标注：MIPS/VAX，MIPS 与 VAX 之比；SPEC89 benchmarks，SPEC89 基准测试程序；Performance ratio，性能之比；Instructions executed ratio，执行指令数之比；CPI ratio，CPI 之比。](images/appm/fig-m-1.png){#fig-m-1 width=90%}
+
+回头来看，RISC/CISC 之争过后，复杂指令系统计算机（CISC）的指令系统只存活下来一种，它与 PC 软件二进制兼容。PC 产业的芯片产量极大，一方面有足够的收入支付额外的设计成本，另一方面摩尔定律提供了足够的资源，可以造出在内部把 CISC 指令翻译成 RISC 指令的微处理器。这样做会损失一些效率：流水级更长，为了在芯片上完成翻译，晶片也更大。但无论损失多少，巨大的产量，加上能够专为这一产品配备集成电路生产线，都足以把它抵消。
+
+有意思的是，Intel 也曾认为 80x86 产品线前途不明。Intel 设计了 IA-64 体系结构，一是支持 64 位寻址，二是转向 RISC 风格的指令系统。IA-64 体系结构（见 Huck et al.［2000］）在 Itanium-1 和 Itanium-2 上的实现成败参半：浮点应用取得了高性能，整数性能却始终不出色。此外，Itanium 的实现晶体管数多、晶片面积大，功耗也高。IA-64 指令系统很复杂，至少在一定程度上与 RISC 的理念相冲突，这无疑是它在面积和功耗上效率不高的原因之一。
+
+AMD 则另辟蹊径，只是把体系结构的地址从 32 位扩展到 64 位，就像当年 Intel 在 80386 上把地址从 16 位扩展到 32 位一样。后来 Intel 也跟着 AMD 这样做了。说到底，80x86 已有的市场优势实在太大，连这份遗产的主人 Intel 都无法撼动！
+
+### 参考文献 {- #sec-m-4-references}
+
+Alexander, W. G., and D. B. Wortman [1975]. "Static and dynamic characteristics of XPL programs," IEEE Computer 8:11 (November), 41–46.
+
+Amdahl, G. M., G. A. Blaauw, and F. P. Brooks, Jr. [1964]. "Architecture of the IBM System 360," IBM J. Research and Development 8:2 (April), 87–101.
+
+Barton, R. S. [1961]. "A new approach to the functional design of a computer," Proc. Western Joint Computer Conf., May 9–11, 1961, Los Angeles, Calif., 393–396.
+
+Bell, G., R. Cady, H. McFarland, B. DeLagi, J. O'Laughlin, R. Noonan, and W. Wulf [1970]. "A new architecture for mini-computers: The DEC PDP-11," Proc. AFIPS SJCC, May 5–7, 1970, Atlantic City, N.J., 657–675.
+
+Bell, G., and W. D. Strecker [1998]. "Computer structures: What have we learned from the PDP-11?" in G. S. Sohi, ed., 25 Years of the International Symposia on Computer Architecture (Selected Papers), ACM, New York, 138–151.
+
+Bhandarkar, D. P. [1995]. Alpha Architecture and Implementations, Digital Press, Newton, Mass.
+
+Bhandarkar, D., and D. W. Clark [1991]. "Performance from architecture: Comparing a RISC and a CISC with similar hardware organizations," Proc. Fourth Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), April 8–11, 1991, Palo Alto, Calif., 310–319.
+
+Bier, J. [1997]. "The evolution of DSP processors," paper presented at University of California, Berkeley, November 14.
+
+Boddie, J. R. [2000]. "History of DSPs," www.lucent.com/micro/dsp/dsphist.html.
+
+Case, R. P., and A. Padegs [1978]. "The architecture of the IBM System/370," Communications of the ACM 21:1, 73–96.
+
+Chow, F. C. [1983]. "A Portable Machine-Independent Global Optimizer—Design and Measurements," Ph.D. thesis, Stanford University, Palo Alto, Calif.
+
+Clark, D., and H. Levy [1982]. "Measurement and analysis of instruction set use in the VAX-11/780," Proc. Ninth Annual Int'l. Symposium on Computer Architecture (ISCA), April 26–29, 1982, Austin, Tex., 9–17.
+
+Clark, D., and W. D. Strecker [1980]. "Comments on 'the case for the reduced instruction set computer,'" Computer Architecture News 8:6 (October), 34–38.
+
+Crawford, J., and P. Gelsinger [1988]. Programming the 80386, Sybex Books, Alameda, Calif.
+
+Darcy, J. D., and D. Gay [1996]. "FLECKmarks: Measuring floating point performance using a full IEEE compliant arithmetic benchmark," CS 252 class project, University of California, Berkeley (see http://www.sonic.net/~jddarcy/Research/fleckmrk.pdf).
+
+Digital Semiconductor. [1996]. Alpha Architecture Handbook, Version 3, Digital Press, Maynard, Mass.
+
+Ditzel, D. R., and D. A. Patterson [1980]. "Retrospective on high-level language computer architecture," Proc. Seventh Annual Int'l. Symposium on Computer Architecture (ISCA), May 6–8, 1980, La Baule, France, 97–104.
+
+Emer, J. S., and D. W. Clark [1984]. "A characterization of processor performance in the VAX-11/780," Proc. 11th Annual Int'l. Symposium on Computer Architecture (ISCA), June 5–7, 1984, Ann Arbor, Mich., 301–310.
+
+Furber, S. B. [2000]. ARM system-on-chip architecture. Addison-Wesley, Boston, Mass.
+
+Gagliardi, U. O. [1973]. "Report of workshop 4—software-related advances in computer hardware," Proc. Symposium on the High Cost of Software, September 17–19, 1973, Monterey, Calif., 99–120.
+
+Game, M., and A. Booker [1999]. "CodePack code compression for PowerPC processors," MicroNews, 5:1.
+
+Garner, R., A. Agarwal, F. Briggs, E. Brown, D. Hough, B. Joy, S. Kleiman, S. Muchnick, M. Namjoo, D. Patterson, J. Pendleton, and R. Tuck [1988]. "Scalable processor architecture (SPARC)," Proc. IEEE COMPCON, February 29–March 4, 1988, San Francisco, 278–283.
+
+Hauck, E. A., and B. A. Dent [1968]. "Burroughs' B6500/B7500 stack mechanism," Proc. AFIPS SJCC, April 30–May 2, 1968, Atlantic City, N.J., 245–251.
+
+Hennessy, J. [1984]. "VLSI processor architecture," IEEE Trans. on Computers C-33:11 (December), 1221–1246.
+
+Hennessy, J. [1985]. "VLSI RISC processors," VLSI Systems Design 6:10 (October), 22–32.
+
+Hennessy, J., N. Jouppi, F. Baskett, and J. Gill [1981]. "MIPS: A VLSI processor architecture," in CMU Conference on VLSI Systems and Computations, Computer Science Press, Rockville, Md.
+
+Hewlett-Packard. [1994]. PA-RISC 2.0 Architecture Reference Manual, 3rd ed., Hewlett-Packard, Palo Alto, Calif.
+
+Hitachi. [1997]. SuperH RISC Engine SH7700 Series Programming Manual, Hitachi, Santa Clara, Calif.
+
+Huck, J. et al. [2000]. "Introducing the IA-64 Architecture" IEEE Micro, 20:5, (September–October), 12–23.
+
+IBM. [1994]. The PowerPC Architecture, Morgan Kaufmann, San Francisco.
+
+Intel. [2001]. "Using MMX instructions to convert RGB to YUV color conversion," cedar.intel.com/cgi-bin/ids.dll/content/content.jsp?cntKey=Legacy::irtm_AP548_9996&cntType=IDS_EDITORIAL.
+
+Kahan, J. [1990]. "On the advantage of the 8087's stack," unpublished course notes, Computer Science Division, University of California, Berkeley.
+
+Kane, G. [1986]. MIPS R2000 RISC Architecture, Prentice Hall, Englewood Cliffs, N.J.
+
+Kane, G. [1996]. PA-RISC 2.0 Architecture, Prentice Hall, Upper Saddle River, N.J.
+
+Kane, G., and J. Heinrich [1992]. MIPS RISC Architecture, Prentice Hall, Englewood Cliffs, N.J.
+
+Kissell, K. D. [1997]. "MIPS16: High-density for the embedded market," Proc. Real Time Systems '97, June 15, 1997, Las Vegas, Nev.
+
+Kozyrakis, C. [2000]. "Vector IRAM: A media-oriented vector processor with embedded DRAM," paper presented at Hot Chips 12, August 13–15, 2000, Palo Alto, Calif, 13–15.
+
+Lee, R. [1989]. "Precision architecture," Computer 22:1 (January), 78–91.
+
+Levy, H., and R. Eckhouse [1989]. Computer Programming and Architecture: The VAX, Digital Press, Boston.
+
+Lindholm, T., and F. Yellin [1999]. The Java Virtual Machine Specification, 2nd ed., Addison-Wesley, Reading, Mass.
+
+Lunde, A. [1977]. "Empirical evaluation of some features of instruction set processor architecture," Communications of the ACM 20:3 (March), 143–152.
+
+Magenheimer, D. J., L. Peters, K. W. Pettis, and D. Zuras [1988]. "Integer multiplication and division on the HP precision architecture," IEEE Trans. on Computers 37:8, 980–990.
+
+McGhan, H., and M. O'Connor [1998]. "PicoJava: A direct execution engine for Java bytecode," Computer 31:10 (October), 22–30.
+
+McKeeman, W. M. [1967]. "Language directed computer design," Proc. AFIPS Fall Joint Computer Conf., November 14–16, 1967, Washington, D.C., 413–417.
+
+Meyers, G. J. [1978]. "The evaluation of expressions in a storage-to-storage architecture," Computer Architecture News 7:3 (October), 20–23.
+
+Meyers, G. J. [1982]. Advances in Computer Architecture, 2nd ed., Wiley, New York.
+
+MIPS. [1997]. MIPS16 Application Specific Extension Product Description.
+
+Mitsubishi. [1996]. Mitsubishi 32-Bit Single Chip Microcomputer M32R Family Software Manual, Mitsubishi, Cypress, Calif.
+
+Morse, S., B. Ravenal, S. Mazor, and W. Pohlman [1980]. "Intel microprocessors—8080 to 8086," Computer 13:10 (October).
+
+Moussouris, J., L. Crudele, D. Freitas, C. Hansen, E. Hudson, S. Przybylski, T. Riordan, and C. Rowen [1986]. "A CMOS RISC processor with integrated system functions," Proc. IEEE COMPCON, March 3–6, 1986, San Francisco, 191.
+
+Muchnick, S. S. [1988]. "Optimizing compilers for SPARC," Sun Technology 1:3 (Summer), 64–77.
+
+Palmer, J., and S. Morse [1984]. The 8087 Primer, John Wiley & Sons, New York, 93.
+
+Patterson, D. [1985]. "Reduced instruction set computers," Communications of the ACM 28:1 (January), 8–21.
+
+Patterson, D. A., and D. R. Ditzel [1980]. "The case for the reduced instruction set computer," Computer Architecture News 8:6 (October), 25–33.
+
+Patterson, D. A., P. Garrison, M. Hill, D. Lioupis, C. Nyberg, T. Sippel, and K. Van Dyke [1983]. "Architecture of a VLSI instruction cache for a RISC," 10th Annual Int'l. Conf. on Computer Architecture Conf. Proc., June 13–16, 1983, Stockholm, Sweden, 108–116.
+
+Radin, G. [1982]. "The 801 minicomputer," Proc. Symposium Architectural Support for Programming Languages and Operating Systems (ASPLOS), March 1–3, 1982, Palo Alto, Calif., 39–47.
+
+Riemens, A., K. A. Vissers, R. J. Schutten, F. W. Sijstermans, G. J. Hekstra, and G. D. La Hei [1999]. "Trimedia CPU64 application domain and benchmark suite," Proc. IEEE Int'l. Conf. on Computer Design: VLSI in Computers and Processors (ICCD'99), October 10–13, 1999, Austin, Tex., 580–585.
+
+Ropers, A., H. W. Lollman, and J. Wellhausen [1999]. DSPstone: Texas Instruments TMS320C54x, Tech. Rep. Nr. IB 315 1999/9-ISS-Version 0.9, Aachen University of Technology, Aaachen, Germany (www.ert.rwth-aachen.de/Projekte/Tools/coal/dspstone_c54x/index.html).
+
+Shustek, L. J. [1978]. "Analysis and Performance of Computer Instruction Sets," Ph.D. dissertation, Stanford University, Palo Alto, Calif.
+
+Silicon Graphics. [1996]. MIPS V Instruction Set (see http://www.sgi.com/MIPS/arch/ISA5/#MIPSV_indx).
+
+Sites, R. L., and R. Witek, eds. [1995]. Alpha Architecture Reference Manual, 2nd ed., Digital Press, Newton, Mass.
+
+Strauss, W. [1998]. "DSP Strategies 2002," www.usadata.com/market_research/spr_05/spr_r127-005.htm.
+
+Strecker, W. D. [1978]. "VAX-11/780: A virtual address extension of the PDP-11 family," Proc. AFIPS National Computer Conf., June 5–8, 1978, Anaheim, Calif., 47, 967–980.
+
+Sun Microsystems. [1989]. The SPARC Architectural Manual, Version 8, Part No. 800-1399-09, Sun Microsystems, Santa Clara, Calif.
+
+Tanenbaum, A. S. [1978]. "Implications of structured programming for machine architecture," Communications of the ACM 21:3 (March), 237–246.
+
+Taylor, G., P. Hilfinger, J. Larus, D. Patterson, and B. Zorn [1986]. "Evaluation of the SPUR LISP architecture," Proc. 13th Annual Int'l. Symposium on Computer Architecture (ISCA), June 2–5, 1986, Tokyo.
+
+Texas Instruments [2000]. "History of innovation: 1980s," www.ti.com/corp/docs/company/history/1980s.shtml.
+
+Thornton, J. E. [1964]. "Parallel operation in Control Data 6600," Proc. AFIPS Fall Joint Computer Conf., Part II, October 27–29, 1964, San Francisco, 26, 33–40.
+
+Ungar, D., R. Blau, P. Foley, D. Samples, and D. Patterson [1984]. "Architecture of SOAR: Smalltalk on a RISC," Proc. 11th Annual Int'l. Symposium on Computer Architecture (ISCA), June 5–7, 1984, Ann Arbor, Mich., 188–197.
+
+van Eijndhoven, J. T. J., F. W. Sijstermans, K. A. Vissers, E. J. D. Pol, M. I. A. Tromp, P. Struik, R. H. J. Bloks, P. van der Wolf, A. D. Pimentel, and H. P. E. Vranken [1999]. "Trimedia CPU64 architecture," Proc. IEEE Int'l. Conf. on Computer Design: VLSI in Computers and Processors (ICCD'99), October 10–13, 1999, Austin, Tex., 586–592.
+
+Wakerly, J. [1989]. Microcomputer Architecture and Programming, Wiley, New York.
+
+Waters, F. (ed.) [1986]. IBM RT Personal Computer Technology, SA 23-1057, IBM, Austin, Tex.
+
+Weaver, D. L., and T. Germond [1994]. The SPARC Architectural Manual, Version 9, Prentice Hall, Englewood Cliffs, N.J.
+
+Weiss, S., and J. E. Smith [1994]. Power and PowerPC, Morgan Kaufmann, San Francisco.
+
+Wiecek, C. [1982]. "A case study of the VAX 11 instruction set usage for compiler execution," Proc. Symposium on Architectural Support for Programming Languages and Operating Systems (ASPLOS), March 1–3, 1982, Palo Alto, Calif., 177–184.
+
+Wulf, W. [1981]. "Compilers and computer architecture," Computer 14:7 (July), 41–47.
+
+## 流水线与指令级并行的发展（第 3 章和附录 C、H） {#sec-m-5}
+
+### 早期的流水线 CPU {-}
+
+一般认为，第一台通用的流水线处理器是 IBM 7030，即 Stretch。Stretch 是 IBM 704 的后继机，目标是速度达到 704 的 100 倍。这一目标远远超出当时的技术水平，是一次「延伸」（stretch），这台机器因此得名。按照计划，Stretch 用一条四级流水线把取指、译码和执行重叠起来，由此把速度提高到原来的 1.6 倍。Bloch［1959］和 Bucholtz［1962］介绍了它的设计和工程上的权衡，其中包括 ALU 旁路的使用。
+
+20 世纪 70 年代末和 80 年代初出现了一系列介绍流水线的综述，简单流水线所用的大部分术语和大多数基本技术都出自这些综述。这些综述包括 Keller［1975］、Ramamoorthy and Li［1977］和 Chen［1980］，以及 Kogge［1981］，后者是一本专讲流水线的书。Davidson 和他的同事［1971，1975］提出了流水线预约表的概念，用来设计带反馈的多周期流水线（Kogge［1981］也有介绍）。许多设计者在设计流水线或编写调度流水线的软件时，都会用到这些概念的某种变形。
+
+RISC 处理器在设计之初就考虑了实现和流水化的方便。20 世纪 80 年代初发表的几篇早期 RISC 论文，都试图定量分析简化指令系统带来的性能优势。不过，最好的分析是 Bhandarkar 和 Clark 在 1991 年发表的 VAX 实现与 MIPS 实现的比较（见[图 M.1](#fig-m-1)），这时距第一批 RISC 论文发表已经过去 10 年。关于 RISC 在实现上的好处，人们争论了 10 年，这篇论文终于让最持怀疑态度的设计者也相信了 RISC 指令系统结构的优势。
+
+J. E. Smith 和他的同事写了许多论文，研究高速标量 CPU 的指令发射、异常处理和流水线深度。Kunkel 和 Smith［1986］评估了流水线开销和相关对最优流水线深度的影响，还精彩地讨论了锁存器的设计及其对流水线的影响。Smith 和 Pleszkun［1988］评估了保持精确异常的多种技术。Weiss 和 Smith［1984］评估了多种硬件流水线调度和指令发射技术。
+
+MIPS R4000 是最早的深度流水线微处理器之一，Killian［1991］和 Heinrich［1993］介绍了它。Alpha 的第一个实现（21064）的指令系统和整数流水线结构都与 R4000 相近，浮点部件的流水化程度更高。
+
+### 动态调度的引入 {-}
+
+1964 年，CDC 交付了第一台 CDC 6600。CDC 6600 在许多方面都独树一帜：它引入了记分牌；它是第一个大量使用多个功能部件的处理器；它的外围处理器采用了多线程。当时人们已经认识到流水线与指令系统设计相互影响，因此 CDC 6600 采用简单的 load-store 型指令系统，以便于流水化。CDC 6600 还采用了先进的组装技术。Thornton［1964］介绍了它的流水线和 I/O 处理器的体系结构，其中包括乱序执行指令的概念。Thornton 的书［1970］从工艺到体系结构，对整个处理器作了精彩的描述，书中还有一篇 Cray 写的序言。（遗憾的是，这本书目前已经绝版。）CDC 6600 还有一个供 FORTRAN 编译器使用的指令调度程序，Thorlin［1967］对它作了介绍。
+
+### IBM 360/91：一台里程碑式的计算机 {-}
+
+IBM 360/91 引入了许多新概念，包括数据的标记、寄存器重命名、存储器冒险的动态检测，以及通用的前递。Tomasulo 算法见于他 1967 年的论文。Anderson、Sparacio 和 Tomasulo［1967］介绍了这台处理器的其他方面，包括转移预测的使用。360/91 的许多思想后来沉寂了将近 25 年，到 20 世纪 90 年代才重新得到广泛应用。遗憾的是，360/91 并不成功，只卖出了寥寥几台。它的设计复杂，推向市场的时间因此推迟，结果性能被 Model 85 超过。Model 85 是 IBM 第一台带 Cache 的处理器。
+
+### 转移预测方案 {-}
+
+J. E. Smith［1981］介绍了 2 位的动态硬件转移预测方案。Ditzel 和 McLellan［1987］为 CRISP 设计了一种新颖的转移目标缓冲，它能实现转移折叠。我们讨论的相关预测器由 Pan、So 和 Rameh［1992］提出。Yeh 和 Patt［1992，1993］推广了相关的思想，提出了多级预测器：每条转移指令使用各自的转移历史，与 21264 中的局部历史预测器类似。McFarling 的竞争预测方案（他称之为组合预测器）见于他 1993 年的技术报告。近年来还有许多关于转移预测的论文，都以多级预测器和相关预测器思想的各种变形为基础。Kaeli 和 Emma［1991］介绍了返回地址预测，Evers et al.［1998］对多级预测器作了深入分析。第 3 章给出的数据来自 Skadron et al.［1999］。还有几种预测方案的效果可能比竞争预测器更好一些，Eden and Mudge［1998］和 Jimenez and Lin［2002］介绍了这类方法。
+
+### 多发射处理器的发展 {-}
+
+IBM 在多发射方面做了开创性的工作。20 世纪 60 年代，IBM 在加利福尼亚开展了一个名为 ACS 的项目。这个项目包括：多发射的概念；一种动态调度的方案（不过它的机制比 Tomasulo 方案简单，使用后备寄存器）；沿转移的两条路径同时取指。项目最初的目标是做一种新的体系结构，接替 Stretch 并超越 CDC 6600/6800。ACS 在纽约启动，后来搬到加利福尼亚，又改为与 S/360 兼容，最终被取消。John Cocke 是这个团队的思想核心之一。团队里有一些 IBM 的老将，也有一批年轻的成员，其中许多人后来在 IBM 内外担任了其他重要角色，包括 Jack Bertram、Ed Sussenguth、Gene Amdahl、Herb Schorr、Fran Allen、Lynn Conway 和 Phil Dauber 等人。编译器小组发表了许多想法，在 IBM 以外影响很大；体系结构方面的思想当时却没有广泛传播。关于这个重要项目，能找到的最完整的资料在 www.cs.clemson.edu/~mark/acs.html，其中有对 ACS 老成员的访谈和指向其他资料的链接。Sussenguth［1999］是 ACS 的一篇很好的概述。
+
+真正进入市场的早期多发射处理器，大多采用 LIW 或 VLIW 的设计方法。Charlesworth［1981］介绍了 Floating Point Systems 公司的 AP-120B，这是最早的宽指令处理器之一，一条指令中包含多个操作。为了高效地使用这台处理器，Floating Point Systems 运用了软件流水的概念，既用在编译器中，也用在手工编写的汇编语言库中。这台处理器是附属处理器，因此通用处理器实现多发射时遇到的许多困难（如虚拟存储和异常处理）都可以不必考虑。

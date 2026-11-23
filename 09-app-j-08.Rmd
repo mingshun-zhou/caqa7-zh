@@ -1,0 +1,119 @@
+J.27　[10/15/20] <J.8> 把下列加法器的框图补充完整。
+
+a. [10] <J.8> 在[图 J.15](#fig-j-15) 中，说明怎样用与门和或门实现「1」框和「2」框。
+
+b. [15] <J.8> 在[图 J.19](#fig-j-19) 中，顶行的加法器单元需要向「C」单元传送哪些信号？写出「C」框的逻辑方程。
+
+c. [20] <J.8> 说明怎样扩展[图 J.17](#fig-j-17) 的框图，使它能产生进位输出位 $c_8$。
+
+J.28　[15] <J.9> 普通的 Booth 重编码在第 $i$ 步所用的 $b$ 的倍数就是 $a_{i-1} - a_i$。对基 4 Booth 重编码（三位一组、相邻组重叠一位），能否找到类似的公式？
+
+J.29　[20] <J.9> 仿照[图 J.27](#fig-j-27) 的画法展开[图 J.29](#fig-j-29)，画出其中的每个加法器。
+
+J.30　[25] <J.9> 对基 8 Booth 重编码，写出与[图 J.25](#fig-j-25) 相当的表。
+
+J.31　[18] <J.9> 设按 J-53 页例题的方法，用带符号数字加法器把 $a_{n-1} \ldots a_1a_0$ 与 $b_{n-1} \ldots b_1b_0$ 相加。用 $a_i$、$a_{i-1}$、$a_{i-2}$、$b_i$、$b_{i-1}$ 和 $b_{i-2}$ 写出和的第 $i$ 位 $s_i$ 的公式。
+
+J.32　[15] <J.9> 正文讨论的基 4 SRT 除法，商数字取 −2、−1、0、1、2。如果商数字还可以取 3 和 −3，$|r_i| \le 2b/3$ 应换成什么关系？
+
+J.33　[25/20/30] <J.9> 关于[图 J.34](#fig-j-34) 的 SRT 除法表：
+
+a. [25] <J.9> 编写一个程序，生成[图 J.34](#fig-j-34) 的结果。
+
+b. [20] <J.9> [图 J.34](#fig-j-34) 对 P 的正值和负值有一定的对称性。能否设法利用这种对称性，只存储 P 为正值的表项？
+
+c. [30] <J.9> 假设用进位保留加法器代替进位传播加法器。商查找表的输入是除数的 $k$ 位和余数的 $l$ 位，余数的这 $l$ 位由和寄存器与进位寄存器的高 $l$ 位相加得到。$k$ 和 $l$ 各是多少？编写一个程序，生成与[图 J.34](#fig-j-34) 相当的表。
+
+J.34　[12/12/12] <J.9, J.12> 最早生产的几百万片 Pentium 芯片有一个缺陷，做除法有时会得到错误的结果。Pentium 采用的基 4 SRT 算法与 J-56 页例题所示的算法类似，只是余数以进位保留形式存放（见习题 J.33(c)）。据 Intel 称，这个错误是由商查找表中 5 个错误的表项造成的。
+
+a. [12] <J.9, J.12> 这些错误表项的商本应是 +2 或 −2，实际却是 0。由于存在冗余，算法似乎有可能在后面的迭代中从错误的商数字「恢复」过来。证明 Pentium 的这个缺陷无法这样恢复。
+
+b. [12] <J.9, J.12> 由于这里做的是浮点除法而不是整数除法，J-45 页的 SRT 除法算法必须作两处修改。一是不再需要第 1 步，因为除数已经规格化。二是第一个余数可能不满足应有的界（对 Pentium，这个界是 $|r| \le 2b/3$，见 J-55 页）。证明只要跳过 SRT 算法第 2(a) 步中的第一次左移，就能解决这个问题。
+
+c. [12] <J.9, J.12> 如果用来索引错误表项的余数在第一个除法步（此时余数就是除数）就可能出现，随机测试很快就能发现这个错误。但实际上并没有很快发现。这说明索引错误表项的余数值有什么特点？
+
+J.35　[12] <J.6, J.9> 前面讨论余数步指令时，假定除法采用每次求一位的算法。如果除法改用更高基数的方法实现，哪些地方必须改变？
+
+J.36　[25] <J.9> 阵列可以流水化，但[图 J.28](#fig-j-28) 的阵列没有利用这一点。能否设计一种结构，把最下面那个 CSA 的输出送回最下面的几个 CSA，而不是送回最上面的 CSA，并且比[图 J.28](#fig-j-28) 的结构运行得更快？
+
+## 参考文献 {- #sec-j-references}
+
+Anderson, S.F., Earle, J.G., Goldschmidt, R.E., Powers, D.M., 1967. The IBM System/360 Model 91: Floating-point execution unit. IBM J. Research and Development 11, 34–53. Reprinted in Swartzlander [1990]. *Good description of an early high-performance floating-point unit that used a pipelined Wallace tree multiplier and iterative division.*
+
+Bell, C.G., Newell, A., 1971. Computer Structures: Readings and Examples. McGraw-Hill, New York.
+
+Birman, M., Samuels, A., Chu, G., Chuk, T., Hu, L., McLeod, J., Barnes, J., 1990. Developing the WRL3170/3171 SPARC floating-point coprocessors. IEEE Micro 10 (1), 55–64. *These chips have the same floating-point core as the Weitek 3364, and this paper has a fairly detailed description of that floating-point design.*
+
+Brent, R.P., Kung, H.T., 1982. A regular layout for parallel adders. IEEE Trans. on Computers C-31, 260–264. *This is the paper that popularized CLAs in VLSI.*
+
+Burgess, N., Williams, T., 1995. Choices of operand truncation in the SRT division algorithm. IEEE Trans. on Computers 44, 7. *Analyzes how many bits of divisor and remainder need to be examined in SRT division.*
+
+Burks, A.W., Goldstine, H.H., von Neumann, J., 1946. Preliminary discussion of the logical design of an electronic computing instrument. In: Aspray, W., Burks, A. (Eds.), Papers of John von Neumann. Report to the U.S. Army Ordnance Department, p. 1; also appears. MIT Press, Cambridge, Mass, pp. 97–146. Tomash Publishers, Los Angeles, 1987.
+
+Cody, W.J., Coonen, J.T., Gay, D.M., Hanson, K., Hough, D., Kahan, W., Karpinski, R., Palmer, J., Ris, F.N., Stevenson, D., 1984. A proposed radix- and word-length-independent standard for floating-point arithmetic. IEEE Micro 4 (4), 86–100. *Contains a draft of the 854 standard, which is more general than 754. The significance of this article is that it contains commentary on the standard, most of which is equally relevant to 754. However, be aware that there are some differences between this draft and the final standard.*
+
+Coonen, J., 1984. Contributions to a proposed standard for binary floating point arithmetic. Ph.D. thesis. University of California–Berkeley. *The only detailed discussion of how rounding modes can be used to implement efficient binary decimal conversion.*
+
+Darley, H.M., et al., 1989. Floating point/integer processor with divide and square root functions. U.S. Patent 4 (878,190). October 31, 1989. *Pretty readable as patents go. Gives a high-level view of the TI 8847 chip, but doesn't have all the details of the division algorithm.*
+
+Demmel, J.W., Li, X., 1994. Faster numerical algorithms via exception handling. IEEE Trans. on Computers 43 (8), 983–992. *A good discussion of how the features unique to IEEE floating point can improve the performance of an important software library.*
+
+Freiman, C.V., 1961. Statistical analysis of certain binary division algorithms. Proc. IRE 49 (1), 91–103. *Contains an analysis of the performance of shifting-over-zeros SRT division algorithm.*
+
+Goldberg, D., 1991. What every computer scientist should know about floating-point arithmetic. Computing Surveys 23 (1), 5–48. *Contains an in-depth tutorial on the IEEE standard from the software point of view.*
+
+Goldberg, I.B., 1967. 27 bits are not enough for 8-digit accuracy. Comm. ACM 10 (2), 105–106. *This paper proposes using hidden bits and gradual underflow.*
+
+Gosling, J.B., 1980. Design of Arithmetic Units for Digital Computers. Springer-Verlag, New York. *A concise, well-written book, although it focuses on MSI designs.*
+
+Hamacher, V.C., Vranesic, Z.G., Zaky, S.G., 1984. Computer Organization, 2nd ed. McGraw-Hill, New York. *Introductory computer architecture book with a good chapter on computer arithmetic.*
+
+Hwang, K., 1979. Computer Arithmetic: Principles, Architecture, and Design. Wiley, New York. *This book contains the widest range of topics of the computer arithmetic books.*
+
+IEEE, 1985. IEEE standard for binary floating-point arithmetic. SIGPLAN Notices 22 (2), 9–25. *IEEE 754 is reprinted here.*
+
+Kahan, W., 1968. 7094-II system support for numerical analysis. SHARE Secretarial Distribution SSD-159. *This system had many features that were incorporated into the IEEE floating-point standard.*
+
+Kahaner, D.K., 1988. Benchmarks for 'real' programs. SIAM News (November). *The benchmark presented in this article turns out to cause many underflows.*
+
+Knuth, D., 1981. In: The Art of Computer Programming, 2nd ed., Vol. II. Addison-Wesley, Reading, Mass. *Has a section on the distribution of floating-point numbers.*
+
+Kogge, P., 1981. The Architecture of Pipelined Computers. McGraw-Hill, New York. *Has a brief discussion of pipelined multipliers.*
+
+Kohn, L., Fu, S.-W., 1989. A 1,000,000 transistor microprocessor. In: IEEE Int'l. Solid-State Circuits Conf. Digest of Technical Papers, pp. 54–55. *There are several articles about the i860, but this one contains the most details about its floating-point algorithms.*
+
+Koren, I., 1989. Computer Arithmetic Algorithms. Prentice Hall, Englewood Cliffs, N.J.
+
+Leighton, F.T., 1992. Introduction to Parallel Algorithms and Architectures: Arrays. Trees, Hypercubes, Morgan Kaufmann, San Francisco. *This is an excellent book, with emphasis on the complexity analysis of algorithms. Section 1.2.1 has a nice discussion of carry-lookahead addition on a tree.*
+
+Magenheimer, D.J., Peters, L., Pettis, K.W., Zuras, D., 1988. Integer multiplication and division on the HP Precision architecture. IEEE Trans. on Computers 37 (8), 980–990. *Gives rationale for the integer- and divide-step instructions in the Precision architecture.*
+
+Markstein, P.W., 1990. Computation of elementary functions on the IBM RISC System/6000 processor. IBM J. of Research and Development 34 (1), 111–119. *Explains how to use fused muliply-add to compute correctly rounded division and square root.*
+
+Mead, C., Conway, L., 1980. Introduction to VLSI Systems. Addison-Wesley, Reading, Mass.
+
+Montoye, R.K., Hokenek, E., Runyon, S.L., 1990. Design of the IBM RISC System/6000 floating-point execution. IBM J. of Research and Development 34 (1), 59–70. *Describes one implementation of fused multiply-add.*
+
+Ngai, T.-F., Irwin, M.J., 1985. Regular, area-time efficient carry-lookahead adders. In: Proc. Seventh IEEE Symposium on Computer Arithmetic, pp. 9–15. *Describes a CLA like that of Figure J.17, where the bits flow up and then come back down.*
+
+Patterson, D.A., Hennessy, J.L., 2009. Computer Organization and Design: The Hardware/Software Interface, 4th Edition. Morgan Kaufmann, San Francisco. *Chapter 3 is a gentler introduction to the first third of this appendix.*
+
+Peng, V., Samudrala, S., Gavrielov, M., 1987. On the implementation of shifters, multipliers, and dividers in VLSI floating point units. In: Proc. Eighth IEEE Symposium on Computer Arithmetic, pp. 95–102. *Highly recommended survey of different techniques actually used in VLSI designs.*
+
+Rowen, C., Johnson, M., Ries, P., 1988. The MIPS R3010 floating-point coprocessor. IEEE Micro 53–62 (June).
+
+Santoro, M.R., Bewick, G., Horowitz, M.A., 1989. Rounding algorithms for IEEE multipliers. In: Proc. Ninth IEEE Symposium on Computer Arithmetic, pp. 176–183. *A very readable discussion of how to efficiently implement rounding for floating-point multiplication.*
+
+Scott, N.R., 1985. Computer Number Systems and Arithmetic. Prentice Hall, Englewood Cliffs, N.J.
+
+Swartzlander, E. (Ed.), 1990. Computer Arithmetic. IEEE Computer Society Press, Los Alamitos, Calif. *A collection of historical papers in two volumes.*
+
+Takagi, N., Yasuura, H., Yajima, S., 1985. High-speed VLSI multiplication algorithm with a redundant binary addition tree. IEEE Trans. on Computers C-34 (9), 789–796. *A discussion of the binary tree signed multiplier that was the basis for the design used in the TI 8847.*
+
+Taylor, G.S., 1981. Compatible hardware for division and square root. In: Proc. Fifth IEEE Symposium on Computer Arithmetic, May 18–19, 1981, Ann Arbor, Mich, pp. 127–134. *Good discussion of a radix-4 SRT division algorithm.*
+
+Taylor, G.S., 1985. Radix 16 SRT dividers with overlapped quotient selection stages. In: Proc. Seventh IEEE Symposium on Computer Arithmetic, June 4–6, 1985, pp. 64–71. Urbana, Ill. *Describes a very sophisticated high-radix division algorithm.*
+
+Weste, N., Eshraghian, K., 1993. Principles of CMOS VLSI Design: A Systems Perspective, 2nd ed. Addison-Wesley, Reading, Mass. *This textbook has a section on the layouts of various kinds of adders.*
+
+Williams, T.E., Horowitz, M., Alverson, R.L., Yang, T.S., 1987. A self-timed chip for division. In: Advanced Research in VLSI, Proc. 1987 Stanford Conf. MIT Press, Cambridge, Mass. *Describes a divider that tries to get the speed of a combinational design without using the area that would be required by one.*

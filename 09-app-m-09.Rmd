@@ -1,0 +1,201 @@
+Hölzle, U. [2010]. "Brawny cores still beat wimpy cores, most of the time," IEEE Micro, July/August.
+
+Kanev, S., Darago, J.P., Hazelwood, K., Ranganathan, P., Moseley, T., Wei, G.Y. and Brooks, D., 2015, June. Profiling a warehouse-scale computer. ACM/IEEE 42nd Annual International Symposium on Computer Architecture (ISCA).
+
+Lang, W., J. M. Patel, and S. Shankar [2010]. "Wimpy node clusters: What about non-wimpy workloads?" Proc. Sixth Int'l. Workshop on Data Management on New Hardware, June 7, 2010, Indianapolis, Ind.
+
+Lim, K., P. Ranganathan, J. Chang, C. Patel, T. Mudge, and S. Reinhardt [2008]. "Understanding and designing new system architectures for emerging warehouse-computing environments," Proc. 35th Annual Int'l. Symposium on Computer Architecture (ISCA), June 21–25, 2008, Beijing, China.
+
+Narayanan, D., E. Thereska, A. Donnelly, S. Elnikety, and A. Rowstron [2009]. "Migrating server storage to SSDs: Analysis of trade-offs," Proc. 4th ACM European Conf. on Computer Systems, April 1–3, 2009, Nuremberg, Germany.
+
+Pfister, G. F. [1998]. In Search of Clusters, 2nd ed., Prentice Hall, Upper Saddle River, N.J.
+
+Pinheiro, E., W.-D. Weber, and L. A. Barroso [2007]. "Failure trends in a large disk drive population," Proc. 5th USENIX Conference on File and Storage Technologies (FAST '07), February 13–16, 2007, San Jose, Calif.
+
+Ranganathan, P., P. Leech, D. Irwin, and J. Chase [2006]. "Ensemble-level power management for dense blade servers," Proc. 33rd Annual Int'l. Symposium on Computer Architecture (ISCA), June 17–21, 2006, Boston, Mass., 66–77.
+
+Reddi, V. J., B. C. Lee, T. Chilimbi, and K. Vaid [2010]. "Web search using mobile cores: Quantifying and mitigating the price of efficiency," Proc. 37th Annual Int'l. Symposium on Computer Architecture (ISCA), June 19–23, 2010, Saint-Malo, France.
+
+Schroeder, B., and G. A. Gibson [2007]. "Understanding failures in petascale computers," Journal of Physics: Conference Series 78, 188–198.
+
+Schroeder, B., E. Pinheiro, and W.-D. Weber [2009]. "DRAM errors in the wild: A large-scale field study," Proc. Eleventh Int'l. Joint Conf. on Measurement and Modeling of Computer Systems (SIGMETRICS), June 15–19, 2009, Seattle, Wash.
+
+Schurman, E. and J. Brutlag [2009]. "The User and Business Impact of Server Delays," Proc. Velocity: Web Performance and Operations Conf., June 22–24, 2009, San Jose, Calif.
+
+Tezzaron Semiconductor. [2004]. "Soft Errors in Electronic Memory—A White Paper, Tezzaron Semiconductor, Naperville, Ill. (http://www.tezzaron.com/about/papers/soft_errors_1_1_secure.pdf).
+
+Vahdat, A., M. Al-Fares, N. Farrington, R. N. Mysore, G. Porter, and S. Radhakrishnan [2010]. "Scale-out networking in the data center," IEEE Micro July/August 2010.
+
+## 历史回顾与参考文献 {#sec-m-9}
+
+体系结构设计者探索 DSA 时，了解体系结构的历史可能会有帮助。过去很可能有一些体系结构思想，在通用计算上没有成功，用于领域专用体系结构却可能非常合适。毕竟，这些体系结构大概总有做得好的地方：或许它们正好与你的领域相匹配；或许反过来，给它们带来难题的那些特性，你的领域恰好不需要。例如，20 世纪 60 年代的 Illiac IV（Barnes et al., 1968）和 20 世纪 70 年代的 FPS 120a（Charlesworth, 1981）都采用二维的处理单元阵列，可以算是 TPU 和 Paintbox 名副其实的前身。再如，Multiflow（Rau and Fisher, 1993）和 Itanium（Sharangpani and Arora, 2000）这类 VLIW 体系结构在通用计算上没有取得商业成功；而 VLIW 体系结构难以对付的问题，即没有规律的数据 Cache 失效、无法预测的转移和庞大的代码量，Paintbox 都没有。
+
+两篇综述文章记载，定制的神经网络 ASIC 至少可以追溯到 25 年前（Ienne et al., 1996; Asanović, 2002）。例如，CNAPS 芯片包含一个由 64 个 16 位 × 8 位乘法器组成的 SIMD 阵列，几块 CNAPS 芯片可以连同一个定序器连接在一起（Hammerstrom, 1990）。Synapse-1 系统基于一块名为 MA-16 的定制脉动乘累加芯片，MA-16 一次完成 16 个 16 位乘法（Ramacher et al., 1991）。这个系统把多块 MA-16 芯片串接起来，并用定制硬件计算激活函数。
+
+从 1995 年起，25 台由定制 ASIC T0 加速的 SPERT-II 工作站投入使用，用来完成语音识别的神经网络训练和推理（Asanović et al., 1998）。T0 的频率为 40 MHz，它在 MIPS 指令系统结构的基础上增加了向量指令。T0 的向量部件有 8 条车道，以 8 位和 16 位数据为输入，每个时钟周期最多能产生 16 个 32 位的运算结果。因此，T0 的推理速度是 SPARC-20 工作站的 25 倍，训练速度是它的 20 倍。研究人员发现，16 位不足以完成训练，于是改用两个 16 位字，训练时间因此增加到原来的 2 倍。为了弥补这一缺点，他们引入了由 32～1000 个数据集组成的「束」（bunch，即批），以减少更新权重所花的时间，于是训练比用单个字、不分批时还要快。
+
+我们用*图像处理单元*（Image Processing Unit）这个说法来指 Paintbox 所代表的这一类新兴处理器，但这个名词并不是我们首创的。我们能找到的最早用法是在 1999 年：索尼 Playstation 把这个名字用在一块芯片上，这块芯片基本上就是一个 MPEG2 解码器（Sony/Toshiba, 1999）。2006 年，Freescale 用 IPU 命名 i.MX31 应用处理器中的一个部件，这一用法更接近我们所理解的较为宽泛的含义（Freescale as part of i.MX31 Applications Processor, 2006）。
+
+### 参考文献 {- #sec-m-9-references}
+
+Abadi, M., Agarwal, A., Barham, P., Brevdo, E., Chen, Z., Citro, C., Corrado, G.S., Davis, A., Dean, J., Devin, M., Ghemawat, S., 2016. Tensor-flow: large-scale machine learning on heterogeneous distributed systems. arXiv preprint arXiv:1603.04467.
+
+Adolf, R., Rama, S., Reagen, B., Wei, G.Y., Brooks, D., 2016. Fathom: reference workloads for modern deep learning methods. In: IEEE International Symposium on Workload Characterization (IISWC).
+
+Amodei, D., et al., 2015. Deep speech 2: end-to-end speech recognition in English and mandarin, arXiv:1512.02595.
+
+Asanović, K., 2002. Programmable neurocomputing. In: Arbib, M.A. (Ed.), The Handbook of Brain Theory and Neural Networks, second ed. MIT Press, Cambridge, MA. ISBN: 0-262-01197-2. https://people.eecs.berkeley.edu/~krste/papers/neurocomputing.pdf.
+
+Asanović, K., Beck, A., Johnson, J., Wawrzynek, J., Kingsbury, B., Morgan, N., 1998. Training neural networks with Spert-II. In: Sundararajan, N., Saratchandran, P. (Eds.), Parallel Architectures for Artificial Networks: Paradigms and Implementations. IEEE Computer Society Press. ISBN: 0-8186-8399-6. (Chapter 11) https://people.eecs.berkeley.edu/~krste/papers/annbook.pdf.
+
+Bachrach, J., Vo, H., Richards, B., Lee, Y., Waterman, A., Avižienis, R., Wawrzynek, J., Asanović, K., 2012. Chisel: constructing hardware in a Scala embedded language. In: Proceedings of the 49th Annual Design Automation Conference, pp. 1216–1225.
+
+Barnes, G.H., Brown, R.M., Kato, M., Kuck, D.J., Slotnick, D.L., Stokes, R., 1968. The ILLIAC IV computer. IEEE Trans. Comput. 100 (8), 746–757.
+
+Bhattacharya, S., Lane, N.D., 2016. Sparsification and separation of deep learning layers for constrained resource inference on wearables. In: Proceedings of the 14th ACM Conference on Embedded Network Sensor Systems CD-ROM, pp. 176–189.
+
+Brunhaver, J., 2014. PhD thesis. Stanford.
+
+Canis, A., Choi, J., Aldham, M., Zhang, V., Kammoona, A., Czajkowski, T., Brown, S.D., Anderson, J.H., 2013. LegUp: an open-source high-level synthesis tool for FPGA-based processor/accelerator systems. ACM Trans. Embed. Comput. Syst. 13 (2).
+
+Canny, J., et al., 2015. Machine learning at the limit. In: IEEE International Conference on Big Data.
+
+Caulfield, A.M., Chung, E.S., Putnam, A., Haselman, H.A.J.F.M., Humphrey, S.H.M., Daniel, P.K.J.Y.K., Ovtcharov, L.T.M.K., Lanka, M.P.L.W.S., Burger, D.C.D., 2016. A cloud-scale acceleration architecture. In: MICRO Conference.
+
+Charlesworth, A.E., 1981. An approach to scientific array processing: the architectural design of the AP-120B/FPS-164 family. Computer 9, 18–27.
+
+Clark, J., October 26, 2015. Google Turning Its Lucrative Web Search Over to AI Machines. Bloomberg Technology, www.bloomberg.com.
+
+Dally, W.J., 2002. Computer architecture is all about interconnect. In: Proceedings of the 8th International Symposium High Performance Computer Architecture.
+
+Freescale as part of i.MX31 Applications Processor, 2006. http://cache.freescale.com/files/32bit/doc/white_paper/IMX31MULTIWP.pdf.
+
+Galal, S., Shacham, O., Brunhaver II, J.S., Pu, J., Vassiliev, A., Horowitz, M., 2013. FPU generator for design space exploration. In: 21st IEEE Symposium on Computer Arithmetic (ARITH).
+
+Hameed, R., Qadeer, W., Wachs, M., Azizi, O., Solomatnikov, A., Lee, B.C., Richardson, S., Kozyrakis, C., Horowitz, M., 2010. Understanding sources of inefficiency in general-purpose chips. ACM SIGARCH Comput. Architect. News 38 (3), 37–47.
+
+Hammerstrom, D., 1990. A VLSI architecture for high-performance, low-cost, on-chip learning. In: IJCNN International Joint Conference on Neural Networks.
+
+He, K., Zhang, X., Ren, S., Sun, J., 2016. Identity mappings in deep residual networks. Also in arXiv preprint arXiv:1603.05027.
+
+Huang, M., Wu, D., Yu, C.H., Fang, Z., Interlandi, M., Condie, T., Cong, J., 2016. Programming and runtime support to blaze FPGA accelerator deployment at datacenter scale. In: Proceedings of the Seventh ACM Symposium on Cloud Computing. ACM, pp. 456–469.
+
+Iandola, F., 2016. Exploring the Design Space of Deep Convolutional Neural Networks at Large Scale (Ph.D. dissertation). UC Berkeley.
+
+Ienne, P., Cornu, T., Kuhn, G., 1996. Special-purpose digital hardware for neural networks: an architectural survey. J. VLSI Signal Process. Syst. Signal Image Video Technol. 13 (1).
+
+Jouppi, N., 2016. Google supercharges machine learning tasks with TPU custom chip. https://cloudplatform.googleblog.com.
+
+Jouppi, N., Young, C., Patil, N., Patterson, D., Agrawal, G., et al., 2017. Datacenter performance analysis of a matrix processing unit. In: 44th International Symposium on Computer Architecture.
+
+Karpathy, A., et al., 2014. Large-scale video classification with convolutional neural networks. CVPR.
+
+Krizhevsky, A., Sutskever, I., Hinton, G., 2012. Imagenet classification with deep convolutional neural networks. Adv. Neural Inf. Process. Syst.
+
+Kung, H.T., Leiserson, C.E., 1980. Algorithms for VLSI processor arrays. Introduction to VLSI systems.
+
+Lee, Y., Waterman, A., Cook, H., Zimmer, B., Keller, B., Puggelli, A., Kwak, J., Jevtic, R., Bailey, S., Blagojevic, M., Chiu, P.-F., Avizienis, R., Richards, B., Bachrach, J., Patterson, D., Alon, E., Nikolic, B., Asanovic, K., 2016. An agile approach to building RISC-V microprocessors. IEEE Micro 36 (2), 8–20.
+
+Lewis-Kraus, G., 2016. The Great A.I. Awakening. New York Times Magazine.
+
+Nielsen, M., 2016. Neural Networks and Deep Learning. http://neuralnetworksanddeeplearning.com/.
+
+Nvidia, 2016. Tesla GPU Accelerators For Servers. http://www.nvidia.com/object/teslaservers.html.
+
+Olofsson, A., 2011. Debunking the myth of the \$100 M ASIC. EE Times. http://www.eetimes.com/author.asp?section_id=36&doc_id=1266014.
+
+Ovtcharov, K., Ruwase, O., Kim, J.Y., Fowers, J., Strauss, K., Chung, E.S., 2015a. Accelerating deep convolutional neural networks using specialized hardware. Microsoft Research Whitepaper. https://www.microsoft.com/en-us/research/publication/accelerating-deepconvolutional-neural-networks-using-specialized-hardware/.
+
+Ovtcharov, K., Ruwase, O., Kim, J.Y., Fowers, J., Strauss, K., Chung, E.S., 2015b. Toward accelerating deep learning at scale using specialized hardware in the datacenter. In: 2015 IEEE Hot Chips 27 Symposium.
+
+Patterson, D., Nikolić, B., 7/25/2015, Agile Design for Hardware, Parts I, II, and III. EE Times, http://www.eetimes.com/author.asp?doc_id=1327239.
+
+Patterson, D.A., Ditzel, D.R., 1980. The case for the reduced instruction set computer. ACM SIGARCH Comput. Architect. News 8 (6), 25–33.
+
+Prabhakar, R., Koeplinger, D., Brown, K.J., Lee, H., De Sa, C., Kozyrakis, C., Olukotun, K., 2016. Generating configurable hardware from parallel patterns. In: Proceedings of the Twenty-First International Conference on Architectural Support for Programming Languages and Operating Systems. ACM, pp. 651–665.
+
+Putnam, A., Caulfield, A.M., Chung, E.S., Chiou, D., Constantinides, K., Demme, J., Esmaeilzadeh, H., Fowers, J., Gopal, G.P., Gray, J., Haselman, M., Hauck, S., Heil, S., Hormati, A., Kim, J.-Y., Lanka, S., Larus, J., Peterson, E., Pope, S., Smith, A., Thong, J., Xiao, P.Y., Burger, D., 2014. A reconfigurable fabric for accelerating large-scale datacenter services. In: 41st International Symposium on Computer Architecture.
+
+Putnam, A., Caulfield, A.M., Chung, E.S., Chiou, D., Constantinides, K., Demme, J., Esmaeilzadeh, H., Fowers, J., Gopal, G.P., Gray, J., Haselman, M., Hauck, S., Heil, S., Hormati, A., Kim, J.-Y., Lanka, S., Larus, J., Peterson, E., Pope, S., Smith, A., Thong, J., Xiao, P.Y., Burger, D., 2015. A reconfigurable fabric for accelerating large-scale datacenter services. IEEE Micro. 35 (3).
+
+Putnam, A., Caulfield, A.M., Chung, E.S., Chiou, D., Constantinides, K., Demme, J., Esmaeilzadeh, H., Fowers, J., Gopal, G.P., Gray, J., Haselman, M., Hauck, S., Heil, S., Hormati, A., Kim, J.-Y., Lanka, S., Larus, J., Peterson, E., Pope, S., Smith, A., Thong, J., Xiao, P.Y., Burger, D., 2016. A reconfigurable fabric for accelerating large-scale datacenter services. Commun. ACM.
+
+Qadeer, W., Hameed, R., Shacham, O., Venkatesan, P., Kozyrakis, C., Horowitz, M.A., 2015. Convolution engine: balancing efficiency & flexibility in specialized computing. Commun. ACM 58 (4).
+
+Ragan-Kelley, J., Barnes, C., Adams, A., Paris, S., Durand, F., Amarasinghe, S., 2013. Halide: a language and compiler for optimizing parallelism, locality, and recomputation in image processing pipelines. ACM SIGPLAN Not. 48 (6), 519–530.
+
+Ramacher, U., Beichter, J., Raab, W., Anlauf, J., Bruels, N., Hachmann, A., Wesseling, M., 1991. Design of a 1st generation neurocomputer. VLSI Design of Neural Networks. Springer, USA.
+
+Rau, B.R., Fisher, J.A., 1993. Instruction-level parallelism. J. Supercomput. 235, Springer Science & Business Media.
+
+Russakovsky, O., Deng, J., Su, H., Krause, J., Satheesh, S., Ma, S., Huang, Z., Karpathy, A., Khosla, A., Bernstein, M., Berg, A.C., 2015. Imagenet large scale visual recognition challenge. Int. J. Comput. Vis. 115 (3).
+
+Sergio Guadarrama, 2015. BVLC googlenet. https://github.com/BVLC/caffe/tree/master/models/bvlc_googlenet.
+
+Shao, Y.S., Brooks, D., 2015. Research infrastructures for hardware accelerators. Synth. Lect. Comput. Architect. 10 (4), 1–99.
+
+Sharangpani, H., Arora, K., 2000. Itanium processor microarchitecture. IEEE Micro 20 (5), 24–43.
+
+Silver, D., Huang, A., Maddison, C.J., Guez, A., Sifre, L., Van Den Driessche, G., Schrittwieser, J., Antonoglou, I., Panneershelvam, V., Lanctot, M., Dieleman, S., 2016. Mastering the game of Go with deep neural networks and tree search. Nature 529 (7587).
+
+Smith, J.E., 1982. Decoupled access/execute computer architectures. In: Proceedings of the 11th International Symposium on Computer Architecture.
+
+Sony/Toshiba, 1999. 'Emotion Engine' in PS2 ("IPU is basically an MPEG2 decoder."). http://www.cpu-collection.de/?l0=co&l1=Sony&l2=Emotion+Engine, http://arstechnica.com/gadgets/2000/02/ee/3/.
+
+Steinberg, D., 2015. Full-Chip Simulations, Keys to Success. In: Proceedings of the Synopsys Users Group (SNUG) Silicon Valley 2015.
+
+Szegedy, C., Liu, W., Jia, Y., Sermanet, P., Reed, S., Anguelov, D., Erhan, D., Vanhoucke, V., Rabinovich, A., 2015. Going deeper with convolutions. In: Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition.
+
+TensorFlow Tutorials, 2016. https://www.tensorflow.org/versions/r0.12/tutorials/index.html.
+
+Tung, L., 2016. Google Translate: 'This landmark update is our biggest single leap in 10 years', ZDNet. http://www.zdnet.com/article/google-translate-this-landmarkupdate-is-our-biggest-single-leap-in-10years/.
+
+Vanhoucke, V., Senior, A., Mao, M.Z., 2011. Improving the speed of neural networks on CPUs. https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/37631.pdf.
+
+Wu, Y., Schuster, M., Chen, Z., Le, Q., Norouzi, M., Macherey, W., Krikun, M., Cao, Y., Gao, Q., Macherey, K., Klingner, J., Shah, A., Johnson, M., Liu, X., Kaiser, Ł., Gouws, S., Kato, Y., Kudo, T., Kazawa, H., Stevens, K., Kurian, G., Patil, N., Wang, W., Young, C., Smith, J., Riesa, J., Rudnick, A., Vinyals, O., Corrado, G., Hughes, M., Dean, J., 2016. Google's Neural Machine Translation System: Bridging the Gap between Human and Machine Translation. http://arxiv.org/abs/1609.08144.
+
+## 磁存储、RAID 和 I/O 总线的历史（附录 D） {#sec-m-10}
+
+> 这里所说的*大容量存储*，指的是单个部件的容量超过 100 万个字母数字字符……
+>
+> ——Hoagland［1963］
+
+存储 I/O 的种类和问题都很多，因此这部分历史也是多头并进的（Smotherman［1989］对 I/O 的历史作了更深入的考察）。本节讨论磁存储、RAID 以及 I/O 总线和控制器。想深入学习排队论的读者，可以阅读 Jain［1991］和 Lazowska 等人［1984］的著作。
+
+### 磁存储 {-}
+
+磁记录最初是为了录制声音而发明的。到 1941 年，磁带已经可以与其他存储设备竞争。1947 年 ENIAC 取得成功，人们随之开始推动用磁带记录数字信息。直到 20 世纪 70 年代，成盘的磁带一直是可移动存储的主流。20 世纪 80 年代，IBM 3480 磁带盒成了事实上的标准，至少在大型机上是这样。它并行读 18 个磁道，传输率可达 3 MB/s，但这种 1/2 英寸磁带的容量只有 200 MB。StorageTek 在 Powder-Horn 中使用的 9840 磁带盒，传输率为 10 MB/s，容量为 20 000 MB。这种设备不是单纯沿纵向记录磁道，而是按之字形记录，磁头要来回换向才能跟上磁道，这种技术称为*蛇形记录*（serpentine recording）。另一种 1/2 英寸磁带是数字线性磁带（Digital Linear Tape），其中 DLT7000 的容量为 35 000 MB，传输率为 5 MB/s。与它竞争的是螺旋扫描技术，这种技术通过旋转磁头来提高记录密度。2001 年，8 mm 螺旋扫描磁带的容量为 20 000 MB，传输率约为 3 MB/s。无论密度和成本如何，磁带只能顺序访问，于是人们需要能够随机访问的存储设备。
+
+1953 年，IBM 的 Reynold B. Johnson 挑选了 15 名科学家组成团队，目标是造出一种比磁带快得多的随机访问存储系统：存储量相当于 5 万张标准 IBM 穿孔卡片，并且能在 1 秒内取出数据。Johnson 的磁盘驱动器设计很简单，但从未有人试过：磁性读写传感器必须悬浮在连续旋转的盘面上方千分之几英寸处。24 个月后，团队拿出了能工作的原型机。它重 1 吨，占地约 300 立方英尺。RAMAC-350（Random Access Method of Accounting Control，会计控制随机访问方法）使用 50 张直径 24 英寸的盘片，转速为 1200 RPM，总容量为 5 MB，访问时间为 1 秒。
+
+从 RAMAC 起，IBM 一直在磁盘行业保持领先地位。IBM 的存储总部设在加利福尼亚州圣何塞，Johnson 的团队就是在那里工作的。后来许多与之竞争的磁盘厂商的领导者都是在 IBM 开始职业生涯的，许多磁盘公司也都设在圣何塞附近。
+
+RAMAC 虽然包含了第一个磁盘，但磁记录的一项重大突破出现在后来的磁盘中，即空气轴承读写头：盘面高速运动形成一层气垫，磁头就浮在这层气垫上。有了这层气垫，磁头既能随盘面的不平整起伏，又能离盘面非常近。此后的进步主要来自部件质量的改进和精度的提高。2001 年，磁头在盘面上方 2～3 微英寸处飞行，而在 RAMAC 驱动器中，这个距离是 1000 微英寸。
+
+动头磁盘很快成为高速磁存储的主流，不过由于成本高，磁带直到 20 世纪 70 年代还在大量使用。硬盘的下一个重要进展是 IBM 在 1962 年开发的可移动硬盘驱动器。有了它，昂贵的驱动器电子线路可以共用，这也帮助磁盘超过磁带，成为首选的存储介质。1962 年的 IBM 1311 磁盘，面密度为每平方英寸 50 000 位，成本约为每兆字节 800 美元。IBM 在 1970 年还发明了软盘驱动器，最初是用来存放 IBM 370 系列的微代码的。大约 10 年后，软盘随着 PC 流行起来。
+
+磁盘的第二项重大突破是大约 1973 年出现的所谓温彻斯特（Winchester）磁盘设计。温彻斯特磁盘得益于两个相互关联的因素。首先，集成电路不仅降低了 CPU 的成本，也降低了磁盘控制器和磁头臂控制电子线路的成本。磁盘电子线路的成本降下来以后，就不必再共用电子线路，不可移动的磁盘也就变得经济了。其次，由于磁盘是固定的，可以装在密封的外壳里，环境问题和控制问题都大大减少。系统密封以后，磁头可以飞得离盘面更近，面密度也就随之提高。IBM 交付的第一款密封磁盘有两根主轴，每根主轴上是一个 30 MB 的磁盘。这种磁盘的绰号「30-30」引出了温彻斯特这个名字（温彻斯特 94 是美国最受欢迎的运动步枪，因子弹口径而得了「30-30」的绰号）。20 世纪 80 年代，温彻斯特磁盘迅速流行，到 80 年代中期已经完全取代了可移动磁盘。在此之前，控制磁盘的电子线路成本高，介质只能做成可移动的。
+
+[附录 D](#app-d) 中提到，DRAM 曾一度缩小了与磁盘在面密度上的差距，看上去正在赶上磁盘存储，于是 IBM 的内部会议对磁盘驱动器的前途提出了质疑。磁盘设计者的结论是：磁盘的面密度必须每年提高 60%，才能抵挡住 DRAM 的威胁，而历史上的速度是每年 29%。实现这一目标的关键是磁阻磁头，目前的密度则是靠巨磁阻磁头达到的。在这场竞争的推动下，从实验室创下某一密度纪录到这一密度的磁盘交付使用，间隔时间已经大大缩短。
+
+个人计算机为小外形尺寸（SFF）的磁盘驱动器创造了市场，因为大型机用的 14 英寸磁盘驱动器比 PC 还大。2006 年，3.5 英寸驱动器在市场上居领先地位，不过笔记本电脑所需的 2.5 英寸驱动器尺寸更小，销量也相当可观。iPod、摄像机这类手持设备需要尺寸更小的磁盘，这类磁盘的销量能否一直保持可观，还有待观察。例如，20 世纪 90 年代初曾为掌上计算机开发过 1.8 英寸驱动器，但这个市场选择了 Flash，1.8 英寸驱动器随之消失。
+
+### RAID {-}
+
+20 世纪 80 年代 PC 使用的 SFF 硬盘，促使伯克利的一个小组提出了廉价磁盘冗余阵列（RAID）。这个小组之前参与过精简指令系统计算机的研究，因此预料快得多的 CPU 将会出现。他们提出了两个问题：PC 附带的这些小磁盘能用来做什么？在 I/O 方面能做些什么，才能跟上快得多的处理器？他们主张用 50 个小驱动器替换一个大型机驱动器，靠这么多独立的磁头臂获得高得多的性能，而且这么多小驱动器甚至还能节省功耗和占地面积。磁盘多的缺点是平均无故障时间（MTTF）低得多。为此，他们独立推导出了冗余磁盘和轮转奇偶校验的好处，用来解决这样一个问题：既要用许多小驱动器获得更高的性能，又要让可靠性与单个大型机磁盘一样高。
+
+他们在解释自己的想法时遇到一个问题：有些研究人员听说过带某种冗余的磁盘阵列，因而不理解伯克利的方案。所以，第一篇 RAID 论文［Patterson, Gibson, and Katz 1987］不只是在论证 SFF 磁盘驱动器阵列的好处，在某种程度上也是对已有磁盘阵列工作的教程和分类。镜像（RAID 1）早已用于 Tandem 公司出售的那类容错计算机。1987 年，Thinking Machines 公司已经有由 32 个数据盘和 7 个校验盘组成、用 ECC 纠错的阵列（RAID 2），Honeywell Bull 的 RAID 2 产品还要更早。在同一时期，科学计算机中也已经使用了只有一个奇偶校验盘的磁盘阵列（RAID 3）。这篇论文接着描述了支持扇区访问的单奇偶校验盘方案（RAID 4）和轮转奇偶校验方案（RAID 5）。Chen 等人［1994］综述了最初的 RAID 思想、商业产品和较新的进展。
+
+伯克利小组并不知道，IBM 研制 AS/400 计算机的工程师也想到了轮转奇偶校验，用来提高一组大磁盘的可靠性。IBM 在伯克利小组写论文之前就为 RAID 5 申请了专利。好几家公司关于 RAID 1、RAID 2 和 RAID 3 的专利，又都早于 IBM 的 RAID 5 专利，由此引发了大量诉讼。
+
+伯克利的这篇论文写于万维网出现之前，但它的复印件通过传真传遍世界，激发了许多工程师的想象。今天 Seagate 公司的一位工程师，就从朋友和客户那里收到了 7 份这篇论文。EMC 原来是 IBM 计算机 DRAM 板的供应商，但在 1988 年前后，IBM 的新政策让 EMC 几乎无法再销售 IBM 的存储板。这篇伯克利论文似乎也送到了 EMC 高管的案头，他们决定转而进军由 IBM 磁盘存储产品主导的市场。他们的模式正是论文所倡导的，用许多小驱动器与大型机驱动器竞争。1990 年，EMC 发布了一款 RAID 产品，靠镜像（RAID 1）保证可靠性；EMC 的 RAID 5 产品则是很久以后才推出的。在接下来的一年里，Micropolis 推出了 RAID 3 产品，Compaq 推出了 RAID 4 产品，Data General、IBM 和 NCR 推出了 RAID 5 产品。
+
+RAID 的思想很快传遍了工作站和服务器行业的其他厂商。*Byte* 杂志上有一篇介绍 RAID 的文章（见 Anderson［1990］），此后台式 PC 也有了 RAID 产品，这多少出乎伯克利小组的意料。他们关注的是性能，同时兼顾良好的可用性；而吸引 PC 市场的却是更高的可用性。
+
+另一件出乎意料的事是磁盘阵列的成本。冗余的电源和风扇、「热插拔」磁盘驱动器的能力、RAID 硬件控制器本身、冗余磁盘等加在一起，最早的磁盘阵列的成本是磁盘本身的许多倍。也许正因为如此，RAID 中的「inexpensive」（廉价）变成了「independent」（独立）。今天，许多市场部门和技术作者只知道 RAID 是「独立磁盘冗余阵列」（redundant arrays of independent disks）。
+
+EMC 的转型是成功的：2006 年，EMC 是领先的存储系统供应商，NetApp 则是领先的网络附加存储系统供应商。2006 年，RAID 是一个 300 亿美元的产业，非 PC 磁盘驱动器的销量中有 80% 以上用于 RAID。1999 年，Garth Gibson、Randy Katz 和 David Patterson 获得了 IEEE Reynold B. Johnson 信息存储奖，以表彰他们「开发了廉价磁盘冗余阵列（RAID）」。
+
+### I/O 总线和控制器 {-}
+
+无处不在的微处理器不仅催生了 20 世纪 70 年代的个人计算机，还带动了 20 世纪 80 年代末和 90 年代把控制器功能移入 I/O 设备的趋势。I/O 设备延续了这一趋势，把控制器直接做进了设备本身。这类设备称为*智能设备*，有些总线标准（如 SCSI）就是专门为它们制定的。智能设备自己处理许多底层任务，并把结果排成队列，因此可以放宽时序约束。例如，许多兼容 SCSI 的磁盘驱动器在磁盘上带有磁道缓冲，支持预读以及连接/断开。于是在一条 SCSI 链上，一个磁盘经 SCSI 总线从自己的缓冲传出数据时，其他磁盘可以同时寻道或装入各自的磁道缓冲。相比之下，最初的 RAMAC 的控制器用真空管搭成，只需要把磁头移到所需的磁道上方，等数据从磁头下经过，再把数据连同计算出的奇偶校验一起传出去。SCSI 是小型计算机系统接口（small computer systems interface）的缩写。在 SCSI 这个例子中，一家公司发明了一种总线，又慷慨地鼓励其他公司制造能插到这种总线上的设备。这种总线由 Shugart 公司创建，最初叫 SASI，后来由 IEEE 标准化。

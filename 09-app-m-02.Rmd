@@ -1,0 +1,221 @@
+正文讲过，系统虚拟机最早由 IBM 在研究虚拟存储的过程中开创。IBM 第一台带虚拟存储的计算机是 1967 年推出的 IBM 360/67。IBM 的研究人员编写了程序 CP-67，营造出好几台互相独立的 360 计算机的假象。随后，他们又编写了一个在这些虚拟机上运行的交互式单用户操作系统，名为 CMS。CP-67 后来发展成产品 VM/370；今天，IBM 仍在为它的大型机销售 z/VM［Meyer and Seawright 1970；Van Vleck 2005］。
+
+Atlas 的论文发表几年之后，Wilkes 发表了第一篇描述 Cache 概念的论文［1965］：
+
+> 本文讨论这样一种用法：用一个快速磁芯存储器（比如 32 000 字）充当一个较慢磁芯存储器（比如 100 万字）的从属存储器，使实际情况下的有效访问时间更接近快速存储器，而不是慢速存储器。［第 270 页］
+
+这篇论文只有两页，描述的是一种直接映射 Cache。这是关于 Cache 的第一篇出版物，但 Cache 最早的实现很可能是剑桥大学做的一个直接映射指令 Cache。这个 Cache 用隧道二极管存储器构成，那是当时速度最快的存储器。据 Wilkes 说，Cache 存储器的想法是 G. Scarott 提出的。
+
+这篇论文发表之后，IBM 启动了一个项目，由此诞生了第一台带 Cache 的商用计算机 IBM 360/85［Liptay 1968］。Gibson［1967］说明了如何用存储器流量和失效率度量程序行为，并给出了失效率在不同程序之间的变化。他以 20 个程序为样本（每个程序有 300 万次访存！），还用平均访存时间比较有 Cache 和没有 Cache 的系统。这个先例已有 40 多年，但直到 20 世纪 90 年代初，许多人仍在用失效率作比较。
+
+Conti、Gibson 和 Pitkowsky［1968］介绍了 360/85 最终达到的性能。与 360/91 相比，360/85 的时钟周期更长（80 ns 对 60 ns），存储器交叉访问的路数更少（4 路对 16 路），主存也更慢（1.04 μs 对 0.75 μs）；尽管如此，在论文的 11 个程序中，360/91 只在 3 个程序上比 360/85 快。*Cache* 这个词也是这篇论文第一次使用的。
+
+此后，Cache 方面的文献很快多了起来。Strecker［1976］考察了 PDP-11 的 Cache，发表了第一篇比较不同 Cache 设计的论文。后来，Smith［1982］发表了一篇详尽的综述，文中使用了*空间局部性*和*时间局部性*这两个术语，许多计算机设计者一直以它为参考。
+
+大多数研究依靠模拟，Clark［1983］则用硬件监视器把 VAX-11/780 连续几天的 Cache 失效记录下来。后来，Clark 和 Emer［1985］又比较了地址转换的模拟结果和硬件测量结果。
+
+[附录 B](#app-b) 用来解释 Cache 失效的 3C 模型是 Hill［1987］提出的。Jouppi［1998］回顾说，正是 Hill 的 3C 模型直接促使他发明了牺牲 Cache，既能利用速度较快的直接映射 Cache，又能免去冲突失效的大部分代价。Sugumar 和 Abraham［1993］主张，3C 模型的基准 Cache 应当采用最优替换，这样做有两个好处：一是消除基于最近最少使用（LRU）的失效分类中出现的反常现象，二是能把冲突失效进一步分成两类：由映射引起的，以及由非最优替换算法引起的。
+
+最早讨论非阻塞 Cache 的论文之一出自 Kroft［1981］。Kroft［1998］后来解释说，他是 Control Data 公司第一个设计带 Cache 计算机的人。在用旧概念构造新机制的过程中，他想到了一个办法：发生失效时，让他的双端口 Cache 继续为其他访问服务。
+
+Baer 和 Wang［1988］的研究是最早考察多级包含性的工作之一。随后，Wang、Baer 和 Levy［1989］发表了一篇较早的多级 Cache 性能评估论文。后来，Jouppi 和 Wilton［1994］又为片上多级 Cache 提出了多级排他。
+
+除了牺牲 Cache，Jouppi［1990］还研究了用流缓冲器预取。Farkas、Jouppi 和 Chow［1995］扩展了这项工作，让流缓冲器在顺序处理器上与非阻塞 load 和推测执行很好地配合。后来，Farkas 等［1997］指出，乱序处理器虽然能更好地容忍不可预测的延迟，但仍然能从流缓冲器中获益。他们还更细致地分析了流缓冲器对存储器带宽的需求。
+
+20 世纪 90 年代的 ASPLOS（Symposium on Architectural Support for Compilers and Operating Systems）和 ISCA（International Computer Architecture Symposium）会议论文集里满是关于 Cache 的论文。（事实上，有好事者说 ISCA 其实是 International Cache Architecture Symposium，即「国际 Cache 体系结构研讨会」的缩写。）
+
+第 2 章依据的是 Cantin 和 Hill［2001］收集的 SPEC2000 基准测试程序测量数据。第 2 章还用到了其他几篇论文的数据，相应的图注中都已注明出处：Agarwal and Pudar［1993］；Barroso, Gharachorloo, and Bugnion［1998］；Farkas and Jouppi［1994］；Jouppi［1990］；Lam, Rothberg, and Wolf［1991］；Lebeck and Wood［1994］；McCalpin［2005］；Mowry, Lam, and Gupta［1992］；Torrellas, Gupta, and Hennessy［1992］。
+
+### 参考文献 {- #sec-m-3-references}
+
+Agarwal, A. [1987]. "Analysis of Cache Performance for Operating Systems and Multiprogramming," Ph.D. thesis, Tech. Rep. No. CSL-TR-87-332, Stanford University, Palo Alto, Calif.
+
+Agarwal, A., and S. D. Pudar [1993]. "Column-associative caches: A technique for reducing the miss rate of direct-mapped caches," 20th Annual Int'l. Symposium on Computer Architecture (ISCA), May 16–19, 1993, San Diego, Calif. (Computer Architecture News 21:2 (May), 179–190).
+
+Baer, J.-L., and W.-H. Wang [1988]. "On the inclusion property for multi-level cache hierarchies," Proc. 15th Annual Int'l. Symposium on Computer Architecture (ISCA), May 30–June 2, 1988, Honolulu, Hawaii, 73–80.
+
+Barham, P., B. Dragovic, K. Fraser, S. Hand, T. Harris, A. Ho, and R. Neugebauer [2003]. "Xen and the art of virtualization," Proc. of the 19th ACM Symposium on Operating Systems Principles, October 19–22, 2003, Bolton Landing, N.Y.
+
+Barroso, L. A., K. Gharachorloo, and E. Bugnion [1998]. "Memory system characterization of commercial workloads," Proc. 25th Annual Int'l. Symposium on Computer Architecture (ISCA), July 3–14, 1998, Barcelona, Spain, 3–14.
+
+Bell, C. G., and W. D. Strecker [1976]. "Computer structures: What have we learned from the PDP-11?" Proc. Third Annual Int'l. Symposium on Computer Architecture (ISCA), January 19–21, 1976, Tampa, Fla., 1–14.
+
+Bhandarkar, D. P. [1995]. Alpha Architecture Implementations, Digital Press, Newton, Mass.
+
+Borg, A., R. E. Kessler, and D. W. Wall [1990]. "Generation and analysis of very long address traces," Proc. 17th Annual Int'l. Symposium on Computer Architecture (ISCA), May 28–31, 1990, Seattle, Wash., 270–279.
+
+Cantin, J. F., and M. D. Hill [2001]. "Cache performance for selected SPEC CPU2000 benchmarks," http://www.cs.wisc.edu/multifacet/misc/spec2000cache-data/.
+
+Cantin, J., and M. Hill [2003]. "Cache performance for SPEC CPU2000 benchmarks, version 3.0," http://www.cs.wisc.edu/multifacet/misc/spec2000cache-data/index.html.
+
+Case, R. P., and A. Padegs [1978]. "The architecture of the IBM System/370," Communications of the ACM 21:1, 73–96. Also appears in D. P. Siewiorek, C. G. Bell, and A. Newell, Computer Structures: Principles and Examples, McGraw-Hill, New York, 1982, 830–855.
+
+Clark, B., T. Deshane, E. Dow, S. Evanchik, M. Finlayson, J. Herne, and J. Neefe Matthews [2004]. "Xen and the art of repeated research," Proc. USENIX Annual Technical Conf., June 27–July 2, 2004, Boston, 1135–1144.
+
+Clark, D. W. [1983]. "Cache performance of the VAX-11/780," ACM Trans. on Computer Systems 1:1, 24–37.
+
+Clark, D. W., and J. S. Emer [1985]. "Performance of the VAX-11/780 translation buffer: Simulation and measurement," ACM Trans. on Computer Systems 3:1 (February), 31–62.
+
+Compaq Computer Corporation. [1999]. Compiler Writer's Guide for the Alpha 21264, Order Number EC-RJ66A-TE, June.
+
+Conti, C., D. H. Gibson, and S. H. Pitkowsky [1968]. "Structural aspects of the System/360 Model 85. Part I. General organization," IBM Systems J. 7:1, 2–14.
+
+Crawford, J., and P. Gelsinger [1988]. Programming the 80386, Sybex, Alameda, Calif.
+
+Cvetanovic, Z., and R. E. Kessler [2000]. "Performance analysis of the Alpha 21264-based Compaq ES40 system," Proc. 27th Annual Int'l. Symposium on Computer Architecture (ISCA), June 10–14, 2000, Vancouver, Canada, 192–202.
+
+Fabry, R. S. [1974]. "Capability based addressing," Communications of the ACM 17:7 (July), 403–412.
+
+Farkas, K. I., P. Chow, N. P. Jouppi, and Z. Vranesic [1997]. "Memory-system design considerations for dynamically-scheduled processors," Proc. 24th Annual Int'l. Symposium on Computer Architecture (ISCA), June 2–4, 1997, Denver, Colo., 133–143.
+
+Farkas, K. I., and N. P. Jouppi [1994]. "Complexity/performance trade-offs with non-blocking loads," Proc. 21st Annual Int'l. Symposium on Computer Architecture (ISCA), April 18–21, 1994, Chicago.
+
+Farkas, K. I., N. P. Jouppi, and P. Chow [1995]. "How useful are non-blocking loads, stream buffers and speculative execution in multiple issue processors?" Proc. First IEEE Symposium on High-Performance Computer Architecture, January 22–25, 1995, Raleigh, N.C., 78–89.
+
+Gao, Q. S. [1993]. "The Chinese remainder theorem and the prime memory system," 20th Annual Int'l. Symposium on Computer Architecture (ISCA), May 16–19, 1993, San Diego, Calif. (Computer Architecture News 21:2 (May), 337–340).
+
+Gee, J. D., M. D. Hill, D. N. Pnevmatikatos, and A. J. Smith [1993]. "Cache performance of the SPEC92 benchmark suite," IEEE Micro 13:4 (August), 17–27.
+
+Gibson, D. H. [1967]. "Considerations in block-oriented systems design," AFIPS Conf. Proc. 30, 75–80.
+
+Handy, J. [1993]. The Cache Memory Book, Academic Press, Boston.
+
+Heald, R., K. Aingaran, C. Amir, M. Ang, M. Boland, A. Das, P. Dixit, G. Gouldsberry, J. Hart, T. Horel, W.-J. Hsu, J. Kaku, C. Kim, S. Kim, F. Klass, H. Kwan, R. Lo, H. McIntyre, A. Mehta, D. Murata, S. Nguyen, Y.-P. Pai, S. Patel, K. Shin, K. Tam, S. Vishwanthaiah, J. Wu, G. Yee, and H. You [2000]. "Implementation of third-generation SPARC V9 64-b microprocessor," ISSCC Digest of Technical Papers, 412–413 and slide supplement.
+
+Hill, M. D. [1987]. "Aspects of Cache Memory and Instruction Buffer Performance," Ph.D. thesis, Tech. Rep. UCB/CSD 87/381, Computer Science Division, University of California, Berkeley.
+
+Hill, M. D. [1988]. "A case for direct mapped caches," Computer 21:12 (December), 25–40.
+
+Horel, T., and G. Lauterbach [1999]. "UltraSPARC-III: Designing third-generation 64-bit performance," IEEE Micro 19:3 (May–June), 73–85.
+
+Hughes, C. J., P. Kaul, S. V. Adve, R. Jain, C. Park, and J. Srinivasan [2001]. "Variability in the execution of multimedia applications and implications for architecture," Proc. 28th Annual Int'l. Symposium on Computer Architecture (ISCA), June 30–July 4, 2001, Goteborg, Sweden, 254–265.
+
+IEEE. [2005]. "Intel virtualization technology, computer," IEEE Computer Society 38:5 (May), 48–56.
+
+Jouppi, N. P. [1990]. "Improving direct-mapped cache performance by the addition of a small fully-associative cache and prefetch buffers," Proc. 17th Annual Int'l. Symposium on Computer Architecture (ISCA), May 28–31, 1990, Seattle, Wash., 364–373.
+
+Jouppi, N. P. [1998]. "Retrospective: Improving direct-mapped cache performance by the addition of a small fully-associative cache and prefetch buffers," in G. S. Sohi, ed., 25 Years of the International Symposia on Computer Architecture (Selected Papers), ACM, New York, 71–73.
+
+Jouppi, N. P., and S. J. E. Wilton [1994]. "Trade-offs in two-level on-chip caching," Proc. 21st Annual Int'l. Symposium on Computer Architecture (ISCA), April 18–21, 1994, Chicago, 34–45.
+
+Kessler, R. E. [1999]. "The Alpha 21264 microprocessor," IEEE Micro 19:2 (March/April), 24–36.
+
+Kilburn, T., D. B. G. Edwards, M. J. Lanigan, and F. H. Sumner [1962]. "One-level storage system," IRE Trans. on Electronic Computers EC-11 (April) 223–235. Also appears in D. P. Siewiorek, C. G. Bell, and A. Newell, Computer Structures: Principles and Examples, McGraw-Hill, New York, 1982, 135–148.
+
+Kroft, D. [1981]. "Lockup-free instruction fetch/prefetch cache organization," Proc. Eighth Annual Int'l. Symposium on Computer Architecture (ISCA), May 12–14, 1981, Minneapolis, Minn., 81–87.
+
+Kroft, D. [1998]. "Retrospective: Lockup-free instruction fetch/prefetch cache organization," in G. S. Sohi, ed., 25 Years of the International Symposia on Computer Architecture (Selected Papers), ACM, New York, 20–21.
+
+Kunimatsu, A., N. Ide, T. Sato, Y. Endo, H. Murakami, T. Kamei, M. Hirano, F. Ishihara, H. Tago, M. Oka, A. Ohba, T. Yutaka, T. Okada, and M. Suzuoki [2000]. "Vector unit architecture for emotion synthesis," IEEE Micro 20:2 (March–April), 40–47.
+
+Lam, M. S., E. E. Rothberg, and M. E. Wolf [1991]. "The cache performance and optimizations of blocked algorithms," Proc. Fourth Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), April 8–11, 1991, Santa Clara, Calif. (SIGPLAN Notices 26:4 (April), 63–74).
+
+Lebeck, A. R., and D. A. Wood [1994]. "Cache profiling and the SPEC benchmarks: A case study," Computer 27:10 (October), 15–26.
+
+Liptay, J. S. [1968]. "Structural aspects of the System/360 Model 85. Part II. The cache," IBM Systems J. 7:1, 15–21.
+
+Luk, C.-K., and T. C Mowry [1999]. "Automatic compiler-inserted prefetching for pointer-based applications," IEEE Trans. on Computers, 48:2 (February), 134–141.
+
+McCalpin, J. D. [2005]. "STREAM: Sustainable Memory Bandwidth in High Performance Computers," www.cs.virginia.edu/stream/.
+
+McFarling, S. [1989]. "Program optimization for instruction caches," Proc. Third Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), April 3–6, 1989, Boston, 183–191.
+
+Menon, A., J. Renato Santos, Y. Turner, G. Janakiraman, and W. Zwaenepoel [2005]. "Diagnosing performance overheads in the xen virtual machine environment," Proc. First ACM/USENIX Int'l. Conf. on Virtual Execution Environments, June 11–12, 2005, Chicago, 13–23.
+
+Meyer, R. A., and L. H. Seawright [1970]. "A virtual machine time sharing system," IBM Systems J. 9:3, 199–218.
+
+Mowry, T. C., S. Lam, and A. Gupta [1992]. "Design and evaluation of a compiler algorithm for prefetching," Proc. Fifth Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 12–15, 1992, Boston (SIGPLAN Notices 27:9 (September), 62–73).
+
+Oka, M., and M. Suzuoki [1999]. "Designing and programming the emotion engine," IEEE Micro 19:6 (November–December), 20–28.
+
+Pabst, T. [2000]. "Performance Showdown at 133 MHz FSB—The Best Platform for Coppermine," www6.tomshardware.com/mainboard/00q1/000302/.
+
+Palacharla, S., and R. E. Kessler [1994]. "Evaluating stream buffers as a secondary cache replacement," Proc. 21st Annual Int'l. Symposium on Computer Architecture (ISCA), April 18–21, 1994, Chicago, 24–33.
+
+Przybylski, S. A. [1990]. Cache Design: A Performance-Directed Approach, Morgan Kaufmann, San Francisco.
+
+Przybylski, S. A., M. Horowitz, and J. L. Hennessy [1988]. "Performance trade-offs in cache design," Proc. 15th Annual Int'l. Symposium on Computer Architecture (ISCA), May 30–June 2, 1988, Honolulu, Hawaii, 290–298.
+
+Reinman, G., and N. P. Jouppi. [1999]. "Extensions to CACTI."
+
+Robin, J., and C. Irvine [2000]. "Analysis of the Intel Pentium's ability to support a secure virtual machine monitor," Proc. USENIX Security Symposium, August 14–17, 2000, Denver, Colo.
+
+Saavedra-Barrera, R. H. [1992]. "CPU Performance Evaluation and Execution Time Prediction Using Narrow Spectrum Benchmarking," Ph.D. dissertation, University of California, Berkeley.
+
+Samples, A. D., and P. N. Hilfinger [1988]. Code Reorganization for Instruction Caches, Tech. Rep. UCB/CSD 88/447, University of California, Berkeley.
+
+Sites, R. L. (ed.) [1992]. Alpha Architecture Reference Manual, Digital Press, Burlington, Mass.
+
+Skadron, K., and D. W. Clark [1997]. "Design issues and tradeoffs for write buffers," Proc. Third Int'l. Symposium on High-Performance Computer Architecture, February 1–5, 1997, San Antonio, Tex., 144–155.
+
+Smith, A. J. [1982]. "Cache memories," Computing Surveys 14:3 (September), 473–530.
+
+Smith, J. E., and J. R. Goodman [1983]. "A study of instruction cache organizations and replacement policies," Proc. 10th Annual Int'l. Symposium on Computer Architecture (ISCA), June 5–7, 1982, Stockholm, Sweden, 132–137.
+
+Stokes, J. [2000]. "Sound and Vision: A Technical Overview of the Emotion Engine," http://arstechnica.com/hardware/reviews/2000/02/ee.ars.
+
+Strecker, W. D. [1976]. "Cache memories for the PDP-11?" Proc. Third Annual Int'l. Symposium on Computer Architecture (ISCA), January 19–21, 1976, Tampa, Fla., 155–158.
+
+Sugumar, R. A., and S. G. Abraham [1993]. "Efficient simulation of caches under optimal replacement with applications to miss characterization," Proc. ACM SIGMETRICS Conf. on Measurement and Modeling of Computer Systems, May 17–21, 1993, Santa Clara, Calif., 24–35.
+
+Tarjan, D., S. Thoziyoor, and N. Jouppi [2006]. CACTI 4.0. Technical Report HPL-2006-86, HP Laboratories.
+
+Torrellas, J., A. Gupta, and J. Hennessy [1992]. "Characterizing the caching and synchronization performance of a multiprocessor operating system," Proc. Fifth Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 12–15, 1992, Boston (SIGPLAN Notices 27:9 (September), 162–174).
+
+Van Vleck, T. [2005]. "The IBM 360/67 and CP/CMS," http://www.multicians.org/thvv/360-67.html.
+
+Wang, W.-H., J.-L. Baer, and H. M. Levy [1989]. "Organization and performance of a two-level virtual-real cache hierarchy," Proc. 16th Annual Int'l. Symposium on Computer Architecture (ISCA), May 28–June 1, 1989, Jerusalem, 140–148.
+
+Wilkes, M. [1965]. "Slave memories and dynamic storage allocation," IEEE Trans. Electronic Computers EC-14:2 (April), 270–271.
+
+Wilkes, M. V. [1982]. "Hardware support for memory protection: Capability implementations," Proc. Symposium on Architectural Support for Programming Languages and Operating Systems (ASPLOS), March 1–3, 1982, Palo Alto, Calif., 107–116.
+
+Wulf, W. A., R. Levin, and S. P. Harbison [1981]. Hydra/C.mmp: An Experimental Computer System, McGraw-Hill, New York.
+
+## 指令系统的演变（附录 A、J 和 K） {#sec-m-4}
+
+> 每当有人用面向栈或面向寄存器的指令系统来开发未来的体系结构时，我们都应当皱起眉头。
+>
+> ——Meyers［1978，第 20 页］
+
+最早的计算机，包括 UNIVAC I、EDSAC 和 IAS 计算机，都是基于累加器的计算机。这类计算机结构简单，在硬件资源非常紧张的年代自然成为首选。第一台通用寄存器计算机是 Ferranti 公司 1956 年制造的 Pegasus。Pegasus 有 8 个通用寄存器，其中 R0 恒为 0。这 8 个寄存器通过块传送从磁鼓存储器装入。
+
+### 栈体系结构 {-}
+
+1963 年，Burroughs 公司交付了 B5000。B5000 也许是第一台认真考虑软件和软硬件权衡的计算机。Barton 和 Burroughs 的设计者们把 B5000 设计成栈体系结构（见 Barton［1961］）。这种栈体系结构是为支持 ALGOL 等高级语言而设计的，所用的操作系统 MCP 也用高级语言编写。B5000 还是美国厂商生产的第一台支持虚拟存储的计算机。1968 年推出的 B6500（Hauck 和 Dent［1968］对它有讨论）增加了由硬件管理的活动记录。B5000 和 B6500 都把栈顶的两个元素放在处理器里，栈的其余部分放在内存中。栈体系结构的代码密度高，但只有两个高速存储位置。IBM 360 的原始论文［Amdahl, Blaauw, and Brooks 1964］和 PDP-11 的原始论文［Bell et al. 1970］都反对栈结构，作者提出了三条主要理由：
+
+* 性能来自快速的寄存器，而不在于寄存器的使用方式；
+* 栈结构限制太多，需要大量交换和复制操作；
+* 栈有栈底，栈底放在较慢的存储器中时，性能会受损。
+
+20 世纪 70 年代末，基于栈的硬件不再受青睐，除了 Intel 80x86 的浮点体系结构，基本上消失了。例如，SPEC 报告里列出的计算机，除 80x86 以外，没有一台使用栈。
+
+然而到了 20 世纪 90 年代，Java 虚拟机（JVM）的成功给栈体系结构打了一针强心剂。JVM 是一个软件解释器，解释的对象是 Java 编译器生成的一种中间语言，称为 Java 字节码［Lindholm and Yellin 1999］。解释器的作用是让软件在许多平台之间兼容，以期做到「一次编写，到处运行」。解释执行使速度降为原来的约 1/10，但有些时候兼容性比性能更重要，例如把 Java「小程序」（applet）下载到互联网浏览器中运行。
+
+有少数人提出用硬件直接执行 JVM 指令（见 McGhan 和 O'Connor［1998］），但到目前为止，这些方案在商业上都没有产生多大影响。人们转而寄希望于 Java 即时（JIT）编译器来弥补解释执行的性能损失。JIT 编译器在运行时把程序编译成本机指令，即运行该 Java 程序的那台计算机的指令系统。Java 的流行还催生了另一类编译器，它们绕过 Java 字节码这层假象，直接编译成硬件的本机指令系统。
+
+### 计算机体系结构的定义 {-}
+
+*计算机体系结构*这个术语是 IBM 在 20 世纪 60 年代初创造的。Amdahl、Blaauw 和 Brooks［1964］用它来指 IBM 360 指令系统中程序员可见的部分。他们认为，同一体系结构的系列计算机应当能运行相同的软件。这个想法今天看来理所当然，在当时却相当新颖。IBM 虽然是业界的龙头企业，但在 360 之前已有 5 种不同的体系结构，因此，让一家公司统一到单一体系结构上，在当时是一个激进的想法。360 的设计者希望借助一种共同的体系结构，把 IBM 的 6 个不同部门联合起来。他们对体系结构的定义是：
+
+> ……计算机的结构，即机器语言程序员为该计算机编写正确的（与时序无关的）程序所必须了解的内容。
+
+「机器语言程序员」一词意味着兼容性一直保持到机器语言这一层；「与时序无关」则允许有不同的实现。360 体系结构为二进制兼容开辟了道路，其他厂商后来也沿着这条路走了下去。
+
+IBM 360 同时采用了 8 位字节的按字节编址和通用寄存器，是这样的计算机中第一台大批量销售的。360 还有寄存器-存储器型指令，以及数量有限的存储器-存储器型指令。[附录 K](#app-k) 概括介绍了这个指令系统。
+
+1964 年，Control Data 公司交付了第一台超级计算机 CDC 6600。Thornton［1964］讲到，他和 Cray 以及 6600 的其他设计者是最早深入探索流水线的一批人。6600 是第一台通用的 load-store 型计算机。早在 20 世纪 60 年代，6600 的设计者就认识到，要让流水线高效工作，就必须简化体系结构。到了 20 世纪 70 年代，微处理器和小型机的设计者基本上忽视了体系结构简洁性与实现之间的这种相互影响，直到 80 年代它才重新受到重视。
+
+### 高级语言计算机体系结构 {-}
+
+20 世纪 60 年代末和 70 年代初，人们意识到软件成本比硬件成本增长得更快。McKeeman［1967］认为，编译器和操作系统变得太大、太复杂，开发周期也太长。由于编译器质量不高，计算机的存储容量也有限，当时大多数系统程序仍用汇编语言编写。许多研究者提出，构造功能更强、面向软件的体系结构，以缓解这场软件危机。Tanenbaum［1978］研究了高级语言的特性，和其他研究者一样，他发现大多数程序都很简单。他主张设计体系结构时考虑这一点，以程序规模和编译的难易为优化目标。为此，他提出了一种栈计算机，指令格式按使用频度编码。但我们已经看到，程序规模并不能直接转化为性价比；这项工作之后不久，栈计算机就逐渐退出了舞台。
+
+Strecker 的文章［1978］讲述了他和 DEC 的其他体系结构设计者如何针对这一问题设计出 VAX 体系结构。VAX 的设计目标是简化高级语言的编译。编译器编写者曾抱怨 PDP-11 的正交性不够完全，因此 VAX 体系结构设计得高度正交，并且能把一条高级语言语句映射成一条 VAX 指令。此外，编译出来的程序常常太大，现有的存储器装不下，所以 VAX 的设计者还设法优化代码长度。[附录 K](#app-k) 概括介绍了这个指令系统。
+
+VAX-11/780 是 VAX 系列中第一台发布的计算机，也是迄今为止最成功、研究得最多的计算机之一。DEC 战略的基石是单一的体系结构 VAX 运行单一的操作系统 VMS，这一战略成功运行了 10 多年。大量论文报道了 VAX 的指令混合比例、实现上的测量和分析，因此 VAX 是一个理想的研究案例［Clark and Levy 1982；Wiecek 1982］。Bhandarkar 和 Clark［1991］定量分析了 VAX 与 RISC 计算机相比的劣势，实际上从技术上解释了 VAX 消亡的原因。
+
+VAX 设计期间，研究界正在提倡一种更激进的方法，称为*高级语言计算机体系结构*（HLLCA）。这场运动的目标是把硬件「提升」到程序设计语言的层次，从而消除高级语言与计算机硬件之间的鸿沟，即 Gagliardi［1973］所说的「语义鸿沟」。Meyers［1982］很好地总结了各方论点，并回顾了高级语言计算机体系结构项目的历史。HLLCA 在商业上始终没有产生重要影响。一方面，计算机的存储容量增大，消除了高级语言带来的代码长度问题，操作系统也可以用高级语言编写了；另一方面，较简单的体系结构与软件相结合，以更低的成本和复杂度提供了更高的性能和更大的灵活性。
+
+### 精简指令系统计算机 {-}
+
+20 世纪 80 年代初，计算机体系结构开始转向，不再追求由硬件为语言提供高级支持。Ditzel 和 Patterson［1980］分析了高级语言体系结构遇到的困难，认为出路在于更简单的体系结构。在另一篇论文［Patterson and Ditzel 1980］中，两人首次讨论了*精简指令系统计算机*（RISC）的思想，并阐述了采用更简单体系结构的理由。VAX 的体系结构设计者 Clark 和 Strecker［1980］撰文反驳了这一主张。

@@ -1,0 +1,104 @@
+## Graphcore IPU Bow：面向训练的数据中心加速器 {#sec-7-6}
+
+Graphcore 智能处理单元（IPU，Intelligence Processing Unit）的主要特征见[图 7.18](#fig-7-18)，晶片照片见[图 7.21](#fig-7-21)。IPU 是集成在一块芯片上的大规模并行处理器。第二代产品 IPU Bow 有 1472 个 IPU 核，每个核每个时钟周期能完成 64 次 16 位浮点运算。IPU 芯片面积达 832 mm^2^，为了提高成品率，它和 GPU 一样设置了冗余核，每 24 个核中有 1 个是冗余的。IPU 的指令是 Graphcore 自行设计的 32 位标量指令。IPU 也和 CPU、GPU 一样支持硬件多线程，每个核直接支持 6 个线程。因此，程序员应当像使用 GPU 时那样开出大量线程，让 IPU 始终有足够的工作可做，从而保持较高的利用率。
+
+各个 tile 之间的通信由芯片中部的交换单元（Exchange Unit）负责。IPU 也和 TPU v4、A100 一样设有片上链路，可以把多块 IPU 芯片连成更大的系统。理论上最多可以连接 64,000 个 IPU，但提交 MLPerf 基准测试的最大系统只有 256 块芯片（见 [7.10 节](#sec-7-10)）。每块芯片上的交换单元与 IPU 链路配合工作，因此程序员可以无缝地向任意一块芯片上的任意一个 tile 发送消息。全互连（all-to-all）通信的实测结果表明，无论在芯片内部还是芯片之间，有效带宽都很高。
+
+![图 7.21　Graphcore IPU MK2 的晶片照片。该芯片采用 7 nm 工艺制造，晶片面积 832 mm^2^，有 1492 个 tile，每个 tile 包含一个 IPU 核和 624 KiB SRAM，每个晶片合计 897 MiB。tile 之间的通信全部由交换单元完成。每个晶片有 3 条 IPU 链路，用来构建大规模系统；目前做过基准测试的最大系统有 256 块芯片。tile 存储器约占晶片面积的一半，tile 逻辑约占四分之一，交换单元约占十分之一，其余是非核部分（uncore）。引自 Sparsity-Aware and Reconfigurable NPU。图中标注：Tile 为 tile，Exchange 为交换单元，Link 为链路。](images/ch07/fig-7-21.png){#fig-7-21 width=60%}
+
+为了简化设计和编程，IPU 采用整体同步并行（BSP，Bulk Synchronous Parallel）模型组织并行计算。BSP 把并行计算分解成一连串较大的步，从而降低了并行计算的难度。每一大步依次包括计算阶段、通信阶段和一次栅障同步，因此所有线程都完成同步之后，程序才能进入下一步。
+
+IPU 最与众不同的地方是存储系统。IPU Bow 的每个 tile 有 624 KiB SRAM，1472 个核合计，每块芯片有 897 MiB SRAM，容量惊人。作个比较：这一容量是第一代 IPU 的 3 倍，接近 TPU v4 片上 SRAM 的 6 倍，是 A100 L2 Cache 的 22 倍。同样大胆的是，IPU 不连接 DRAM。应用需要的内存如果超出 IPU 片上的容量，就必须经过网关，使用主机 ARM CPU 所连接的 DDR4 DRAM。IPU 的架构师下了一个赌注：片上 SRAM 足以满足大多数 DNN 的需要（见 [7.11 节](#sec-7-11)）。
+
+### 小结：IPU Bow 如何遵循设计准则 {-}
+
+IPU Bow 遵循 [7.2 节](#sec-7-2)准则的情况如下。
+
+1. 使用专用存储器，尽量缩短数据搬运的距离。
+
+    IPU Bow 每个核配有 624 KiB 存储器，每块芯片合计 897 MiB，目的是让数据尽可能留在本地。唯一的 DRAM 在 CPU 主机上，带宽比前面几种 DSA 的 DRAM 低得多。
+
+2. 把省去高级微结构优化而节省下来的资源，投入到更多的运算单元或更大的存储器上。
+
+    IPU Bow 有 94,208 个 16 位 ALU，数量同样远远超过同时代的 CPU。
+
+3. 采用与领域相匹配的最简单的并行形式。
+
+    IPU 依靠多处理器、多线程和一维 SIMD 实现并行。
+
+4. 把数据的宽度和类型缩减到该领域所需的最简形式。
+
+    与其他 DSA 不同，IPU Bow 只支持 fp16 和 fp32。
+
+5. 使用领域专用编程语言，把代码移植到 DSA 上。
+
+    IPU 和 TPU、GPU 一样，使用 JAX、PyTorch 和 TensorFlow 编程框架编程。
+
+## 三星神经处理单元（NPU）：智能手机推理加速器 {#sec-7-7}
+
+智能手机中的 DSA 是作为片上系统（SOC）的一部分设计的。[图 7.22](#fig-7-22) 列出了三星神经处理单元（NPUv1）的各项特征，所列项目与[图 7.11](#fig-7-11) 和[图 7.18](#fig-7-18) 中的数据中心加速器一一对应；[图 7.23](#fig-7-23) 是它的晶片照片。NPU 的能耗预算和晶片面积预算都比数据中心的推理 DSA 小两个数量级。
+
+每个 NPUv1 有三个核，核的框图见[图 7.24](#fig-7-24)。每个核有两个 NPU 引擎，它们共享一个 1 MiB 的便笺存储器，这个存储器称为紧耦合存储器（TCM，Tightly Coupled Memory）。NPU 引擎的核心是张量单元中的四个 16×16 乘累加单元。它们与 TPU v4 lite 中的四个 MXU 类似，大概也组织成脉动阵列。这些乘累加单元主要处理 8 位整数，也能处理 16 位整数，只是处理 16 位整数时每次运算要花多个时钟周期。
+
+[图 7.22　智能手机 DNN 推理加速器三星 NPUv1、NPUv2 与 Intel Core i7 的主要特征，[7.9 节](#sec-7-9)对它们作了比较。引自 Architecture for Samsung Flagship Mobile SoC]{#fig-7-22 .caption}
+
+| | 三星 NPUv1 | 三星 NPUv2 | Intel Core i7-11375H |
+|---|---|---|---|
+| 投入生产部署 | 2021 | 2022 | 2021 |
+| 峰值 TOPS（8 位整数） | 14.6（8b） | 39.3（4b），19.7（8b），9.8（fp16） | 1.3（8b），0.6（fp16） |
+| DNN 目标 | 仅推理 | 仅推理 | 通用 |
+| 基准时钟频率（MHz） | 332 | 332 | 3300 |
+| 睿频时钟频率（MHz） | 1196 | 1196 | 5000 |
+| AVX/SIMD 时钟频率（MHz） | N.A. | N.A. | |
+| 工艺节点，晶片面积 | 5 nm，5.4 mm^2^ | 4 nm，4.7 mm^2^ | 10 nm，122 mm^2^ |
+| 晶体管数 | N.A. | N.A. | N.A. |
+| 热设计功耗（W） | 0.33 @0.6V，0.79 @0.9V | 0.38–5.1 @0.55V | 28–35 |
+| 处理器类型 | 单指令二维数据 | 单指令二维数据 | 多线程 SIMD |
+| 每核运算单元数 | 2048（8b） | 4096（8b） | 64（8b） |
+| 每芯片核数 | 3 | 2 | 4 |
+| 每核线程数 | 1 | 1 | 2 |
+| 片上存储器 | 3 MiB | 2 MiB | 17 MiB |
+| DRAM 类型 | N.A. | N.A. | DDR4，LPDDR4 |
+| DRAM 容量，带宽 | N.A. | N.A. | 64 GiB，26–34 GB/s |
+
+![图 7.23　三星 NPUv1（左）和 NPUv2（右）的晶片照片。NPUv1 采用 5 nm 工艺制造，晶片面积 5.4 mm^2^，有 3 个核；NPUv2 采用 4 nm 工艺制造，晶片面积 4.7 mm^2^，有 2 个核。两个版本的每个核都有 1 MiB SRAM。两张照片按两个版本的实际大小比例排列。引自 2021 ACM/IEEE 48th Annual International Symposium on Computer Architecture (ISCA)。图中标注：NPU Core 0/1/2 为 NPU 核 0/1/2，NPU Control Unit 和 NPU controller 为 NPU 控制器，括号内为各部分面积。](images/ch07/fig-7-23.png){#fig-7-23 width=80%}
+
+![图 7.24　NPUv1 一个核的框图。引自 A Multi-Mode 8K-MAC HW-Utilization-Aware Neural Processing Unit with a Unified Multi-Precision Datapath in 4nm Flagship Mobile SoC。图中标注：NPU Core 0 为 NPU 核 0，NPU controller 为 NPU 控制器，NPUE 0/1 为 NPU 引擎 0/1，1 MB shared on-chip scratchpad memory 为 1 MB 共享片上便笺存储器，External memory 为外部存储器；Data fetcher 为数据取数器，其中 IFM fetcher、Weight fetcher、IFM/PSUM fetcher、PSUM fetcher 分别为输入特征图、权重、输入特征图/部分和、部分和取数部件；Sparsity unit 为稀疏单元，含 Sparsity controller（稀疏控制器）和 Flow controller（流控制器）；Tensor unit 为张量单元，MAA0～MAA3 为四个乘累加阵列，每个有 Weight buffer（权重缓冲）、IFM reg.（输入特征图寄存器）和 16 × 16 MAC array（16×16 乘累加阵列）；Vector unit 为向量单元，含 Activation function unit（激活函数单元）、Quantization unit（量化单元）和 Buffer（缓冲），Block #1～#16 为第 1～16 块；图例中 IFM 为输入特征图，Weights 为权重，OFM/PSUM 为输出特征图/部分和，MAA output from NPUE 0/1 为来自 NPU 引擎 0/1 的乘累加阵列输出；To NPUE 1 和 From NPUE 1 分别为送往和来自 NPU 引擎 1。](images/ch07/fig-7-24.png){#fig-7-24 width=95%}
+
+数据取数器（Data Fetcher）负责把数据从 TCM 送到它右侧的张量单元。数据取数器由几个子单元组成，分别取输入特征图（IFU）、权重（WFU）和部分和（PSUM）；另有一个单元根据计算的需要，取特征图或部分和（IFM/PSUM）。各个取数子单元通过各自独立的 256 位通路访问 TCM，因此可以同时工作。
+
+NPUv1 最新颖的地方，也许是利用输入矩阵的稀疏性来节省能耗、提高性能。[图 7.24](#fig-7-24) 中，张量单元左侧的稀疏单元跳过输入中的零值，生成稠密矩阵，再把稠密矩阵送给四个乘累加（MAC）单元。张量单元旁边是向量单元，它和 TPU v4 lite 中的向量单元一样，对 MAC 单元的输出执行非线性激活运算。
+
+NPUv1 推出一年后，三星发布了下一代 NPU，即 NPUv2（见[图 7.22](#fig-7-22) 和[图 7.23](#fig-7-23)）。NPUv2 的设计思路与 NPUv1 相似，时钟频率相同，每个核的 TCM 容量也相同。两者的主要区别如下：
+
+* NPUv2 的每个核只有一个 NPU 引擎，而不是两个。
+* NPUv2 的每个张量单元除了 8 位整数，还支持 16 位浮点数和 4 位整数。
+* NPUv2 的每个张量单元有 4096 个 8 位 MAC，因此每个核的 MAC 数是 NPUv1 的 2 倍。
+* NPUv2 的核面积变大了。为了减轻这一影响，每个 NPUv2 只有两个核，而不是三个。
+* NPUv2 有几种工作模式。一是低功耗模式，以功耗为先，用于语音唤醒这类常开功能：这时只用一个核，其他单元都可以休眠，功耗比标准模式低 89%。二是低延迟模式，两个核都以高时钟频率运行 DNN，力求尽快处理完模型，这时的功耗可能比 NPUv1 高出不少。
+* NPUv2 还增加了一个收集单元，可以访问另一个核 TCM 中的数据。在低延迟模式下，收集单元与软件方案相比能大大减少冗余的数据传送，降低总延迟。
+* NPUv2 采用 4 nm 工艺制造，而不是 5 nm，晶片面积小 15%。
+
+### 小结：三星 NPU 如何遵循设计准则 {-}
+
+NPU 遵循 [7.2 节](#sec-7-2)准则的情况如下。
+
+1. 使用专用存储器，尽量缩短数据搬运的距离。
+
+    NPU 每个核有 1 MiB 便笺存储器，占核面积的 51%。
+
+2. 把省去高级微结构优化而节省下来的资源，投入到更多的运算单元或更大的存储器上。
+
+    NPUv1 有 6144 个 8 位 MAC，NPUv2 有 8192 个 8 位 MAC。
+
+3. 采用与领域相匹配的最简单的并行形式。
+
+    NPU 依靠多处理器和二维 SIMD 实现并行。
+
+4. 把数据的宽度和类型缩减到该领域所需的最简形式。
+
+    NPUv1 只支持 8 位和 16 位整数，NPUv2 增加了 4 位整数和 16 位浮点。
+
+5. 使用领域专用编程语言，把代码移植到 DSA 上。
+
+    NPU 使用 TensorFlow 和 TensorFlow Lite 编程框架编程。
