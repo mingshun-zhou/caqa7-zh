@@ -1,0 +1,31 @@
+# 附录 A 勘误
+
+- A.8 节例题（RGB→YUV 代码第 2 行）：原书作「-4784*R 9437*G」，应为「-4784*R -9437*G」（与习题 A.8 同一段代码一致）；已改。
+- A.8 节例题（RGB→YUV 代码第 3 行）：原书作「20218*R 16941*G 3277*B」，应为「20218*R -16941*G -3277*B」；已改。
+- A.9 节图 A.24 图注：原书作「S and J」，应为「S 和 U」（表中和图 A.23 只有 R/I/S/U 型，没有 J 型）；已改。
+- A.9 节正文（RV64G 指令列表的位置）：原书作「Figure A.28 (page A.42)」，图 A.28 实际在 A-41 页；页码已删，保留图 A.28 链接；已改。
+- A.9 节 C 描述语言例子：原书作「x8 and x10 are 32-bit registers」，应为「64 位寄存器」（RV64G 寄存器为 64 位，下文说扩展成 64 位存入 x10）；已改。
+- A.9 节同一例子的式子：原书作「Mem[Regs[R8]]」，应为「Mem[Regs[x8]]」；公式按约定不动，存疑，未改。
+- 图 A.26：`addi` 名称原书作「Add immediate unsigned」，应为「加立即数」（addi 的立即数做符号扩展）；已改。
+- 图 A.26 表头：原书作「instrucmtion」，应为「instruction」；已改（译文原已按正确词译出）。
+- A.9 节控制流指令：原书作「R64C」，应为「RV64C」；已改。
+- 图 A.27：`beq` 名称原书作「Branch equal zero」，应为「相等转移」；已改。
+- 图 A.27：`bgt` 名称原书作「Branch not equal zero」，应为「大于转移」；已改。
+- 图 A.23 图注：原书作「formata」，应为「formats」；已改（译文原已按正确词译出）。
+- 图 A.28 移位行：原书作「srli … srai」各重复一次，字版本应为「srlw」「sraw」；已改。
+- 图 A.28 浮点行：原书作「fmult, fiv」，应为「fmul, fdiv」；已改。
+- 图 A.28 浮点行：原书作「fsgn, fsgnj, fsjnx」，应为「fsgnj, fsgnjn, fsgnjx」；已改。
+- 图 A.28 浮点 fmv 行：原书作「abd」，应为「and」；已改（译文原已按正确词译出）。
+- 图 A.28 加减行：原书作「subi, subiw」，RISC-V 无此指令，删去还是另有所指无法确定；存疑，未改。
+- 图 A.29 图注：原书作「1/5 to 3x」，疑为「1.5」，但表中 astar 等程序的比值也超出 3 倍，正确范围无法确定；存疑，未改。
+- A.9 节末（RISC-V 指令的使用情况）：原书作「using RV32G」，与 A.9 节讨论的 RV64G 不一致，无法确定测量实际用的是哪个；存疑，未改。
+- 习题 A.2、A.3：原书作「Table A.29」，应为「图 A.29」；已改。
+- 习题 A.13：原书作「this chapter」，应为「本附录」；已改。
+- 习题 A.21 (b)：原书作「this chapter」，应为「本附录」；已改。
+- 习题 A.23 分值：原书作「[25,25]」，应为「[25/25]」；已改。
+- 习题 A.22 (c)(d)：原书两小题文字完全相同，(d) 可能应为「大端、不对齐 4 字节字」，但无法确定；存疑，未改。
+- A.1 节：原书作「four embedded RISC processors」，括号里只列三种，无法确定是数字错还是漏列；存疑，未改。
+- A.2 节：正文作「these three classes」，图 A.2 图题作「four classes」，两种分法都说得通；存疑，未改。
+- A.3 节小结：原书「This claim is not substantiated by the caption of the figure to which it refers」像作者批注误入正文，且图 A.8 图注里没有「12～16 位覆盖 75%～99%」的数；需对照纸本，存疑，未改。
+- A.7 节（第 23 页）：原书作「intermediates」，应为「immediates」；已改（译文原已按「立即数」译出）。
+- 图 A.16：原书作「instructionsbecause」「greater then, less then」，应为「instructions because」「greater than, less than」；已改（译文原已按正确意思译出）。

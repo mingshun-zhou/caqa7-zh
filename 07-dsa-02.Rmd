@@ -35,7 +35,7 @@
 
 ### TPU v4 lite 的体系结构 {-}
 
-[图 7.12](#fig-7-12) 是 TPU v4 lite 的框图，图中也画出了 *uncore*。所谓 uncore，就是芯片上除 TensorCore 以外的全部部分。（TPU v4 的 uncore 与这款推理芯片相同，只是规模更大。）设计的核心是一个向量单元和一个 16 MB 的向量存储器，向量单元负责执行 DNN 的激活函数。谷歌发明了「brain float 16」（bfloat16，简称 bf16）浮点格式，并从 TPU v2 开始采用，因为它比 IEEE 754 fp16 更适合 DNN。与 fp16 不同，bf16 的指数位数与 IEEE 754 fp32 相同，尾数位则较少，而尾数位对 DNN 没那么重要。
+[图 7.12](#fig-7-12) 是 TPU v4 lite 的框图，图中也画出了 *uncore*。所谓 uncore，就是芯片上除 TensorCore 以外的全部部分。（TPU v4 的 uncore 与这款推理芯片相同，只是规模更大。）设计的核心是一个向量单元和一个 16 MiB 的向量存储器，向量单元负责执行 DNN 的激活函数。谷歌发明了「brain float 16」（bfloat16，简称 bf16）浮点格式，并从 TPU v2 开始采用，因为它比 IEEE 754 fp16 更适合 DNN。与 fp16 不同，bf16 的指数位数与 IEEE 754 fp32 相同，尾数位则较少，而尾数位对 DNN 没那么重要。
 
 向量单元上连接着 4 个矩阵乘单元（MXU）。每个 MXU 每个时钟周期完成一次 128×128 的矩阵乘，既可以用 bf16 计算、以 IEEE 754 fp32 累加，也可以用 8 位整数计算、以 32 位累加。每个 MXU 有 16,384 个乘累加单元，TPU v4 lite 的峰值性能 138 TFLOPS 就由此而来。跨通道单元（XLU）负责在 VPU 的各个通道之间完成 128×128 的矩阵转置、归约和置换。
 
@@ -51,9 +51,9 @@ MXU 采用脉动执行方式，减少了对向量存储器的读写，从而节�
 
 [图 7.14](#fig-7-14) 是 TPU v4 lite 晶片的布局图。这款 TPU 芯片采用 7 nm 工艺制造，时钟频率为 1.05 GHz。确切的晶片面积没有公布，但小于 400 mm^2^。
 
-[图 7.14](#fig-7-14) 中最大的模块是公共存储器（CMEM），占晶片面积的 28%。DNN 所需的一些大型数据结构放不进 16 MB 的向量存储器，因此 TPU v4 增加了一个 128 MB 的存储器来扩展存储层次，从而减少对主存的访问次数。主存即高带宽存储器（HBM），是存储层次中速度最慢、能效最低的一级。
+[图 7.14](#fig-7-14) 中最大的模块是公共存储器（CMEM），占晶片面积的 28%。DNN 所需的一些大型数据结构放不进 16 MiB 的向量存储器，因此 TPU v4 增加了一个 128 MiB 的存储器来扩展存储层次，从而减少对主存的访问次数。主存即高带宽存储器（HBM），是存储层次中速度最慢、能效最低的一级。
 
-![图 7.14　TPU v4 lite 晶片的布局图。阴影的用法与[图 7.11](#fig-7-11) 相同。晶片面积小于 400 mm^2^，CMEM 占 28%。晶片尺寸和总体布局主要由 TensorCore、CMEM 和 SerDes 的位置决定，因此在这种紧密拼接的布局中，OCI 模块被拉伸以填满剩余空间。TensorCore 和 CMEM 模块的排布沿用了 TPU v4 的布局。图中标注：SerDes 为串行器/解串器；Misc 为其他杂项电路；GPIO 为通用输入输出；PCIe Controller and SerDes 为 PCIe 控制器及 SerDes。](images/ch07/fig-7-14.png){#fig-7-14 width=90%}
+![图 7.14　TPU v4 lite 晶片的布局图。阴影的用法与[图 7.12](#fig-7-12) 相同。晶片面积小于 400 mm^2^，CMEM 占 28%。晶片尺寸和总体布局主要由 TensorCore、CMEM 和 SerDes 的位置决定，因此在这种紧密拼接的布局中，OCI 模块被拉伸以填满剩余空间。TensorCore 和 CMEM 模块的排布沿用了 TPU v4 的布局。图中标注：SerDes 为串行器/解串器；Misc 为其他杂项电路；GPIO 为通用输入输出；PCIe Controller and SerDes 为 PCIe 控制器及 SerDes。](images/ch07/fig-7-14.png){#fig-7-14 width=90%}
 
 ### TPU v4 lite 的指令系统结构 {-}
 

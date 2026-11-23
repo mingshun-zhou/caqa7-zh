@@ -15,7 +15,7 @@ SIMD 处理器类似于向量处理器。GPU 中的多个 SIMD 处理器各自�
 | | 掩码寄存器（Mask Registers） | 谓词寄存器和内部掩码寄存器（Predicate Registers and Internal Mask Registers） | 向量掩码寄存器明确属于体系结构状态，GPU 的掩码寄存器则位于硬件内部。GPU 的条件执行硬件在谓词寄存器之外还增加了一项新特性，用来动态管理掩码 |
 | 处理与存储硬件 | 向量处理器（Vector Processor） | 多线程 SIMD 处理器（Multithreaded SIMD Processor） | 两者相似。区别是：SIMD 处理器的车道往往很多，每个车道只需几个时钟周期就能处理完一个向量；向量体系结构的车道少，处理完一个向量需要很多周期。此外，SIMD 处理器是多线程的，向量处理器通常不是 |
 | | 控制处理器（Control Processor） | 线程块调度器（Thread Block Scheduler） | 最接近的是线程块调度器，它把线程块分配给多线程 SIMD 处理器。但 GPU 没有标量—向量操作，也没有单位步长或带步长的数据传送指令，而向量体系结构的控制处理器通常提供这些指令 |
-| | 标量处理器（Scalar Processor） | 系统处理器（System Processor） | GPU 没有共享存储器，经 PCI 总线通信的延迟又很高（数千个时钟周期），所以 GPU 的系统处理器很少承担向量体系结构中标量处理器所做的那些任务 |
+| | 标量处理器（Scalar Processor） | 系统处理器（System Processor） | GPU 没有共享存储器，经 PCIe 总线通信的延迟又很高（数千个时钟周期），所以 GPU 的系统处理器很少承担向量体系结构中标量处理器所做的那些任务 |
 | | 向量车道（Vector Lane） | SIMD 车道（SIMD Lane） | 非常相似，两者本质上都是带寄存器的功能部件 |
 | | 向量寄存器（Vector Registers） | SIMD 车道寄存器（SIMD Lane Registers） | 多线程 SIMD 处理器运行一个 SIMD 指令线程时，全部 16 个 SIMD 车道中的同一个寄存器合起来，相当于一个向量寄存器。每个 SIMD 线程的寄存器数可以变化，Pascal 中最多 256 个，因此向量寄存器最多也是 256 个 |
 | | 主存（Main Memory） | GPU 存储器（GPU Memory） | GPU 用的是 GPU 自己的存储器，向量计算机用的是系统存储器 |

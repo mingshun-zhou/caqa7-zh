@@ -31,11 +31,11 @@ CUDA 中的矩阵乘操作是 D = A × B + C，其中 A、B、C、D 可以是更
 
 ![图 7.15　NVIDIA Volta SM 的子核。引自 Choquette, J., Giroux, O. and Foley, D., 2018. Volta: Performance and programmability. IEEE Micro, 38(2), pp. 42–52 的图 3。图中标注：Sub-Core 为子核；BRU (1 Branch/clk) 为转移部件（每个时钟周期 1 条转移）；L0 ICache 为 L0 指令 Cache；Constant Cache 为常数 Cache；Warp Scheduler (1 Warp Inst/clk) 为 warp 调度器（每个时钟周期 1 条 warp 指令）；Math Dispatch Unit 为运算分派部件；MIO Queue (Load/Store/TEX) 为 MIO 队列（load/store/纹理）；Tensor Core two 4x4x4 tensor/clk 为张量核（每个时钟周期两次 4×4×4 张量运算）；FP64 8 DFMA/clk 为 FP64 部件（每个时钟周期 8 次双精度融合乘加）；INT 16/clk 为整数部件（每个时钟周期 16 次）；FP32 16 FFMA/clk 为 FP32 部件（每个时钟周期 16 次单精度融合乘加）；MUFU 4/clk 为多功能部件（每个时钟周期 4 次）；Register File (512 * 32-threads * 32-bits) 为寄存器堆（512 × 32 个线程 × 32 位）；MIO Datapath (64B/clk) 为 MIO 数据通路（每个时钟周期 64 字节）；MIO Scheduler (1 Warp Inst / 2 clk) 为 MIO 调度器（每 2 个时钟周期 1 条 warp 指令）。](images/ch07/fig-7-15.png){#fig-7-15 width=80%}
 
-**每个张量核完成矩阵乘法。** 一个张量核每个时钟周期处理 1024 位数据，操作数的类型从 1 位整数到 16 位浮点数都可以：1024 个 1 位整数，或 256 个 4 位整数，或 128 个 8 位整数，或 64 个 16 位浮点数。[图 7.15](#fig-7-15) 中的 warp 调度器把乘加操作发给张量核；张量核从寄存器堆取出操作数，完成 4 × 4 × 4 的矩阵乘，再把结果写回寄存器堆。每个张量核每个时钟周期完成一次 4 × 4 × 4 的矩阵乘加，需要 64 次浮点运算。
+**每个张量核完成矩阵乘法。** 一个张量核每个时钟周期处理 1024 位数据，操作数的类型从 1 位整数到 16 位浮点数都可以：1024 个 1 位整数，或 256 个 4 位整数，或 128 个 8 位整数，或 64 个 16 位浮点数。[图 7.15](#fig-7-15) 中的 warp 调度器把乘加操作发给张量核；张量核从寄存器堆取出操作数，完成 4 × 4 × 4 的矩阵乘，再把结果写回寄存器堆。每个张量核每个时钟周期完成一次 4 × 4 × 4 的矩阵乘加，需要 64 次乘加。
 
 NVIDIA 没有公布张量核的框图，于是 Raihan（2019）运行微基准测试程序，试图揭示其内部的微结构。[图 7.16](#fig-7-16) 是他们推测的 Volta 张量核微结构。
 
-TPU 的矩阵乘硬件依靠脉动阵列。Volta 计算的只是 4 × 4 的矩阵，而不是 128 × 128 的矩阵，因此不需要脉动阵列。Volta 的乘加硬件只是简单的组合逻辑，靠良好的电路设计、逻辑设计、流水线设计和物理设计，在一个时钟周期内完成全部 64 次浮点运算。
+TPU 的矩阵乘硬件依靠脉动阵列。Volta 计算的只是 4 × 4 的矩阵，而不是 128 × 128 的矩阵，因此不需要脉动阵列。Volta 的乘加硬件只是简单的组合逻辑，靠良好的电路设计、逻辑设计、流水线设计和物理设计，在一个时钟周期内完成全部 64 次乘加。
 
 ![图 7.16　推测的 NVIDIA Volta 张量核微结构。*线程组*（threadgroup）是一个 warp 中 4 个连续的线程。*八线程组*（octet）是一对线程组，负责计算结果中一个 8 × 8 的子块。每个 Volta warp 有 4 个八线程组。引自 Raihan, M.A., Goli, N. and Aamodt, T.M., 2019, March. Modeling deep learning accelerator enabled GPUs. In 2019 IEEE International Symposium on Performance Analysis of Systems and Software (ISPASS) (pp. 79–92). IEEE 的图 13。图中标注：FP16 Multiplier 为 FP16 乘法器；FP32 Adder 为 FP32 加法器；Accumulator Buffer 为累加器缓冲；Register File 为寄存器堆；Operand Bus 1～3 为操作数总线 1～3；other execution units 为其他执行部件；TENSOR CORE 为张量核；Octet 0～3 为八线程组 0～3；Threadgroup 0、Threadgroup 4 为线程组 0、线程组 4；Lane 为车道；Matrix A Buffer、Matrix B Buffer 为矩阵 A 缓冲、矩阵 B 缓冲；Mux 为多路选择器；Pipeline Registers 为流水线寄存器；DP (Dot Product) Unit 为点积部件；Writeback 为写回。](images/ch07/fig-7-16.png){#fig-7-16 width=90%}
 
@@ -86,7 +86,7 @@ Hopper 取消了 A100 的 Int1 和 Int4 数据类型（见[图 7.17](#fig-7-17)�
 
 [图 7.19](#fig-7-19) 和[图 7.20](#fig-7-20) 是这两种 GPU 的芯片布局。A100 和 T4 两种芯片在面积、功耗和主存上差别很大。首先是面积和功耗。T4 晶片的面积约为 A100 的三分之二，SM 数却只有 A100 的 40% 左右，原因是 T4 采用的工艺节点较老（12 nm 对 7 nm）。值得注意的是，A100 的基础时钟频率只是 T4 的 1.3 倍（765 MHz 对 585 MHz），T4 的热设计功耗（TDP）却只有 A100 的 1/4（70 W 对 300 W）。到了最高的睿频模式，时钟频率的比例甚至反了过来，T4 是 A100 的 1.1 倍（1590 MHz 对 1410 MHz）。
 
-![图 7.19　NVIDIA A100 的布局图。图中画有 128 个 SM，但 NVIDIA 只启用其中 108 个。L2 Cache 容量为 40 MB。A100 能把来自 DRAM 的数据压缩后存入 Cache，以加速非结构化稀疏和其他可压缩的数据模式。据称，压缩可使 DRAM 读写带宽和 L2 读带宽最多提高到原来的 4 倍，L2 Cache 容量最多提高到原来的 2 倍。图中标注：PCI Express 4.0 Host Interface 为 PCI Express 4.0 主机接口；GigaThread Engine with MIG Control 为带 MIG 控制的 GigaThread 引擎；GPC 为图形处理簇；TPC 为纹理处理簇；SM 为流式多处理器；L2 Cache 为 L2 Cache；Memory Controller 为存储控制器；HBM2 为 HBM2 存储器；High-Speed Hub 为高速集线器；NVLink 为 NVLink 链路。](images/ch07/fig-7-19.png){#fig-7-19 width=90%}
+![图 7.19　NVIDIA A100 的布局图。图中画有 128 个 SM，但 NVIDIA 只启用其中 108 个。L2 Cache 容量为 40 MiB。A100 能把来自 DRAM 的数据压缩后存入 Cache，以加速非结构化稀疏和其他可压缩的数据模式。据称，压缩可使 DRAM 读写带宽和 L2 读带宽最多提高到原来的 4 倍，L2 Cache 容量最多提高到原来的 2 倍。图中标注：PCI Express 4.0 Host Interface 为 PCI Express 4.0 主机接口；GigaThread Engine with MIG Control 为带 MIG 控制的 GigaThread 引擎；GPC 为图形处理簇；TPC 为纹理处理簇；SM 为流式多处理器；L2 Cache 为 L2 Cache；Memory Controller 为存储控制器；HBM2 为 HBM2 存储器；High-Speed Hub 为高速集线器；NVLink 为 NVLink 链路。](images/ch07/fig-7-19.png){#fig-7-19 width=90%}
 
 ![图 7.20　NVIDIA T4 的晶片照片。图中有 48 个 SM，但 NVIDIA 只启用其中 40 个。](images/ch07/fig-7-20.png){#fig-7-20 width=70%}
 

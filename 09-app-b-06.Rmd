@@ -70,7 +70,7 @@ Opteron 在每张页表中使用 64 位的表项。前 12 位留作将来使用�
 * *用户/管理*（user/supervisor）：表示用户能否访问该页，还是该页只限较高的三个特权级访问。
 * *脏*（dirty）：表示该页是否被修改过。
 * *已访问*（accessed）：表示自上次清除该位以来，该页是否被读或写过。
-* *页大小*（page size）：表示最后一级用于 4 KiB 页还是 4 MiB 页；如果是后者，Opteron 只用三级页表而不是四级。
+* *页大小*（page size）：表示最后一级用于 4 KiB 页还是 2 MiB 页；如果是后者，Opteron 只用三级页表而不是四级。
 * *禁止执行*（no execute）：80386 的保护方案中没有这一位，加入它是为了禁止在某些页中执行代码。
 * *页级 Cache 禁止*（page level cache disable）：表示该页能否放进 Cache。
 * *页级写直达*（page level write through）：表示该页对数据 Cache 采用写回还是写直达。
@@ -145,7 +145,7 @@ Alpha 的设计者有一套周密的计划：通过逐步增大页大小，让�
 
 ## 历史回顾与参考文献 {#sec-b-8}
 
-M.3 节（在网上提供）回顾了 Cache、虚拟存储和虚拟机的历史（这一历史回顾同时涵盖本附录和第 3 章）。在这三者的历史中，IBM 都起了重要作用。那里还列出了供进一步阅读的参考文献。
+M.3 节（在网上提供）回顾了 Cache、虚拟存储和虚拟机的历史（这一历史回顾同时涵盖本附录和第 2 章）。在这三者的历史中，IBM 都起了重要作用。那里还列出了供进一步阅读的参考文献。
 
 补充参考文献：Gupta, S., Xiang, P., Yang, Y., Zhou, H., Locality principle revisited: a probability-based quantitative approach. J. Parallel Distrib. Comput. 73 (7), 1011–1027.
 

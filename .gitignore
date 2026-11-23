@@ -15,3 +15,12 @@ preview.html
 .Rhistory
 .DS_Store
 caqa7.html
+
+# bookdown 构建中间产物
+/*.html
+/caqa7.Rmd
+/caqa7.knit.md
+/*_files/
+/search_index.json
+/reference-keys.txt
+/libs/

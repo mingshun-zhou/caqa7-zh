@@ -1,4 +1,4 @@
-SCSI 的后继者有过好几个候选，目前呼声最高的是光纤通道仲裁环（FC-AL，Fibre Channel Arbitrated Loop）。但 SCSI 委员会一直在提高 SCSI 总线的时钟频率，让这个标准焕发了新的生命，因此 SCSI 比它的一些候选后继者都长寿得多。SCSI 和 ATA 后来又有了串行接口（「Serial Attach SCSI」和「Serial ATA」），这两个标准可能还会沿用很长时间。
+SCSI 的后继者有过好几个候选，目前呼声最高的是光纤通道仲裁环（FC-AL，Fibre Channel Arbitrated Loop）。但 SCSI 委员会一直在提高 SCSI 总线的时钟频率，让这个标准焕发了新的生命，因此 SCSI 比它的一些候选后继者都长寿得多。SCSI 和 ATA 后来又有了串行接口（「Serial Attached SCSI」和「Serial ATA」），这两个标准可能还会沿用很长时间。
 
 第一种多厂商总线，也许是 DEC 公司 1970 年推出的 PDP-11 Unibus。遗憾的是，并非所有公司都对总线采取这种开放政策。有些公司的总线是专有的，接口受专利保护，插接兼容厂商因此无法参与竞争。总线专有还有两个后果：一是成本升高，二是能插到这种总线上的 I/O 设备变少，因为这些设备都必须专门为这种总线设计接口。Intel 推出 PCI 总线，标志着计算机内部又回到了开放的标准 I/O 总线。PCI 的直接后继是 PCI-X；到 2000 年，Infiniband 也在开发之中。这两个标准都由多家公司组成的行业协会制定。
 
@@ -28,7 +28,7 @@ Blaum, M., J. Brady, J. Bruck, and J. Menon [1994]. "EVENODD: An optimal scheme 
 
 Blaum, M., J. Brady, J. Bruck, and J. Menon [1995]. "EVENODD: An optimal scheme for tolerating double disk failures in RAID architectures," IEEE Trans. on Computers 44:2 (February), 192–202.
 
-Blaum, M., J. Brady, J., Bruck, J. Menon, and A. Vardy [2001]. "The EVENODD code and its generalization," in H. Jin, T. Cortes, and R. Buyya, eds., High Performance Mass Storage and Parallel I/O: Technologies and Applications, IEEE & Wiley Press, New York, 187–208.
+Blaum, M., J. Brady, J. Bruck, J. Menon, and A. Vardy [2001]. "The EVENODD code and its generalization," in H. Jin, T. Cortes, and R. Buyya, eds., High Performance Mass Storage and Parallel I/O: Technologies and Applications, IEEE & Wiley Press, New York, 187–208.
 
 Blaum, M., J. Bruck, and A. Vardy [1996]. "MDS array codes with independent parity symbols," IEEE Trans. on Information Theory, IT-42 (March), 529–542.
 
@@ -68,7 +68,7 @@ Gray, J., and A. Reuter [1993]. Transaction Processing: Concepts and Techniques,
 
 Gray, J., and D. P. Siewiorek [1991]. "High-availability computer systems." Computer 24:9 (September), 39–48.
 
-Gray, J., and C. van Ingen [2005]. Empirical Measurements of Disk Failure Rates and Error Rates," MSR-TR-2005-166, Microsoft Research, Redmond, Wash.
+Gray, J., and C. van Ingen [2005]. "Empirical Measurements of Disk Failure Rates and Error Rates," MSR-TR-2005-166, Microsoft Research, Redmond, Wash.
 
 Gurumurthi, S., A. Sivasubramaniam, and V. Natarajan [2005]. Disk Drive Roadmap from the Thermal Perspective: A Case for Dynamic Thermal Management, Proceedings of the International Symposium on Computer Architecture (ISCA), June, 38–49.
 

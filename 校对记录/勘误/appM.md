@@ -1,0 +1,39 @@
+# 附录 M 勘误
+
+- M.1 节各节对应关系列表：原书作「Section M.9, on I/O」，应为「M.10 节」（第 7 版 I/O 历史在 M.10，M.9 讲 DSA）；已改，链接改为 #sec-m-10。
+- M.3 节 80286 保护机制：原书作「Appendix C」，应为「附录 B」（80x86 分段保护在 B.5 节）；已改。
+- M.3 节 Cache 研究会议名：原书作「Symposium on Architectural Support for Compilers and Operating Systems」，应为「Architectural Support for Programming Languages and Operating Systems」；已改。
+- M.3 节 Cache 研究会议名：原书作「International Computer Architecture Symposium」，应为「International Symposium on Computer Architecture」；已改。
+- M.3 参考文献 Smith and Goodman［1983］：原书作会议日期「June 5–7, 1982」，与年份不符（第 10 届 ISCA 在 1983 年），确切日期无法据原书确定；存疑，未改。
+- M.4 节 RISC 小标题下：原书作「RS 6000」，应为「RS/6000」（与 M.5 节写法一致）；已改。
+- M.4 参考文献 Ropers et al.［1999］：原书作「Aaachen」，应为「Aachen」；已改。
+- M.4 参考文献 Kozyrakis［2000］：原书作页码「13–15」，与会议日期相同，正确页码无法确定；存疑，未改。
+- M.5 参考文献 Gallagher et al.［1994］：原书作「Santa Jose」，应为「San Jose」；已改。
+- M.5 参考文献 Fisher［1983］、Jordan［1983］：原书作会议日期「June 5–7, 1982」，与年份不符，确切日期无法据原书确定；存疑，未改。
+- M.5 参考文献 Hsu［1994］：原书作「18:2」「2333」，应为「14:2」「23–33」（IEEE Micro 1994 年为第 14 卷）；已改。
+- M.5 参考文献 Riseman and Foster［1972］：与 Foster and Riseman［1972］重复收录，删哪条需编辑决定；存疑，未改。
+- M.6 节 SIMD 超级计算机：原书作「Connection Multiprocessor 2」，应为「Connection Machine 2」；已改（M.7 节 SIMD 计算机小节和 Bell 预测一段同改）。
+- M.6 节向量计算机：原书作「SX/5」「SX/6」，应为「SX-5」「SX-6」（与同段 SX-6、SX-8 一致）；已改。SX-5 与 SX-6 都写 2001 年，是否有误无法确定；存疑，未改。
+- M.6 节引语署名：原书作「Vincent Natol」，应为「Vincent Natoli」；已改。
+- M.6 参考文献 Hillis［1985］：原书作「The Connection Multiprocessor」，应为「The Connection Machine」；已改（M.7 参考文献同条同改）。
+- M.6 参考文献 Lindholm et al.［2001］：原书作「Kligard」，应为「Kilgard」；已改。
+- M.7 节 SIMD 回顾：原书作「65,636 1-bit processors」，应为「65 536」（与下文 Connection Machine 2 一致）；已改。
+- M.7 节大规模多处理器：原书作「Gajksi et al. 1983」，应为「Gajski」（与参考文献一致）；已改。
+- M.7 节集群：原书作「Bell and Gray 2001」，应为「2002」（与参考文献条目年份一致）；已改（M.8 节同句同改）。
+- M.7 节 Blue Gene：原书作「QCDOD」，应为「QCDOC」；已改。
+- M.7 节 Blue Gene：原书作「In 2006 … scheduled to go to 65K in late 2005」，年份矛盾，正确年份无法确定；存疑，未改。
+- M.7 节 CM-5：原书作「Thinking Multiprocessors」，应为「Thinking Machines」；译稿此前已改。
+- M.7 参考文献 Li［1988］、Lovett and Thakkar［1988］：原书作「ICCP」，应为「ICPP」（Int'l. Conf. on Parallel Processing）；已改。
+- M.7 参考文献 Pfister et al.［1985］：原书作「Kleinfekder」，应为「Kleinfelder」；已改。
+- M.7 参考文献 Scott and Thorson［1996］：原书作页码「14–156」，起始页无法确定；存疑，未改。
+- M.7 参考文献 Stenström et al.［1992］：原书作「cachecoherent」，应为「cache-coherent」；已改。
+- M.7 参考文献 Goodman［1983］：原书作会议日期「June 5–7, 1982」，与年份不符；存疑，未改。
+- M.7 参考文献 Hagersten and Koster［1998］：原书作年份［1998］而会议日期为 1999 年，哪一个需改无法确定；存疑，未改。
+- M.8 节效用计算：原书作「Elastic Cloud Computing」，应为「Elastic Compute Cloud」（译名相应改为「弹性计算云」）；已改。
+- M.8 参考文献 Barroso, Marty, Patterson, Ranganathan 2017：原书作「56(2)」，应为「60(4)」；已改。
+- M.8 参考文献 Clos 1953：原书作「Bell Labs Technical Journal」，应为「Bell System Technical Journal」；已改。
+- M.8 参考文献 Tezzaron［2004］：原书作「White Paper,」（引号未闭合），应为「White Paper,"」；已改。
+- M.9 节标题：原书作「Historical Perspectives and References」，未写对应章（应为第 7 章），标题措辞由编辑决定；存疑，未改。
+- M.10 节 SCSI：原书作「Serial Attach SCSI」，应为「Serial Attached SCSI」；已改。
+- M.10 参考文献 Blaum et al.［2001］：原书作「J. Brady, J., Bruck」，应为「J. Brady, J. Bruck」；已改。
+- M.10 参考文献 Gray and van Ingen［2005］：原书作「Empirical … Rates,"」（缺前引号），应为「"Empirical」；已改。

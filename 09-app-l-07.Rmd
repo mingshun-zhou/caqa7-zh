@@ -14,12 +14,12 @@
 - [6] Eishi Arima and Hiroshi Nakamura. Page Table Walk Aware Cache Management for Efficient Big Data Processing. Workshop on Big data benchmarks, Performance Optimization, and Emerging hardware (BPOE), 2017.
 - [7] Rachata Ausavarungnirun, Joshua Landgraf, Vance Miller, Saugata Ghose, Jayneel Gandhi, Christopher Rossbach, and Onur Mutlu. Mosaic: A GPU Memory Manager with Application-Transparent Support for Multiple Page Sizes. International Symposium on Microarchitecture, 2017.
 - [8] Rachata Ausavarungnirun, Vance Miller, Joshua Landgraf, Saugata Ghose, Jayneel Gandhi, Adwait Jog, Christopher Rossbach, and Onur Mutlu. MASK: Redesigning the GPU Memory Hierarchy to Support Multi-Application Concurrency. International Conference on Architectural Support for Programming Languages and Operating Systems, 2018.
-- [9] Amro Award, Arkaprava Basu, Sergey Blagodurov, Yan Solihin, and Gabriel Loh. Avoiding TLB Shootdowns through Self-invalidating TLB Entries. International Conference on Parallel Architectures and Compilation Techniques, 2017.
+- [9] Amro Awad, Arkaprava Basu, Sergey Blagodurov, Yan Solihin, and Gabriel Loh. Avoiding TLB Shootdowns through Self-invalidating TLB Entries. International Conference on Parallel Architectures and Compilation Techniques, 2017.
 - [10] Thomas W. Barr, Alan L. Cox, and Scott Rixner. Translation caching: Skip, don’t walk (the page table). In International Symposium on Computer Architecture, 2010.
 - [11] Thomas W. Barr, Alan L. Cox, and Scott Rixner. Spectlb: A mechanism for speculative address translation. In International Symposium on Computer Architecture, 2011.
 - [12] Arkaprava Basu, Jayneel Gandhi, Jichuan Chang, Mark Hill, and Mike Swift. Efficient Virtual Memory for Big Memory Servers. International Symposium on Computer Architecture, 2013.
 - [13] Arkaprava Basu, Mark Hill, and Michael Swift. Reducing Memory Reference Energy with Opportunistic Virtual Caching. International Symposium on Computer Architecture, 2012.
-- [14] Srikant Bharadwaj, Guilherme Cox, Tushar Krishna, and Abhishek Bhattacharjee. Scalable Distributed Shared Last-Level TLBs Using Low-Latency Interconnects. International Symposium on Microarchitecure, 2018.
+- [14] Srikant Bharadwaj, Guilherme Cox, Tushar Krishna, and Abhishek Bhattacharjee. Scalable Distributed Shared Last-Level TLBs Using Low-Latency Interconnects. International Symposium on Microarchitecture, 2018.
 - [15] Ravi Bhargava, Benjamin Serebrin, Francesco Spadini, and Srilatha Manne. Accelerating two-dimensional page walks for virtualized systems. In International Conference on Architectural Support for Programming Languages and Operating Systems, 2008.
 - [16] Abhishek Bhattacharjee. Large-reach memory management unit caches. In International Symposium on Microarchitecture, 2013.
 - [17] Abhishek Bhattacharjee. Preserving Virtual Memory by Mitigating the Address Translation Wall. IEEE MICRO, 2017.
@@ -47,11 +47,11 @@
 - [39] Swapnil Haria, Mark Hill, and Michael Swift. Devirtualizing Memory in Heterogeneous Systems. International Conference on Architectural Support for Programming Languages and Operating Systems, 2018.
 - [40] Intel. Haswell microarchitecture. www.7-cpu.com/cpu/Haswell.html.
 - [41] Intel. Skylake microarchitecture. www.7-cpu.com/cpu/Skylake.html.
-- [42] Bruce Jacob and Trevor Mudge. A Look at Several Memory Management Units, TLB-Refull Mechanisms, and Page Table Organizations. ASPLOS, 1998.
+- [42] Bruce Jacob and Trevor Mudge. A Look at Several Memory Management Units, TLB-Refill Mechanisms, and Page Table Organizations. ASPLOS, 1998.
 - [43] Aamer Jaleel, Eric Borch, Malini Bhandaru, Simon Steely, and Joel Emer. Achieving Non-Inclusive Cache Performance with Inclusive Caches Temporal Locality Aware (TLA) Cache Management Policies. International Symposium on Microarchitecture, 2010.
-- [44] Aamer Jaleel and Bruce Jacob. In-line Interrupt Handling for Sofware-Managed TLBs. International Conference on Computer Design, 2001.
+- [44] Aamer Jaleel and Bruce Jacob. In-line Interrupt Handling for Software-Managed TLBs. International Conference on Computer Design, 2001.
 - [45] Aamer Jaleel, Joseph Nuzman, Adrian Moga, Simon Steely, and Joel Emer. High Performing Cache Hierarchies for Server Workloads: Relaxing Inclusion to Capture the Latency Benefits of Exclusive Caches. International Symposium on High Performance Computer Architecture, 2015.
-- [46] Alexandre Joannou, Jonathan Woodruff, Robert Kovacsics, Simon W. Moore, Alex Bradbury, Hongyan Xia, Robert N. M. Watson, David Chisnall, Michael Roe, Brooks Davis, Edward Napierala, John Baldwin, Khilan Gudka, Peter G. Neumann, Alfredo Mazzinghi, Alex Richardson, Stacey Son, , and A. Theodore Markettos. Efficient Tagged Memory. International Conference on Computer Design, 2017.
+- [46] Alexandre Joannou, Jonathan Woodruff, Robert Kovacsics, Simon W. Moore, Alex Bradbury, Hongyan Xia, Robert N. M. Watson, David Chisnall, Michael Roe, Brooks Davis, Edward Napierala, John Baldwin, Khilan Gudka, Peter G. Neumann, Alfredo Mazzinghi, Alex Richardson, Stacey Son, and A. Theodore Markettos. Efficient Tagged Memory. International Conference on Computer Design, 2017.
 - [47] Gokul Kandiraju and Anand Sivasubramaniam. Going the Distance for TLB Prefetching: An Application-Driven Study. International Symposium on Computer Architecture, 2002.
 - [48] Vasileios Karakostas, Jayneel Gandhi, Furkan Ayar, Adrian Cristal, Mark Hill, Kathryn McKinley, Mario Nemirovsky, Michael Swift, and Osman Unsal. Redundant Memory Mappings for Fast Access to Large Memories. International Symposium on Computer Architecture, 2015.
 - [49] Vasileios Karakostas, Jayneel Gandhi, Adrian Cristal, Mark D. Hill, Kathryn S. McKinley, Mario Nemirovsky, Michael M. Swift, and Osman S. Unsal. Energyefficient address translation. In International Symposium on High Performance Computer Architecture, 2016.
@@ -62,17 +62,17 @@
 - [54] Daniel Lustig, Geet Sethi, Margaret Martonosi, and Abhishek Bhattacharjee. Coatcheck: Verifying memory ordering at the hardware-os interface. In International Conference on Architectural Support for Programming Languages and Operating Systems, 2016.
 - [55] Daniel Lustig, Geeth Sethi, Abhishek Bhattacharjee, and Margaret Martonosi. Transistency Models: Memory Ordering at the Hardware-OS Interface. IEEE Micro Top Picks, 2017.
 - [56] Yashwant Marathe, Nagendra Gulur, Jee Ho Ryoo, Shuang Song, and Lizy John. CSALT: Context Switch Aware Large TLB. International Symposium on Microarchitecture, 2017.
-- [57] Juan Navarro, Sitararn Iyer, Peter Druschel, and Alan Cox. Practical, transparent operating system support for superpages. Operating Systems Review, 2002.
+- [57] Juan Navarro, Sitaram Iyer, Peter Druschel, and Alan Cox. Practical, transparent operating system support for superpages. Operating Systems Review, 2002.
 - [58] Mark Oskin and Gabriel H. Loh. A software-managed approach to die-stacked dram. In International Conference on Parallel Architecture and Compilation, 2015.
 - [59] Jiannan Ouyang, John R. Lange, and Haoqiang Zheng. Shoot4u: Using vmm assists to optimize tlb operations on preempted vcpus. In International Conference on Virtual Execution Environments, 2016.
 - [60] Ashish Panwar, Aravinda Prasad, and K Gopinath. Making Huge Pages Actually Useful. ASPLOS, 2018.
 - [61] Myrto Papadopoulou, Xin Tong, Andrew Seznec, and Andreas Moshovos. Prediction-Based Superpage-Friendly TLB Designs. HPCA, 2014.
 - [62] Mayank Parasar, Abhishek Bhattacharjee, and Tushar Krishna. SEESAW: Using Superpages to Improve VIPT Caches. International Symposium on Computer Architecture, 2018.
-- [63] Chang Hyun Park, Taekyung Heo, Jungi Jeong, , and Jaehyuk Huh. Hybrid TLB Coalescing: Improving TLB Translation Coverage under Diverse Fragmented Memory Allocations. International Symposium on Computer Architecture, 2017.
+- [63] Chang Hyun Park, Taekyung Heo, Jungi Jeong, and Jaehyuk Huh. Hybrid TLB Coalescing: Improving TLB Translation Coverage under Diverse Fragmented Memory Allocations. International Symposium on Computer Architecture, 2017.
 - [64] Binh Pham, Abhishek Bhattacharjee, Yasuko Eckert, and Gabriel H. Loh. Increasing tlb reach by exploiting clustering in page translations. In International Symposium on High Performance Computer Architecture, 2014.
 - [65] Binh Pham, Derek Hower, Abhishek Bhattacharjee, and Trey Cain. TLB Shootdown Mitigation for Low-Power Many-Core Servers with L1 Virtual Caches. Computer Architecture Letters, 2018.
 - [66] Binh Pham, Viswanathan Vaidyanathan, Aamer Jaleel, and Abhishek Bhattacharjee. Colt: Coalesced large-reach tlbs. In International Symposium on Microarchitecture, 2012.
-- [67] Binh Pham, Jan Vesely, Gabriel Loh, and Abhishek Bhattacharjee. Using TLB Speculation to Overcome Page Splintering in Virtual Machines. Rutgers Technical Report DCS-TR-713, Department of Computer Science, Rutgers University, Pistcataway, NJ, 2015.
+- [67] Binh Pham, Jan Vesely, Gabriel Loh, and Abhishek Bhattacharjee. Using TLB Speculation to Overcome Page Splintering in Virtual Machines. Rutgers Technical Report DCS-TR-713, Department of Computer Science, Rutgers University, Piscataway, NJ, 2015.
 - [68] Binh Pham, Ján Veselý, Gabriel H. Loh, and Abhishek Bhattacharjee. Large pages and lightweight memory management in virtualized environments: Can you have it both ways? In International Symposium on Microarchitecture, 2015.
 - [69] Bharath Pichai, Lisa Hsu, and Abhishek Bhattacharjee. Architectural Support for Address Translation on GPUs. International Conference on Architectural Support for Programming Languages and Operating Systems, 2014.
 - [70] Bharath Pichai, Lisa Hsu, and Abhishek Bhattacharjee. Address Translation for Throughput Oriented Accelerators. IEEE Micro Top Picks, 2015.
@@ -80,7 +80,7 @@
 - [72] Jason Power, Mark Hill, and David Wood. Supporting x86-64 Address Translation for 100s of GPU Lanes. International Symposium on High Performance Computer Architecture, 2014.
 - [73] Bogdan Romanescu, Alvin Lebeck, and Daniel Sorin. Specifying and Dynamically Verifying Address Translation-Aware Memory Consistency. International Conference on Architectural Support for Programming Languages and Operating Systems, 2010.
 - [74] Bogdan F. Romanescu, Alvin R. Lebeck, Daniel J. Sorin, and Anne Bracy. Unified instruction/translation/data (unitd) coherence: One protocol to rule them all. In International Symposium on High-Performance Computer Architecture, 2010.
-- [75] Jee Ho Ryoo, Nagendra Gulur, Shuang Song, , and Lizy John. Rethinking TLB Designs in Virtualized Environments: A Very Large Part-of-Memory TLB. International Symposium on Computer Architecture, 2017.
+- [75] Jee Ho Ryoo, Nagendra Gulur, Shuang Song, and Lizy John. Rethinking TLB Designs in Virtualized Environments: A Very Large Part-of-Memory TLB. International Symposium on Computer Architecture, 2017.
 - [76] Ashley Saulsbury, Fredrik Dahlgren, and Per Stenström. Recency-Based TLB Preloading. International Symposium on Computer Architecture, 2000.
 - [77] Vivek Seshadri, Gennady Pekhimenko, Olatunji Ruwase, Onur Mutlu, Phillip Gibbons, Michael Kozuch, Todd C. Mowry, and Trishul Chilimbi. Page Overlays: An Enhanced Virtual Memory Framework to Enable Fine-grained Memory Management. International Symposium on Computer Architecture, 2015.
 - [78] Andre Seznec. Concurrent Support of Multiple Page Sizes on a Skewed Associative TLB. IEEE Transactions on Computers, 2004.

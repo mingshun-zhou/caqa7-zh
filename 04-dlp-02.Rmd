@@ -15,8 +15,8 @@ for (i=0; i < n; i=i+1)
 
 RISC-V 不必单独写一个分段开采循环，它有更好的办法：指令 `setvl` 把 `VLMAX` 和循环变量 `n` 中较小的一个写入 `vl`（同时写入另一个寄存器）。具体分两种情况：
 
-* 如果循环的迭代次数大于 `n`，循环每次最多只能计算 `VLMAX` 个值，`setvl` 就把 `vl` 设为 `VLMAX`；
-* 如果 n 小于 `VLMAX`，循环最后一次迭代只应计算最后 `n` 个元素，`setvl` 就把 `VLMAX` 设为 `n`。
+* 如果循环的迭代次数大于 `VLMAX`，循环每次最多只能计算 `VLMAX` 个值，`setvl` 就把 `vl` 设为 `VLMAX`；
+* 如果 n 小于 `VLMAX`，循环最后一次迭代只应计算最后 `n` 个元素，`setvl` 就把 `vl` 设为 `n`。
 
 `setvl` 写入的另一个标量寄存器供后面的循环记账使用。下面是对任意 `n` 值都适用的向量 DAXPY 的 RV64V 代码。
 
@@ -152,7 +152,7 @@ vsetvl  a3,a0,e64,m8,ta,ma # 4 个 64 位向量寄存器（SEW=64,LMUL=8）
 vle64   v0, x7             # 取 K[]
 vloxe64 v8,x5,(v0)         # 取 A[K[]]
 vle64   v16,x28            # 取 M[]
-vloxe64 v24, x6, (v2)      # 取 C[M[]]
+vloxe64 v24, x6, (v16)     # 取 C[M[]]
 vadd    v8, v8, v24        # 相加
 vsoxe64 v8, x5,(v0)        # 存 A[K[]]
 ```

@@ -18,7 +18,7 @@
 
 > 2007 年 9 月 NVIDIA 推出 CUDA API，GPU 计算由此进入 HPC 的主流，至今已近三年。此后，这项技术的普及速度快得出人意料，而且十分稳定。许多机构一两年前还只是做小规模试点项目，现在已经转入企业级部署；在 TOP500 榜单上，从第二名开始就有了 GPU 加速的机器。高性能计算界向来不以接受新东西快而著称，却相当快地接受了 CUDA，这是一个值得注意的信号。人们普遍认为 GPU 计算更难，我却认为，它迄今的成功表明，它并不比良好的 CPU 编程更复杂。而且，对一大类问题来说，它能更清楚、更简洁地表达其中的并行性，写出的代码更容易维护，可扩展性更好，将来映射到众核体系结构上也更有利。
 >
-> ——Vincent Natol，《为 CUDA 喝彩》，HPCwire（2010）
+> ——Vincent Natoli，《为 CUDA 喝彩》，HPCwire（2010）
 
 三维图形流水线硬件经历了这样的演变：20 世纪 80 年代初是大型的昂贵系统，后来变成小型工作站，到 90 年代中后期又变成 PC 上的加速卡。在这段时间里，发生了三大转变：
 
@@ -52,7 +52,7 @@ AMD 收购了排名第二的 GPU 厂商 ATI，这预示着 GPU 计算将进一�
 
 Bouknight, W. J., S. A. Deneberg, D. E. McIntyre, J. M. Randall, A. H. Sameh, and D. L. Slotnick [1972]. "The Illiac IV system," Proc. IEEE 60:4, 369–379. Also appears in D. P. Siewiorek, C. G. Bell, and A. Newell, Computer Structures: Principles and Examples, McGraw-Hill, New York, 1982, 306–316.
 
-Hillis, W. D. [1985]. The Connection Multiprocessor, MIT Press, Cambridge, Mass.
+Hillis, W. D. [1985]. The Connection Machine, MIT Press, Cambridge, Mass.
 
 Hord, R. M. [1982]. The Illiac-IV, The First Supercomputer, Computer Science Press, Rockville, Md.
 
@@ -110,7 +110,7 @@ IEEE 754-2008 Working Group. [2006]. DRAFT Standard for Floating-Point Arithmeti
 
 Lee, W. V., et al. [2010]. "Debunking the 100X GPU vs. CPU myth: an evaluation of throughput computing on CPU and GPU," Proc. ISCA '10, June 19–23, 2010, Saint-Malo, France.
 
-Lindholm, E., M. J. Kligard, and H. Moreton [2001]. A user-programmable vertex engine. In SIGGRAPH '01: Proceedings of the 28th annual conference on Computer graphics and interactive techniques, 149–158.
+Lindholm, E., M. J. Kilgard, and H. Moreton [2001]. A user-programmable vertex engine. In SIGGRAPH '01: Proceedings of the 28th annual conference on Computer graphics and interactive techniques, 149–158.
 
 Moore, G. E. [1965]. "Cramming more components onto integrated circuits," Electronics 38:8 (April 19), 114–117.
 
@@ -128,13 +128,13 @@ Williams, S., A. Waterman, and D. Patterson [2009]. "Roofline: An insightful vis
 
 SIMD 模型是最早的并行计算模型之一，可以追溯到第一台大规模多处理器 Illiac IV。Illiac IV 和后来的 SIMD 多处理器一样，关键思想是让一条指令借助许多功能部件，同时操作许多数据项。
 
-SIMD 式计算机最早的想法出自 Unger［1958］以及 Slotnick、Borck 和 McReynolds［1962］。Slotnick 的 Solomon 设计是 Illiac IV 的基础，而 Illiac IV 大概是名声最差的超级计算机项目。这个项目推动了几项技术的发展，这些技术后来在别的项目中证明是有用的；但作为一台计算机，Illiac IV 是失败的。它只建成了计划规模的四分之一，成本却从 1966 年估计的 800 万美元一路攀升到 1972 年的 3100 万美元。最初预测完整系统能达到 1000 MFLOPS，实际性能最多只有 15 MFLOPS［Hord 1982］。这台计算机于 1972 年交付 NASA 艾姆斯研究中心，又经过三年的工程调试才能使用。这些事件延缓了对 SIMD 的研究。后来 Danny Hillis［1985］在 Connection Machine 上复兴了这种风格，Connection Machine 有 65 636 个 1 位处理器。
+SIMD 式计算机最早的想法出自 Unger［1958］以及 Slotnick、Borck 和 McReynolds［1962］。Slotnick 的 Solomon 设计是 Illiac IV 的基础，而 Illiac IV 大概是名声最差的超级计算机项目。这个项目推动了几项技术的发展，这些技术后来在别的项目中证明是有用的；但作为一台计算机，Illiac IV 是失败的。它只建成了计划规模的四分之一，成本却从 1966 年估计的 800 万美元一路攀升到 1972 年的 3100 万美元。最初预测完整系统能达到 1000 MFLOPS，实际性能最多只有 15 MFLOPS［Hord 1982］。这台计算机于 1972 年交付 NASA 艾姆斯研究中心，又经过三年的工程调试才能使用。这些事件延缓了对 SIMD 的研究。后来 Danny Hillis［1985］在 Connection Machine 上复兴了这种风格，Connection Machine 有 65 536 个 1 位处理器。
 
 真正的 SIMD 计算机需要混合使用 SISD 指令和 SIMD 指令。它有一台 SISD 主机，负责执行转移、地址计算这类不需要并行的操作。SIMD 指令则广播给所有执行部件，每个执行部件都有自己的一组寄存器。为了灵活，在执行一条 SIMD 指令时，可以禁止个别执行部件工作。此外，大规模并行的 SIMD 多处理器依靠互连网络或通信网络在处理单元之间交换数据。
 
 SIMD 最擅长处理 for 循环中的数组。因此，SIMD 要有大规模并行的机会，就必须有海量的数据，即数据并行。SIMD 最不擅长的是 case 语句，因为这时每个执行部件要根据自己手上的数据，对数据执行不同的操作。持有「错误」数据的执行部件要被禁止，让应当执行的部件继续执行。这种情况下的性能基本上只有 1/n，其中 n 是 case 分支的个数。
 
-SIMD 多处理器的基本权衡，是在单个处理器的性能和处理器的数目之间取舍。近来的多处理器更看重并行度，而不是单个处理器的性能。例如，Connection Multiprocessor 2 有 65 536 个 1 位宽的处理器，而 Illiac IV 只有 64 个 64 位的处理器。
+SIMD 多处理器的基本权衡，是在单个处理器的性能和处理器的数目之间取舍。近来的多处理器更看重并行度，而不是单个处理器的性能。例如，Connection Machine 2 有 65 536 个 1 位宽的处理器，而 Illiac IV 只有 64 个 64 位的处理器。
 
 SIMD 模型在 20 世纪 80 年代先后由 Thinking Machines 和 MasPar 复活，之后作为通用多处理器体系结构又一次被搁置了。主要原因有两个。一是它太不灵活。许多重要的问题无法使用这种风格的多处理器，而且这种体系结构缩小规模后缺乏竞争力，也就是说，小规模 SIMD 多处理器的性价比往往不如其他方案。二是 SIMD 无法享受微处理器技术在性能和成本上的巨大优势。SIMD 多处理器的设计者不能利用这种低成本技术，而必须为自己的多处理器定制处理器。
 
@@ -162,7 +162,7 @@ SIMD 计算机虽然已经作为通用方案退出了舞台，但这种风格的
 
 未来很难预测，但 1989 年 Gordon Bell 对 1995 年作了两个预测。我们在本书第 1 版中收录了这两个预测，当时结果完全不明朗。本节讨论这两个预测，并评估它们的准确程度。
 
-第一个预测是：到 1995 年，将会造出一台能持续达到 1 TFLOPS（即 100 万 MFLOPS）的计算机，它要么是一台有 4K 到 32K 个节点的多计算机，要么是一台有几百万个处理单元的 Connection Multiprocessor［Bell 1989］。为了看清这个预测的分量，可以参照戈登·贝尔奖。这个奖每年表彰并行性方面的进展，其中包括最快的实际程序（MFLOPS 最高）。1989 年的获奖者用一台 8 处理器的 Cray Y-MP 达到了 1680 MFLOPS。按这些数字计算，多处理器和程序必须每年提高到上一年的 3.6 倍，最快的程序才能在 1995 年达到 1 TFLOPS。实际上，到 1999 年才第一次有戈登·贝尔奖获奖者突破 1 TFLOPS 大关。他们使用一台专门为利弗莫尔实验室设计的 5832 处理器 IBM RS/6000 SST 系统，在一个激波模拟程序上达到了 1.18 TFLOPS。这相当于每年提高到上一年的 1.93 倍，仍然相当可观。
+第一个预测是：到 1995 年，将会造出一台能持续达到 1 TFLOPS（即 100 万 MFLOPS）的计算机，它要么是一台有 4K 到 32K 个节点的多计算机，要么是一台有几百万个处理单元的 Connection Machine［Bell 1989］。为了看清这个预测的分量，可以参照戈登·贝尔奖。这个奖每年表彰并行性方面的进展，其中包括最快的实际程序（MFLOPS 最高）。1989 年的获奖者用一台 8 处理器的 Cray Y-MP 达到了 1680 MFLOPS。按这些数字计算，多处理器和程序必须每年提高到上一年的 3.6 倍，最快的程序才能在 1995 年达到 1 TFLOPS。实际上，到 1999 年才第一次有戈登·贝尔奖获奖者突破 1 TFLOPS 大关。他们使用一台专门为利弗莫尔实验室设计的 5832 处理器 IBM RS/6000 SST 系统，在一个激波模拟程序上达到了 1.18 TFLOPS。这相当于每年提高到上一年的 1.93 倍，仍然相当可观。
 
 20 世纪 90 年代以来，人们逐渐认识到：我们也许有能力造出 TFLOPS 级的多处理器，但这样的机器在成本上是否值得并不清楚，也许只有少数几种与国家安全有关、非常专门而又极其重要的应用例外。我们在 1990 年估计，要达到 1 TFLOPS，需要一台大约 5000 个处理器的机器，成本约 1 亿美元。利弗莫尔那台 5832 处理器的 IBM 系统花了 1.1 亿美元。可以预料，单个微处理器在成本和性能上的改进，会直接影响大规模多处理器的成本和性能；但是，一个 5000 处理器的系统，价格要超过使用同样处理器的台式系统的 5000 倍。从那以后，人们造出了快得多的多处理器，但在过去五年里，主要的改进越来越多地来自处理器本身，而不是并行体系结构的根本突破。
 

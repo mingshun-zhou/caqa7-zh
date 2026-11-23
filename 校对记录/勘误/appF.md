@@ -1,0 +1,32 @@
+# 附录 F 勘误
+
+- F.1 节（OCN 一项）：原书作「Sonic's」，应为「Sonics'」；已改。
+- F.1 节（OCN 一项）：原书作「SCCC」，应为「SCC」（与 F.8 节一致）；已改。
+- F.8 节 InfiniBand：原书作「0.946 and 1.423 ms」「0.910 and 0.323 ms」，应为「μs」；已改。
+- F.8 节 InfiniBand：原书作「Gbp/link」，应为「Gbps/link」；已改。
+- 图 F.31：原书作「SGI Altrix」，应为「SGI Altix」；已改。
+- F.8 节以太网：原书作「10, 100, 10,000, and 100,000 Mbits/sec」，漏了「1000」；已改。
+- 图 F.32(b) 图例：原书作「1PoIB」，应为「IPoIB」；图内文字不动，图注译文已按 IPoIB 写。
+- 图 F.20 图注：原书作「interconnections networks」，应为「interconnection networks」；译文已按正确写法。
+- F.5 节例题讨论：原书作「load, = causing」，等号应为破折号；译文已按正确写法。
+- 图 F.28 出处 / Howard10 文献：原书作「58e59」，应为「58–59」；已改（初译时）。
+- F.13 节：原书作「TPC/IP」，应为「TCP/IP」；已改（初译时）。
+- F.13 节：原书作「shear size」，应为「sheer size」；译文已按正确写法。
+- F.13 节：原书作「ACM Software Award」，应为「ACM Software System Award」（ACM 软件系统奖）；已改。
+- 参考文献 Senior 1993：原书作「Commmunications」，应为「Communications」；已改。
+- 参考文献 Howard 2010：原书作「Borka, N.」，应为「Borkar, N.」；已改。
+- 参考文献 Holt 1972：原书作「ACM Computer Surveys」，应为「ACM Computing Surveys」；已改。
+- F.2 节例题：原书作「page F-17」，公式实际在 F-18；页码引用已去掉。
+- F.4 节：原书作「page F-40」，表达式实际在 F-42；页码引用已去掉。
+- F.8 节：原书作「Figure F.36 on page F-85」，图实际在 F-86；已改为图 F.36 链接。
+- F.2 节第二道例题：原书作「about 800 bytes」「655 bytes and larger」，按题设参数交叉点约 421 字节，正确值不能确定；存疑，未改。
+- F.4 节 NEWS 例题「环」一项：原书正文作「8 of the 56 packets」，算式作「γ = 10/112」，两者对不上；存疑，未改。
+- 图 F.10 图注：原书说片上交换网络有效带宽等于聚合带宽，与例题 σ < 1 的设定矛盾；存疑，未改。
+- F.4 节：原书作「not in terms of performance」，从上下文看可能写反；存疑，未改。
+- F.3 节交换机成本例题：原书作「170」「85」，精确值为 170.67、85.33，位于公式内；存疑，未改。
+- F.8 节 SCC：原书作「(two 2-tile regions)」，24 个 tile 分 6 区应每区 4 tile；存疑，未改。
+- F.9 节：原书作「Messages of 2 KB」，按图 F.32 应指 2 KB 及以下的消息；存疑，未改。
+- F.11 节 Blue Gene/L：原书作「7-bit injection and 12-bit reception links」，无法核实；存疑，未改。
+- 习题 F.11(f)：原书作「modulo N − 1」，桶形移位通常为 mod N，位于公式内；存疑，未改。
+- 习题 F.31：原书题干作「network bridge」，小题作「gateway」，不能确定哪个对；存疑，未改。
+- 参考文献 Hoskote 2007：原书作「5-ghz」，应为「5-GHz」；参考文献按原书照录，存疑，未改。

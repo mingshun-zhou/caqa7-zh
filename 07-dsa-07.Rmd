@@ -18,7 +18,7 @@
 
 ```c
 const int M, N, K;
-float a[M][K], b[K][N], c[M][K];
+float a[M][K], b[K][N], c[M][N];
 
 void GEMM(const float &a[M][], const float &b[K][], float &c[M][]) {
   for (int i = 0; i < M; ++i)
@@ -81,6 +81,7 @@ void GEMM_MAC_BT(const float &a[M][], const float &b_t[N][], float &c[M][]) {
   for (int j = 0; j < N; ++j)
     for (int k = 0; k < K; ++k)
     MAC(c[i][j], a[i][k], b_t[j][k]);
+}
 ```
 
 这样转置还有一个好处：A 和 B 两个矩阵在内存中的低维（变化最快的那一维）现在都是 k。
@@ -161,7 +162,7 @@ b.　[25] 重画[图 7.33](#fig-7-33)，表示出怎样把长方体分解成点�
 * 在分类器层，SoftMax 函数把由 1000 个元素组成的激活值向量变换成 1000 个概率。SoftMax 是一个向量函数，公式为 $v_i = e^{z_i} \big/ \sum_{j=1}^{K} e^{x_j}$，其中输入向量的 K 个元素是 $x_i$，输出向量的 K 个元素是 $v_i$。这个公式不必让人望而生畏：每个输出的分母都相同，它只是一个缩放因子，保证输出向量中各值之和为 1。
 * 图中还表示出网络怎样在两个 GPU 上并行执行，两个 GPU 之间只有有限的通信。并行化的问题后面还会讲到。
 
-7.4　[10/20/15//25/25/25/25] <7.3, 7.4>
+7.4　[10/20/15/25/25/25/25] <7.3, 7.4>
 
 a.　[10] 每个卷积层有多少个权重？产生一个输出激活值要用到多少个权重？
 
@@ -184,7 +185,7 @@ f.　[25] 分别用均匀分布、高斯分布和指数分布生成一些长度�
 
 g.　[25] SoftMax 在数值上可能不稳定。原因是计算中用到的指数函数增长很快，即使输入不算大，结果也可能超出浮点数的表示范围。怎样改写 SoftMax，才能消除这种数值不稳定性？
 
-AlexNet 缺少的一个主要部件是*注意力*层。《Attention Is All You Need》（Vishwani，2017）一文提出了 Transformer 体系结构，注意力层在这篇论文中占有突出地位。用代数式表示，注意力的公式为
+AlexNet 缺少的一个主要部件是*注意力*层。《Attention Is All You Need》（Vaswani，2017）一文提出了 Transformer 体系结构，注意力层在这篇论文中占有突出地位。用代数式表示，注意力的公式为
 
 $$
 \mathit{Attention}(Q, K, V) = \mathit{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V

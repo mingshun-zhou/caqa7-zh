@@ -13,14 +13,14 @@
 | `and, or, xor, andi, ori, xori` | 与、或、异或，都有寄存器-寄存器和寄存器-立即数两种形式 |
 | `lui` | 取高位立即数：把立即数装入寄存器的第 31..12 位，高 32 位置 0 |
 | `auipc` | 把立即数与 PC 的高 20 位相加，结果写入寄存器；可用来构造跳到任意 32 位地址的转移 |
-| `sll, srl, sra, slli, srli, srai, sllw, slliw, srli, srliw, srai, sraiw` | 移位：逻辑左移、逻辑右移和算术右移，都有立即数版本和字版本（字版本不改动高 32 位） |
+| `sll, srl, sra, slli, srli, srai, sllw, slliw, srlw, srliw, sraw, sraiw` | 移位：逻辑左移、逻辑右移和算术右移，都有立即数版本和字版本（字版本不改动高 32 位） |
 | `mul, mulw, mulh, mulhsu, mulhu, div, divw, divu, rem, remu, remw, remuw` | 整数乘法、除法和求余，有符号和无符号，用两条指令支持 64 位乘积；也有字版本 |
 | *控制* | *条件转移和跳转；相对于 PC 或通过寄存器* |
 | `beq, bne, blt, bge, bltu, bgeu` | 根据两个寄存器的比较结果转移：相等、不等、小于、大于或等于，有符号和无符号 |
 | `jal, jalr` | 跳转并链接，地址相对于某个寄存器或 PC |
 | *浮点* | *所有浮点操作都有双精度（.d）和单精度（.s）两种* |
 | `flw, fld, fsw, fsd` | 取、存字（单精度）和双字（双精度） |
-| `fadd, fsub, fmult, fiv, fsqrt, fmadd, fmsub, fnmadd, fnmsub, fmin, fmax, fsgn, fsgnj, fsjnx` | 加、减、乘、除、平方根、乘加、乘减、取负乘加、取负乘减、最大值、最小值，以及替换符号位的指令。单精度操作码后加 .s，双精度加 .d，如 fadd.s、fadd.d |
+| `fadd, fsub, fmul, fdiv, fsqrt, fmadd, fmsub, fnmadd, fnmsub, fmin, fmax, fsgnj, fsgnjn, fsgnjx` | 加、减、乘、除、平方根、乘加、乘减、取负乘加、取负乘减、最大值、最小值，以及替换符号位的指令。单精度操作码后加 .s，双精度加 .d，如 fadd.s、fadd.d |
 | `feq, flt, fle` | 比较两个浮点寄存器，结果 0 或 1 存入一个 GPR |
 | `fmv.x.*, fmv.*.x` | 在浮点寄存器和 GPR 之间传送数据，「\*」为 s 或 d |
 | `fcvt.*.l, fcvt.l.*, fcvt.*.lu, fcvt.lu.*, fcvt.*.w, fcvt.w.*, fcvt.*.wu, fcvt.wu.*` | 在浮点寄存器和整数寄存器之间转换，「\*」为 S 或 D，分别表示单精度或双精度。有有符号和无符号版本，也有字和双字版本 |
@@ -150,7 +150,7 @@ A.1　[10] <A.9> 利用[图 A.29](#fig-a-29)，计算某种嵌入式 RISC-V CPU 
 
 取 astar 和 gcc 两个程序指令频度的平均值作为指令组成。
 
-A.2　[10] <A.9> 利用[图 A.29](#fig-a-29) 和上表，计算 RISC-V 的有效 CPI。取 bzip 和 hmmer 两个程序指令频度的平均值作为指令组成。可以假设其他所有指令（即表 A.29 中各类型没有涵盖的指令）每条需要 3.0 个时钟周期。
+A.2　[10] <A.9> 利用[图 A.29](#fig-a-29) 和上表，计算 RISC-V 的有效 CPI。取 bzip 和 hmmer 两个程序指令频度的平均值作为指令组成。可以假设其他所有指令（即图 A.29 中各类型没有涵盖的指令）每条需要 3.0 个时钟周期。
 
 A.3　[10] <A.9> 利用[图 A.29](#fig-a-29)，计算某种 RISC-V CPU 实现的有效 CPI。假设我们测得各类指令的平均 CPI 如下：
 
@@ -164,7 +164,7 @@ A.3　[10] <A.9> 利用[图 A.29](#fig-a-29)，计算某种 RISC-V CPU 实现的
 | 　不成功 | 2.0 |
 | 跳转 | 2.4 |
 
-取 gobmk 和 mcf 两个程序指令频度的平均值作为指令组成。可以假设其他所有指令（即表 A.29 中各类型没有涵盖的指令）每条需要 3.0 个时钟周期。
+取 gobmk 和 mcf 两个程序指令频度的平均值作为指令组成。可以假设其他所有指令（即图 A.29 中各类型没有涵盖的指令）每条需要 3.0 个时钟周期。
 
 A.4　[10] <A.9> 利用[图 A.29](#fig-a-29) 和上表，计算 RISC-V 的有效 CPI。取 perlbench 和 sjeng 两个程序指令频度的平均值作为指令组成。
 

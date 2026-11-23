@@ -1,0 +1,21 @@
+# 附录 I 勘误
+
+- I.3 节 LU 核心：原书作「a grid of size p × p」，若 p 为处理器数应为「√p × √p」；公式按约定不动，存疑，未改。
+- I.4 节自旋锁例题解答：原书作「120 clock cycles per lock acquisition」，应为「1200 个时钟周期」（12,000 个时钟周期分摊到 10 次获得锁）；已改。
+- 图 I.3：代码末尾原书多一个「}」，应删去（括号不配对）；已改。
+- 图 I.4 最后一行源代码：原书作「spin (release==local_sense);/」，应为「spin (release==local_sense);」；已改。
+- I.4 节正文（串行化的例子）：原书作「1000 rather than 15,000 cycles」，两个数都与前面例题（12,000 个时钟周期；无竞争时 10 次约 2000 个时钟周期）对不上，正确值无法确定；存疑，未改。
+- 图 I.6：原书 `if (tree[mynode].count==k) {` 缺右括号，`barrier(tree[mynode].parent)` 和 `barrier (mynode)` 只传一个参数而定义有两个参数，补法不唯一；存疑，未改。
+- I.4 节硬件原语小节（两处）：原书作「the example on page I-12」，该例题实际在 I-13 页；页码已删，改为「前面的例题」；已改。
+- I.4 节取并加一：原书作「simple code-sensing barrier」，应为「sense-reversing barrier」（感知反转栅障，即图 I.3）；已改。
+- I.4 节栅障例题：原书作「as the time to execute other nonsynchronization operations」，应为「as well as」；已改（译文原已按正确词译出）。
+- I.5 节第 27–28 页 FFT 带宽例题：原书把解答后半段「FFT performs all-to-all communication…」排在 Example 与 Answer 之间，应属解答；已改（译文原已移到解答末尾）。
+- I.5 节：原书作「increasing the basic size」，应为「block size」；已改（译文原已按「块大小」译出）。
+- I.5 节例题解答：原书作「CrayT3E」，应为「Cray T3E」；已改（译文原已补空格）。
+- I.6 节：原书作「see the discussion in Section I.6」，出现在 I.6 节本身，自指可疑，原意所指无法确定；存疑，未改。
+- I.6 节时间受限扩展例题：原书作「k log k = 10」得 5.72，只有自然对数才成立；公式按约定不动，存疑，未改。
+- I.7 节：原书作「the directory can tell the register」，应为「requester」；已改（译文原已按「请求者」译出）。
+- I.7 节：原书作「avoid deadlock, Let's start」，逗号应为句号；已改（译文原已按意思处理）。
+- I.8 节：原书作「the main BL/G interconnect network」，应为「BG/L」；已改（译文原已改正）。
+- I.8 节：原书作「32 racks」，应为「64 个机柜」（64 K 个节点、每机柜 1 K 个节点）；已改。
+- I.8 节：原书作「out-order」「nonbblocking」「forms of the heart」「in terms」「the uses」，应为「out-of-order」「nonblocking」「forms the heart」「in turn」「that uses」；已改（译文原已按意思译出）。

@@ -23,11 +23,11 @@ opcode.type d, a, b, c ; comment
 
 [图 4.18](#fig-4-18) 列出了基本的 PTX 指令集。所有指令都可以受 1 位谓词寄存器控制，谓词寄存器由设置谓词指令 `setp` 设置。控制流指令包括函数调用 `call` 与返回 `return`、线程退出 `exit`、转移 `branch`，以及线程块内各线程之间的栅栏同步 `bar.sync`。转移指令前面加上谓词，就成了条件转移。虚拟寄存器由编译器或 PTX 程序员声明，分为 32 位和 64 位，可以有类型，也可以无类型。例如 `R0`、`R1`、……存放 32 位值，`RD0`、`RD1`、……是 64 位寄存器。前面说过，PTX 的虚拟寄存器在装入时才分配到物理寄存器。
 
-第 292 页 DAXPY 循环的一次迭代可以写成下面的 PTX 指令序列：
+[4.2 节](#sec-4-2) DAXPY 循环的一次迭代可以写成下面的 PTX 指令序列：
 
 ```
 shl.u32 R8, blockIdx, 8      ; Thread Block ID * Block size
-                             ; (256 or 28)
+                             ; (256 or 2^8)
 add.u32 R8, R8, threadIdx    ; R8 = i = my CUDA Thread ID
 shl.u32 R8, R8, 3            ; byte offset
 ld.global.f64 RD0, [X+R8]    ; RD0 = X[i]
@@ -146,7 +146,7 @@ ENDIF1:< next instruction >, *Pop   ; pop to restore old mask
 
 * *高带宽存储器*：Pascal GP100 GPU 的第二项创新是采用堆叠式高带宽存储器（*HBM2*）。这种存储器的总线很宽，有 4096 根数据线，工作频率为 0.7 GHz，峰值带宽达 732 GB/s，是以往 GPU 的 2 倍以上。后来的 GPU 采用了更新、更快的 HBM 版本。
 
-* *高速芯片间互连*：GPU 是协处理器，一个 CPU 配多个 GPU 使用时，PCI 总线可能成为通信瓶颈。为此，Pascal GP100 引入了 *NVLink* 通信通道，每个方向的数据传送速率最高 20 GB/s。每块 GP100 有 4 个 NVLink 通道，每块芯片的芯片间聚合峰值带宽为 160 GB/s。面向多 GPU 应用，有 2 个、4 个和 8 个 GPU 的系统可供选用，每个 GPU 都可以对经 NVLink 连接的任何 GPU 执行 load、store 和原子操作。在某些情况下，NVLink 通道还可以与 CPU 通信，例如 IBM Power9 及以后的 CPU 就支持 CPU 与 GPU 之间的通信。在这种芯片中，NVLink 让连接在一起的所有 GPU 和 CPU 看到一致的存储器视图，并提供 Cache 到 Cache 的通信，而不是存储器到存储器的通信。
+* *高速芯片间互连*：GPU 是协处理器，一个 CPU 配多个 GPU 使用时，PCIe 总线可能成为通信瓶颈。为此，Pascal GP100 引入了 *NVLink* 通信通道，每个方向的数据传送速率最高 20 GB/s。每块 GP100 有 4 个 NVLink 通道，每块芯片的芯片间聚合峰值带宽为 160 GB/s。面向多 GPU 应用，有 2 个、4 个和 8 个 GPU 的系统可供选用，每个 GPU 都可以对经 NVLink 连接的任何 GPU 执行 load、store 和原子操作。在某些情况下，NVLink 通道还可以与 CPU 通信，例如 IBM Power9 及以后的 CPU 就支持 CPU 与 GPU 之间的通信。在这种芯片中，NVLink 让连接在一起的所有 GPU 和 CPU 看到一致的存储器视图，并提供 Cache 到 Cache 的通信，而不是存储器到存储器的通信。
 
 ![图 4.21　Pascal GPU 多线程 SIMD 处理器的框图。64 个 SIMD 车道（核）各有一个流水化的浮点部件、一个流水化的整数部件、一些把指令和操作数分派给这两个部件的逻辑，以及一个保存结果的队列。这 64 个 SIMD 车道与 32 个双精度 ALU（DP 部件，执行 64 位浮点运算）、16 个 load-store 部件（LD/ST）和 16 个特殊功能部件（SFU）交互，SFU 用来计算平方根、倒数、正弦、余弦等函数](images/ch04/fig-4-21.png){#fig-4-21 width=100%}
 

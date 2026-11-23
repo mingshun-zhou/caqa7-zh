@@ -12,7 +12,7 @@ IBM 的项目始于 1975 年，开始得最早，公开得却最晚。IBM 的计
 
 两个大学项目在 1983–1984 年前后结束，此后工业界广泛采用了这项技术。许多早期计算机（1986 年以前制造的）的厂商都声称自己的产品是 RISC 计算机。但这些说法往往更多出于市场宣传的需要，而不是工程上的事实。
 
-1986 年，计算机工业界开始发布处理器，所用的技术来自三个 RISC 研究项目的探索。Moussouris et al.［1986］介绍了 MIPS R2000 整数处理器，Kane 的书［1986］则完整描述了它的体系结构。惠普把已有的小型机产品线转到了 RISC 体系结构上，Lee［1989］介绍了 HP Precision Architecture。IBM 始终没有把 801 直接做成产品，而是把其中的思想用在一种新的低端体系结构上。这种体系结构用在 IBM RT-PC 中，一组论文对它作了介绍［Waters 1986］。1990 年，IBM 发布了一种新的 RISC 体系结构（RS 6000），这是第一个超标量 RISC 处理器。1987 年，Sun Microsystems 开始交付基于 SPARC 体系结构的计算机。SPARC 由伯克利的 RISC-II 处理器衍生而来，Garner et al.［1988］对它作了介绍。PowerPC 则是苹果、IBM 和 Motorola 联手的产物。[附录 K](#app-k) 概括介绍了几种 RISC 体系结构。
+1986 年，计算机工业界开始发布处理器，所用的技术来自三个 RISC 研究项目的探索。Moussouris et al.［1986］介绍了 MIPS R2000 整数处理器，Kane 的书［1986］则完整描述了它的体系结构。惠普把已有的小型机产品线转到了 RISC 体系结构上，Lee［1989］介绍了 HP Precision Architecture。IBM 始终没有把 801 直接做成产品，而是把其中的思想用在一种新的低端体系结构上。这种体系结构用在 IBM RT-PC 中，一组论文对它作了介绍［Waters 1986］。1990 年，IBM 发布了一种新的 RISC 体系结构（RS/6000），这是第一个超标量 RISC 处理器。1987 年，Sun Microsystems 开始交付基于 SPARC 体系结构的计算机。SPARC 由伯克利的 RISC-II 处理器衍生而来，Garner et al.［1988］对它作了介绍。PowerPC 则是苹果、IBM 和 Motorola 联手的产物。[附录 K](#app-k) 概括介绍了几种 RISC 体系结构。
 
 为了帮助平息 RISC 与传统设计之争，VAX 处理器的设计者后来选了两种组成相当的实现，对 VAX 和一种 RISC 处理器作了定量比较。他们选的是 VAX 8700 和 MIPS M2000。VAX 和 MIPS 的设计目标不同，两者的体系结构因此差别很大：
 
@@ -145,7 +145,7 @@ Radin, G. [1982]. "The 801 minicomputer," Proc. Symposium Architectural Support 
 
 Riemens, A., K. A. Vissers, R. J. Schutten, F. W. Sijstermans, G. J. Hekstra, and G. D. La Hei [1999]. "Trimedia CPU64 application domain and benchmark suite," Proc. IEEE Int'l. Conf. on Computer Design: VLSI in Computers and Processors (ICCD'99), October 10–13, 1999, Austin, Tex., 580–585.
 
-Ropers, A., H. W. Lollman, and J. Wellhausen [1999]. DSPstone: Texas Instruments TMS320C54x, Tech. Rep. Nr. IB 315 1999/9-ISS-Version 0.9, Aachen University of Technology, Aaachen, Germany (www.ert.rwth-aachen.de/Projekte/Tools/coal/dspstone_c54x/index.html).
+Ropers, A., H. W. Lollman, and J. Wellhausen [1999]. DSPstone: Texas Instruments TMS320C54x, Tech. Rep. Nr. IB 315 1999/9-ISS-Version 0.9, Aachen University of Technology, Aachen, Germany (www.ert.rwth-aachen.de/Projekte/Tools/coal/dspstone_c54x/index.html).
 
 Shustek, L. J. [1978]. "Analysis and Performance of Computer Instruction Sets," Ph.D. dissertation, Stanford University, Palo Alto, Calif.
 

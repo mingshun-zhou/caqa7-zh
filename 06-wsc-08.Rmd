@@ -54,7 +54,7 @@ VM 运行起来以后，只有在该 VM 的核、内存或设备分配发生变�
 
 ![图 6.37　AWS Nitro 系统上 VM 实例的启动过程。Nitro 宿主机包含一个或多个 CPU，内存直接连在 CPU 上。所有本地存储设备（磁盘或 Flash）都通过 Nitro 实例控制器卡访问，远程存储通过 Nitro EBS 卡访问，网络由 Nitro ENA 卡和 EFA 卡提供。VM 实例上运行的 OS 带有设备驱动程序，通过常规的 PCIe 和 NVMe 接口访问这些设备。图中 Nitro Host 为 Nitro 宿主机，Nitro Hypervisor 即 Nitro VMM，Nitro Controller 为 Nitro 控制器，Nitro Cards 为 Nitro 卡，Nitro Security Chip 为 Nitro 安全芯片，EC2 Control Plane 为 EC2 控制平面，Local storage 为本地存储，PCIe Bus 为 PCIe 总线，圆圈中的数字为正文所述的步骤。](images/ch06/fig-6-37.png){#fig-6-37 width=90%}
 
-![图 6.38　VM 实例与裸金属实例在计算密集型 HPC 基准测试程序上的归一化性能。c5n.18xlarge 和 c5n.metal 两种实例使用相同的硬件：一台双插座 Intel Xeon Platinum 8000 系统，每个插座 18 个核，配一块 100 GBps 的 EFA 适配器。两者唯一的区别是 c5n.18xlarge 使用 Nitro VMM。在所用的 HPC 负载上，两种实例的性能相差不到 1%。负载的详细情况见 <https://aws.amazon.com/blogs/hpc/bare-metal-performance-with-the-aws-nitro-system/>。图题意为「裸金属与 Nitro VMM 的对比（16 个实例）」，纵轴为归一化性能，横轴为负载。](images/ch06/fig-6-38.png){#fig-6-38 width=80%}
+![图 6.38　VM 实例与裸金属实例在计算密集型 HPC 基准测试程序上的归一化性能。c5n.18xlarge 和 c5n.metal 两种实例使用相同的硬件：一台双插座 Intel Xeon Platinum 8000 系统，每个插座 18 个核，配一块 100 Gbps 的 EFA 适配器。两者唯一的区别是 c5n.18xlarge 使用 Nitro VMM。在所用的 HPC 负载上，两种实例的性能相差不到 1%。负载的详细情况见 <https://aws.amazon.com/blogs/hpc/bare-metal-performance-with-the-aws-nitro-system/>。图题意为「裸金属与 Nitro VMM 的对比（16 个实例）」，纵轴为归一化性能，横轴为负载。](images/ch06/fig-6-38.png){#fig-6-38 width=80%}
 
 **加快新技术的部署。** 几乎所有虚拟化任务都由 Nitro 卡完成，因此部署新的 CPU、DSA 和存储系统、支持新的操作系统时，都不需要花大力气移植或扩展 VMM。以裸金属方式运行一台服务器，就等于启动一个宿主 CPU 上没有 VMM 运行的 VM。实例和服务器都统一通过 Nitro 卡管理。在 Nitro 系统出现之前，AWS 提供大约 70 种 EC2 实例；到 2023 年初，AWS 已提供 600 多种实例，可选的 CPU 有 Intel 和 AMD 的 x86、AWS 和苹果的 Arm，加速器有 GPU、ML DSA、视频 DSA 和 FPGA，还有多种存储和网络选项，操作系统有 Linux、Windows、Unix 和 macOS。
 
@@ -85,7 +85,7 @@ Nitro 的安全引导过程有三方面的作用：
 
 AWS 开发基于 Arm 的 Graviton CPU，目的是让 EC2 实例的性价比尽可能高，并推动服务器提高能效。2018 年，Graviton1 成为大型云提供商中第一款用于 IaaS 实例的 Arm CPU，它证明了 Arm 的硬件和软件生态能够大规模地支撑云应用。
 
-**三代 Graviton。** [图 6.39](#fig-6-39) 列出了三代 Graviton 的主要特点。借助第 3 章和第 4 章讨论的乱序执行和 SIMD 技术，每个核的性能稳步提高：Graviton2 核的速度约为 Graviton1 核的 2 倍，Graviton3 核的整数性能和浮点性能又在此基础上分别提高了 30% 和 60%。这些年来，每个核的性能提高了，核数也增加到原来的 4 倍，为了支撑这两方面的增长，每块芯片的存储带宽从 50 GB/s 提高到 300 GB/s。
+**三代 Graviton。** [图 6.39](#fig-6-39) 列出了三代 Graviton 的主要特点。借助第 3 章和第 4 章讨论的乱序执行和 SIMD 技术，每个核的性能稳步提高：Graviton2 核的速度约为 Graviton1 核的 2 倍，Graviton3 核的整数性能和浮点性能又在此基础上分别提高了 30% 和 60%。这些年来，每个核的性能提高了，核数也增加到原来的 4 倍，为了支撑这两方面的增长，每块芯片的存储带宽从 40 GB/s 提高到 300 GB/s。
 
 [图 6.39　三代 AWS Graviton CPU 的主要特点。Graviton3 本可以改用 5 nm 工艺来降低功耗，但需要与 7 nm 工艺的成熟度权衡。Graviton3 的设计本身功耗就低，因此在该芯片量产的两年里，7 nm 工艺的成本效益更好。Graviton3 的末级 Cache（LLC，Last-Level Cache）相对较小，因为芯片的 DRAM 带宽充裕，负载下的延迟也控制得很好。此外，DRAM 带宽高，复杂的预取引擎就能发挥特别好的效果。]{#fig-6-39 .caption}
 
@@ -104,7 +104,7 @@ AWS 开发基于 Arm 的 Graviton CPU，目的是让 EC2 实例的性价比尽�
 | ROB 大小 | 128 | 128 | 256 |
 | 每核 L1I/L1D/L2 | 48 KB/32 KB/-- | 64 KB/64 KB/1 MB | 64 KB/64 KB/1 MB |
 | LLC 容量 | 8 MB | 32 MB | 32 MB |
-| DRAM 类型 | DDR4-2633 | DDR4-3200 | DDR5-4800 |
+| DRAM 类型 | DDR4-2666 | DDR4-3200 | DDR5-4800 |
 | DRAM 控制器数 | 2 | 8 | 8 |
 | DRAM 带宽 | 40 GB/s | 200 GB/s | 300 GB/s |
 | DRAM 加密 | 无 | 有 | 有 |

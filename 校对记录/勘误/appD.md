@@ -1,0 +1,28 @@
+# 附录 D 勘误
+
+- 图 D.3 图注：原书作「512 KB」（扇区），应为「512 字节」；已改。
+- D.2 节（带宽对比）：原书作「6000 times」，按正文数字应为「12,000 倍」；已改。
+- D.5 节（双磁盘例题末句）：原书作「mean service time」，应为「平均响应时间」；已改。
+- D.5 节（泊松分布一小节）：原书作「the equation for Time_server」，应为「Time_queue 的公式」；已改。
+- D.7 节（Internet Archive 例）：原书作「18,600 IOPS」，应为「16,600 IOPS」；已改。
+- D.7 节（TB-80 机架成本）：原书作「almost 60%」，按 60,000/84,500 应为「约 71%」；已改。
+- D.8 节：原书作「NSF」（两处），应为「NFS」；已改（翻译时已改）。
+- D.8 节：原书作「running NTFS or CIFS」，应为「NFS」；已改。
+- D.5 节（拆分公式）：原书乘号作「∞」，应为「×」；已改（翻译时已改）。
+- 习题 D.25 a、b：原书作「20 GB」卷，按 D.24 应为「37 GB」；已改。
+- 习题 D.31：原书作「100 byte keys, with 10-byte records」，应为「100 字节的记录，关键字长 10 字节」；已改。
+- D.4 节（TPC-C）：原书作「Figure 1.17」，第 7 版图 1.17 讲 NRE 成本，与 TPC-C 无关，正确图号无法确定；存疑，未改。
+- D.5 节（服务器利用率定义）：原书作「divided by the service rate」，与后面公式不符，正确说法不能唯一确定；存疑，未改。
+- D.5 节（M/M/m 公式）：原书分子作「N_servers × Utilization^N_servers」，标准公式为 (N_servers × Utilization)^N_servers；公式不动，存疑，未改。
+- D.5 节（双磁盘例题）：原书作「1.75」，按 6.7/3.8 约为 1.76，属舍入差异；存疑，未改。
+- D.2 节（磁盘规格）：原书作「four or five」盘片与 SAS「many fewer」，图 D.3 两者都是 4 张；存疑，未改。
+- 图 D.4 RAID 2 缺点栏：原书作「~ Log 2 check storage overhead」，含义不清；存疑，未改。
+- D.4 节（Tertiary Disk）：原书正文作「Talagala et al., 2000」、图注作「[2000b]」，72,000 幅与 70,000 多件不一致；存疑，未改。
+- D.4 节：原书作「Transaction Processing Council」，正式名称为 Transaction Processing Performance Council，译名沿用第 1 章；存疑，未改。
+- D.7 节（TB-80 成本式）：原书「$1500」在假定中无出处；存疑，未改。
+- D.9 节（微软网站）：原书作「250 years」，按每年 5 分钟计约 264 年；存疑，未改。
+- 案例研究 3、5 及习题 D.25、D.26：原书作「37 GB SCSI disk shown in Figure D.3」，第 7 版图 D.3 无此磁盘；存疑，未改。
+- 习题 D.24：原书作「20-byte MD5 checksum」，D.27 说 MD5 输出 128 位（16 字节），改动会影响题目计算；存疑，未改。
+- 习题 D.6：原书题号处分值作「[10/10/10/10]」，子题各标 [20]；存疑，未改。
+- 习题 D.6 代码：循环以 chunksize 为步长却与 numchunks 比较；存疑，未改。
+- 习题 D.4、D.5：原书所问 0.4、0.8、1.6 秒和 0.75 秒与图 D.26、D.27 读数不完全吻合，属题目内容；存疑，未改。

@@ -8,7 +8,7 @@
 
 **Hamilton 的案例研究。** 为了说明能源成本在其中占多大分量，Hamilton（2010）做了一项估算 WSC 成本的案例研究。按他的估算，一个 8 MW 设施的 CAPEX 为 8800 万美元；约 46,000 台服务器及相应的网络设备又使 WSC 的 CAPEX 增加了 7900 万美元。案例研究的其余假设见[图 6.32](#fig-6-32)。
 
-[图 6.32　一个 WSC 的案例研究，数据四舍五入到 5000 美元。因特网带宽的成本随应用而不同，这里没有计入。设施 CAPEX 中其余的 18% 包括购买地产和建造楼房的费用。安保和设施管理的人员成本不在原案例研究中，是我们在图 6.14 中加上的。注意，Hamilton 的估算是在他加入 Amazon 之前做的，并不以某一家公司的 WSC 为依据。资料来源：Hamilton, J., 2010. Cloud computing economies of scale. In: Paper Presented at the AWS Workshop on Genomics and Cloud Computing, June 8, 2010, Seattle, WA. <http://mvdirona.com/jrh/TalksAndPapers/JamesHamilton_GenomicsCloud20100608.pdf>。]{#fig-6-32 .caption}
+[图 6.32　一个 WSC 的案例研究，数据四舍五入到 5000 美元。因特网带宽的成本随应用而不同，这里没有计入。设施 CAPEX 中其余的 18% 包括购买地产和建造楼房的费用。安保和设施管理的人员成本不在原案例研究中，是我们在[图 6.33](#fig-6-33) 中加上的。注意，Hamilton 的估算是在他加入 Amazon 之前做的，并不以某一家公司的 WSC 为依据。资料来源：Hamilton, J., 2010. Cloud computing economies of scale. In: Paper Presented at the AWS Workshop on Genomics and Cloud Computing, June 8, 2010, Seattle, WA. <http://mvdirona.com/jrh/TalksAndPapers/JamesHamilton_GenomicsCloud20100608.pdf>。]{#fig-6-32 .caption}
 
 | 项目 | 数值 |
 |---|--:|

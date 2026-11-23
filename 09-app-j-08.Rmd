@@ -12,7 +12,7 @@ J.29　[20] <J.9> 仿照[图 J.27](#fig-j-27) 的画法展开[图 J.29](#fig-j-2
 
 J.30　[25] <J.9> 对基 8 Booth 重编码，写出与[图 J.25](#fig-j-25) 相当的表。
 
-J.31　[18] <J.9> 设按 J-53 页例题的方法，用带符号数字加法器把 $a_{n-1} \ldots a_1a_0$ 与 $b_{n-1} \ldots b_1b_0$ 相加。用 $a_i$、$a_{i-1}$、$a_{i-2}$、$b_i$、$b_{i-1}$ 和 $b_{i-2}$ 写出和的第 $i$ 位 $s_i$ 的公式。
+J.31　[18] <J.9> 设按 [J.9 节](#sec-j-9)带符号数字加法例题的方法，用带符号数字加法器把 $a_{n-1} \ldots a_1a_0$ 与 $b_{n-1} \ldots b_1b_0$ 相加。用 $a_i$、$a_{i-1}$、$a_{i-2}$、$b_i$、$b_{i-1}$ 和 $b_{i-2}$ 写出和的第 $i$ 位 $s_i$ 的公式。
 
 J.32　[15] <J.9> 正文讨论的基 4 SRT 除法，商数字取 −2、−1、0、1、2。如果商数字还可以取 3 和 −3，$|r_i| \le 2b/3$ 应换成什么关系？
 
@@ -24,11 +24,11 @@ b. [20] <J.9> [图 J.34](#fig-j-34) 对 P 的正值和负值有一定的对称�
 
 c. [30] <J.9> 假设用进位保留加法器代替进位传播加法器。商查找表的输入是除数的 $k$ 位和余数的 $l$ 位，余数的这 $l$ 位由和寄存器与进位寄存器的高 $l$ 位相加得到。$k$ 和 $l$ 各是多少？编写一个程序，生成与[图 J.34](#fig-j-34) 相当的表。
 
-J.34　[12/12/12] <J.9, J.12> 最早生产的几百万片 Pentium 芯片有一个缺陷，做除法有时会得到错误的结果。Pentium 采用的基 4 SRT 算法与 J-56 页例题所示的算法类似，只是余数以进位保留形式存放（见习题 J.33(c)）。据 Intel 称，这个错误是由商查找表中 5 个错误的表项造成的。
+J.34　[12/12/12] <J.9, J.12> 最早生产的几百万片 Pentium 芯片有一个缺陷，做除法有时会得到错误的结果。Pentium 采用的基 4 SRT 算法与 [J.9 节](#sec-j-9)基 4 SRT 除法例题所示的算法类似，只是余数以进位保留形式存放（见习题 J.33(c)）。据 Intel 称，这个错误是由商查找表中 5 个错误的表项造成的。
 
 a. [12] <J.9, J.12> 这些错误表项的商本应是 +2 或 −2，实际却是 0。由于存在冗余，算法似乎有可能在后面的迭代中从错误的商数字「恢复」过来。证明 Pentium 的这个缺陷无法这样恢复。
 
-b. [12] <J.9, J.12> 由于这里做的是浮点除法而不是整数除法，J-45 页的 SRT 除法算法必须作两处修改。一是不再需要第 1 步，因为除数已经规格化。二是第一个余数可能不满足应有的界（对 Pentium，这个界是 $|r| \le 2b/3$，见 J-55 页）。证明只要跳过 SRT 算法第 2(a) 步中的第一次左移，就能解决这个问题。
+b. [12] <J.9, J.12> 由于这里做的是浮点除法而不是整数除法，[J.9 节](#sec-j-9)的 SRT 除法算法必须作两处修改。一是不再需要第 1 步，因为除数已经规格化。二是第一个余数可能不满足应有的界（对 Pentium，这个界是 $|r| \le 2b/3$，见 [J.9 节](#sec-j-9)「用单个加法器加快除法」小节）。证明只要跳过 SRT 算法第 2(a) 步中的第一次左移，就能解决这个问题。
 
 c. [12] <J.9, J.12> 如果用来索引错误表项的余数在第一个除法步（此时余数就是除数）就可能出现，随机测试很快就能发现这个错误。但实际上并没有很快发现。这说明索引错误表项的余数值有什么特点？
 
@@ -88,7 +88,7 @@ Leighton, F.T., 1992. Introduction to Parallel Algorithms and Architectures: Arr
 
 Magenheimer, D.J., Peters, L., Pettis, K.W., Zuras, D., 1988. Integer multiplication and division on the HP Precision architecture. IEEE Trans. on Computers 37 (8), 980–990. *Gives rationale for the integer- and divide-step instructions in the Precision architecture.*
 
-Markstein, P.W., 1990. Computation of elementary functions on the IBM RISC System/6000 processor. IBM J. of Research and Development 34 (1), 111–119. *Explains how to use fused muliply-add to compute correctly rounded division and square root.*
+Markstein, P.W., 1990. Computation of elementary functions on the IBM RISC System/6000 processor. IBM J. of Research and Development 34 (1), 111–119. *Explains how to use fused multiply-add to compute correctly rounded division and square root.*
 
 Mead, C., Conway, L., 1980. Introduction to VLSI Systems. Addison-Wesley, Reading, Mass.
 

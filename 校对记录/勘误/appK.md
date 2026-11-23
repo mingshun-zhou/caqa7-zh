@@ -1,0 +1,52 @@
+# 附录 K 勘误
+
+- K.2 节图 K.5 图注：原书作「global pointer is register 30」，应为「register 28」（与图 K.4 一致，microMIPS 的 gp 是 $28）；已改。
+- K.2 节图 K.5 图注：原书作 Thumb-2 栈指针是「r31」的另一个版本，图 K.4 又印作「0」，ARM 的 SP 实为 r13，原书本意无法确定；存疑，未改。
+- K.2 节「指令：嵌入式体系结构」：原书作「Figures K.14 through K.17」，应为「K.14 through K.16」（图 K.17 是桌面体系结构扩展指令表）；已改。
+- K.2 节「指令：RV64G 之外的常见扩展」：原书作「Figures K.15 through K.18」，应为「K.17 through K.19」；已改。
+- K.2 节 SPARC v9 寄存器转移条件：原书作「<=, >=, or <= 0」，应为「≤, >, ≥ 0」（与 BPr 指令、图 K.12 一致）；已改（译文已按正确写法译出）。
+- K.1 节：原书作「vulnerable」，应为「venerable」；已改（译文已按正确写法译出）。
+- K.1 节：原书作「then it did」，应为「than」；已改（译文已按正确写法译出）。
+- K.2 节：原书作「EEE 754」，应为「IEEE 754」；已改（译文已按正确写法译出）。
+- K.2 节：原书作「16-it」，应为「16-bit」；已改（译文已按正确写法译出）。
+- K.2 节：原书作「accessible my most」，应为「by」；已改（译文已按正确写法译出）。
+- 图 K.5 图注：原书作「RV64c」「a designed GPR」，应为「RV64GC」「designated」；已改（译文已按正确写法译出）。
+- 图 K.6 图注：原书作「sift amount」，应为「shift amount」；已改（译文已按正确写法译出）。
+- K.2 节：原书作「SPARVv9」，应为「SPARC v9」；已改（译文已按正确写法译出）。
+- 图 K.9：原书 ARMv8 存半字作「STW」、存字作「STL」，RV64G 存半字作「STH」，Power 取字作「LW_」等，助记符可疑但正确写法无法逐一确定；存疑，未改。
+- 图 K.10：原书 ARM 除法作「MULX, SMULX」、移位作「RSL、RSA」，RISC-V「Load bits 31..16」作「ADDIS」；存疑，未改。
+- 图 K.11：原书 RISC-V「Return from interrupt」作「EBREAK」；存疑，未改。
+- 图 K.14：原书 Thumb-2 以 SP 为基址的取/存字作「1;3;8」，可能是「1;8;8」；存疑，未改。
+- K.2 节：原书作「same four categories」，只列三类；存疑，未改。
+- 图 K.26 Power 列「交织」「打包」两行：原书作「6B」，应为「16B」（同列其余各行均为 16B, 8H, 4W; 2 D）；已改。
+- 图 K.29 VAX 数据寻址方式：原书作「=14」，可能是「≥14」；存疑，未改。
+- 图 K.24 图注：原书开头残句「In addition to the vector facility,」错位；已改（译文已移到 Power3 向量-标量扩展一句前）。
+- K.2 节：原书作「an the maximum/minimum」，应为「and」；已改（译文已按正确写法译出）。
+- K.3 节：原书作「on page K-11」，应为 K-41（「80x86 指令编码」小节）；已改（统稿时改为指向本节后面该小节的说法）。
+- K.3 节：原书作「Figure A.31 on page A-4」，应为图 A.1、A.2；已改。
+- K.3 节：原书作「for 32 to 64 bits」，应为「from」；已改（译文已按正确写法译出）。
+- 图 K.33：原书「MOVW BX,[DI+45]」印在功能栏，应在指令栏；已改。
+- 图 K.34：原书作「CX ¦ 0」，应为「CX ≠ 0」；已改。
+- K.3 节 FADD 说明：原书作「in the in stack」，多一个「in」；已改（译文已按正确写法译出）。
+- K.3 节：原书作「Section L.3」，应为附录 M 的 M.4 节；已改。
+- 图 K.38：原书 r/m = 3 一行作「BP+SI」，应为「BP+DI」；mod = 1、mod = 2 两栏 disp8/disp16 似印反。该图为截图；存疑，未改。
+- K.3 节「融会贯通」：原书作「compare the measurements to MIPS」，后文实际与 DLX 比较；存疑，未改。
+- K.3 节：原书作整数程序数据访问「1.25」倍、浮点程序「2 to 4」倍，图 K.46、K.47 的平均值为 1.23、4.35；存疑，未改。
+- 图 K.48：原书浮点平均 DLX「数据传送合计」作「2%」，与浮点数据传送 33% 不协调；存疑，未改。
+- K.4 节：原书作「page K-24」，应为前面例题（K-54）；已改。
+- K.4 节：原书作「MIPS lui (Figure A.24 on page A-37)」，应为附录 A 中列出 lui 的图 A.26；已改。
+- 图 K.52 calls 行：原书作「page K-33」，应指本节后面的 sort 例子；已改。
+- K.4 节补充说明：原书称 VAX 有 22 种寻址方式，图 K.50 只列 10 行（字节/字/长字合列），数法不明；存疑，未改。
+- 图 K.54、K.56 图注：原书作「on page K-30」「on page K-33」，应为图 K.53、K.55 所在的 K-60、K-62；已改（去掉页码，只留图链接）。
+- K.4 节：原书作「the fallacy on page K-38」，应指 K.4 节「谬误与陷阱」最后一条；已改。
+- K.4 节：原书作 swap「17 lines of MIPS」、sort「44 lines in MIPS」，图 K.54、K.56 中 MIPS 数得 15 条、42 条（是否计入标号行等不明）；存疑，未改。
+- 图 K.54：原书 VAX 代码作「4(a)」「8(a)」，应为「4(ap)」「8(ap)」；该图为截图；存疑，未改。
+- K.4 节 sort 拼合代码注释：原书作「v[j] ð [j+1]」，应为「v[j] ≤ v[j+1]」；已改。
+- 图 K.57：原书横轴标题作「Number of bits of displacement」，与图意不符，正确标题无法确定；存疑，未改。
+- K.4 节：原书作「the VMS C compiler does include registers r0 and r1」，是否应为 does not 无法确定；存疑，未改（按上下文译出）。
+- 习题 K.1：原书作「pointed to be register r5」，应为「by」；已改（译文已按正确写法译出）。
+- K.4 节「结束语」引语出处：原书作「Hans Hoffman」，应为「Hans Hofmann」；已改。
+- K.6 节：原书作「Section L.4 (available online)」，应为附录 M 的 M.4 节；已改。
+- 图 K.59 图注：原书作「PL-I」，应为「PL/I」（与同句其余写法一致）；已改。
+- 图 K.59：原书汇总行与分项之和略有出入（只列 >1.5% 的指令且有舍入）；存疑，未改。
+- 致谢：原书作「Hiokazu Takata」，应为「Hirokazu Takata」；已改。

@@ -14,7 +14,7 @@ Hagersten, E., A. Landin, and S. Haridi [1992]. "DDM—a cache-only memory archi
 
 Hill, M. D. [1998]. "Multiprocessors should support simple memory consistency models," IEEE Computer 31:8 (August), 28–34.
 
-Hillis, W. D. [1985]. The Connection Multiprocessor, MIT Press, Cambridge, Mass.
+Hillis, W. D. [1985]. The Connection Machine, MIT Press, Cambridge, Mass.
 
 Hirata, H., K. Kimura, S. Nagamine, Y. Mochizuki, A. Nishimura, Y. Nakase, and T. Nishizawa [1992]. "An elementary processor architecture with simultaneous instruction issuing from multiple threads," Proc. 19th Annual Int'l. Symposium on Computer Architecture (ISCA), May 19–21, 1992, Gold Coast, Australia, 136–145.
 
@@ -54,13 +54,13 @@ Lenoski, D., J. Laudon, K. Gharachorloo, A. Gupta, and J. L. Hennessy [1990]. "T
 
 Lenoski, D., J. Laudon, K. Gharachorloo, W.-D. Weber, A. Gupta, J. L. Hennessy, M. A. Horowitz, and M. Lam [1992]. "The Stanford DASH multiprocessor," IEEE Computer 25:3 (March), 63–79.
 
-Li, K. [1988]. "IVY: A shared virtual memory system for parallel computing," Proc. Int'l. Conf. on Parallel Processing (ICCP), August, The Pennsylvania State University, University Park, Penn.
+Li, K. [1988]. "IVY: A shared virtual memory system for parallel computing," Proc. Int'l. Conf. on Parallel Processing (ICPP), August, The Pennsylvania State University, University Park, Penn.
 
 Lo, J., L. Barroso, S. Eggers, K. Gharachorloo, H. Levy, and S. Parekh [1998]. "An analysis of database workload performance on simultaneous multithreaded processors," Proc. 25th Annual Int'l. Symposium on Computer Architecture (ISCA), July 3–14, 1998, Barcelona, Spain, 39–50.
 
 Lo, J., S. Eggers, J. Emer, H. Levy, R. Stamm, and D. Tullsen [1997]. "Converting thread-level parallelism into instruction-level parallelism via simultaneous multithreading," ACM Trans. on Computer Systems 15:2 (August), 322–354.
 
-Lovett, T., and S. Thakkar [1988]. "The Symmetry multiprocessor system," Proc. Int'l. Conf. on Parallel Processing (ICCP), August, The Pennsylvania State University, University Park, Penn., 303–310.
+Lovett, T., and S. Thakkar [1988]. "The Symmetry multiprocessor system," Proc. Int'l. Conf. on Parallel Processing (ICPP), August, The Pennsylvania State University, University Park, Penn., 303–310.
 
 Mellor-Crummey, J. M., and M. L. Scott [1991]. "Algorithms for scalable synchronization on shared-memory multiprocessors," ACM Trans. on Computer Systems 9:1 (February), 21–65.
 
@@ -84,7 +84,7 @@ Partridge, C. [1994]. Gigabit Networking, Addison-Wesley, Reading, Mass.
 
 Pfister, G. F. [1998]. In Search of Clusters, 2nd ed., Prentice Hall, Upper Saddle River, N.J.
 
-Pfister, G. F., W. C. Brantley, D. A. George, S. L. Harvey, W. J. Kleinfekder, K. P. McAuliffe, E. A. Melton, V. A. Norton, and J. Weiss [1985]. "The IBM research parallel processor prototype (RP3): Introduction and architecture," Proc. 12th Annual Int'l. Symposium on Computer Architecture (ISCA), June 17–19, 1985, Boston, Mass., 764–771.
+Pfister, G. F., W. C. Brantley, D. A. George, S. L. Harvey, W. J. Kleinfelder, K. P. McAuliffe, E. A. Melton, V. A. Norton, and J. Weiss [1985]. "The IBM research parallel processor prototype (RP3): Introduction and architecture," Proc. 12th Annual Int'l. Symposium on Computer Architecture (ISCA), June 17–19, 1985, Boston, Mass., 764–771.
 
 Reinhardt, S. K., J. R. Larus, and D. A. Wood [1994]. "Tempest and Typhoon: User-level shared memory," Proc. 21st Annual Int'l. Symposium on Computer Architecture (ISCA), April 18–21, 1994, Chicago, 325–336.
 
@@ -116,7 +116,7 @@ Soundararajan, V., M. Heinrich, B. Verghese, K. Gharachorloo, A. Gupta, and J. L
 
 Spurgeon, C. [2001]. "Charles Spurgeon's Ethernet Web site," www.host.ots.utexas.edu/ethernet/ethernet-home.html.
 
-Stenström, P., T. Joe, and A. Gupta [1992]. "Comparative performance evaluation of cachecoherent NUMA and COMA architectures," Proc. 19th Annual Int'l. Symposium on Computer Architecture (ISCA), May 19–21, 1992, Gold Coast, Australia, 80–91.
+Stenström, P., T. Joe, and A. Gupta [1992]. "Comparative performance evaluation of cache-coherent NUMA and COMA architectures," Proc. 19th Annual Int'l. Symposium on Computer Architecture (ISCA), May 19–21, 1992, Gold Coast, Australia, 80–91.
 
 Sterling, T. [2001]. Beowulf PC Cluster Computing with Windows and Beowulf PC Cluster Computing with Linux, MIT Press, Cambridge, Mass.
 
@@ -164,7 +164,7 @@ Yamamoto, W., M. J. Serrano, A. R. Talcott, R. C. Wood, and M. Nemirosky [1994].
 
 集群大概是 20 世纪 60 年代由用户「发明」的。这些用户有的是一台计算机容纳不下全部工作，有的是需要一台备用机，以便主机出故障时接替工作［Pfister 1998］。1975 年，Tandem 推出了 16 个节点的集群；1984 年，Digital 随后推出了 VAX 集群。早期的集群由若干台独立的计算机组成，这些计算机共享 I/O 设备，需要由分布式操作系统来协调它们的活动。不久，计算机之间加上了通信链路，原因之一是这样可以把计算机分散到不同的地点，某一地点发生灾难时系统仍然可用。用户登录到集群上，并不知道自己的程序在哪一台机器上运行。到 1993 年，DEC（现为 HP）已经售出 25 000 多套集群。其他早期的集群厂商还有 Tandem（现为 HP）和 IBM（至今仍是 IBM）。今天，几乎每家公司都有集群产品。这些产品大多以可用性为目标，性能的可扩展性只是附带的好处。
 
-后来，在集群上做科学计算成了 MPP 的竞争对手。1993 年，Beowulf 项目启动，目标是满足 NASA 的需求：用不到 50 000 美元造出一台 1 GFLOPS 的计算机。1994 年，一台由现成的 80486 PC 组成的 16 节点集群达到了这一目标［Bell and Gray 2001］。由于重视这类应用，人们开发了多种软件接口，使大型程序或大量独立程序的提交、协调和调试更加方便。
+后来，在集群上做科学计算成了 MPP 的竞争对手。1993 年，Beowulf 项目启动，目标是满足 NASA 的需求：用不到 50 000 美元造出一台 1 GFLOPS 的计算机。1994 年，一台由现成的 80486 PC 组成的 16 节点集群达到了这一目标［Bell and Gray 2002］。由于重视这类应用，人们开发了多种软件接口，使大型程序或大量独立程序的提交、协调和调试更加方便。
 
 人们一方面设法降低集群中的通信延迟，另一方面设法提高带宽，有好几个研究项目专门研究这个问题。（低延迟研究的一项商业成果是 VI 接口标准，下文介绍的 Infiniband 采用了这一标准。）后来，低延迟在其他应用中也证明是有用的。例如，1997 年，加州大学伯克利分校用 100 台 UltraSPARC 台式计算机组成一个集群，计算机之间通过 Myrinet 交换机连接，每条链路 160 MB/s。这个集群创造了两项世界纪录：一是数据库排序，1 分钟内把原先存放在磁盘上的 8.6 GB 数据排好序；二是破解加密消息，只用 3.5 小时就破译了一个 40 位的 DES 密钥。
 
@@ -176,7 +176,7 @@ Yamamoto, W., M. J. Serrano, A. R. Talcott, R. C. Wood, and M. Nemirosky [1994].
 
 与此相关的一个话题是网格计算。发明网格计算，最初是为了让科学计算程序能够在地理上分散的多个计算设施上运行。当时就有人怀疑这个目标是否明智，更不用说实现它有多难了。网格计算往往要用非常大的系统运行非常大的程序，由多个数据中心共同完成任务。距离远，延迟就长，这是固有的，因此单个应用分散到不同地点运行，效果并不好。网格计算这第一步最终形成了一些数据访问方面的约定，但网格计算界没有开发出在高性能计算界之外也有用的 API，因此云计算与网格计算在代码和历史上几乎没有共同之处。
 
-Armbrust 等人［2009］认为，互联网服务公司解决了大规模运营中的问题以后，发现了显著的规模经济，成本因此降到小型数据中心之下。亚马逊意识到，如果这种成本优势确实存在，那么出售这种服务就应该能够盈利。2006 年，亚马逊发布了弹性云计算（Elastic Cloud Computing，EC2），价格为每个实例每小时 0.10 美元。EC2 随后大受欢迎，其他互联网公司也纷纷推出云计算服务，如 Google App Engine 和 Microsoft Azure，只是它们的抽象层次比 Amazon Web Services 的 x86 虚拟机更高。由此可见，按需付费计算如今流行起来，并不是因为最近有人想出了这个主意，而是因为技术和商业模式终于相互契合，公司提供一种很多人都想用的服务就能赚钱。将来是多种效用计算模式都能成功，还是整个行业统一到一个标准上，只有时间能给出答案。这一过程肯定很值得关注。
+Armbrust 等人［2009］认为，互联网服务公司解决了大规模运营中的问题以后，发现了显著的规模经济，成本因此降到小型数据中心之下。亚马逊意识到，如果这种成本优势确实存在，那么出售这种服务就应该能够盈利。2006 年，亚马逊发布了弹性计算云（Elastic Compute Cloud，EC2），价格为每个实例每小时 0.10 美元。EC2 随后大受欢迎，其他互联网公司也纷纷推出云计算服务，如 Google App Engine 和 Microsoft Azure，只是它们的抽象层次比 Amazon Web Services 的 x86 虚拟机更高。由此可见，按需付费计算如今流行起来，并不是因为最近有人想出了这个主意，而是因为技术和商业模式终于相互契合，公司提供一种很多人都想用的服务就能赚钱。将来是多种效用计算模式都能成功，还是整个行业统一到一个标准上，只有时间能给出答案。这一过程肯定很值得关注。
 
 ### 集装箱 {-}
 
@@ -204,7 +204,7 @@ Barroso, L.A., and U. Hölzle [2009]. "The datacenter as a computer: An introduc
 
 Barroso, L.A., Clidaras, J. and Hölzle, U., 2013. The datacenter as a computer: An introduction to the design of warehouse-scale machines. Synthesis lectures on computer architecture, 8(3), pp.1–154.
 
-Barroso, L.A., Marty, M., Patterson, D., and Ranganathan, P. 2017. Attack of the Killer Microseconds. Communications of the ACM, 56(2).
+Barroso, L.A., Marty, M., Patterson, D., and Ranganathan, P. 2017. Attack of the Killer Microseconds. Communications of the ACM, 60(4).
 
 Bell, C. G., and J. Gray [2002]. "What's next in high performance computing," Communications of the ACM 45:2 (February), 91–95.
 
@@ -224,7 +224,7 @@ Clidaras, J., C. Johnson, and B. Felderman [2010]. Private communication.
 
 Climate Savers Computing. [2007]. Efficiency specs, http://www.climatesaverscomputing.org/.
 
-Clos, C., 1953. A Study of Non-Blocking Switching Networks. Bell Labs Technical Journal, 32(2), pp.406-424.
+Clos, C., 1953. A Study of Non-Blocking Switching Networks. Bell System Technical Journal, 32(2), pp.406-424.
 
 Dean, J. [2009]. "Designs, lessons and advice from building large distributed systems [keynote address]," Proc. 3rd ACM SIGOPS International Workshop on Large Scale Distributed Systems and Middleware, Co-located with the 22nd ACM Symposium on Operating Systems Principles (SOSP 2009), October 10–11, 2009, Big Sky, Mont.
 

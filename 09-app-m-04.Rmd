@@ -146,7 +146,7 @@ Forgie, J. W. [1957]. "The Lincoln TX-2 input-output system," Proc. Western Join
 
 Foster, C. C., and E. M. Riseman [1972]. "Percolation of code to enhance parallel dispatching and execution," IEEE Trans. on Computers C-21:12 (December), 1411–1415.
 
-Gallagher, D. M., W. Y. Chen, S. A. Mahlke, J. C. Gyllenhaal, and W.W. Hwu [1994]. "Dynamic memory disambiguation using the memory conflict buffer," Proc. Sixth Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 4–7, Santa Jose, Calif., 183–193.
+Gallagher, D. M., W. Y. Chen, S. A. Mahlke, J. C. Gyllenhaal, and W.W. Hwu [1994]. "Dynamic memory disambiguation using the memory conflict buffer," Proc. Sixth Int'l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 4–7, San Jose, Calif., 183–193.
 
 González, J., and A. González [1998]. "Limits of instruction level parallelism with data speculation," Proc. Vector and Parallel Processing (VECPAR) Conf., June 21–23, 1998, Porto, Portugal, 585–598.
 

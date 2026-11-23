@@ -22,7 +22,7 @@ Baer 和 Wang［1988］的研究是最早考察多级包含性的工作之一。
 
 除了牺牲 Cache，Jouppi［1990］还研究了用流缓冲器预取。Farkas、Jouppi 和 Chow［1995］扩展了这项工作，让流缓冲器在顺序处理器上与非阻塞 load 和推测执行很好地配合。后来，Farkas 等［1997］指出，乱序处理器虽然能更好地容忍不可预测的延迟，但仍然能从流缓冲器中获益。他们还更细致地分析了流缓冲器对存储器带宽的需求。
 
-20 世纪 90 年代的 ASPLOS（Symposium on Architectural Support for Compilers and Operating Systems）和 ISCA（International Computer Architecture Symposium）会议论文集里满是关于 Cache 的论文。（事实上，有好事者说 ISCA 其实是 International Cache Architecture Symposium，即「国际 Cache 体系结构研讨会」的缩写。）
+20 世纪 90 年代的 ASPLOS（Symposium on Architectural Support for Programming Languages and Operating Systems）和 ISCA（International Symposium on Computer Architecture）会议论文集里满是关于 Cache 的论文。（事实上，有好事者说 ISCA 其实是 International Cache Architecture Symposium，即「国际 Cache 体系结构研讨会」的缩写。）
 
 第 2 章依据的是 Cantin 和 Hill［2001］收集的 SPEC2000 基准测试程序测量数据。第 2 章还用到了其他几篇论文的数据，相应的图注中都已注明出处：Agarwal and Pudar［1993］；Barroso, Gharachorloo, and Bugnion［1998］；Farkas and Jouppi［1994］；Jouppi［1990］；Lam, Rothberg, and Wolf［1991］；Lebeck and Wood［1994］；McCalpin［2005］；Mowry, Lam, and Gupta［1992］；Torrellas, Gupta, and Hennessy［1992］。
 

@@ -106,7 +106,7 @@ for (i=1;i < 64;i++) dot[0] = dot[0] + dot[i];
 
 ```c
 unsigned int tid = threadIdx.x;
-for(unsigned int s=1; s < blockDim.x; s * = 2) {
+for(unsigned int s=1; s < blockDim.x; s *= 2) {
   if ((tid % (2*s)) == 0) {
     sdata[tid] += sdata[tid + s];
   }

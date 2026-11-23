@@ -228,7 +228,7 @@ ret 会撤销所有这些操作，所以只需在过程末尾加上 ret。
 
 > 简化的能力，就是去掉不必要的东西，让必要的东西说话。
 >
-> ——Hans Hoffman，*Search for the Real*（1967）
+> ——Hans Hofmann，*Search for the Real*（1967）
 
 **谬误**　*可以设计出完美无缺的体系结构。*
 

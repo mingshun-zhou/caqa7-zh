@@ -88,7 +88,7 @@ SPEC CPU2017 针对的是处理器性能，但 SPEC 还提供许多其他基准�
 | | SPECjEnterprise 2018 Web Profile | Java EE Web Profile V7 或更高版本的应用服务器、数据库和支撑基础设施 |
 | | SPECJEnterprise 2010 | Java EE Web Profile V5 或更高版本的应用服务器、数据库和支撑基础设施 |
 | | SPECjvm 2008 | Java 运行时环境的真实应用和基准测试程序，侧重 Java 核心功能 |
-| 功耗 | SPECpower_ssj2008 | 运行 SPECjbb2015 的批量服务器级计算机的功耗。其他几个 SPEC 程序集也测量功耗：ACCEL、CPU 2017、OMP、2012 和 VIRT_SC 2013 |
+| 功耗 | SPECpower_ssj2008 | 运行 SPECjbb2015 的批量服务器级计算机的功耗。其他几个 SPEC 程序集也测量功耗：ACCEL、CPU 2017、OMP 2012 和 VIRT_SC 2013 |
 | 存储 | SPECstorage Solution 2020 | 文件服务器的吞吐率和响应时间 |
 | 虚拟化 | SPEC VIRT_SC 2013 | 用于虚拟化服务器整合的数据中心服务器 |
 | | SPECvirt Datacenter 2021 | 第三代基准测试程序，面向数据中心里多台主机上的虚拟化环境 |
@@ -124,7 +124,7 @@ $$
 
 [图 1.21　Sun UltraSPARC-IV+（SPEC CPU2017 的参考计算机）运行 SPEC CPU2017 Integer Speed 的执行时间（单位为秒），以及 AMD EPYC 7763 和 Intel Xeon Platinum 8380 的执行时间和 SPECRatio。最后两列是执行时间之比和 SPEC 比值之比。本图说明，计算相对性能时，参考计算机的选择无关紧要。执行时间之比与 SPEC 比值之比完全相同，几何平均值之比（11.69/11.99 = 0.98）也与各比值的几何平均值（0.98）完全相同。]{#fig-1-21 .caption}
 
-| 基准测试程序 | Sun UltraSPARC-IV+ 时间（秒） | AMD EPYC 7763 时间（秒） | SPEC CPU2017 比值 | Intel Xeon Platinum 8380 时间（秒） | SPEC CPU2017 比值 | AMD/Intel 时间之比（秒） | Intel/AMD SPEC 比值之比 |
+| 基准测试程序 | Sun UltraSPARC-IV+ 时间（秒） | AMD EPYC 7763 时间（秒） | SPEC CPU2017 比值 | Intel Xeon Platinum 8380 时间（秒） | SPEC CPU2017 比值 | AMD/Intel 时间之比 | Intel/AMD SPEC 比值之比 |
 |---|--:|--:|--:|--:|--:|--:|--:|
 | perlbench | 1,774 | 257 | 6.90 | 253 | 7.01 | 1.02 | 1.02 |
 | gcc | 3,976 | 310 | 12.83 | 371 | 10.72 | 0.84 | 0.84 |

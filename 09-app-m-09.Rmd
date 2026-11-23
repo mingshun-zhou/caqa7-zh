@@ -22,7 +22,7 @@ Schroeder, B., E. Pinheiro, and W.-D. Weber [2009]. "DRAM errors in the wild: A 
 
 Schurman, E. and J. Brutlag [2009]. "The User and Business Impact of Server Delays," Proc. Velocity: Web Performance and Operations Conf., June 22–24, 2009, San Jose, Calif.
 
-Tezzaron Semiconductor. [2004]. "Soft Errors in Electronic Memory—A White Paper, Tezzaron Semiconductor, Naperville, Ill. (http://www.tezzaron.com/about/papers/soft_errors_1_1_secure.pdf).
+Tezzaron Semiconductor. [2004]. "Soft Errors in Electronic Memory—A White Paper," Tezzaron Semiconductor, Naperville, Ill. (http://www.tezzaron.com/about/papers/soft_errors_1_1_secure.pdf).
 
 Vahdat, A., M. Al-Fares, N. Farrington, R. N. Mysore, G. Porter, and S. Radhakrishnan [2010]. "Scale-out networking in the data center," IEEE Micro July/August 2010.
 

@@ -4,7 +4,7 @@ Graphcore 智能处理单元（IPU，Intelligence Processing Unit）的主要特
 
 各个 tile 之间的通信由芯片中部的交换单元（Exchange Unit）负责。IPU 也和 TPU v4、A100 一样设有片上链路，可以把多块 IPU 芯片连成更大的系统。理论上最多可以连接 64,000 个 IPU，但提交 MLPerf 基准测试的最大系统只有 256 块芯片（见 [7.10 节](#sec-7-10)）。每块芯片上的交换单元与 IPU 链路配合工作，因此程序员可以无缝地向任意一块芯片上的任意一个 tile 发送消息。全互连（all-to-all）通信的实测结果表明，无论在芯片内部还是芯片之间，有效带宽都很高。
 
-![图 7.21　Graphcore IPU MK2 的晶片照片。该芯片采用 7 nm 工艺制造，晶片面积 832 mm^2^，有 1492 个 tile，每个 tile 包含一个 IPU 核和 624 KiB SRAM，每个晶片合计 897 MiB。tile 之间的通信全部由交换单元完成。每个晶片有 3 条 IPU 链路，用来构建大规模系统；目前做过基准测试的最大系统有 256 块芯片。tile 存储器约占晶片面积的一半，tile 逻辑约占四分之一，交换单元约占十分之一，其余是非核部分（uncore）。引自 Sparsity-Aware and Reconfigurable NPU。图中标注：Tile 为 tile，Exchange 为交换单元，Link 为链路。](images/ch07/fig-7-21.png){#fig-7-21 width=60%}
+![图 7.21　Graphcore IPU MK2 的晶片照片。该芯片采用 7 nm 工艺制造，晶片面积 832 mm^2^，有 1472 个 tile，每个 tile 包含一个 IPU 核和 624 KiB SRAM，每个晶片合计 897 MiB。tile 之间的通信全部由交换单元完成。每个晶片有 3 条 IPU 链路，用来构建大规模系统；目前做过基准测试的最大系统有 256 块芯片。tile 存储器约占晶片面积的一半，tile 逻辑约占四分之一，交换单元约占十分之一，其余是非核部分（uncore）。引自 Sparsity-Aware and Reconfigurable NPU。图中标注：Tile 为 tile，Exchange 为交换单元，Link 为链路。](images/ch07/fig-7-21.png){#fig-7-21 width=60%}
 
 为了简化设计和编程，IPU 采用整体同步并行（BSP，Bulk Synchronous Parallel）模型组织并行计算。BSP 把并行计算分解成一连串较大的步，从而降低了并行计算的难度。每一大步依次包括计算阶段、通信阶段和一次栅障同步，因此所有线程都完成同步之后，程序才能进入下一步。
 

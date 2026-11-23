@@ -1,0 +1,33 @@
+# 附录 L 勘误
+
+- L.4 节问答 1（答 1b）：原书作「1024 项」，应为「4096 项」（8 GB ÷ 2 MB）；已改。
+- L.4 节问答 4（答 4d）：原书作「CPU 1 and CPU 3」，应为「CPU 0 和 CPU 3」（执行 store 的是 CPU 1）；已改。
+- L.5 节页大小预测器：原书作「rs」，应为「rs1」（与图 L.5 一致）；已改。
+- L.6 节解答 6：原书作「system physical page (SPP)」（客户 CR3 内容），应为「客户物理页（GPP）」；已改。
+- L.6 节解答 6：原书作「L3 index bits」（查 gL4），应为「L4 索引位」；已改。
+- 图 L.12 图注：原书作「page walk cache」「split page walk caches」，应为「分页结构 Cache」「分离分页结构 Cache」；已改。
+- L.8 节正文和图 L.19 图注：原书作「327,680」，应为「32 768」（2 MB ÷ 64 B）；已改正文和图注，图内标注「$ Line 327679」未改。
+- 图 L.18 图注：原书作「L4-L3」，应为「L4～L2」（与正文和图中一致）；已改。
+- L.11 节完全子块化（两处）：原书作「Figure 30(c)」，应为「图 L.30(d)」（图中没有 (c)，所指为「(d) Sub-blocked TLB」）；已改。
+- L.11 节 MIX TLB 镜像数：原书作「(or N mirrors)」「M mirrors」，应为「M 个镜像」「N 个镜像」（镜像数为 min(N, M)）；已改。
+- 参考文献 [9]：原书作「Award」，应为「Awad」；已改。
+- 参考文献 [14]：原书作「Microarchitecure」，应为「Microarchitecture」；已改。
+- 参考文献 [42]：原书作「TLB-Refull」，应为「TLB-Refill」；已改。
+- 参考文献 [44]：原书作「Sofware-Managed」，应为「Software-Managed」；已改。
+- 参考文献 [46]、[63]、[75]：原书作者表中多出「, ,」，应为「,」；已改。
+- 参考文献 [57]：原书作「Sitararn」，应为「Sitaram」；已改。
+- 参考文献 [67]：原书作「Pistcataway」，应为「Piscataway」；已改。
+- 参考文献 [78]、[79]：同一篇 Seznec 论文重复列出；存疑，未改（删条目会打乱编号）。
+- 图 L.2：原书作「14 cycle access」，与 L.4 节「8-10 cycle」不一致，1 GB 页 L2 TLB 一栏疑为复制错误；存疑，未改（图片）。
+- 图 L.3：黑色位落在第 29 位，图注作「第 30 位」；存疑，未改（图片）。
+- L.5 节斜相联 TLB 例子：原书作「bits 23-21」，64 组需 6 位索引，正确位段无法确定；存疑，未改。
+- L.6 节开头：原书称 Alpha 用硬件遍历、SPARC 和 ARM 改为软件遍历，与通常认识相反；存疑，未改。
+- L.7 节「复杂度」：原书作「40 bits」，按图 L.14 公式页遍历 Cache 的 tag 应为 49 位，无法确定作者本意；存疑，未改。
+- 图 L.14：转换路径 Cache 的 tag 印作「(L-1, N) x N」，疑为 (L−1) × N；存疑，未改（图片）。
+- 图 L.18：图中两个「PTW generates PA for L2 lookup」方框，疑有一个重复；存疑，未改（图片）。
+- L.9 节超级页预取：原书作「L1 page table level … L3 page table levels」，按 x86-64 编号 2 MB 页表项在 L2 级，可能是作者编号习惯不同；存疑，未改。
+- 图 L.21 图注 / 图 L.26：原书作「Adaptive sequential prefetching」「Adaptive Stride」，与正文「Arbitrary stride prefetching」名称不一致，无法确定统一为哪个；存疑，未改。
+- 图 L.29：原书作「9 (10010)」，十进制与二进制不符，无法确定哪个对；存疑，未改（图片）。
+- L.11 节完全子块化：原书作「B aligned virtual pages」，与子块因子 N 符号不一致；存疑，未改。
+- L.11 节：原书作「V0-V1 … P1-P3」，页数对不上，正确值不确定；存疑，未改。
+- 图 L.33：位图「0b111」位数与 4 项不符；存疑，未改（图片）。
