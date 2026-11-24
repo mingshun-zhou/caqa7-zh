@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xml:lang="zh-CN">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>M.5 流水线与指令级并行的发展（第 3 章和附录 C、H） | 计算机体系结构：量化研究方法</title>
+  <meta name="description" content="Computer Architecture: A Quantitative Approach, 7th Edition 中文重译稿" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="M.5 流水线与指令级并行的发展（第 3 章和附录 C、H） | 计算机体系结构：量化研究方法" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Computer Architecture: A Quantitative Approach, 7th Edition 中文重译稿" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="M.5 流水线与指令级并行的发展（第 3 章和附录 C、H） | 计算机体系结构：量化研究方法" />
+  
+  <meta name="twitter:description" content="Computer Architecture: A Quantitative Approach, 7th Edition 中文重译稿" />
+  
+
+<meta name="author" content="John L. Hennessy David A. Patterson Christos Kozyrakis" />
+
+
+<meta name="date" content="2026-11-24" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="sec-m-4.html"/>
+<link rel="next" href="sec-m-6.html"/>
+<script src="libs/jquery-3.6.1/jquery-3.6.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">计算机体系结构：量化研究方法（第 7 版）</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>说明</a></li>
+<li class="chapter" data-level="1" data-path="ch-fundamentals.html"><a href="ch-fundamentals.html"><i class="fa fa-check"></i><b>1</b> 定量设计与分析基础</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="sec-1-1.html"><a href="sec-1-1.html"><i class="fa fa-check"></i><b>1.1</b> 引言</a></li>
+<li class="chapter" data-level="1.2" data-path="sec-1-2.html"><a href="sec-1-2.html"><i class="fa fa-check"></i><b>1.2</b> 计算机的分类</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-1-2.html"><a href="sec-1-2.html#物联网嵌入式计算机"><i class="fa fa-check"></i>物联网/嵌入式计算机</a></li>
+<li class="chapter" data-level="" data-path="sec-1-2.html"><a href="sec-1-2.html#个人移动设备"><i class="fa fa-check"></i>个人移动设备</a></li>
+<li class="chapter" data-level="" data-path="sec-1-2.html"><a href="sec-1-2.html#桌面计算"><i class="fa fa-check"></i>桌面计算</a></li>
+<li class="chapter" data-level="" data-path="sec-1-2.html"><a href="sec-1-2.html#服务器"><i class="fa fa-check"></i>服务器</a></li>
+<li class="chapter" data-level="" data-path="sec-1-2.html"><a href="sec-1-2.html#集群仓库级计算机"><i class="fa fa-check"></i>集群/仓库级计算机</a></li>
+<li class="chapter" data-level="" data-path="sec-1-2.html"><a href="sec-1-2.html#并行的类型与并行体系结构"><i class="fa fa-check"></i>并行的类型与并行体系结构</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="sec-1-3.html"><a href="sec-1-3.html"><i class="fa fa-check"></i><b>1.3</b> 计算机体系结构的定义</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-1-3.html"><a href="sec-1-3.html#指令系统结构短视的计算机体系结构观"><i class="fa fa-check"></i>指令系统结构：短视的计算机体系结构观</a></li>
+<li class="chapter" data-level="" data-path="sec-1-3.html"><a href="sec-1-3.html#真正的计算机体系结构设计组成和硬件以满足目标和功能需求"><i class="fa fa-check"></i>真正的计算机体系结构：设计组成和硬件以满足目标和功能需求</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="sec-1-4.html"><a href="sec-1-4.html"><i class="fa fa-check"></i><b>1.4</b> 工艺的发展趋势</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-1-4.html"><a href="sec-1-4.html#性能趋势带宽胜过延迟"><i class="fa fa-check"></i>性能趋势：带宽胜过延迟</a></li>
+<li class="chapter" data-level="" data-path="sec-1-4.html"><a href="sec-1-4.html#晶体管性能和连线的缩放"><i class="fa fa-check"></i>晶体管性能和连线的缩放</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="sec-1-5.html"><a href="sec-1-5.html"><i class="fa fa-check"></i><b>1.5</b> 集成电路功耗和能耗的发展趋势</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-1-5.html"><a href="sec-1-5.html#功耗和能耗系统的视角"><i class="fa fa-check"></i>功耗和能耗：系统的视角</a></li>
+<li class="chapter" data-level="" data-path="sec-1-5.html"><a href="sec-1-5.html#微处理器内部的能耗和功耗"><i class="fa fa-check"></i>微处理器内部的能耗和功耗</a></li>
+<li class="chapter" data-level="" data-path="sec-1-5.html"><a href="sec-1-5.html#能耗限制带来的计算机体系结构转变"><i class="fa fa-check"></i>能耗限制带来的计算机体系结构转变</a></li>
+<li class="chapter" data-level="" data-path="sec-1-5.html"><a href="sec-1-5.html#计算机能耗对全球气候变化的影响"><i class="fa fa-check"></i>计算机能耗对全球气候变化的影响</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="sec-1-6.html"><a href="sec-1-6.html"><i class="fa fa-check"></i><b>1.6</b> 成本的变化趋势</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-1-6.html"><a href="sec-1-6.html#时间产量和商品化的影响"><i class="fa fa-check"></i>时间、产量和商品化的影响</a></li>
+<li class="chapter" data-level="" data-path="sec-1-6.html"><a href="sec-1-6.html#集成电路的成本"><i class="fa fa-check"></i>集成电路的成本</a></li>
+<li class="chapter" data-level="" data-path="sec-1-6.html"><a href="sec-1-6.html#芯粒"><i class="fa fa-check"></i>芯粒</a></li>
+<li class="chapter" data-level="" data-path="sec-1-6.html"><a href="sec-1-6.html#成本与价格"><i class="fa fa-check"></i>成本与价格</a></li>
+<li class="chapter" data-level="" data-path="sec-1-6.html"><a href="sec-1-6.html#制造成本与运营成本"><i class="fa fa-check"></i>制造成本与运营成本</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="sec-1-7.html"><a href="sec-1-7.html"><i class="fa fa-check"></i><b>1.7</b> 可信性</a></li>
+<li class="chapter" data-level="1.8" data-path="sec-1-8.html"><a href="sec-1-8.html"><i class="fa fa-check"></i><b>1.8</b> 安全</a></li>
+<li class="chapter" data-level="1.9" data-path="sec-1-9.html"><a href="sec-1-9.html"><i class="fa fa-check"></i><b>1.9</b> 性能的测量、报告和汇总</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-1-9.html"><a href="sec-1-9.html#基准测试程序"><i class="fa fa-check"></i>基准测试程序</a></li>
+<li class="chapter" data-level="" data-path="sec-1-9.html"><a href="sec-1-9.html#报告性能结果"><i class="fa fa-check"></i>报告性能结果</a></li>
+<li class="chapter" data-level="" data-path="sec-1-9.html"><a href="sec-1-9.html#汇总性能结果"><i class="fa fa-check"></i>汇总性能结果</a></li>
+</ul></li>
+<li class="chapter" data-level="1.10" data-path="sec-1-10.html"><a href="sec-1-10.html"><i class="fa fa-check"></i><b>1.10</b> 计算机设计的量化原则</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-1-10.html"><a href="sec-1-10.html#利用并行性"><i class="fa fa-check"></i>利用并行性</a></li>
+<li class="chapter" data-level="" data-path="sec-1-10.html"><a href="sec-1-10.html#利用流水线"><i class="fa fa-check"></i>利用流水线</a></li>
+<li class="chapter" data-level="" data-path="sec-1-10.html"><a href="sec-1-10.html#利用预测"><i class="fa fa-check"></i>利用预测</a></li>
+<li class="chapter" data-level="" data-path="sec-1-10.html"><a href="sec-1-10.html#利用局部性原理"><i class="fa fa-check"></i>利用局部性原理</a></li>
+<li class="chapter" data-level="" data-path="sec-1-10.html"><a href="sec-1-10.html#通过冗余实现可信性"><i class="fa fa-check"></i>通过冗余实现可信性</a></li>
+<li class="chapter" data-level="" data-path="sec-1-10.html"><a href="sec-1-10.html#关注常见情况"><i class="fa fa-check"></i>关注常见情况</a></li>
+<li class="chapter" data-level="" data-path="sec-1-10.html"><a href="sec-1-10.html#amdahl-定律"><i class="fa fa-check"></i>Amdahl 定律</a></li>
+<li class="chapter" data-level="" data-path="sec-1-10.html"><a href="sec-1-10.html#处理器性能公式"><i class="fa fa-check"></i>处理器性能公式</a></li>
+</ul></li>
+<li class="chapter" data-level="1.11" data-path="sec-1-11.html"><a href="sec-1-11.html"><i class="fa fa-check"></i><b>1.11</b> 融会贯通：性能、价格和功耗</a></li>
+<li class="chapter" data-level="1.12" data-path="sec-1-12.html"><a href="sec-1-12.html"><i class="fa fa-check"></i><b>1.12</b> 谬误与陷阱</a></li>
+<li class="chapter" data-level="1.13" data-path="sec-1-13.html"><a href="sec-1-13.html"><i class="fa fa-check"></i><b>1.13</b> 结束语</a></li>
+<li class="chapter" data-level="1.14" data-path="sec-1-14.html"><a href="sec-1-14.html"><i class="fa fa-check"></i><b>1.14</b> 历史回顾与参考文献</a></li>
+<li class="chapter" data-level="" data-path="sec-1-exercises.html"><a href="sec-1-exercises.html"><i class="fa fa-check"></i>案例研究与习题（Gregory D. Peterson）</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-1-exercises.html"><a href="sec-1-exercises.html#案例研究-1芯片制造的趋势"><i class="fa fa-check"></i>案例研究 1：芯片制造的趋势</a></li>
+<li class="chapter" data-level="" data-path="sec-1-exercises.html"><a href="sec-1-exercises.html#案例研究-2可扩展的计算机系统"><i class="fa fa-check"></i>案例研究 2：可扩展的计算机系统</a></li>
+<li class="chapter" data-level="" data-path="sec-1-exercises.html"><a href="sec-1-exercises.html#案例研究-3计算机系统中的能耗和功耗问题"><i class="fa fa-check"></i>案例研究 3：计算机系统中的能耗和功耗问题</a></li>
+<li class="chapter" data-level="" data-path="sec-1-exercises.html"><a href="sec-1-exercises.html#习题"><i class="fa fa-check"></i>习题</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="sec-1-references.html"><a href="sec-1-references.html"><i class="fa fa-check"></i>参考文献</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ch-memory.html"><a href="ch-memory.html"><i class="fa fa-check"></i><b>2</b> 存储层次设计</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="sec-2-1.html"><a href="sec-2-1.html"><i class="fa fa-check"></i><b>2.1</b> 引言</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-2-1.html"><a href="sec-2-1.html#存储层次基础快速回顾"><i class="fa fa-check"></i>存储层次基础：快速回顾</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="sec-2-2.html"><a href="sec-2-2.html"><i class="fa fa-check"></i><b>2.2</b> 存储技术及其优化</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-2-2.html"><a href="sec-2-2.html#sram-技术"><i class="fa fa-check"></i>SRAM 技术</a></li>
+<li class="chapter" data-level="" data-path="sec-2-2.html"><a href="sec-2-2.html#dram-技术"><i class="fa fa-check"></i>DRAM 技术</a></li>
+<li class="chapter" data-level="" data-path="sec-2-2.html"><a href="sec-2-2.html#在-dram-芯片内部提高存储性能sdram"><i class="fa fa-check"></i>在 DRAM 芯片内部提高存储性能：SDRAM</a></li>
+<li class="chapter" data-level="" data-path="sec-2-2.html"><a href="sec-2-2.html#封装创新堆叠或嵌入式-dram-或-sram"><i class="fa fa-check"></i>封装创新：堆叠或嵌入式 DRAM 或 SRAM</a></li>
+<li class="chapter" data-level="" data-path="sec-2-2.html"><a href="sec-2-2.html#flash-存储器"><i class="fa fa-check"></i>Flash 存储器</a></li>
+<li class="chapter" data-level="" data-path="sec-2-2.html"><a href="sec-2-2.html#相变存储器技术"><i class="fa fa-check"></i>相变存储器技术</a></li>
+<li class="chapter" data-level="" data-path="sec-2-2.html"><a href="sec-2-2.html#提高存储系统的可信性"><i class="fa fa-check"></i>提高存储系统的可信性</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="sec-2-3.html"><a href="sec-2-3.html"><i class="fa fa-check"></i><b>2.3</b> 存储层次的十种高级性能优化</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-2-3.html"><a href="sec-2-3.html#第一种优化采用虚拟索引和组相联的流水化-l1-cache"><i class="fa fa-check"></i>第一种优化：采用虚拟索引和组相联的流水化 L1 Cache</a></li>
+<li class="chapter" data-level="" data-path="sec-2-3.html"><a href="sec-2-3.html#第二种优化用多存储体和多端口提高-l1-数据-cache-的带宽"><i class="fa fa-check"></i>第二种优化：用多存储体和多端口提高 L1 数据 Cache 的带宽</a></li>
+<li class="chapter" data-level="" data-path="sec-2-3.html"><a href="sec-2-3.html#第三种优化用更好的替换策略降低失效率"><i class="fa fa-check"></i>第三种优化：用更好的替换策略降低失效率</a></li>
+<li class="chapter" data-level="" data-path="sec-2-3.html"><a href="sec-2-3.html#第四种优化用多体-l2-和-l3-cache-降低功耗和延迟提高带宽"><i class="fa fa-check"></i>第四种优化：用多体 L2 和 L3 Cache 降低功耗和延迟、提高带宽</a></li>
+<li class="chapter" data-level="" data-path="sec-2-3.html"><a href="sec-2-3.html#第五种优化用非阻塞-cache-提高-cache-带宽"><i class="fa fa-check"></i>第五种优化：用非阻塞 Cache 提高 Cache 带宽</a></li>
+<li class="chapter" data-level="" data-path="sec-2-3.html"><a href="sec-2-3.html#第六种优化关键字优先和提前重启降低失效开销"><i class="fa fa-check"></i>第六种优化：关键字优先和提前重启，降低失效开销</a></li>
+<li class="chapter" data-level="" data-path="sec-2-3.html"><a href="sec-2-3.html#第七种优化通过编译器优化降低失效率"><i class="fa fa-check"></i>第七种优化：通过编译器优化降低失效率</a></li>
+<li class="chapter" data-level="" data-path="sec-2-3.html"><a href="sec-2-3.html#第八种优化指令和数据的硬件预取降低失效开销或失效率"><i class="fa fa-check"></i>第八种优化：指令和数据的硬件预取，降低失效开销或失效率</a></li>
+<li class="chapter" data-level="" data-path="sec-2-3.html"><a href="sec-2-3.html#第九种优化编译器控制的预取降低失效开销或失效率"><i class="fa fa-check"></i>第九种优化：编译器控制的预取，降低失效开销或失效率</a></li>
+<li class="chapter" data-level="" data-path="sec-2-3.html"><a href="sec-2-3.html#第十种优化多条存储总线和多个存储模块提高带宽"><i class="fa fa-check"></i>第十种优化：多条存储总线和多个存储模块，提高带宽</a></li>
+<li class="chapter" data-level="" data-path="sec-2-3.html"><a href="sec-2-3.html#存储层次优化小结"><i class="fa fa-check"></i>存储层次优化小结</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="sec-2-4.html"><a href="sec-2-4.html"><i class="fa fa-check"></i><b>2.4</b> 虚拟存储与保护</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-2-4.html"><a href="sec-2-4.html#利用虚拟存储实现保护"><i class="fa fa-check"></i>利用虚拟存储实现保护</a></li>
+<li class="chapter" data-level="" data-path="sec-2-4.html"><a href="sec-2-4.html#针对存储系统的旁路攻击"><i class="fa fa-check"></i>针对存储系统的旁路攻击</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="sec-2-5.html"><a href="sec-2-5.html"><i class="fa fa-check"></i><b>2.5</b> 交叉问题：存储层次的设计</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-2-5.html"><a href="sec-2-5.html#自主取指部件"><i class="fa fa-check"></i>自主取指部件</a></li>
+<li class="chapter" data-level="" data-path="sec-2-5.html"><a href="sec-2-5.html#专用指令-cache"><i class="fa fa-check"></i>专用指令 Cache</a></li>
+<li class="chapter" data-level="" data-path="sec-2-5.html"><a href="sec-2-5.html#推测执行与访存"><i class="fa fa-check"></i>推测执行与访存</a></li>
+<li class="chapter" data-level="" data-path="sec-2-5.html"><a href="sec-2-5.html#缓存数据的一致性"><i class="fa fa-check"></i>缓存数据的一致性</a></li>
+<li class="chapter" data-level="" data-path="sec-2-5.html"><a href="sec-2-5.html#利用虚拟机实现保护"><i class="fa fa-check"></i>利用虚拟机实现保护</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="sec-2-6.html"><a href="sec-2-6.html"><i class="fa fa-check"></i><b>2.6</b> 融会贯通：ARM Cortex-A53 和 Intel Core i9 12900 的存储层次</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-2-6.html"><a href="sec-2-6.html#arm-cortex-a53"><i class="fa fa-check"></i>ARM Cortex-A53</a></li>
+<li class="chapter" data-level="" data-path="sec-2-6.html"><a href="sec-2-6.html#cortex-a53-存储层次的性能"><i class="fa fa-check"></i>Cortex-A53 存储层次的性能</a></li>
+<li class="chapter" data-level="" data-path="sec-2-6.html"><a href="sec-2-6.html#用这些失效开销计算"><i class="fa fa-check"></i>用这些失效开销计算</a></li>
+<li class="chapter" data-level="" data-path="sec-2-6.html"><a href="sec-2-6.html#intel-core-i9"><i class="fa fa-check"></i>Intel Core i9</a></li>
+<li class="chapter" data-level="" data-path="sec-2-6.html"><a href="sec-2-6.html#i9-存储系统的性能"><i class="fa fa-check"></i>i9 存储系统的性能</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="sec-2-7.html"><a href="sec-2-7.html"><i class="fa fa-check"></i><b>2.7</b> 谬误与陷阱</a></li>
+<li class="chapter" data-level="2.8" data-path="sec-2-8.html"><a href="sec-2-8.html"><i class="fa fa-check"></i><b>2.8</b> 结束语：展望未来</a></li>
+<li class="chapter" data-level="2.9" data-path="sec-2-9.html"><a href="sec-2-9.html"><i class="fa fa-check"></i><b>2.9</b> 历史回顾与参考文献</a></li>
+<li class="chapter" data-level="" data-path="sec-2-exercises.html"><a href="sec-2-exercises.html"><i class="fa fa-check"></i>案例研究与习题（Rajeev Balasubramonian、Norman P. Jouppi、Naveen Muralimanohar、Sheng Li）</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-2-exercises.html"><a href="sec-2-exercises.html#案例研究-1用高级技术优化-cache-性能"><i class="fa fa-check"></i>案例研究 1：用高级技术优化 Cache 性能</a></li>
+<li class="chapter" data-level="" data-path="sec-2-exercises.html"><a href="sec-2-exercises.html#案例研究-2融会贯通高度并行的存储系统"><i class="fa fa-check"></i>案例研究 2：融会贯通：高度并行的存储系统</a></li>
+<li class="chapter" data-level="" data-path="sec-2-exercises.html"><a href="sec-2-exercises.html#案例研究-3研究各种存储系统组织方式的影响"><i class="fa fa-check"></i>案例研究 3：研究各种存储系统组织方式的影响</a></li>
+<li class="chapter" data-level="" data-path="sec-2-exercises.html"><a href="sec-2-exercises.html#习题-1"><i class="fa fa-check"></i>习题</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ch-ilp.html"><a href="ch-ilp.html"><i class="fa fa-check"></i><b>3</b> 指令级并行及其利用</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="sec-3-1.html"><a href="sec-3-1.html"><i class="fa fa-check"></i><b>3.1</b> 引言</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-3-1.html"><a href="sec-3-1.html#什么是指令级并行"><i class="fa fa-check"></i>什么是指令级并行</a></li>
+<li class="chapter" data-level="" data-path="sec-3-1.html"><a href="sec-3-1.html#数据相关与冒险"><i class="fa fa-check"></i>数据相关与冒险</a></li>
+<li class="chapter" data-level="" data-path="sec-3-1.html"><a href="sec-3-1.html#控制相关"><i class="fa fa-check"></i>控制相关</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="sec-3-2.html"><a href="sec-3-2.html"><i class="fa fa-check"></i><b>3.2</b> 揭示 ILP 的基本编译技术</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-3-2.html"><a href="sec-3-2.html#基本流水线调度和循环展开"><i class="fa fa-check"></i>基本流水线调度和循环展开</a></li>
+<li class="chapter" data-level="" data-path="sec-3-2.html"><a href="sec-3-2.html#循环展开和调度小结"><i class="fa fa-check"></i>循环展开和调度小结</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="sec-3-3.html"><a href="sec-3-3.html"><i class="fa fa-check"></i><b>3.3</b> 现代超标量处理器中的 ILP 关键概念</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-3-3.html"><a href="sec-3-3.html#更深的流水线和多发射"><i class="fa fa-check"></i>更深的流水线和多发射</a></li>
+<li class="chapter" data-level="" data-path="sec-3-3.html"><a href="sec-3-3.html#控制相关-转移预测和推测执行"><i class="fa fa-check"></i>控制相关 → 转移预测和推测执行</a></li>
+<li class="chapter" data-level="" data-path="sec-3-3.html"><a href="sec-3-3.html#名相关-寄存器重命名"><i class="fa fa-check"></i>名相关 → 寄存器重命名</a></li>
+<li class="chapter" data-level="" data-path="sec-3-3.html"><a href="sec-3-3.html#数据相关-采用动态调度的-ooo-执行"><i class="fa fa-check"></i>数据相关 → 采用动态调度的 OOO 执行</a></li>
+<li class="chapter" data-level="" data-path="sec-3-3.html"><a href="sec-3-3.html#存储相关-推测式存储器消歧"><i class="fa fa-check"></i>存储相关 → 推测式存储器消歧</a></li>
+<li class="chapter" data-level="" data-path="sec-3-3.html"><a href="sec-3-3.html#推测恢复和精确异常-重排序缓冲"><i class="fa fa-check"></i>推测恢复和精确异常 → 重排序缓冲</a></li>
+<li class="chapter" data-level="" data-path="sec-3-3.html"><a href="sec-3-3.html#超标量处理器概览"><i class="fa fa-check"></i>超标量处理器概览</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="sec-3-4.html"><a href="sec-3-4.html"><i class="fa fa-check"></i><b>3.4</b> 用高级转移预测降低转移开销</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-3-4.html"><a href="sec-3-4.html#相关转移预测器"><i class="fa fa-check"></i>相关转移预测器</a></li>
+<li class="chapter" data-level="" data-path="sec-3-4.html"><a href="sec-3-4.html#竞争预测器自适应地组合局部预测器和全局预测器"><i class="fa fa-check"></i>竞争预测器：自适应地组合局部预测器和全局预测器</a></li>
+<li class="chapter" data-level="" data-path="sec-3-4.html"><a href="sec-3-4.html#带-tag-的混合预测器"><i class="fa fa-check"></i>带 tag 的混合预测器</a></li>
+<li class="chapter" data-level="" data-path="sec-3-4.html"><a href="sec-3-4.html#intel-处理器中转移预测器的演变"><i class="fa fa-check"></i>Intel 处理器中转移预测器的演变</a></li>
+<li class="chapter" data-level="" data-path="sec-3-4.html"><a href="sec-3-4.html#专用转移预测器预测过程返回间接跳转和循环转移"><i class="fa fa-check"></i>专用转移预测器：预测过程返回、间接跳转和循环转移</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="sec-3-5.html"><a href="sec-3-5.html"><i class="fa fa-check"></i><b>3.5</b> 用寄存器重命名克服名相关</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-3-5.html"><a href="sec-3-5.html#寄存器重命名的其他实现方式"><i class="fa fa-check"></i>寄存器重命名的其他实现方式</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="sec-3-6.html"><a href="sec-3-6.html"><i class="fa fa-check"></i><b>3.6</b> 用动态调度克服数据冒险</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-3-6.html"><a href="sec-3-6.html#动态调度的基本思想"><i class="fa fa-check"></i>动态调度的基本思想</a></li>
+<li class="chapter" data-level="" data-path="sec-3-6.html"><a href="sec-3-6.html#动态调度的例子"><i class="fa fa-check"></i>动态调度的例子</a></li>
+<li class="chapter" data-level="" data-path="sec-3-6.html"><a href="sec-3-6.html#动态调度的细节"><i class="fa fa-check"></i>动态调度的细节</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="sec-3-7.html"><a href="sec-3-7.html"><i class="fa fa-check"></i><b>3.7</b> 用动态消歧克服存储相关</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-3-7.html"><a href="sec-3-7.html#推测式存储消歧"><i class="fa fa-check"></i>推测式存储消歧</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="sec-3-8.html"><a href="sec-3-8.html"><i class="fa fa-check"></i><b>3.8</b> 现代超标量处理器的高级问题</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-3-8.html"><a href="sec-3-8.html#每周期多发射的挑战"><i class="fa fa-check"></i>每周期多发射的挑战</a></li>
+<li class="chapter" data-level="" data-path="sec-3-8.html"><a href="sec-3-8.html#推测执行到什么程度"><i class="fa fa-check"></i>推测执行到什么程度</a></li>
+<li class="chapter" data-level="" data-path="sec-3-8.html"><a href="sec-3-8.html#跨多个转移的推测执行"><i class="fa fa-check"></i>跨多个转移的推测执行</a></li>
+<li class="chapter" data-level="" data-path="sec-3-8.html"><a href="sec-3-8.html#推测执行与能效的挑战"><i class="fa fa-check"></i>推测执行与能效的挑战</a></li>
+<li class="chapter" data-level="" data-path="sec-3-8.html"><a href="sec-3-8.html#超标量处理器受什么限制"><i class="fa fa-check"></i>超标量处理器受什么限制</a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="sec-3-9.html"><a href="sec-3-9.html"><i class="fa fa-check"></i><b>3.9</b> 利用多发射和静态调度开发 ILP</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-3-9.html"><a href="sec-3-9.html#基本的-vliw-方法"><i class="fa fa-check"></i>基本的 VLIW 方法</a></li>
+<li class="chapter" data-level="" data-path="sec-3-9.html"><a href="sec-3-9.html#多发射方法综观"><i class="fa fa-check"></i>多发射方法综观</a></li>
+</ul></li>
+<li class="chapter" data-level="3.10" data-path="sec-3-10.html"><a href="sec-3-10.html"><i class="fa fa-check"></i><b>3.10</b> 交叉问题</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-3-10.html"><a href="sec-3-10.html#硬件推测执行与软件推测执行"><i class="fa fa-check"></i>硬件推测执行与软件推测执行</a></li>
+<li class="chapter" data-level="" data-path="sec-3-10.html"><a href="sec-3-10.html#推测执行与存储系统"><i class="fa fa-check"></i>推测执行与存储系统</a></li>
+</ul></li>
+<li class="chapter" data-level="3.11" data-path="sec-3-11.html"><a href="sec-3-11.html"><i class="fa fa-check"></i><b>3.11</b> 多线程：利用线程级并行提高单核吞吐率</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-3-11.html"><a href="sec-3-11.html#同时多线程在超标量处理器上的效果"><i class="fa fa-check"></i>同时多线程在超标量处理器上的效果</a></li>
+</ul></li>
+<li class="chapter" data-level="3.12" data-path="sec-3-12.html"><a href="sec-3-12.html"><i class="fa fa-check"></i><b>3.12</b> 微结构旁路攻击</a></li>
+<li class="chapter" data-level="3.13" data-path="sec-3-13.html"><a href="sec-3-13.html"><i class="fa fa-check"></i><b>3.13</b> 融会贯通：Arm Cortex-A53 和 Intel Golden Cove 处理器</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-3-13.html"><a href="sec-3-13.html#arm-cortex-a53-1"><i class="fa fa-check"></i>Arm Cortex-A53</a></li>
+<li class="chapter" data-level="" data-path="sec-3-13.html"><a href="sec-3-13.html#intel-golden-cove"><i class="fa fa-check"></i>Intel Golden Cove</a></li>
+</ul></li>
+<li class="chapter" data-level="3.14" data-path="sec-3-14.html"><a href="sec-3-14.html"><i class="fa fa-check"></i><b>3.14</b> 谬误与陷阱</a></li>
+<li class="chapter" data-level="3.15" data-path="sec-3-15.html"><a href="sec-3-15.html"><i class="fa fa-check"></i><b>3.15</b> 结束语</a></li>
+<li class="chapter" data-level="3.16" data-path="sec-3-16.html"><a href="sec-3-16.html"><i class="fa fa-check"></i><b>3.16</b> 历史回顾与参考文献</a></li>
+<li class="chapter" data-level="" data-path="sec-3-exercises.html"><a href="sec-3-exercises.html"><i class="fa fa-check"></i>案例研究与习题（Jason D. Bakos）</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-3-exercises.html"><a href="sec-3-exercises.html#案例研究动态调度"><i class="fa fa-check"></i>案例研究：动态调度</a></li>
+<li class="chapter" data-level="" data-path="sec-3-exercises.html"><a href="sec-3-exercises.html#习题-2"><i class="fa fa-check"></i>习题</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="sec-3-additional-references.html"><a href="sec-3-additional-references.html"><i class="fa fa-check"></i>补充参考文献</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ch-dlp.html"><a href="ch-dlp.html"><i class="fa fa-check"></i><b>4</b> 向量、SIMD 和 GPU 体系结构中的数据级并行</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="sec-4-1.html"><a href="sec-4-1.html"><i class="fa fa-check"></i><b>4.1</b> 引言</a></li>
+<li class="chapter" data-level="4.2" data-path="sec-4-2.html"><a href="sec-4-2.html"><i class="fa fa-check"></i><b>4.2</b> 向量体系结构</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-4-2.html"><a href="sec-4-2.html#rv64v-扩展"><i class="fa fa-check"></i>RV64V 扩展</a></li>
+<li class="chapter" data-level="" data-path="sec-4-2.html"><a href="sec-4-2.html#向量处理器的工作原理一个例子"><i class="fa fa-check"></i>向量处理器的工作原理：一个例子</a></li>
+<li class="chapter" data-level="" data-path="sec-4-2.html"><a href="sec-4-2.html#向量执行时间"><i class="fa fa-check"></i>向量执行时间</a></li>
+<li class="chapter" data-level="" data-path="sec-4-2.html"><a href="sec-4-2.html#多车道每个时钟周期处理多个元素"><i class="fa fa-check"></i>多车道：每个时钟周期处理多个元素</a></li>
+<li class="chapter" data-level="" data-path="sec-4-2.html"><a href="sec-4-2.html#向量长度寄存器处理长度不等于-32-的循环"><i class="fa fa-check"></i>向量长度寄存器：处理长度不等于 32 的循环</a></li>
+<li class="chapter" data-level="" data-path="sec-4-2.html"><a href="sec-4-2.html#掩码寄存器处理向量循环中的-if-语句"><i class="fa fa-check"></i>掩码寄存器：处理向量循环中的 IF 语句</a></li>
+<li class="chapter" data-level="" data-path="sec-4-2.html"><a href="sec-4-2.html#存储体为向量-loadstore-部件提供带宽"><i class="fa fa-check"></i>存储体：为向量 load/store 部件提供带宽</a></li>
+<li class="chapter" data-level="" data-path="sec-4-2.html"><a href="sec-4-2.html#步长在向量体系结构中处理多维数组"><i class="fa fa-check"></i>步长：在向量体系结构中处理多维数组</a></li>
+<li class="chapter" data-level="" data-path="sec-4-2.html"><a href="sec-4-2.html#集中分散在向量体系结构中处理稀疏矩阵"><i class="fa fa-check"></i>集中—分散：在向量体系结构中处理稀疏矩阵</a></li>
+<li class="chapter" data-level="" data-path="sec-4-2.html"><a href="sec-4-2.html#向量体系结构的编程"><i class="fa fa-check"></i>向量体系结构的编程</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="sec-4-3.html"><a href="sec-4-3.html"><i class="fa fa-check"></i><b>4.3</b> 面向多媒体的 SIMD 指令系统扩展</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-4-3.html"><a href="sec-4-3.html#多媒体-simd-体系结构的编程"><i class="fa fa-check"></i>多媒体 SIMD 体系结构的编程</a></li>
+<li class="chapter" data-level="" data-path="sec-4-3.html"><a href="sec-4-3.html#roofline-可视化性能模型"><i class="fa fa-check"></i>Roofline 可视化性能模型</a></li>
+<li class="chapter" data-level="" data-path="sec-4-3.html"><a href="sec-4-3.html#向量体系结构与多媒体-simd-计算机的异同"><i class="fa fa-check"></i>向量体系结构与多媒体 SIMD 计算机的异同</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="sec-4-4.html"><a href="sec-4-4.html"><i class="fa fa-check"></i><b>4.4</b> 图形处理器</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-4-4.html"><a href="sec-4-4.html#gpu-编程"><i class="fa fa-check"></i>GPU 编程</a></li>
+<li class="chapter" data-level="" data-path="sec-4-4.html"><a href="sec-4-4.html#nvidia-gpu-的计算结构"><i class="fa fa-check"></i>NVIDIA GPU 的计算结构</a></li>
+<li class="chapter" data-level="" data-path="sec-4-4.html"><a href="sec-4-4.html#nvidia-gpu-的指令系统结构"><i class="fa fa-check"></i>NVIDIA GPU 的指令系统结构</a></li>
+<li class="chapter" data-level="" data-path="sec-4-4.html"><a href="sec-4-4.html#gpu-中的条件转移"><i class="fa fa-check"></i>GPU 中的条件转移</a></li>
+<li class="chapter" data-level="" data-path="sec-4-4.html"><a href="sec-4-4.html#nvidia-gpu-的存储结构"><i class="fa fa-check"></i>NVIDIA GPU 的存储结构</a></li>
+<li class="chapter" data-level="" data-path="sec-4-4.html"><a href="sec-4-4.html#近期-gpu-体系结构的创新"><i class="fa fa-check"></i>近期 GPU 体系结构的创新</a></li>
+<li class="chapter" data-level="" data-path="sec-4-4.html"><a href="sec-4-4.html#向量体系结构与-gpu-的异同"><i class="fa fa-check"></i>向量体系结构与 GPU 的异同</a></li>
+<li class="chapter" data-level="" data-path="sec-4-4.html"><a href="sec-4-4.html#多媒体-simd-计算机与-gpu-的异同"><i class="fa fa-check"></i>多媒体 SIMD 计算机与 GPU 的异同</a></li>
+<li class="chapter" data-level="" data-path="sec-4-4.html"><a href="sec-4-4.html#小结"><i class="fa fa-check"></i>小结</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="sec-4-5.html"><a href="sec-4-5.html"><i class="fa fa-check"></i><b>4.5</b> 循环级并行的检测与增强</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-4-5.html"><a href="sec-4-5.html#寻找相关"><i class="fa fa-check"></i>寻找相关</a></li>
+<li class="chapter" data-level="" data-path="sec-4-5.html"><a href="sec-4-5.html#消除相关的计算"><i class="fa fa-check"></i>消除相关的计算</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="sec-4-6.html"><a href="sec-4-6.html"><i class="fa fa-check"></i><b>4.6</b> 交叉问题</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-4-6.html"><a href="sec-4-6.html#能耗与-dlp慢而宽与快而窄"><i class="fa fa-check"></i>能耗与 DLP：慢而宽与快而窄</a></li>
+<li class="chapter" data-level="" data-path="sec-4-6.html"><a href="sec-4-6.html#分体存储器与高带宽存储器"><i class="fa fa-check"></i>分体存储器与高带宽存储器</a></li>
+<li class="chapter" data-level="" data-path="sec-4-6.html"><a href="sec-4-6.html#带步长访问与-tlb-失效"><i class="fa fa-check"></i>带步长访问与 TLB 失效</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="sec-4-7.html"><a href="sec-4-7.html"><i class="fa fa-check"></i><b>4.7</b> 融会贯通：嵌入式 GPU 与服务器 GPU，Tesla 与 Core i7</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-4-7.html"><a href="sec-4-7.html#gpu-与带多媒体-simd-的-mimd-的比较"><i class="fa fa-check"></i>GPU 与带多媒体 SIMD 的 MIMD 的比较</a></li>
+<li class="chapter" data-level="" data-path="sec-4-7.html"><a href="sec-4-7.html#比较的更新"><i class="fa fa-check"></i>比较的更新</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="sec-4-8.html"><a href="sec-4-8.html"><i class="fa fa-check"></i><b>4.8</b> 谬误与陷阱</a></li>
+<li class="chapter" data-level="4.9" data-path="sec-4-9.html"><a href="sec-4-9.html"><i class="fa fa-check"></i><b>4.9</b> 结束语</a></li>
+<li class="chapter" data-level="4.10" data-path="sec-4-10.html"><a href="sec-4-10.html"><i class="fa fa-check"></i><b>4.10</b> 历史回顾与参考文献</a></li>
+<li class="chapter" data-level="" data-path="sec-4-exercises.html"><a href="sec-4-exercises.html"><i class="fa fa-check"></i>案例研究与习题（Jason D. Bakos）</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-4-exercises.html"><a href="sec-4-exercises.html#案例研究低运算强度机器学习任务上的-gpu-与向量处理器"><i class="fa fa-check"></i>案例研究：低运算强度机器学习任务上的 GPU 与向量处理器</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="sec-4-references.html"><a href="sec-4-references.html"><i class="fa fa-check"></i>参考文献</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="ch-tlp.html"><a href="ch-tlp.html"><i class="fa fa-check"></i><b>5</b> 线程级并行</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="sec-5-1.html"><a href="sec-5-1.html"><i class="fa fa-check"></i><b>5.1</b> 引言</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-5-1.html"><a href="sec-5-1.html#多处理器体系结构问题与方法"><i class="fa fa-check"></i>多处理器体系结构：问题与方法</a></li>
+<li class="chapter" data-level="" data-path="sec-5-1.html"><a href="sec-5-1.html#并行处理的挑战"><i class="fa fa-check"></i>并行处理的挑战</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="sec-5-2.html"><a href="sec-5-2.html"><i class="fa fa-check"></i><b>5.2</b> 多处理器的 Cache 一致性</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-5-2.html"><a href="sec-5-2.html#实现一致性的基本方案"><i class="fa fa-check"></i>实现一致性的基本方案</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="sec-5-3.html"><a href="sec-5-3.html"><i class="fa fa-check"></i><b>5.3</b> 用监听维护 Cache 一致性</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-5-3.html"><a href="sec-5-3.html#协议举例"><i class="fa fa-check"></i>协议举例</a></li>
+<li class="chapter" data-level="" data-path="sec-5-3.html"><a href="sec-5-3.html#基本一致性协议的扩展"><i class="fa fa-check"></i>基本一致性协议的扩展</a></li>
+<li class="chapter" data-level="" data-path="sec-5-3.html"><a href="sec-5-3.html#对称共享存储多处理器与监听协议的局限"><i class="fa fa-check"></i>对称共享存储多处理器与监听协议的局限</a></li>
+<li class="chapter" data-level="" data-path="sec-5-3.html"><a href="sec-5-3.html#监听-cache-一致性的实现"><i class="fa fa-check"></i>监听 Cache 一致性的实现</a></li>
+<li class="chapter" data-level="" data-path="sec-5-3.html"><a href="sec-5-3.html#共享存储多处理器的性能"><i class="fa fa-check"></i>共享存储多处理器的性能</a></li>
+<li class="chapter" data-level="" data-path="sec-5-3.html"><a href="sec-5-3.html#小规模多处理器上的商业工作负载"><i class="fa fa-check"></i>小规模多处理器上的商业工作负载</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="sec-5-4.html"><a href="sec-5-4.html"><i class="fa fa-check"></i><b>5.4</b> 用目录维护 Cache 一致性</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-5-4.html"><a href="sec-5-4.html#基于目录的-cache-一致性协议基础"><i class="fa fa-check"></i>基于目录的 Cache 一致性协议：基础</a></li>
+<li class="chapter" data-level="" data-path="sec-5-4.html"><a href="sec-5-4.html#目录协议举例"><i class="fa fa-check"></i>目录协议举例</a></li>
+<li class="chapter" data-level="" data-path="sec-5-4.html"><a href="sec-5-4.html#在多核处理器中实现目录一致性"><i class="fa fa-check"></i>在多核处理器中实现目录一致性</a></li>
+<li class="chapter" data-level="" data-path="sec-5-4.html"><a href="sec-5-4.html#numa-多处理器在-www-搜索应用上的性能"><i class="fa fa-check"></i>NUMA 多处理器在 WWW 搜索应用上的性能</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="sec-5-5.html"><a href="sec-5-5.html"><i class="fa fa-check"></i><b>5.5</b> 同步：基础</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-5-5.html"><a href="sec-5-5.html#基本硬件原语"><i class="fa fa-check"></i>基本硬件原语</a></li>
+<li class="chapter" data-level="" data-path="sec-5-5.html"><a href="sec-5-5.html#利用-cache-一致性实现锁"><i class="fa fa-check"></i>利用 Cache 一致性实现锁</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="sec-5-6.html"><a href="sec-5-6.html"><i class="fa fa-check"></i><b>5.6</b> 存储一致性模型简介</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-5-6.html"><a href="sec-5-6.html#程序员的视角"><i class="fa fa-check"></i>程序员的视角</a></li>
+<li class="chapter" data-level="" data-path="sec-5-6.html"><a href="sec-5-6.html#宽松一致性模型基础与释放一致性"><i class="fa fa-check"></i>宽松一致性模型：基础与释放一致性</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="sec-5-7.html"><a href="sec-5-7.html"><i class="fa fa-check"></i><b>5.7</b> 交叉问题</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-5-7.html"><a href="sec-5-7.html#编译器优化与一致性模型"><i class="fa fa-check"></i>编译器优化与一致性模型</a></li>
+<li class="chapter" data-level="" data-path="sec-5-7.html"><a href="sec-5-7.html#在严格一致性模型中用推测执行隐藏延迟"><i class="fa fa-check"></i>在严格一致性模型中用推测执行隐藏延迟</a></li>
+<li class="chapter" data-level="" data-path="sec-5-7.html"><a href="sec-5-7.html#包含性及其实现"><i class="fa fa-check"></i>包含性及其实现</a></li>
+<li class="chapter" data-level="" data-path="sec-5-7.html"><a href="sec-5-7.html#多线程为多处理器带来的性能提升"><i class="fa fa-check"></i>多线程为多处理器带来的性能提升</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="sec-5-8.html"><a href="sec-5-8.html"><i class="fa fa-check"></i><b>5.8</b> 融会贯通：多核处理器及其性能</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-5-8.html"><a href="sec-5-8.html#三种多核服务器处理器"><i class="fa fa-check"></i>三种多核服务器处理器</a></li>
+<li class="chapter" data-level="" data-path="sec-5-8.html"><a href="sec-5-8.html#多核多处理器在多道程序负载上的性能"><i class="fa fa-check"></i>多核多处理器在多道程序负载上的性能</a></li>
+<li class="chapter" data-level="" data-path="sec-5-8.html"><a href="sec-5-8.html#xeon-platinum-在两种不同负载上的可扩展性"><i class="fa fa-check"></i>Xeon Platinum 在两种不同负载上的可扩展性</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="sec-5-9.html"><a href="sec-5-9.html"><i class="fa fa-check"></i><b>5.9</b> 谬误与陷阱</a></li>
+<li class="chapter" data-level="5.10" data-path="sec-5-10.html"><a href="sec-5-10.html"><i class="fa fa-check"></i><b>5.10</b> 多核扩展的未来</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-5-10.html"><a href="sec-5-10.html#多核的未来是异构"><i class="fa fa-check"></i>多核的未来是异构</a></li>
+<li class="chapter" data-level="" data-path="sec-5-10.html"><a href="sec-5-10.html#苹果-m1一种异构的-soc-多核"><i class="fa fa-check"></i>苹果 M1：一种异构的 SoC 多核</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="sec-5-11.html"><a href="sec-5-11.html"><i class="fa fa-check"></i><b>5.11</b> 结束语</a></li>
+<li class="chapter" data-level="5.12" data-path="sec-5-12.html"><a href="sec-5-12.html"><i class="fa fa-check"></i><b>5.12</b> 历史回顾与参考文献</a></li>
+<li class="chapter" data-level="" data-path="sec-5-exercises.html"><a href="sec-5-exercises.html"><i class="fa fa-check"></i>案例研究与习题（Amr Zaky）</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-5-exercises.html"><a href="sec-5-exercises.html#案例研究-1单芯片多核多处理器"><i class="fa fa-check"></i>案例研究 1：单芯片多核多处理器</a></li>
+<li class="chapter" data-level="" data-path="sec-5-exercises.html"><a href="sec-5-exercises.html#案例研究-2简单的基于目录的一致性"><i class="fa fa-check"></i>案例研究 2：简单的基于目录的一致性</a></li>
+<li class="chapter" data-level="" data-path="sec-5-exercises.html"><a href="sec-5-exercises.html#案例研究-3存储一致性"><i class="fa fa-check"></i>案例研究 3：存储一致性</a></li>
+<li class="chapter" data-level="" data-path="sec-5-exercises.html"><a href="sec-5-exercises.html#习题-3"><i class="fa fa-check"></i>习题</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ch-wsc.html"><a href="ch-wsc.html"><i class="fa fa-check"></i><b>6</b> 面向效用计算的仓库级体系结构</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="sec-6-1.html"><a href="sec-6-1.html"><i class="fa fa-check"></i><b>6.1</b> 引言</a></li>
+<li class="chapter" data-level="6.2" data-path="sec-6-2.html"><a href="sec-6-2.html"><i class="fa fa-check"></i><b>6.2</b> 云计算：效用计算的回归</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-6-2.html"><a href="sec-6-2.html#云计算模式"><i class="fa fa-check"></i>云计算模式</a></li>
+<li class="chapter" data-level="" data-path="sec-6-2.html"><a href="sec-6-2.html#深入了解-iaas-云服务"><i class="fa fa-check"></i>深入了解 IaaS 云服务</a></li>
+<li class="chapter" data-level="" data-path="sec-6-2.html"><a href="sec-6-2.html#云计算的指标与-wsc-体系结构的驱动因素"><i class="fa fa-check"></i>云计算的指标与 WSC 体系结构的驱动因素</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="sec-6-3.html"><a href="sec-6-3.html"><i class="fa fa-check"></i><b>6.3</b> 虚拟化的硬件支持</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-6-3.html"><a href="sec-6-3.html#怎样的体系结构才能虚拟化"><i class="fa fa-check"></i>怎样的体系结构才能虚拟化</a></li>
+<li class="chapter" data-level="" data-path="sec-6-3.html"><a href="sec-6-3.html#虚拟化的体系结构支持"><i class="fa fa-check"></i>虚拟化的体系结构支持</a></li>
+<li class="chapter" data-level="" data-path="sec-6-3.html"><a href="sec-6-3.html#内存虚拟化"><i class="fa fa-check"></i>内存虚拟化</a></li>
+<li class="chapter" data-level="" data-path="sec-6-3.html"><a href="sec-6-3.html#io-虚拟化"><i class="fa fa-check"></i>I/O 虚拟化</a></li>
+<li class="chapter" data-level="" data-path="sec-6-3.html"><a href="sec-6-3.html#一个-vmm-实例xen-项目"><i class="fa fa-check"></i>一个 VMM 实例：Xen 项目</a></li>
+<li class="chapter" data-level="" data-path="sec-6-3.html"><a href="sec-6-3.html#机密计算与安全飞地"><i class="fa fa-check"></i>机密计算与安全飞地</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="sec-6-4.html"><a href="sec-6-4.html"><i class="fa fa-check"></i><b>6.4</b> 仓库级计算机的体系结构</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-6-4.html"><a href="sec-6-4.html#wsc-的计算"><i class="fa fa-check"></i>WSC 的计算</a></li>
+<li class="chapter" data-level="" data-path="sec-6-4.html"><a href="sec-6-4.html#wsc-的存储"><i class="fa fa-check"></i>WSC 的存储</a></li>
+<li class="chapter" data-level="" data-path="sec-6-4.html"><a href="sec-6-4.html#wsc-网络"><i class="fa fa-check"></i>WSC 网络</a></li>
+<li class="chapter" data-level="" data-path="sec-6-4.html"><a href="sec-6-4.html#程序员眼中的-wsc"><i class="fa fa-check"></i>程序员眼中的 WSC</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="sec-6-5.html"><a href="sec-6-5.html"><i class="fa fa-check"></i><b>6.5</b> 高性能 I/O 设备的体系结构</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-6-5.html"><a href="sec-6-5.html#网络接口"><i class="fa fa-check"></i>网络接口</a></li>
+<li class="chapter" data-level="" data-path="sec-6-5.html"><a href="sec-6-5.html#nvme-flash-盘"><i class="fa fa-check"></i>NVMe Flash 盘</a></li>
+<li class="chapter" data-level="" data-path="sec-6-5.html"><a href="sec-6-5.html#io-设备虚拟化"><i class="fa fa-check"></i>I/O 设备虚拟化</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="sec-6-6.html"><a href="sec-6-6.html"><i class="fa fa-check"></i><b>6.6</b> WSC 的配电与冷却</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-6-6.html"><a href="sec-6-6.html#wsc-的供电"><i class="fa fa-check"></i>WSC 的供电</a></li>
+<li class="chapter" data-level="" data-path="sec-6-6.html"><a href="sec-6-6.html#wsc-的冷却"><i class="fa fa-check"></i>WSC 的冷却</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="sec-6-7.html"><a href="sec-6-7.html"><i class="fa fa-check"></i><b>6.7</b> 仓库级计算的成本与效率</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-6-7.html"><a href="sec-6-7.html#wsc-的成本"><i class="fa fa-check"></i>WSC 的成本</a></li>
+<li class="chapter" data-level="" data-path="sec-6-7.html"><a href="sec-6-7.html#通过功率配置提高效率"><i class="fa fa-check"></i>通过功率配置提高效率</a></li>
+<li class="chapter" data-level="" data-path="sec-6-7.html"><a href="sec-6-7.html#通过提高利用率提高效率"><i class="fa fa-check"></i>通过提高利用率提高效率</a></li>
+<li class="chapter" data-level="" data-path="sec-6-7.html"><a href="sec-6-7.html#通过提高性能提高效率"><i class="fa fa-check"></i>通过提高性能提高效率</a></li>
+<li class="chapter" data-level="" data-path="sec-6-7.html"><a href="sec-6-7.html#通过能耗正比性提高效率"><i class="fa fa-check"></i>通过能耗正比性提高效率</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="sec-6-8.html"><a href="sec-6-8.html"><i class="fa fa-check"></i><b>6.8</b> 融会贯通：AWS 云中的定制芯片</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-6-8.html"><a href="sec-6-8.html#nitro-系统"><i class="fa fa-check"></i>Nitro 系统</a></li>
+<li class="chapter" data-level="" data-path="sec-6-8.html"><a href="sec-6-8.html#nitro-安全芯片"><i class="fa fa-check"></i>Nitro 安全芯片</a></li>
+<li class="chapter" data-level="" data-path="sec-6-8.html"><a href="sec-6-8.html#graviton-cpu-芯片"><i class="fa fa-check"></i>Graviton CPU 芯片</a></li>
+<li class="chapter" data-level="" data-path="sec-6-8.html"><a href="sec-6-8.html#云计算中的-cpu-效率"><i class="fa fa-check"></i>云计算中的 CPU 效率</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="sec-6-9.html"><a href="sec-6-9.html"><i class="fa fa-check"></i><b>6.9</b> 谬误与陷阱</a></li>
+<li class="chapter" data-level="6.10" data-path="sec-6-10.html"><a href="sec-6-10.html"><i class="fa fa-check"></i><b>6.10</b> 结束语</a></li>
+<li class="chapter" data-level="6.11" data-path="sec-6-11.html"><a href="sec-6-11.html"><i class="fa fa-check"></i><b>6.11</b> 历史回顾与参考文献</a></li>
+<li class="chapter" data-level="" data-path="sec-6-exercises.html"><a href="sec-6-exercises.html"><i class="fa fa-check"></i>案例研究与习题（Parthasarathy Ranganathan）</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-6-exercises.html"><a href="sec-6-exercises.html#案例研究-1总拥有成本对仓库级计算机设计决策的影响"><i class="fa fa-check"></i>案例研究 1：总拥有成本对仓库级计算机设计决策的影响</a></li>
+<li class="chapter" data-level="" data-path="sec-6-exercises.html"><a href="sec-6-exercises.html#案例研究-2wsc-中的资源分配与-tco"><i class="fa fa-check"></i>案例研究 2：WSC 中的资源分配与 TCO</a></li>
+<li class="chapter" data-level="" data-path="sec-6-exercises.html"><a href="sec-6-exercises.html#习题-4"><i class="fa fa-check"></i>习题</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="sec-6-references.html"><a href="sec-6-references.html"><i class="fa fa-check"></i>参考文献</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ch-dsa.html"><a href="ch-dsa.html"><i class="fa fa-check"></i><b>7</b> 领域专用体系结构</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="sec-7-1.html"><a href="sec-7-1.html"><i class="fa fa-check"></i><b>7.1</b> 引言</a></li>
+<li class="chapter" data-level="7.2" data-path="sec-7-2.html"><a href="sec-7-2.html"><i class="fa fa-check"></i><b>7.2</b> DSA 指导原则</a></li>
+<li class="chapter" data-level="7.3" data-path="sec-7-3.html"><a href="sec-7-3.html"><i class="fa fa-check"></i><b>7.3</b> 示例领域：深度神经网络</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-7-3.html"><a href="sec-7-3.html#dnn-的神经元"><i class="fa fa-check"></i>DNN 的神经元</a></li>
+<li class="chapter" data-level="" data-path="sec-7-3.html"><a href="sec-7-3.html#训练与推理"><i class="fa fa-check"></i>训练与推理</a></li>
+<li class="chapter" data-level="" data-path="sec-7-3.html"><a href="sec-7-3.html#多层感知机"><i class="fa fa-check"></i>多层感知机</a></li>
+<li class="chapter" data-level="" data-path="sec-7-3.html"><a href="sec-7-3.html#卷积神经网络"><i class="fa fa-check"></i>卷积神经网络</a></li>
+<li class="chapter" data-level="" data-path="sec-7-3.html"><a href="sec-7-3.html#循环神经网络"><i class="fa fa-check"></i>循环神经网络</a></li>
+<li class="chapter" data-level="" data-path="sec-7-3.html"><a href="sec-7-3.html#transformer-神经网络"><i class="fa fa-check"></i>Transformer 神经网络</a></li>
+<li class="chapter" data-level="" data-path="sec-7-3.html"><a href="sec-7-3.html#批"><i class="fa fa-check"></i>批</a></li>
+<li class="chapter" data-level="" data-path="sec-7-3.html"><a href="sec-7-3.html#量化"><i class="fa fa-check"></i>量化</a></li>
+<li class="chapter" data-level="" data-path="sec-7-3.html"><a href="sec-7-3.html#dnn-小结"><i class="fa fa-check"></i>DNN 小结</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="sec-7-4.html"><a href="sec-7-4.html"><i class="fa fa-check"></i><b>7.4</b> 谷歌张量处理单元 TPU v4 与 v4 lite：数据中心 DNN 加速器</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-7-4.html"><a href="sec-7-4.html#tpu-v4-lite-的体系结构"><i class="fa fa-check"></i>TPU v4 lite 的体系结构</a></li>
+<li class="chapter" data-level="" data-path="sec-7-4.html"><a href="sec-7-4.html#tpu-v4-lite-的指令系统结构"><i class="fa fa-check"></i>TPU v4 lite 的指令系统结构</a></li>
+<li class="chapter" data-level="" data-path="sec-7-4.html"><a href="sec-7-4.html#tpu-v4-相对-tpu-v4-lite-的改动"><i class="fa fa-check"></i>TPU v4 相对 TPU v4 lite 的改动</a></li>
+<li class="chapter" data-level="" data-path="sec-7-4.html"><a href="sec-7-4.html#小结tpu-v4-怎样遵循设计准则"><i class="fa fa-check"></i>小结：TPU v4 怎样遵循设计准则</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="sec-7-5.html"><a href="sec-7-5.html"><i class="fa fa-check"></i><b>7.5</b> NVIDIA A100 和 T4 GPU：图形与数据中心 DNN 加速器</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-7-5.html"><a href="sec-7-5.html#nvidia-a100-张量核体系结构"><i class="fa fa-check"></i>NVIDIA A100 张量核体系结构</a></li>
+<li class="chapter" data-level="" data-path="sec-7-5.html"><a href="sec-7-5.html#小结a100-和-t4-如何遵循设计准则"><i class="fa fa-check"></i>小结：A100 和 T4 如何遵循设计准则</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="sec-7-6.html"><a href="sec-7-6.html"><i class="fa fa-check"></i><b>7.6</b> Graphcore IPU Bow：面向训练的数据中心加速器</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-7-6.html"><a href="sec-7-6.html#小结ipu-bow-如何遵循设计准则"><i class="fa fa-check"></i>小结：IPU Bow 如何遵循设计准则</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="sec-7-7.html"><a href="sec-7-7.html"><i class="fa fa-check"></i><b>7.7</b> 三星神经处理单元（NPU）：智能手机推理加速器</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-7-7.html"><a href="sec-7-7.html#小结三星-npu-如何遵循设计准则"><i class="fa fa-check"></i>小结：三星 NPU 如何遵循设计准则</a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="sec-7-8.html"><a href="sec-7-8.html"><i class="fa fa-check"></i><b>7.8</b> 交叉问题</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-7-8.html"><a href="sec-7-8.html#异构与片上系统"><i class="fa fa-check"></i>异构与片上系统</a></li>
+<li class="chapter" data-level="" data-path="sec-7-8.html"><a href="sec-7-8.html#机器学习训练的能耗与碳排放"><i class="fa fa-check"></i>机器学习训练的能耗与碳排放</a></li>
+<li class="chapter" data-level="" data-path="sec-7-8.html"><a href="sec-7-8.html#开放的指令系统"><i class="fa fa-check"></i>开放的指令系统</a></li>
+</ul></li>
+<li class="chapter" data-level="7.9" data-path="sec-7-9.html"><a href="sec-7-9.html"><i class="fa fa-check"></i><b>7.9</b> 融会贯通：DNN 加速器比较</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-7-9.html"><a href="sec-7-9.html#推理tpu-v4-lite-与-t4"><i class="fa fa-check"></i>推理：TPU v4 lite 与 T4</a></li>
+<li class="chapter" data-level="" data-path="sec-7-9.html"><a href="sec-7-9.html#训练tpu-v4a100-与-ipu-bow"><i class="fa fa-check"></i>训练：TPU v4、A100 与 IPU Bow</a></li>
+<li class="chapter" data-level="" data-path="sec-7-9.html"><a href="sec-7-9.html#推理三星-npuv1npuv2-与-intel-core-i7-加-iris-xe-gpu"><i class="fa fa-check"></i>推理：三星 NPUv1、NPUv2 与 Intel Core i7 加 Iris Xe GPU</a></li>
+</ul></li>
+<li class="chapter" data-level="7.10" data-path="sec-7-10.html"><a href="sec-7-10.html"><i class="fa fa-check"></i><b>7.10</b> 谬误与陷阱</a></li>
+<li class="chapter" data-level="7.11" data-path="sec-7-11.html"><a href="sec-7-11.html"><i class="fa fa-check"></i><b>7.11</b> 结束语</a></li>
+<li class="chapter" data-level="7.12" data-path="sec-7-12.html"><a href="sec-7-12.html"><i class="fa fa-check"></i><b>7.12</b> 历史回顾与参考文献</a></li>
+<li class="chapter" data-level="" data-path="sec-7-exercises.html"><a href="sec-7-exercises.html"><i class="fa fa-check"></i>案例研究与习题（Cliff Young）</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-7-exercises.html"><a href="sec-7-exercises.html#案例研究-1矩阵乘法"><i class="fa fa-check"></i>案例研究 1：矩阵乘法</a></li>
+<li class="chapter" data-level="" data-path="sec-7-exercises.html"><a href="sec-7-exercises.html#案例研究-2神经网络的层"><i class="fa fa-check"></i>案例研究 2：神经网络的层</a></li>
+<li class="chapter" data-level="" data-path="sec-7-exercises.html"><a href="sec-7-exercises.html#案例研究-3数值表示"><i class="fa fa-check"></i>案例研究 3：数值表示</a></li>
+<li class="chapter" data-level="" data-path="sec-7-exercises.html"><a href="sec-7-exercises.html#案例研究-4速度馈送与规模"><i class="fa fa-check"></i>案例研究 4：速度、馈送与规模</a></li>
+<li class="chapter" data-level="" data-path="sec-7-exercises.html"><a href="sec-7-exercises.html#习题-5"><i class="fa fa-check"></i>习题</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="sec-7-references.html"><a href="sec-7-references.html"><i class="fa fa-check"></i>参考文献</a></li>
+</ul></li>
+<li class="appendix"><span><b>附录</b></span></li>
+<li class="chapter" data-level="A" data-path="app-a.html"><a href="app-a.html"><i class="fa fa-check"></i><b>A</b> 指令系统原理</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="sec-a-1.html"><a href="sec-a-1.html"><i class="fa fa-check"></i><b>A.1</b> 引言</a></li>
+<li class="chapter" data-level="A.2" data-path="sec-a-2.html"><a href="sec-a-2.html"><i class="fa fa-check"></i><b>A.2</b> 指令系统结构的分类</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-a-2.html"><a href="sec-a-2.html#小结指令系统结构的分类"><i class="fa fa-check"></i>小结：指令系统结构的分类</a></li>
+</ul></li>
+<li class="chapter" data-level="A.3" data-path="sec-a-3.html"><a href="sec-a-3.html"><i class="fa fa-check"></i><b>A.3</b> 存储器寻址</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-a-3.html"><a href="sec-a-3.html#存储器地址的解释"><i class="fa fa-check"></i>存储器地址的解释</a></li>
+<li class="chapter" data-level="" data-path="sec-a-3.html"><a href="sec-a-3.html#寻址方式"><i class="fa fa-check"></i>寻址方式</a></li>
+<li class="chapter" data-level="" data-path="sec-a-3.html"><a href="sec-a-3.html#偏移量寻址方式"><i class="fa fa-check"></i>偏移量寻址方式</a></li>
+<li class="chapter" data-level="" data-path="sec-a-3.html"><a href="sec-a-3.html#立即数寻址方式"><i class="fa fa-check"></i>立即数寻址方式</a></li>
+<li class="chapter" data-level="" data-path="sec-a-3.html"><a href="sec-a-3.html#小结存储器寻址"><i class="fa fa-check"></i>小结：存储器寻址</a></li>
+</ul></li>
+<li class="chapter" data-level="A.4" data-path="sec-a-4.html"><a href="sec-a-4.html"><i class="fa fa-check"></i><b>A.4</b> 操作数的类型和长度</a></li>
+<li class="chapter" data-level="A.5" data-path="sec-a-5.html"><a href="sec-a-5.html"><i class="fa fa-check"></i><b>A.5</b> 指令系统中的操作</a></li>
+<li class="chapter" data-level="A.6" data-path="sec-a-6.html"><a href="sec-a-6.html"><i class="fa fa-check"></i><b>A.6</b> 控制流指令</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-a-6.html"><a href="sec-a-6.html#控制流指令的寻址方式"><i class="fa fa-check"></i>控制流指令的寻址方式</a></li>
+<li class="chapter" data-level="" data-path="sec-a-6.html"><a href="sec-a-6.html#条件转移的实现方式"><i class="fa fa-check"></i>条件转移的实现方式</a></li>
+<li class="chapter" data-level="" data-path="sec-a-6.html"><a href="sec-a-6.html#过程调用的实现方式"><i class="fa fa-check"></i>过程调用的实现方式</a></li>
+<li class="chapter" data-level="" data-path="sec-a-6.html"><a href="sec-a-6.html#小结控制流指令"><i class="fa fa-check"></i>小结：控制流指令</a></li>
+</ul></li>
+<li class="chapter" data-level="A.7" data-path="sec-a-7.html"><a href="sec-a-7.html"><i class="fa fa-check"></i><b>A.7</b> 指令系统的编码</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-a-7.html"><a href="sec-a-7.html#risc-的代码压缩"><i class="fa fa-check"></i>RISC 的代码压缩</a></li>
+<li class="chapter" data-level="" data-path="sec-a-7.html"><a href="sec-a-7.html#小结指令系统的编码"><i class="fa fa-check"></i>小结：指令系统的编码</a></li>
+</ul></li>
+<li class="chapter" data-level="A.8" data-path="sec-a-8.html"><a href="sec-a-8.html"><i class="fa fa-check"></i><b>A.8</b> 交叉问题：编译器的作用</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-a-8.html"><a href="sec-a-8.html#现代编译器的结构"><i class="fa fa-check"></i>现代编译器的结构</a></li>
+<li class="chapter" data-level="" data-path="sec-a-8.html"><a href="sec-a-8.html#寄存器分配"><i class="fa fa-check"></i>寄存器分配</a></li>
+<li class="chapter" data-level="" data-path="sec-a-8.html"><a href="sec-a-8.html#优化对性能的影响"><i class="fa fa-check"></i>优化对性能的影响</a></li>
+<li class="chapter" data-level="" data-path="sec-a-8.html"><a href="sec-a-8.html#编译技术对体系结构设计决策的影响"><i class="fa fa-check"></i>编译技术对体系结构设计决策的影响</a></li>
+<li class="chapter" data-level="" data-path="sec-a-8.html"><a href="sec-a-8.html#体系结构设计者如何帮助编译器编写者"><i class="fa fa-check"></i>体系结构设计者如何帮助编译器编写者</a></li>
+<li class="chapter" data-level="" data-path="sec-a-8.html"><a href="sec-a-8.html#编译器对多媒体指令的支持或者说缺乏支持"><i class="fa fa-check"></i>编译器对多媒体指令的支持（或者说缺乏支持）</a></li>
+<li class="chapter" data-level="" data-path="sec-a-8.html"><a href="sec-a-8.html#小结编译器的作用"><i class="fa fa-check"></i>小结：编译器的作用</a></li>
+</ul></li>
+<li class="chapter" data-level="A.9" data-path="sec-a-9.html"><a href="sec-a-9.html"><i class="fa fa-check"></i><b>A.9</b> 融会贯通：RISC-V 体系结构</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-a-9.html"><a href="sec-a-9.html#risc-v-指令集的组织"><i class="fa fa-check"></i>RISC-V 指令集的组织</a></li>
+<li class="chapter" data-level="" data-path="sec-a-9.html"><a href="sec-a-9.html#risc-v-的寄存器"><i class="fa fa-check"></i>RISC-V 的寄存器</a></li>
+<li class="chapter" data-level="" data-path="sec-a-9.html"><a href="sec-a-9.html#risc-v-的数据类型"><i class="fa fa-check"></i>RISC-V 的数据类型</a></li>
+<li class="chapter" data-level="" data-path="sec-a-9.html"><a href="sec-a-9.html#risc-v-数据传送的寻址方式"><i class="fa fa-check"></i>RISC-V 数据传送的寻址方式</a></li>
+<li class="chapter" data-level="" data-path="sec-a-9.html"><a href="sec-a-9.html#risc-v-的指令格式"><i class="fa fa-check"></i>RISC-V 的指令格式</a></li>
+<li class="chapter" data-level="" data-path="sec-a-9.html"><a href="sec-a-9.html#risc-v-的操作"><i class="fa fa-check"></i>RISC-V 的操作</a></li>
+<li class="chapter" data-level="" data-path="sec-a-9.html"><a href="sec-a-9.html#risc-v-的控制流指令"><i class="fa fa-check"></i>RISC-V 的控制流指令</a></li>
+<li class="chapter" data-level="" data-path="sec-a-9.html"><a href="sec-a-9.html#risc-v-的浮点操作"><i class="fa fa-check"></i>RISC-V 的浮点操作</a></li>
+<li class="chapter" data-level="" data-path="sec-a-9.html"><a href="sec-a-9.html#risc-v-指令的使用情况"><i class="fa fa-check"></i>RISC-V 指令的使用情况</a></li>
+</ul></li>
+<li class="chapter" data-level="A.10" data-path="sec-a-10.html"><a href="sec-a-10.html"><i class="fa fa-check"></i><b>A.10</b> 谬误与陷阱</a></li>
+<li class="chapter" data-level="A.11" data-path="sec-a-11.html"><a href="sec-a-11.html"><i class="fa fa-check"></i><b>A.11</b> 结束语</a></li>
+<li class="chapter" data-level="A.12" data-path="sec-a-12.html"><a href="sec-a-12.html"><i class="fa fa-check"></i><b>A.12</b> 历史回顾与参考文献</a></li>
+<li class="chapter" data-level="" data-path="sec-a-exercises.html"><a href="sec-a-exercises.html"><i class="fa fa-check"></i>习题（Gregory D. Peterson）</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="app-b.html"><a href="app-b.html"><i class="fa fa-check"></i><b>B</b> 存储层次回顾</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="sec-b-1.html"><a href="sec-b-1.html"><i class="fa fa-check"></i><b>B.1</b> 引言</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-b-1.html"><a href="sec-b-1.html#cache-性能回顾"><i class="fa fa-check"></i>Cache 性能回顾</a></li>
+<li class="chapter" data-level="" data-path="sec-b-1.html"><a href="sec-b-1.html#存储层次的四个问题"><i class="fa fa-check"></i>存储层次的四个问题</a></li>
+<li class="chapter" data-level="" data-path="sec-b-1.html"><a href="sec-b-1.html#一个例子opteron-的数据-cache"><i class="fa fa-check"></i>一个例子：Opteron 的数据 Cache</a></li>
+</ul></li>
+<li class="chapter" data-level="B.2" data-path="sec-b-2.html"><a href="sec-b-2.html"><i class="fa fa-check"></i><b>B.2</b> Cache 的性能</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-b-2.html"><a href="sec-b-2.html#平均访存时间与处理器性能"><i class="fa fa-check"></i>平均访存时间与处理器性能</a></li>
+<li class="chapter" data-level="" data-path="sec-b-2.html"><a href="sec-b-2.html#失效开销与乱序执行处理器"><i class="fa fa-check"></i>失效开销与乱序执行处理器</a></li>
+</ul></li>
+<li class="chapter" data-level="B.3" data-path="sec-b-3.html"><a href="sec-b-3.html"><i class="fa fa-check"></i><b>B.3</b> 六种基本的 Cache 优化</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-b-3.html"><a href="sec-b-3.html#第一种优化增大块以降低失效率"><i class="fa fa-check"></i>第一种优化：增大块以降低失效率</a></li>
+<li class="chapter" data-level="" data-path="sec-b-3.html"><a href="sec-b-3.html#第二种优化增大-cache-以降低失效率"><i class="fa fa-check"></i>第二种优化：增大 Cache 以降低失效率</a></li>
+<li class="chapter" data-level="" data-path="sec-b-3.html"><a href="sec-b-3.html#第三种优化提高相联度以降低失效率"><i class="fa fa-check"></i>第三种优化：提高相联度以降低失效率</a></li>
+<li class="chapter" data-level="" data-path="sec-b-3.html"><a href="sec-b-3.html#第四种优化采用多级-cache-以降低失效开销"><i class="fa fa-check"></i>第四种优化：采用多级 Cache 以降低失效开销</a></li>
+<li class="chapter" data-level="" data-path="sec-b-3.html"><a href="sec-b-3.html#第五种优化读失效优先于写以降低失效开销"><i class="fa fa-check"></i>第五种优化：读失效优先于写以降低失效开销</a></li>
+<li class="chapter" data-level="" data-path="sec-b-3.html"><a href="sec-b-3.html#第六种优化在-cache-索引时避免地址转换以降低命中时间"><i class="fa fa-check"></i>第六种优化：在 Cache 索引时避免地址转换以降低命中时间</a></li>
+<li class="chapter" data-level="" data-path="sec-b-3.html"><a href="sec-b-3.html#基本-cache-优化小结"><i class="fa fa-check"></i>基本 Cache 优化小结</a></li>
+</ul></li>
+<li class="chapter" data-level="B.4" data-path="sec-b-4.html"><a href="sec-b-4.html"><i class="fa fa-check"></i><b>B.4</b> 虚拟存储</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-b-4.html"><a href="sec-b-4.html#再谈存储层次的四个问题"><i class="fa fa-check"></i>再谈存储层次的四个问题</a></li>
+<li class="chapter" data-level="" data-path="sec-b-4.html"><a href="sec-b-4.html#快速地址转换技术"><i class="fa fa-check"></i>快速地址转换技术</a></li>
+<li class="chapter" data-level="" data-path="sec-b-4.html"><a href="sec-b-4.html#页大小的选择"><i class="fa fa-check"></i>页大小的选择</a></li>
+<li class="chapter" data-level="" data-path="sec-b-4.html"><a href="sec-b-4.html#虚拟存储与-cache-小结"><i class="fa fa-check"></i>虚拟存储与 Cache 小结</a></li>
+</ul></li>
+<li class="chapter" data-level="B.5" data-path="sec-b-5.html"><a href="sec-b-5.html"><i class="fa fa-check"></i><b>B.5</b> 保护与虚拟存储实例</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-b-5.html"><a href="sec-b-5.html#进程保护"><i class="fa fa-check"></i>进程保护</a></li>
+<li class="chapter" data-level="" data-path="sec-b-5.html"><a href="sec-b-5.html#分段虚拟存储的例子intel-pentium-中的保护"><i class="fa fa-check"></i>分段虚拟存储的例子：Intel Pentium 中的保护</a></li>
+<li class="chapter" data-level="" data-path="sec-b-5.html"><a href="sec-b-5.html#分页虚拟存储的例子64-位-opteron-的存储管理"><i class="fa fa-check"></i>分页虚拟存储的例子：64 位 Opteron 的存储管理</a></li>
+<li class="chapter" data-level="" data-path="sec-b-5.html"><a href="sec-b-5.html#小结32-位-intel-pentium-与-64-位-amd-opteron-的保护"><i class="fa fa-check"></i>小结：32 位 Intel Pentium 与 64 位 AMD Opteron 的保护</a></li>
+</ul></li>
+<li class="chapter" data-level="B.6" data-path="sec-b-6.html"><a href="sec-b-6.html"><i class="fa fa-check"></i><b>B.6</b> 谬误与陷阱</a></li>
+<li class="chapter" data-level="B.7" data-path="sec-b-7.html"><a href="sec-b-7.html"><i class="fa fa-check"></i><b>B.7</b> 结束语</a></li>
+<li class="chapter" data-level="B.8" data-path="sec-b-8.html"><a href="sec-b-8.html"><i class="fa fa-check"></i><b>B.8</b> 历史回顾与参考文献</a></li>
+<li class="chapter" data-level="" data-path="sec-b-exercises.html"><a href="sec-b-exercises.html"><i class="fa fa-check"></i>习题（Amr Zaky）</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="app-c.html"><a href="app-c.html"><i class="fa fa-check"></i><b>C</b> 流水线：基本概念与进阶概念</a>
+<ul>
+<li class="chapter" data-level="C.1" data-path="sec-c-1.html"><a href="sec-c-1.html"><i class="fa fa-check"></i><b>C.1</b> 引言</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-c-1.html"><a href="sec-c-1.html#什么是流水线"><i class="fa fa-check"></i>什么是流水线</a></li>
+<li class="chapter" data-level="" data-path="sec-c-1.html"><a href="sec-c-1.html#risc-v-指令系统基础"><i class="fa fa-check"></i>RISC-V 指令系统基础</a></li>
+<li class="chapter" data-level="" data-path="sec-c-1.html"><a href="sec-c-1.html#risc-指令系统的一种简单实现"><i class="fa fa-check"></i>RISC 指令系统的一种简单实现</a></li>
+<li class="chapter" data-level="" data-path="sec-c-1.html"><a href="sec-c-1.html#risc-处理器的经典五段流水线"><i class="fa fa-check"></i>RISC 处理器的经典五段流水线</a></li>
+<li class="chapter" data-level="" data-path="sec-c-1.html"><a href="sec-c-1.html#流水线的基本性能问题"><i class="fa fa-check"></i>流水线的基本性能问题</a></li>
+</ul></li>
+<li class="chapter" data-level="C.2" data-path="sec-c-2.html"><a href="sec-c-2.html"><i class="fa fa-check"></i><b>C.2</b> 流水线的主要障碍——流水线冒险</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-c-2.html"><a href="sec-c-2.html#有停顿时流水线的性能"><i class="fa fa-check"></i>有停顿时流水线的性能</a></li>
+<li class="chapter" data-level="" data-path="sec-c-2.html"><a href="sec-c-2.html#数据冒险-1"><i class="fa fa-check"></i>数据冒险</a></li>
+<li class="chapter" data-level="" data-path="sec-c-2.html"><a href="sec-c-2.html#转移冒险"><i class="fa fa-check"></i>转移冒险</a></li>
+<li class="chapter" data-level="" data-path="sec-c-2.html"><a href="sec-c-2.html#用预测降低转移代价"><i class="fa fa-check"></i>用预测降低转移代价</a></li>
+</ul></li>
+<li class="chapter" data-level="C.3" data-path="sec-c-3.html"><a href="sec-c-3.html"><i class="fa fa-check"></i><b>C.3</b> 流水线是怎样实现的</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-c-3.html"><a href="sec-c-3.html#risc-v-的简单实现"><i class="fa fa-check"></i>RISC-V 的简单实现</a></li>
+<li class="chapter" data-level="" data-path="sec-c-3.html"><a href="sec-c-3.html#risc-v-的基本流水线"><i class="fa fa-check"></i>RISC-V 的基本流水线</a></li>
+<li class="chapter" data-level="" data-path="sec-c-3.html"><a href="sec-c-3.html#risc-v-流水线控制的实现"><i class="fa fa-check"></i>RISC-V 流水线控制的实现</a></li>
+<li class="chapter" data-level="" data-path="sec-c-3.html"><a href="sec-c-3.html#流水线中转移的处理"><i class="fa fa-check"></i>流水线中转移的处理</a></li>
+</ul></li>
+<li class="chapter" data-level="C.4" data-path="sec-c-4.html"><a href="sec-c-4.html"><i class="fa fa-check"></i><b>C.4</b> 流水线实现的难点</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-c-4.html"><a href="sec-c-4.html#异常的处理"><i class="fa fa-check"></i>异常的处理</a></li>
+<li class="chapter" data-level="" data-path="sec-c-4.html"><a href="sec-c-4.html#指令系统带来的复杂性"><i class="fa fa-check"></i>指令系统带来的复杂性</a></li>
+</ul></li>
+<li class="chapter" data-level="C.5" data-path="sec-c-5.html"><a href="sec-c-5.html"><i class="fa fa-check"></i><b>C.5</b> 扩展 RISC-V 整数流水线以处理多周期操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-c-5.html"><a href="sec-c-5.html#长延迟流水线中的冒险与前递"><i class="fa fa-check"></i>长延迟流水线中的冒险与前递</a></li>
+<li class="chapter" data-level="" data-path="sec-c-5.html"><a href="sec-c-5.html#保持精确异常"><i class="fa fa-check"></i>保持精确异常</a></li>
+<li class="chapter" data-level="" data-path="sec-c-5.html"><a href="sec-c-5.html#简单-risc-v-浮点流水线的性能"><i class="fa fa-check"></i>简单 RISC-V 浮点流水线的性能</a></li>
+</ul></li>
+<li class="chapter" data-level="C.6" data-path="sec-c-6.html"><a href="sec-c-6.html"><i class="fa fa-check"></i><b>C.6</b> 融会贯通：MIPS R4000 流水线</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-c-6.html"><a href="sec-c-6.html#浮点流水线"><i class="fa fa-check"></i>浮点流水线</a></li>
+<li class="chapter" data-level="" data-path="sec-c-6.html"><a href="sec-c-6.html#r4000-流水线的性能"><i class="fa fa-check"></i>R4000 流水线的性能</a></li>
+</ul></li>
+<li class="chapter" data-level="C.7" data-path="sec-c-7.html"><a href="sec-c-7.html"><i class="fa fa-check"></i><b>C.7</b> 交叉问题</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-c-7.html"><a href="sec-c-7.html#risc-指令系统与流水线效率"><i class="fa fa-check"></i>RISC 指令系统与流水线效率</a></li>
+<li class="chapter" data-level="" data-path="sec-c-7.html"><a href="sec-c-7.html#动态调度的流水线"><i class="fa fa-check"></i>动态调度的流水线</a></li>
+</ul></li>
+<li class="chapter" data-level="C.8" data-path="sec-c-8.html"><a href="sec-c-8.html"><i class="fa fa-check"></i><b>C.8</b> 谬误与陷阱</a></li>
+<li class="chapter" data-level="C.9" data-path="sec-c-9.html"><a href="sec-c-9.html"><i class="fa fa-check"></i><b>C.9</b> 结束语</a></li>
+<li class="chapter" data-level="C.10" data-path="sec-c-10.html"><a href="sec-c-10.html"><i class="fa fa-check"></i><b>C.10</b> 历史回顾与参考文献</a></li>
+<li class="chapter" data-level="" data-path="sec-c-exercises.html"><a href="sec-c-exercises.html"><i class="fa fa-check"></i>习题（Diana Franklin）</a></li>
+</ul></li>
+<li class="chapter" data-level="D" data-path="app-d.html"><a href="app-d.html"><i class="fa fa-check"></i><b>D</b> 存储系统</a>
+<ul>
+<li class="chapter" data-level="D.1" data-path="sec-d-1.html"><a href="sec-d-1.html"><i class="fa fa-check"></i><b>D.1</b> 引言</a></li>
+<li class="chapter" data-level="D.2" data-path="sec-d-2.html"><a href="sec-d-2.html"><i class="fa fa-check"></i><b>D.2</b> 磁盘存储的高级专题</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-d-2.html"><a href="sec-d-2.html#磁盘的功耗"><i class="fa fa-check"></i>磁盘的功耗</a></li>
+<li class="chapter" data-level="" data-path="sec-d-2.html"><a href="sec-d-2.html#磁盘阵列的高级专题"><i class="fa fa-check"></i>磁盘阵列的高级专题</a></li>
+<li class="chapter" data-level="" data-path="sec-d-2.html"><a href="sec-d-2.html#raid-10-与-raid-01raid-10-与-raid-01"><i class="fa fa-check"></i>RAID 10 与 RAID 01（RAID 1+0 与 RAID 0+1）</a></li>
+<li class="chapter" data-level="" data-path="sec-d-2.html"><a href="sec-d-2.html#raid-6容忍多于一块磁盘的失效"><i class="fa fa-check"></i>RAID 6：容忍多于一块磁盘的失效</a></li>
+</ul></li>
+<li class="chapter" data-level="D.3" data-path="sec-d-3.html"><a href="sec-d-3.html"><i class="fa fa-check"></i><b>D.3</b> 真实故障与失效的定义和实例</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-d-3.html"><a href="sec-d-3.html#伯克利的-tertiary-disk"><i class="fa fa-check"></i>伯克利的 Tertiary Disk</a></li>
+<li class="chapter" data-level="" data-path="sec-d-3.html"><a href="sec-d-3.html#tandem"><i class="fa fa-check"></i>Tandem</a></li>
+<li class="chapter" data-level="" data-path="sec-d-3.html"><a href="sec-d-3.html#其他关于操作人员对可信性影响的研究"><i class="fa fa-check"></i>其他关于操作人员对可信性影响的研究</a></li>
+</ul></li>
+<li class="chapter" data-level="D.4" data-path="sec-d-4.html"><a href="sec-d-4.html"><i class="fa fa-check"></i><b>D.4</b> I/O 性能、可靠性度量和基准测试程序</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-d-4.html"><a href="sec-d-4.html#吞吐率与响应时间"><i class="fa fa-check"></i>吞吐率与响应时间</a></li>
+<li class="chapter" data-level="" data-path="sec-d-4.html"><a href="sec-d-4.html#事务处理基准测试程序"><i class="fa fa-check"></i>事务处理基准测试程序</a></li>
+<li class="chapter" data-level="" data-path="sec-d-4.html"><a href="sec-d-4.html#spec-系统级文件服务器邮件和-web-基准测试程序"><i class="fa fa-check"></i>SPEC 系统级文件服务器、邮件和 Web 基准测试程序</a></li>
+<li class="chapter" data-level="" data-path="sec-d-4.html"><a href="sec-d-4.html#可信性基准测试的例子"><i class="fa fa-check"></i>可信性基准测试的例子</a></li>
+</ul></li>
+<li class="chapter" data-level="D.5" data-path="sec-d-5.html"><a href="sec-d-5.html"><i class="fa fa-check"></i><b>D.5</b> 排队论初步</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-d-5.html"><a href="sec-d-5.html#随机变量的泊松分布"><i class="fa fa-check"></i>随机变量的泊松分布</a></li>
+</ul></li>
+<li class="chapter" data-level="D.6" data-path="sec-d-6.html"><a href="sec-d-6.html"><i class="fa fa-check"></i><b>D.6</b> 交叉问题</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-d-6.html"><a href="sec-d-6.html#点到点链路和交换机取代总线"><i class="fa fa-check"></i>点到点链路和交换机取代总线</a></li>
+<li class="chapter" data-level="" data-path="sec-d-6.html"><a href="sec-d-6.html#块服务器与文件服务器"><i class="fa fa-check"></i>块服务器与文件服务器</a></li>
+<li class="chapter" data-level="" data-path="sec-d-6.html"><a href="sec-d-6.html#异步-io-与操作系统"><i class="fa fa-check"></i>异步 I/O 与操作系统</a></li>
+</ul></li>
+<li class="chapter" data-level="D.7" data-path="sec-d-7.html"><a href="sec-d-7.html"><i class="fa fa-check"></i><b>D.7</b> 设计和评估 I/O 系统——Internet Archive 集群</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-d-7.html"><a href="sec-d-7.html#internet-archive-集群"><i class="fa fa-check"></i>Internet Archive 集群</a></li>
+<li class="chapter" data-level="" data-path="sec-d-7.html"><a href="sec-d-7.html#估算-internet-archive-集群的性能可信性和成本"><i class="fa fa-check"></i>估算 Internet Archive 集群的性能、可信性和成本</a></li>
+<li class="chapter" data-level="" data-path="sec-d-7.html"><a href="sec-d-7.html#计算-tb-80-集群的-mttf"><i class="fa fa-check"></i>计算 TB-80 集群的 MTTF</a></li>
+</ul></li>
+<li class="chapter" data-level="D.8" data-path="sec-d-8.html"><a href="sec-d-8.html"><i class="fa fa-check"></i><b>D.8</b> 融会贯通：NetApp FAS6000 文件服务器</a></li>
+<li class="chapter" data-level="D.9" data-path="sec-d-9.html"><a href="sec-d-9.html"><i class="fa fa-check"></i><b>D.9</b> 谬误与陷阱</a></li>
+<li class="chapter" data-level="D.10" data-path="sec-d-10.html"><a href="sec-d-10.html"><i class="fa fa-check"></i><b>D.10</b> 结束语</a></li>
+<li class="chapter" data-level="D.11" data-path="sec-d-11.html"><a href="sec-d-11.html"><i class="fa fa-check"></i><b>D.11</b> 历史回顾与参考文献</a></li>
+<li class="chapter" data-level="" data-path="sec-d-exercises.html"><a href="sec-d-exercises.html"><i class="fa fa-check"></i>案例研究与习题（Andrea C. Arpaci-Dusseau、Remzi H. Arpaci-Dusseau）</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-d-exercises.html"><a href="sec-d-exercises.html#案例研究-1解构一块磁盘"><i class="fa fa-check"></i>案例研究 1：解构一块磁盘</a></li>
+<li class="chapter" data-level="" data-path="sec-d-exercises.html"><a href="sec-d-exercises.html#案例研究-2解析磁盘阵列"><i class="fa fa-check"></i>案例研究 2：解析磁盘阵列</a></li>
+<li class="chapter" data-level="" data-path="sec-d-exercises.html"><a href="sec-d-exercises.html#案例研究-3raid-重建"><i class="fa fa-check"></i>案例研究 3：RAID 重建</a></li>
+<li class="chapter" data-level="" data-path="sec-d-exercises.html"><a href="sec-d-exercises.html#案例研究-4raid-的性能预测"><i class="fa fa-check"></i>案例研究 4：RAID 的性能预测</a></li>
+<li class="chapter" data-level="" data-path="sec-d-exercises.html"><a href="sec-d-exercises.html#案例研究-5io-子系统设计"><i class="fa fa-check"></i>案例研究 5：I/O 子系统设计</a></li>
+<li class="chapter" data-level="" data-path="sec-d-exercises.html"><a href="sec-d-exercises.html#案例研究-6烂掉的位"><i class="fa fa-check"></i>案例研究 6：烂掉的位</a></li>
+<li class="chapter" data-level="" data-path="sec-d-exercises.html"><a href="sec-d-exercises.html#案例研究-7排序问题"><i class="fa fa-check"></i>案例研究 7：排序问题</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="E" data-path="app-e.html"><a href="app-e.html"><i class="fa fa-check"></i><b>E</b> 嵌入式系统</a>
+<ul>
+<li class="chapter" data-level="E.1" data-path="sec-e-1.html"><a href="sec-e-1.html"><i class="fa fa-check"></i><b>E.1</b> 引言</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-e-1.html"><a href="sec-e-1.html#实时处理"><i class="fa fa-check"></i>实时处理</a></li>
+</ul></li>
+<li class="chapter" data-level="E.2" data-path="sec-e-2.html"><a href="sec-e-2.html"><i class="fa fa-check"></i><b>E.2</b> 信号处理与嵌入式应用：数字信号处理器</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-e-2.html"><a href="sec-e-2.html#ti-320c55"><i class="fa fa-check"></i>TI 320C55</a></li>
+<li class="chapter" data-level="" data-path="sec-e-2.html"><a href="sec-e-2.html#ti-320c6x"><i class="fa fa-check"></i>TI 320C6x</a></li>
+<li class="chapter" data-level="" data-path="sec-e-2.html"><a href="sec-e-2.html#媒体扩展"><i class="fa fa-check"></i>媒体扩展</a></li>
+</ul></li>
+<li class="chapter" data-level="E.3" data-path="sec-e-3.html"><a href="sec-e-3.html"><i class="fa fa-check"></i><b>E.3</b> 嵌入式基准测试程序</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-e-3.html"><a href="sec-e-3.html#以功耗和效率为衡量指标"><i class="fa fa-check"></i>以功耗和效率为衡量指标</a></li>
+</ul></li>
+<li class="chapter" data-level="E.4" data-path="sec-e-4.html"><a href="sec-e-4.html"><i class="fa fa-check"></i><b>E.4</b> 嵌入式多处理器</a></li>
+<li class="chapter" data-level="E.5" data-path="sec-e-5.html"><a href="sec-e-5.html"><i class="fa fa-check"></i><b>E.5</b> 案例研究：索尼 PlayStation 2 的 Emotion Engine</a></li>
+<li class="chapter" data-level="E.6" data-path="sec-e-6.html"><a href="sec-e-6.html"><i class="fa fa-check"></i><b>E.6</b> 案例研究：三洋 VPC-SX500 数码相机</a></li>
+<li class="chapter" data-level="E.7" data-path="sec-e-7.html"><a href="sec-e-7.html"><i class="fa fa-check"></i><b>E.7</b> 案例研究：手机内部</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-e-7.html"><a href="sec-e-7.html#无线网络的背景知识"><i class="fa fa-check"></i>无线网络的背景知识</a></li>
+<li class="chapter" data-level="" data-path="sec-e-7.html"><a href="sec-e-7.html#手机"><i class="fa fa-check"></i>手机</a></li>
+<li class="chapter" data-level="" data-path="sec-e-7.html"><a href="sec-e-7.html#手机标准及其演进"><i class="fa fa-check"></i>手机标准及其演进</a></li>
+</ul></li>
+<li class="chapter" data-level="E.8" data-path="sec-e-8.html"><a href="sec-e-8.html"><i class="fa fa-check"></i><b>E.8</b> 结束语</a></li>
+</ul></li>
+<li class="chapter" data-level="F" data-path="app-f.html"><a href="app-f.html"><i class="fa fa-check"></i><b>F</b> 互连网络</a>
+<ul>
+<li class="chapter" data-level="F.1" data-path="sec-f-1.html"><a href="sec-f-1.html"><i class="fa fa-check"></i><b>F.1</b> 引言</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-f-1.html"><a href="sec-f-1.html#互连网络的领域"><i class="fa fa-check"></i>互连网络的领域</a></li>
+<li class="chapter" data-level="" data-path="sec-f-1.html"><a href="sec-f-1.html#本附录的讲法和组织"><i class="fa fa-check"></i>本附录的讲法和组织</a></li>
+</ul></li>
+<li class="chapter" data-level="F.2" data-path="sec-f-2.html"><a href="sec-f-2.html"><i class="fa fa-check"></i><b>F.2</b> 两个设备的互连</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-f-2.html"><a href="sec-f-2.html#网络接口的功能组装和处理消息"><i class="fa fa-check"></i>网络接口的功能：组装和处理消息</a></li>
+<li class="chapter" data-level="" data-path="sec-f-2.html"><a href="sec-f-2.html#网络的基本结构和功能介质与外形规格包传输流量控制和差错处理"><i class="fa fa-check"></i>网络的基本结构和功能：介质与外形规格、包传输、流量控制和差错处理</a></li>
+<li class="chapter" data-level="" data-path="sec-f-2.html"><a href="sec-f-2.html#性能刻画延迟与有效带宽"><i class="fa fa-check"></i>性能刻画：延迟与有效带宽</a></li>
+</ul></li>
+<li class="chapter" data-level="F.3" data-path="sec-f-3.html"><a href="sec-f-3.html"><i class="fa fa-check"></i><b>F.3</b> 连接两台以上的设备</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-f-3.html"><a href="sec-f-3.html#附加的网络结构和功能拓扑路由仲裁与交换"><i class="fa fa-check"></i>附加的网络结构和功能：拓扑、路由、仲裁与交换</a></li>
+<li class="chapter" data-level="" data-path="sec-f-3.html"><a href="sec-f-3.html#共享介质网络"><i class="fa fa-check"></i>共享介质网络</a></li>
+<li class="chapter" data-level="" data-path="sec-f-3.html"><a href="sec-f-3.html#交换介质网络"><i class="fa fa-check"></i>交换介质网络</a></li>
+<li class="chapter" data-level="" data-path="sec-f-3.html"><a href="sec-f-3.html#共享介质网络与交换介质网络的比较"><i class="fa fa-check"></i>共享介质网络与交换介质网络的比较</a></li>
+<li class="chapter" data-level="" data-path="sec-f-3.html"><a href="sec-f-3.html#性能刻画延迟与有效带宽-1"><i class="fa fa-check"></i>性能刻画：延迟与有效带宽</a></li>
+</ul></li>
+<li class="chapter" data-level="F.4" data-path="sec-f-4.html"><a href="sec-f-4.html"><i class="fa fa-check"></i><b>F.4</b> 网络拓扑</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-f-4.html"><a href="sec-f-4.html#集中式交换网络"><i class="fa fa-check"></i>集中式交换网络</a></li>
+<li class="chapter" data-level="" data-path="sec-f-4.html"><a href="sec-f-4.html#分布式交换网络"><i class="fa fa-check"></i>分布式交换网络</a></li>
+<li class="chapter" data-level="" data-path="sec-f-4.html"><a href="sec-f-4.html#拓扑对网络性能的影响"><i class="fa fa-check"></i>拓扑对网络性能的影响</a></li>
+</ul></li>
+<li class="chapter" data-level="F.5" data-path="sec-f-5.html"><a href="sec-f-5.html"><i class="fa fa-check"></i><b>F.5</b> 网络路由、仲裁和交换</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-f-5.html"><a href="sec-f-5.html#路由"><i class="fa fa-check"></i>路由</a></li>
+<li class="chapter" data-level="" data-path="sec-f-5.html"><a href="sec-f-5.html#仲裁"><i class="fa fa-check"></i>仲裁</a></li>
+<li class="chapter" data-level="" data-path="sec-f-5.html"><a href="sec-f-5.html#交换"><i class="fa fa-check"></i>交换</a></li>
+<li class="chapter" data-level="" data-path="sec-f-5.html"><a href="sec-f-5.html#对网络性能的影响"><i class="fa fa-check"></i>对网络性能的影响</a></li>
+</ul></li>
+<li class="chapter" data-level="F.6" data-path="sec-f-6.html"><a href="sec-f-6.html"><i class="fa fa-check"></i><b>F.6</b> 交换机微结构</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-f-6.html"><a href="sec-f-6.html#基本的交换机微结构"><i class="fa fa-check"></i>基本的交换机微结构</a></li>
+<li class="chapter" data-level="" data-path="sec-f-6.html"><a href="sec-f-6.html#缓冲组织"><i class="fa fa-check"></i>缓冲组织</a></li>
+<li class="chapter" data-level="" data-path="sec-f-6.html"><a href="sec-f-6.html#路由算法的实现"><i class="fa fa-check"></i>路由算法的实现</a></li>
+<li class="chapter" data-level="" data-path="sec-f-6.html"><a href="sec-f-6.html#交换机微结构的流水化"><i class="fa fa-check"></i>交换机微结构的流水化</a></li>
+<li class="chapter" data-level="" data-path="sec-f-6.html"><a href="sec-f-6.html#其他交换机微结构改进"><i class="fa fa-check"></i>其他交换机微结构改进</a></li>
+</ul></li>
+<li class="chapter" data-level="F.7" data-path="sec-f-7.html"><a href="sec-f-7.html"><i class="fa fa-check"></i><b>F.7</b> 商用互连网络的实际问题</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-f-7.html"><a href="sec-f-7.html#连通性"><i class="fa fa-check"></i>连通性</a></li>
+<li class="chapter" data-level="" data-path="sec-f-7.html"><a href="sec-f-7.html#标准化跨公司的互操作性"><i class="fa fa-check"></i>标准化：跨公司的互操作性</a></li>
+<li class="chapter" data-level="" data-path="sec-f-7.html"><a href="sec-f-7.html#拥塞管理"><i class="fa fa-check"></i>拥塞管理</a></li>
+<li class="chapter" data-level="" data-path="sec-f-7.html"><a href="sec-f-7.html#容错"><i class="fa fa-check"></i>容错</a></li>
+</ul></li>
+<li class="chapter" data-level="F.8" data-path="sec-f-8.html"><a href="sec-f-8.html"><i class="fa fa-check"></i><b>F.8</b> 互连网络实例</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-f-8.html"><a href="sec-f-8.html#片上网络intel-单芯片云计算机"><i class="fa fa-check"></i>片上网络：Intel 单芯片云计算机</a></li>
+<li class="chapter" data-level="" data-path="sec-f-8.html"><a href="sec-f-8.html#系统区域网络ibm-blue-genel-三维环面网络"><i class="fa fa-check"></i>系统区域网络：IBM Blue Gene/L 三维环面网络</a></li>
+<li class="chapter" data-level="" data-path="sec-f-8.html"><a href="sec-f-8.html#系统存储区域网络infiniband"><i class="fa fa-check"></i>系统/存储区域网络：InfiniBand</a></li>
+<li class="chapter" data-level="" data-path="sec-f-8.html"><a href="sec-f-8.html#以太网局域网"><i class="fa fa-check"></i>以太网：局域网</a></li>
+<li class="chapter" data-level="" data-path="sec-f-8.html"><a href="sec-f-8.html#广域网atm"><i class="fa fa-check"></i>广域网：ATM</a></li>
+</ul></li>
+<li class="chapter" data-level="F.9" data-path="sec-f-9.html"><a href="sec-f-9.html"><i class="fa fa-check"></i><b>F.9</b> 网络互连</a></li>
+<li class="chapter" data-level="F.10" data-path="sec-f-10.html"><a href="sec-f-10.html"><i class="fa fa-check"></i><b>F.10</b> 互连网络的交叉问题</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-f-10.html"><a href="sec-f-10.html#面向密度优化的处理器与面向-spec-优化的处理器"><i class="fa fa-check"></i>面向密度优化的处理器与面向 SPEC 优化的处理器</a></li>
+<li class="chapter" data-level="" data-path="sec-f-10.html"><a href="sec-f-10.html#智能交换机与智能接口卡"><i class="fa fa-check"></i>智能交换机与智能接口卡</a></li>
+<li class="chapter" data-level="" data-path="sec-f-10.html"><a href="sec-f-10.html#保护与用户对网络的访问"><i class="fa fa-check"></i>保护与用户对网络的访问</a></li>
+<li class="chapter" data-level="" data-path="sec-f-10.html"><a href="sec-f-10.html#高效的存储层次接口与高效的网络接口"><i class="fa fa-check"></i>高效的存储层次接口与高效的网络接口</a></li>
+<li class="chapter" data-level="" data-path="sec-f-10.html"><a href="sec-f-10.html#面向计算优化的处理器与接收开销"><i class="fa fa-check"></i>面向计算优化的处理器与接收开销</a></li>
+</ul></li>
+<li class="chapter" data-level="F.11" data-path="sec-f-11.html"><a href="sec-f-11.html"><i class="fa fa-check"></i><b>F.11</b> 谬误与陷阱</a></li>
+<li class="chapter" data-level="F.12" data-path="sec-f-12.html"><a href="sec-f-12.html"><i class="fa fa-check"></i><b>F.12</b> 结束语</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-f-12.html"><a href="sec-f-12.html#致谢"><i class="fa fa-check"></i>致谢</a></li>
+</ul></li>
+<li class="chapter" data-level="F.13" data-path="sec-f-13.html"><a href="sec-f-13.html"><i class="fa fa-check"></i><b>F.13</b> 历史回顾与参考文献</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-f-13.html"><a href="sec-f-13.html#广域网"><i class="fa fa-check"></i>广域网</a></li>
+<li class="chapter" data-level="" data-path="sec-f-13.html"><a href="sec-f-13.html#局域网"><i class="fa fa-check"></i>局域网</a></li>
+<li class="chapter" data-level="" data-path="sec-f-13.html"><a href="sec-f-13.html#系统区域网络"><i class="fa fa-check"></i>系统区域网络</a></li>
+<li class="chapter" data-level="" data-path="sec-f-13.html"><a href="sec-f-13.html#存储区域网络"><i class="fa fa-check"></i>存储区域网络</a></li>
+<li class="chapter" data-level="" data-path="sec-f-13.html"><a href="sec-f-13.html#片上网络"><i class="fa fa-check"></i>片上网络</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="sec-f-exercises.html"><a href="sec-f-exercises.html"><i class="fa fa-check"></i>习题</a></li>
+<li class="chapter" data-level="" data-path="sec-f-references.html"><a href="sec-f-references.html"><i class="fa fa-check"></i>参考文献</a></li>
+</ul></li>
+<li class="chapter" data-level="G" data-path="app-g.html"><a href="app-g.html"><i class="fa fa-check"></i><b>G</b> 深入讨论向量处理器</a>
+<ul>
+<li class="chapter" data-level="G.1" data-path="sec-g-1.html"><a href="sec-g-1.html"><i class="fa fa-check"></i><b>G.1</b> 引言</a></li>
+<li class="chapter" data-level="G.2" data-path="sec-g-2.html"><a href="sec-g-2.html"><i class="fa fa-check"></i><b>G.2</b> 深入讨论向量性能</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-g-2.html"><a href="sec-g-2.html#指令启动的流水化与多车道"><i class="fa fa-check"></i>指令启动的流水化与多车道</a></li>
+</ul></li>
+<li class="chapter" data-level="G.3" data-path="sec-g-3.html"><a href="sec-g-3.html"><i class="fa fa-check"></i><b>G.3</b> 深入讨论向量存储系统</a></li>
+<li class="chapter" data-level="G.4" data-path="sec-g-4.html"><a href="sec-g-4.html"><i class="fa fa-check"></i><b>G.4</b> 提高向量性能</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-g-4.html"><a href="sec-g-4.html#深入讨论链接"><i class="fa fa-check"></i>深入讨论链接</a></li>
+<li class="chapter" data-level="" data-path="sec-g-4.html"><a href="sec-g-4.html#深入讨论稀疏矩阵"><i class="fa fa-check"></i>深入讨论稀疏矩阵</a></li>
+</ul></li>
+<li class="chapter" data-level="G.5" data-path="sec-g-5.html"><a href="sec-g-5.html"><i class="fa fa-check"></i><b>G.5</b> 编译器向量化的效果</a></li>
+<li class="chapter" data-level="G.6" data-path="sec-g-6.html"><a href="sec-g-6.html"><i class="fa fa-check"></i><b>G.6</b> 融会贯通：向量处理器的性能</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-g-6.html"><a href="sec-g-6.html#向量性能的度量"><i class="fa fa-check"></i>向量性能的度量</a></li>
+<li class="chapter" data-level="" data-path="sec-g-6.html"><a href="sec-g-6.html#vmips-执行-daxpy-的峰值性能"><i class="fa fa-check"></i>VMIPS 执行 DAXPY 的峰值性能</a></li>
+<li class="chapter" data-level="" data-path="sec-g-6.html"><a href="sec-g-6.html#vmips-在-linpack-基准测试程序上的持续性能"><i class="fa fa-check"></i>VMIPS 在 Linpack 基准测试程序上的持续性能</a></li>
+<li class="chapter" data-level="" data-path="sec-g-6.html"><a href="sec-g-6.html#增强型-vmips-上的-daxpy-性能"><i class="fa fa-check"></i>增强型 VMIPS 上的 DAXPY 性能</a></li>
+</ul></li>
+<li class="chapter" data-level="G.7" data-path="sec-g-7.html"><a href="sec-g-7.html"><i class="fa fa-check"></i><b>G.7</b> 现代向量超级计算机：Cray X1</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-g-7.html"><a href="sec-g-7.html#多流处理器"><i class="fa fa-check"></i>多流处理器</a></li>
+<li class="chapter" data-level="" data-path="sec-g-7.html"><a href="sec-g-7.html#cray-x1e"><i class="fa fa-check"></i>Cray X1E</a></li>
+</ul></li>
+<li class="chapter" data-level="G.8" data-path="sec-g-8.html"><a href="sec-g-8.html"><i class="fa fa-check"></i><b>G.8</b> 结束语</a></li>
+<li class="chapter" data-level="G.9" data-path="sec-g-9.html"><a href="sec-g-9.html"><i class="fa fa-check"></i><b>G.9</b> 历史回顾与参考文献</a></li>
+<li class="chapter" data-level="" data-path="sec-g-exercises.html"><a href="sec-g-exercises.html"><i class="fa fa-check"></i>习题</a></li>
+<li class="chapter" data-level="" data-path="sec-g-references.html"><a href="sec-g-references.html"><i class="fa fa-check"></i>参考文献</a></li>
+</ul></li>
+<li class="chapter" data-level="H" data-path="app-h.html"><a href="app-h.html"><i class="fa fa-check"></i><b>H</b> VLIW 和 EPIC 的硬件与软件</a>
+<ul>
+<li class="chapter" data-level="H.1" data-path="sec-h-1.html"><a href="sec-h-1.html"><i class="fa fa-check"></i><b>H.1</b> 引言：静态地利用指令级并行</a></li>
+<li class="chapter" data-level="H.2" data-path="sec-h-2.html"><a href="sec-h-2.html"><i class="fa fa-check"></i><b>H.2</b> 循环级并行的检测与增强</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-h-2.html"><a href="sec-h-2.html#寻找相关-1"><i class="fa fa-check"></i>寻找相关</a></li>
+<li class="chapter" data-level="" data-path="sec-h-2.html"><a href="sec-h-2.html#消除相关的计算-1"><i class="fa fa-check"></i>消除相关的计算</a></li>
+</ul></li>
+<li class="chapter" data-level="H.3" data-path="sec-h-3.html"><a href="sec-h-3.html"><i class="fa fa-check"></i><b>H.3</b> 面向并行的代码调度与组织</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-h-3.html"><a href="sec-h-3.html#软件流水符号化的循环展开"><i class="fa fa-check"></i>软件流水：符号化的循环展开</a></li>
+<li class="chapter" data-level="" data-path="sec-h-3.html"><a href="sec-h-3.html#全局代码调度"><i class="fa fa-check"></i>全局代码调度</a></li>
+<li class="chapter" data-level="" data-path="sec-h-3.html"><a href="sec-h-3.html#踪迹调度聚焦关键路径"><i class="fa fa-check"></i>踪迹调度：聚焦关键路径</a></li>
+<li class="chapter" data-level="" data-path="sec-h-3.html"><a href="sec-h-3.html#超块"><i class="fa fa-check"></i>超块</a></li>
+</ul></li>
+<li class="chapter" data-level="H.4" data-path="sec-h-4.html"><a href="sec-h-4.html"><i class="fa fa-check"></i><b>H.4</b> 暴露并行性的硬件支持：谓词指令</a></li>
+<li class="chapter" data-level="H.5" data-path="sec-h-5.html"><a href="sec-h-5.html"><i class="fa fa-check"></i><b>H.5</b> 编译器推测的硬件支持</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-h-5.html"><a href="sec-h-5.html#保持异常行为的硬件支持"><i class="fa fa-check"></i>保持异常行为的硬件支持</a></li>
+<li class="chapter" data-level="" data-path="sec-h-5.html"><a href="sec-h-5.html#访存推测的硬件支持"><i class="fa fa-check"></i>访存推测的硬件支持</a></li>
+</ul></li>
+<li class="chapter" data-level="H.6" data-path="sec-h-6.html"><a href="sec-h-6.html"><i class="fa fa-check"></i><b>H.6</b> Intel IA-64 体系结构与 Itanium 处理器</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-h-6.html"><a href="sec-h-6.html#intel-ia-64-指令系统结构"><i class="fa fa-check"></i>Intel IA-64 指令系统结构</a></li>
+<li class="chapter" data-level="" data-path="sec-h-6.html"><a href="sec-h-6.html#ia-64-的寄存器模型"><i class="fa fa-check"></i>IA-64 的寄存器模型</a></li>
+<li class="chapter" data-level="" data-path="sec-h-6.html"><a href="sec-h-6.html#指令格式与显式并行的支持"><i class="fa fa-check"></i>指令格式与显式并行的支持</a></li>
+<li class="chapter" data-level="" data-path="sec-h-6.html"><a href="sec-h-6.html#指令系统基础"><i class="fa fa-check"></i>指令系统基础</a></li>
+<li class="chapter" data-level="" data-path="sec-h-6.html"><a href="sec-h-6.html#谓词执行与推测的支持"><i class="fa fa-check"></i>谓词执行与推测的支持</a></li>
+<li class="chapter" data-level="" data-path="sec-h-6.html"><a href="sec-h-6.html#itanium-2-处理器"><i class="fa fa-check"></i>Itanium 2 处理器</a></li>
+<li class="chapter" data-level="" data-path="sec-h-6.html"><a href="sec-h-6.html#功能部件与指令发射"><i class="fa fa-check"></i>功能部件与指令发射</a></li>
+<li class="chapter" data-level="" data-path="sec-h-6.html"><a href="sec-h-6.html#itanium-2-的性能"><i class="fa fa-check"></i>Itanium 2 的性能</a></li>
+</ul></li>
+<li class="chapter" data-level="H.7" data-path="sec-h-7.html"><a href="sec-h-7.html"><i class="fa fa-check"></i><b>H.7</b> 结束语</a></li>
+<li class="chapter" data-level="" data-path="sec-h-references.html"><a href="sec-h-references.html"><i class="fa fa-check"></i>参考文献</a></li>
+</ul></li>
+<li class="chapter" data-level="I" data-path="app-i.html"><a href="app-i.html"><i class="fa fa-check"></i><b>I</b> 大规模多处理器与科学计算应用</a>
+<ul>
+<li class="chapter" data-level="I.1" data-path="sec-i-1.html"><a href="sec-i-1.html"><i class="fa fa-check"></i><b>I.1</b> 引言</a></li>
+<li class="chapter" data-level="I.2" data-path="sec-i-2.html"><a href="sec-i-2.html"><i class="fa fa-check"></i><b>I.2</b> 处理器间通信：性能的关键问题</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-i-2.html"><a href="sec-i-2.html#不同通信机制的优点"><i class="fa fa-check"></i>不同通信机制的优点</a></li>
+</ul></li>
+<li class="chapter" data-level="I.3" data-path="sec-i-3.html"><a href="sec-i-3.html"><i class="fa fa-check"></i><b>I.3</b> 科学计算应用的特点</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-i-3.html"><a href="sec-i-3.html#科学计算应用的特点"><i class="fa fa-check"></i>科学计算应用的特点</a></li>
+<li class="chapter" data-level="" data-path="sec-i-3.html"><a href="sec-i-3.html#fft-核心"><i class="fa fa-check"></i>FFT 核心</a></li>
+<li class="chapter" data-level="" data-path="sec-i-3.html"><a href="sec-i-3.html#lu-核心"><i class="fa fa-check"></i>LU 核心</a></li>
+<li class="chapter" data-level="" data-path="sec-i-3.html"><a href="sec-i-3.html#barnes-应用"><i class="fa fa-check"></i>Barnes 应用</a></li>
+<li class="chapter" data-level="" data-path="sec-i-3.html"><a href="sec-i-3.html#ocean-应用"><i class="fa fa-check"></i>Ocean 应用</a></li>
+<li class="chapter" data-level="" data-path="sec-i-3.html"><a href="sec-i-3.html#并行程序的计算通信比"><i class="fa fa-check"></i>并行程序的计算/通信比</a></li>
+</ul></li>
+<li class="chapter" data-level="I.4" data-path="sec-i-4.html"><a href="sec-i-4.html"><i class="fa fa-check"></i><b>I.4</b> 同步：向大规模扩展</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-i-4.html"><a href="sec-i-4.html#同步性能面临的挑战"><i class="fa fa-check"></i>同步性能面临的挑战</a></li>
+<li class="chapter" data-level="" data-path="sec-i-4.html"><a href="sec-i-4.html#较大规模多处理器的同步机制"><i class="fa fa-check"></i>较大规模多处理器的同步机制</a></li>
+</ul></li>
+<li class="chapter" data-level="I.5" data-path="sec-i-5.html"><a href="sec-i-5.html"><i class="fa fa-check"></i><b>I.5</b> 共享存储多处理器上科学计算应用的性能</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-i-5.html"><a href="sec-i-5.html#对称共享存储多处理器上科学计算负载的性能"><i class="fa fa-check"></i>对称共享存储多处理器上科学计算负载的性能</a></li>
+<li class="chapter" data-level="" data-path="sec-i-5.html"><a href="sec-i-5.html#分布式存储多处理器上科学计算负载的性能"><i class="fa fa-check"></i>分布式存储多处理器上科学计算负载的性能</a></li>
+</ul></li>
+<li class="chapter" data-level="I.6" data-path="sec-i-6.html"><a href="sec-i-6.html"><i class="fa fa-check"></i><b>I.6</b> 用科学计算应用测量并行处理器的性能</a></li>
+<li class="chapter" data-level="I.7" data-path="sec-i-7.html"><a href="sec-i-7.html"><i class="fa fa-check"></i><b>I.7</b> Cache 一致性的实现</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-i-7.html"><a href="sec-i-7.html#在-dsm-多处理器中实现-cache-一致性"><i class="fa fa-check"></i>在 DSM 多处理器中实现 Cache 一致性</a></li>
+<li class="chapter" data-level="" data-path="sec-i-7.html"><a href="sec-i-7.html#避免由有限缓冲引起的死锁"><i class="fa fa-check"></i>避免由有限缓冲引起的死锁</a></li>
+<li class="chapter" data-level="" data-path="sec-i-7.html"><a href="sec-i-7.html#目录控制器的实现"><i class="fa fa-check"></i>目录控制器的实现</a></li>
+</ul></li>
+<li class="chapter" data-level="I.8" data-path="sec-i-8.html"><a href="sec-i-8.html"><i class="fa fa-check"></i><b>I.8</b> 定制集群方法：Blue Gene/L</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-i-8.html"><a href="sec-i-8.html#blue-genel-的计算节点"><i class="fa fa-check"></i>Blue Gene/L 的计算节点</a></li>
+</ul></li>
+<li class="chapter" data-level="I.9" data-path="sec-i-9.html"><a href="sec-i-9.html"><i class="fa fa-check"></i><b>I.9</b> 结束语</a></li>
+</ul></li>
+<li class="chapter" data-level="J" data-path="app-j.html"><a href="app-j.html"><i class="fa fa-check"></i><b>J</b> 计算机算术</a>
+<ul>
+<li class="chapter" data-level="J.1" data-path="sec-j-1.html"><a href="sec-j-1.html"><i class="fa fa-check"></i><b>J.1</b> 引言</a></li>
+<li class="chapter" data-level="J.2" data-path="sec-j-2.html"><a href="sec-j-2.html"><i class="fa fa-check"></i><b>J.2</b> 整数算术的基本技术</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-j-2.html"><a href="sec-j-2.html#行波进位加法"><i class="fa fa-check"></i>行波进位加法</a></li>
+<li class="chapter" data-level="" data-path="sec-j-2.html"><a href="sec-j-2.html#基-2-乘法和除法"><i class="fa fa-check"></i>基 2 乘法和除法</a></li>
+<li class="chapter" data-level="" data-path="sec-j-2.html"><a href="sec-j-2.html#有符号数"><i class="fa fa-check"></i>有符号数</a></li>
+<li class="chapter" data-level="" data-path="sec-j-2.html"><a href="sec-j-2.html#系统问题"><i class="fa fa-check"></i>系统问题</a></li>
+</ul></li>
+<li class="chapter" data-level="J.3" data-path="sec-j-3.html"><a href="sec-j-3.html"><i class="fa fa-check"></i><b>J.3</b> 浮点</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-j-3.html"><a href="sec-j-3.html#特殊值与非规格化数"><i class="fa fa-check"></i>特殊值与非规格化数</a></li>
+<li class="chapter" data-level="" data-path="sec-j-3.html"><a href="sec-j-3.html#浮点数的表示"><i class="fa fa-check"></i>浮点数的表示</a></li>
+</ul></li>
+<li class="chapter" data-level="J.4" data-path="sec-j-4.html"><a href="sec-j-4.html"><i class="fa fa-check"></i><b>J.4</b> 浮点乘法</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-j-4.html"><a href="sec-j-4.html#非规格化数"><i class="fa fa-check"></i>非规格化数</a></li>
+<li class="chapter" data-level="" data-path="sec-j-4.html"><a href="sec-j-4.html#乘法的精度"><i class="fa fa-check"></i>乘法的精度</a></li>
+</ul></li>
+<li class="chapter" data-level="J.5" data-path="sec-j-5.html"><a href="sec-j-5.html"><i class="fa fa-check"></i><b>J.5</b> 浮点加法</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-j-5.html"><a href="sec-j-5.html#加速加法"><i class="fa fa-check"></i>加速加法</a></li>
+<li class="chapter" data-level="" data-path="sec-j-5.html"><a href="sec-j-5.html#非规格化数-1"><i class="fa fa-check"></i>非规格化数</a></li>
+</ul></li>
+<li class="chapter" data-level="J.6" data-path="sec-j-6.html"><a href="sec-j-6.html"><i class="fa fa-check"></i><b>J.6</b> 除法与求余</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-j-6.html"><a href="sec-j-6.html#迭代除法"><i class="fa fa-check"></i>迭代除法</a></li>
+<li class="chapter" data-level="" data-path="sec-j-6.html"><a href="sec-j-6.html#浮点余数"><i class="fa fa-check"></i>浮点余数</a></li>
+</ul></li>
+<li class="chapter" data-level="J.7" data-path="sec-j-7.html"><a href="sec-j-7.html"><i class="fa fa-check"></i><b>J.7</b> 浮点运算的补充话题</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-j-7.html"><a href="sec-j-7.html#融合乘加"><i class="fa fa-check"></i>融合乘加</a></li>
+<li class="chapter" data-level="" data-path="sec-j-7.html"><a href="sec-j-7.html#精度"><i class="fa fa-check"></i>精度</a></li>
+<li class="chapter" data-level="" data-path="sec-j-7.html"><a href="sec-j-7.html#异常"><i class="fa fa-check"></i>异常</a></li>
+<li class="chapter" data-level="" data-path="sec-j-7.html"><a href="sec-j-7.html#下溢"><i class="fa fa-check"></i>下溢</a></li>
+</ul></li>
+<li class="chapter" data-level="J.8" data-path="sec-j-8.html"><a href="sec-j-8.html"><i class="fa fa-check"></i><b>J.8</b> 整数加法的加速</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-j-8.html"><a href="sec-j-8.html#先行进位"><i class="fa fa-check"></i>先行进位</a></li>
+<li class="chapter" data-level="" data-path="sec-j-8.html"><a href="sec-j-8.html#进位跳跃加法器"><i class="fa fa-check"></i>进位跳跃加法器</a></li>
+<li class="chapter" data-level="" data-path="sec-j-8.html"><a href="sec-j-8.html#进位选择加法器"><i class="fa fa-check"></i>进位选择加法器</a></li>
+</ul></li>
+<li class="chapter" data-level="J.9" data-path="sec-j-9.html"><a href="sec-j-9.html"><i class="fa fa-check"></i><b>J.9</b> 整数乘法和除法的加速</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-j-9.html"><a href="sec-j-9.html#跳-0-移位"><i class="fa fa-check"></i>跳 0 移位</a></li>
+<li class="chapter" data-level="" data-path="sec-j-9.html"><a href="sec-j-9.html#用单个加法器加快乘法"><i class="fa fa-check"></i>用单个加法器加快乘法</a></li>
+<li class="chapter" data-level="" data-path="sec-j-9.html"><a href="sec-j-9.html#用多个加法器加快乘法"><i class="fa fa-check"></i>用多个加法器加快乘法</a></li>
+<li class="chapter" data-level="" data-path="sec-j-9.html"><a href="sec-j-9.html#用单个加法器加快除法"><i class="fa fa-check"></i>用单个加法器加快除法</a></li>
+</ul></li>
+<li class="chapter" data-level="J.10" data-path="sec-j-10.html"><a href="sec-j-10.html"><i class="fa fa-check"></i><b>J.10</b> 融会贯通</a></li>
+<li class="chapter" data-level="J.11" data-path="sec-j-11.html"><a href="sec-j-11.html"><i class="fa fa-check"></i><b>J.11</b> 谬误与陷阱</a></li>
+<li class="chapter" data-level="J.12" data-path="sec-j-12.html"><a href="sec-j-12.html"><i class="fa fa-check"></i><b>J.12</b> 历史回顾与参考文献</a></li>
+<li class="chapter" data-level="" data-path="sec-j-exercises.html"><a href="sec-j-exercises.html"><i class="fa fa-check"></i>习题</a></li>
+<li class="chapter" data-level="" data-path="sec-j-references.html"><a href="sec-j-references.html"><i class="fa fa-check"></i>参考文献</a></li>
+</ul></li>
+<li class="chapter" data-level="K" data-path="app-k.html"><a href="app-k.html"><i class="fa fa-check"></i><b>K</b> 指令系统结构概览</a>
+<ul>
+<li class="chapter" data-level="K.1" data-path="sec-k-1.html"><a href="sec-k-1.html"><i class="fa fa-check"></i><b>K.1</b> 引言</a></li>
+<li class="chapter" data-level="K.2" data-path="sec-k-2.html"><a href="sec-k-2.html"><i class="fa fa-check"></i><b>K.2</b> 桌面机、服务器和嵌入式计算机的 RISC 体系结构概览</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-k-2.html"><a href="sec-k-2.html#引言"><i class="fa fa-check"></i>引言</a></li>
+<li class="chapter" data-level="" data-path="sec-k-2.html"><a href="sec-k-2.html#寻址方式和指令格式"><i class="fa fa-check"></i>寻址方式和指令格式</a></li>
+<li class="chapter" data-level="" data-path="sec-k-2.html"><a href="sec-k-2.html#指令"><i class="fa fa-check"></i>指令</a></li>
+<li class="chapter" data-level="" data-path="sec-k-2.html"><a href="sec-k-2.html#指令rv64g-之外的常见扩展"><i class="fa fa-check"></i>指令：RV64G 之外的常见扩展</a></li>
+<li class="chapter" data-level="" data-path="sec-k-2.html"><a href="sec-k-2.html#mips64-r6-独有的指令"><i class="fa fa-check"></i>MIPS64 R6 独有的指令</a></li>
+<li class="chapter" data-level="" data-path="sec-k-2.html"><a href="sec-k-2.html#sparc-v.9-独有的指令"><i class="fa fa-check"></i>SPARC v.9 独有的指令</a></li>
+<li class="chapter" data-level="" data-path="sec-k-2.html"><a href="sec-k-2.html#arm-特有的指令"><i class="fa fa-check"></i>ARM 特有的指令</a></li>
+<li class="chapter" data-level="" data-path="sec-k-2.html"><a href="sec-k-2.html#power3-特有的指令"><i class="fa fa-check"></i>Power3 特有的指令</a></li>
+<li class="chapter" data-level="" data-path="sec-k-2.html"><a href="sec-k-2.html#指令桌面服务器-risc-的多媒体扩展"><i class="fa fa-check"></i>指令：桌面/服务器 RISC 的多媒体扩展</a></li>
+<li class="chapter" data-level="" data-path="sec-k-2.html"><a href="sec-k-2.html#指令嵌入式-risc-的数字信号处理扩展"><i class="fa fa-check"></i>指令：嵌入式 RISC 的数字信号处理扩展</a></li>
+<li class="chapter" data-level="" data-path="sec-k-2.html"><a href="sec-k-2.html#结束语"><i class="fa fa-check"></i>结束语</a></li>
+</ul></li>
+<li class="chapter" data-level="K.3" data-path="sec-k-3.html"><a href="sec-k-3.html"><i class="fa fa-check"></i><b>K.3</b> Intel 80x86</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-k-3.html"><a href="sec-k-3.html#引言-1"><i class="fa fa-check"></i>引言</a></li>
+<li class="chapter" data-level="" data-path="sec-k-3.html"><a href="sec-k-3.html#x86-的寄存器和数据寻址方式"><i class="fa fa-check"></i>80x86 的寄存器和数据寻址方式</a></li>
+<li class="chapter" data-level="" data-path="sec-k-3.html"><a href="sec-k-3.html#x86-的整数运算"><i class="fa fa-check"></i>80x86 的整数运算</a></li>
+<li class="chapter" data-level="" data-path="sec-k-3.html"><a href="sec-k-3.html#x86-的浮点运算"><i class="fa fa-check"></i>80x86 的浮点运算</a></li>
+<li class="chapter" data-level="" data-path="sec-k-3.html"><a href="sec-k-3.html#x86-指令编码"><i class="fa fa-check"></i>80x86 指令编码</a></li>
+<li class="chapter" data-level="" data-path="sec-k-3.html"><a href="sec-k-3.html#融会贯通指令系统使用情况的测量"><i class="fa fa-check"></i>融会贯通：指令系统使用情况的测量</a></li>
+<li class="chapter" data-level="" data-path="sec-k-3.html"><a href="sec-k-3.html#结束语-1"><i class="fa fa-check"></i>结束语</a></li>
+</ul></li>
+<li class="chapter" data-level="K.4" data-path="sec-k-4.html"><a href="sec-k-4.html"><i class="fa fa-check"></i><b>K.4</b> VAX 体系结构</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-k-4.html"><a href="sec-k-4.html#引言-2"><i class="fa fa-check"></i>引言</a></li>
+<li class="chapter" data-level="" data-path="sec-k-4.html"><a href="sec-k-4.html#vax-的操作数与寻址方式"><i class="fa fa-check"></i>VAX 的操作数与寻址方式</a></li>
+<li class="chapter" data-level="" data-path="sec-k-4.html"><a href="sec-k-4.html#vax-指令的编码"><i class="fa fa-check"></i>VAX 指令的编码</a></li>
+<li class="chapter" data-level="" data-path="sec-k-4.html"><a href="sec-k-4.html#vax-的操作"><i class="fa fa-check"></i>VAX 的操作</a></li>
+<li class="chapter" data-level="" data-path="sec-k-4.html"><a href="sec-k-4.html#融会贯通的例子swap"><i class="fa fa-check"></i>融会贯通的例子：swap</a></li>
+<li class="chapter" data-level="" data-path="sec-k-4.html"><a href="sec-k-4.html#一个更长的例子sort"><i class="fa fa-check"></i>一个更长的例子：sort</a></li>
+<li class="chapter" data-level="" data-path="sec-k-4.html"><a href="sec-k-4.html#谬误与陷阱"><i class="fa fa-check"></i>谬误与陷阱</a></li>
+<li class="chapter" data-level="" data-path="sec-k-4.html"><a href="sec-k-4.html#结束语-2"><i class="fa fa-check"></i>结束语</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="sec-k-exercises.html"><a href="sec-k-exercises.html"><i class="fa fa-check"></i>习题</a></li>
+<li class="chapter" data-level="K.5" data-path="sec-k-5.html"><a href="sec-k-5.html"><i class="fa fa-check"></i><b>K.5</b> 大型机的 IBM 360/370 体系结构</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-k-5.html"><a href="sec-k-5.html#引言-3"><i class="fa fa-check"></i>引言</a></li>
+<li class="chapter" data-level="" data-path="sec-k-5.html"><a href="sec-k-5.html#system360-指令系统"><i class="fa fa-check"></i>System/360 指令系统</a></li>
+<li class="chapter" data-level="" data-path="sec-k-5.html"><a href="sec-k-5.html#的详细测量结果"><i class="fa fa-check"></i>360 的详细测量结果</a></li>
+</ul></li>
+<li class="chapter" data-level="K.6" data-path="sec-k-6.html"><a href="sec-k-6.html"><i class="fa fa-check"></i><b>K.6</b> 历史回顾与参考文献</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-k-6.html"><a href="sec-k-6.html#致谢-1"><i class="fa fa-check"></i>致谢</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="L" data-path="app-l.html"><a href="app-l.html"><i class="fa fa-check"></i><b>L</b> 地址转换的高级概念</a>
+<ul>
+<li class="chapter" data-level="L.1" data-path="sec-l-1.html"><a href="sec-l-1.html"><i class="fa fa-check"></i><b>L.1</b> 引言</a></li>
+<li class="chapter" data-level="L.2" data-path="sec-l-2.html"><a href="sec-l-2.html"><i class="fa fa-check"></i><b>L.2</b> 现代芯片上的地址转换</a></li>
+<li class="chapter" data-level="L.3" data-path="sec-l-3.html"><a href="sec-l-3.html"><i class="fa fa-check"></i><b>L.3</b> L1 TLB</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-l-3.html"><a href="sec-l-3.html#指令-tlb-与数据-tlb-分开"><i class="fa fa-check"></i>3.1　指令 TLB 与数据 TLB 分开</a></li>
+<li class="chapter" data-level="" data-path="sec-l-3.html"><a href="sec-l-3.html#不同页大小各用一组-l1-tlb"><i class="fa fa-check"></i>3.2　不同页大小各用一组 L1 TLB</a></li>
+</ul></li>
+<li class="chapter" data-level="L.4" data-path="sec-l-4.html"><a href="sec-l-4.html"><i class="fa fa-check"></i><b>L.4</b> L2 TLB</a></li>
+<li class="chapter" data-level="L.5" data-path="sec-l-5.html"><a href="sec-l-5.html"><i class="fa fa-check"></i><b>L.5</b> 支持多种页大小</a></li>
+<li class="chapter" data-level="L.6" data-path="sec-l-6.html"><a href="sec-l-6.html"><i class="fa fa-check"></i><b>L.6</b> 页表遍历</a></li>
+<li class="chapter" data-level="L.7" data-path="sec-l-7.html"><a href="sec-l-7.html"><i class="fa fa-check"></i><b>L.7</b> MMU Cache</a></li>
+<li class="chapter" data-level="L.8" data-path="sec-l-8.html"><a href="sec-l-8.html"><i class="fa fa-check"></i><b>L.8</b> MMU 的集成：融会贯通</a></li>
+<li class="chapter" data-level="L.9" data-path="sec-l-9.html"><a href="sec-l-9.html"><i class="fa fa-check"></i><b>L.9</b> 地址转换预取</a></li>
+<li class="chapter" data-level="L.10" data-path="sec-l-10.html"><a href="sec-l-10.html"><i class="fa fa-check"></i><b>L.10</b> 重放预取</a></li>
+<li class="chapter" data-level="L.11" data-path="sec-l-11.html"><a href="sec-l-11.html"><i class="fa fa-check"></i><b>L.11</b> 转换连续性</a></li>
+<li class="chapter" data-level="L.12" data-path="sec-l-12.html"><a href="sec-l-12.html"><i class="fa fa-check"></i><b>L.12</b> 结论</a></li>
+<li class="chapter" data-level="" data-path="sec-l-references.html"><a href="sec-l-references.html"><i class="fa fa-check"></i>参考文献</a></li>
+</ul></li>
+<li class="chapter" data-level="M" data-path="app-m.html"><a href="app-m.html"><i class="fa fa-check"></i><b>M</b> 历史回顾与参考文献</a>
+<ul>
+<li class="chapter" data-level="M.1" data-path="sec-m-1.html"><a href="sec-m-1.html"><i class="fa fa-check"></i><b>M.1</b> 引言</a></li>
+<li class="chapter" data-level="M.2" data-path="sec-m-2.html"><a href="sec-m-2.html"><i class="fa fa-check"></i><b>M.2</b> 计算机的早期发展（第 1 章）</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-m-2.html"><a href="sec-m-2.html#第一批通用电子计算机"><i class="fa fa-check"></i>第一批通用电子计算机</a></li>
+<li class="chapter" data-level="" data-path="sec-m-2.html"><a href="sec-m-2.html#重要的专用机器"><i class="fa fa-check"></i>重要的专用机器</a></li>
+<li class="chapter" data-level="" data-path="sec-m-2.html"><a href="sec-m-2.html#商业发展"><i class="fa fa-check"></i>商业发展</a></li>
+<li class="chapter" data-level="" data-path="sec-m-2.html"><a href="sec-m-2.html#定量性能度量的发展成功与失败"><i class="fa fa-check"></i>定量性能度量的发展：成功与失败</a></li>
+<li class="chapter" data-level="" data-path="sec-m-2.html"><a href="sec-m-2.html#sec-m-2-references"><i class="fa fa-check"></i>参考文献</a></li>
+</ul></li>
+<li class="chapter" data-level="M.3" data-path="sec-m-3.html"><a href="sec-m-3.html"><i class="fa fa-check"></i><b>M.3</b> 存储层次与保护的发展（第 2 章和附录 B）</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-m-3.html"><a href="sec-m-3.html#sec-m-3-references"><i class="fa fa-check"></i>参考文献</a></li>
+</ul></li>
+<li class="chapter" data-level="M.4" data-path="sec-m-4.html"><a href="sec-m-4.html"><i class="fa fa-check"></i><b>M.4</b> 指令系统的演变（附录 A、J 和 K）</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-m-4.html"><a href="sec-m-4.html#栈体系结构"><i class="fa fa-check"></i>栈体系结构</a></li>
+<li class="chapter" data-level="" data-path="sec-m-4.html"><a href="sec-m-4.html#计算机体系结构的定义"><i class="fa fa-check"></i>计算机体系结构的定义</a></li>
+<li class="chapter" data-level="" data-path="sec-m-4.html"><a href="sec-m-4.html#高级语言计算机体系结构"><i class="fa fa-check"></i>高级语言计算机体系结构</a></li>
+<li class="chapter" data-level="" data-path="sec-m-4.html"><a href="sec-m-4.html#精简指令系统计算机"><i class="fa fa-check"></i>精简指令系统计算机</a></li>
+<li class="chapter" data-level="" data-path="sec-m-4.html"><a href="sec-m-4.html#sec-m-4-references"><i class="fa fa-check"></i>参考文献</a></li>
+</ul></li>
+<li class="chapter" data-level="M.5" data-path="sec-m-5.html"><a href="sec-m-5.html"><i class="fa fa-check"></i><b>M.5</b> 流水线与指令级并行的发展（第 3 章和附录 C、H）</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-m-5.html"><a href="sec-m-5.html#早期的流水线-cpu"><i class="fa fa-check"></i>早期的流水线 CPU</a></li>
+<li class="chapter" data-level="" data-path="sec-m-5.html"><a href="sec-m-5.html#动态调度的引入"><i class="fa fa-check"></i>动态调度的引入</a></li>
+<li class="chapter" data-level="" data-path="sec-m-5.html"><a href="sec-m-5.html#ibm-36091一台里程碑式的计算机"><i class="fa fa-check"></i>IBM 360/91：一台里程碑式的计算机</a></li>
+<li class="chapter" data-level="" data-path="sec-m-5.html"><a href="sec-m-5.html#转移预测方案"><i class="fa fa-check"></i>转移预测方案</a></li>
+<li class="chapter" data-level="" data-path="sec-m-5.html"><a href="sec-m-5.html#多发射处理器的发展"><i class="fa fa-check"></i>多发射处理器的发展</a></li>
+<li class="chapter" data-level="" data-path="sec-m-5.html"><a href="sec-m-5.html#编译技术和支持调度的硬件"><i class="fa fa-check"></i>编译技术和支持调度的硬件</a></li>
+<li class="chapter" data-level="" data-path="sec-m-5.html"><a href="sec-m-5.html#epic-和-ia-64-的发展"><i class="fa fa-check"></i>EPIC 和 IA-64 的发展</a></li>
+<li class="chapter" data-level="" data-path="sec-m-5.html"><a href="sec-m-5.html#ilp-的研究和提高-ilp-的思路"><i class="fa fa-check"></i>ILP 的研究和提高 ILP 的思路</a></li>
+<li class="chapter" data-level="" data-path="sec-m-5.html"><a href="sec-m-5.html#突破数据流极限"><i class="fa fa-check"></i>突破数据流极限</a></li>
+<li class="chapter" data-level="" data-path="sec-m-5.html"><a href="sec-m-5.html#近年来的先进微处理器"><i class="fa fa-check"></i>近年来的先进微处理器</a></li>
+<li class="chapter" data-level="" data-path="sec-m-5.html"><a href="sec-m-5.html#多线程和同时多线程"><i class="fa fa-check"></i>多线程和同时多线程</a></li>
+<li class="chapter" data-level="" data-path="sec-m-5.html"><a href="sec-m-5.html#sec-m-5-references"><i class="fa fa-check"></i>参考文献</a></li>
+</ul></li>
+<li class="chapter" data-level="M.6" data-path="sec-m-6.html"><a href="sec-m-6.html"><i class="fa fa-check"></i><b>M.6</b> SIMD 超级计算机、向量计算机、多媒体 SIMD 指令扩展和图形处理器的发展（第 4 章）</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-m-6.html"><a href="sec-m-6.html#simd-超级计算机"><i class="fa fa-check"></i>SIMD 超级计算机</a></li>
+<li class="chapter" data-level="" data-path="sec-m-6.html"><a href="sec-m-6.html#向量计算机"><i class="fa fa-check"></i>向量计算机</a></li>
+<li class="chapter" data-level="" data-path="sec-m-6.html"><a href="sec-m-6.html#多媒体-simd-指令扩展"><i class="fa fa-check"></i>多媒体 SIMD 指令扩展</a></li>
+<li class="chapter" data-level="" data-path="sec-m-6.html"><a href="sec-m-6.html#图形处理器"><i class="fa fa-check"></i>图形处理器</a></li>
+<li class="chapter" data-level="" data-path="sec-m-6.html"><a href="sec-m-6.html#sec-m-6-references"><i class="fa fa-check"></i>参考文献</a></li>
+</ul></li>
+<li class="chapter" data-level="M.7" data-path="sec-m-7.html"><a href="sec-m-7.html"><i class="fa fa-check"></i><b>M.7</b> 多处理器与并行处理的历史（第 5 章和附录 F、G、I）</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-m-7.html"><a href="sec-m-7.html#simd-计算机想法诱人尝试很多没有持久的成功"><i class="fa fa-check"></i>SIMD 计算机：想法诱人，尝试很多，没有持久的成功</a></li>
+<li class="chapter" data-level="" data-path="sec-m-7.html"><a href="sec-m-7.html#其他早期实验"><i class="fa fa-check"></i>其他早期实验</a></li>
+<li class="chapter" data-level="" data-path="sec-m-7.html"><a href="sec-m-7.html#并行处理的大争论"><i class="fa fa-check"></i>并行处理的大争论</a></li>
+<li class="chapter" data-level="" data-path="sec-m-7.html"><a href="sec-m-7.html#近年来的进展"><i class="fa fa-check"></i>近年来的进展</a></li>
+<li class="chapter" data-level="" data-path="sec-m-7.html"><a href="sec-m-7.html#sec-m-7-references"><i class="fa fa-check"></i>参考文献</a></li>
+</ul></li>
+<li class="chapter" data-level="M.8" data-path="sec-m-8.html"><a href="sec-m-8.html"><i class="fa fa-check"></i><b>M.8</b> 集群的发展（第 6 章）</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-m-8.html"><a href="sec-m-8.html#集群wsc-的先驱"><i class="fa fa-check"></i>集群：WSC 的先驱</a></li>
+<li class="chapter" data-level="" data-path="sec-m-8.html"><a href="sec-m-8.html#效用计算云计算的先驱"><i class="fa fa-check"></i>效用计算：云计算的先驱</a></li>
+<li class="chapter" data-level="" data-path="sec-m-8.html"><a href="sec-m-8.html#集装箱"><i class="fa fa-check"></i>集装箱</a></li>
+<li class="chapter" data-level="" data-path="sec-m-8.html"><a href="sec-m-8.html#sec-m-8-references"><i class="fa fa-check"></i>参考文献</a></li>
+</ul></li>
+<li class="chapter" data-level="M.9" data-path="sec-m-9.html"><a href="sec-m-9.html"><i class="fa fa-check"></i><b>M.9</b> 历史回顾与参考文献</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-m-9.html"><a href="sec-m-9.html#sec-m-9-references"><i class="fa fa-check"></i>参考文献</a></li>
+</ul></li>
+<li class="chapter" data-level="M.10" data-path="sec-m-10.html"><a href="sec-m-10.html"><i class="fa fa-check"></i><b>M.10</b> 磁存储、RAID 和 I/O 总线的历史（附录 D）</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-m-10.html"><a href="sec-m-10.html#磁存储"><i class="fa fa-check"></i>磁存储</a></li>
+<li class="chapter" data-level="" data-path="sec-m-10.html"><a href="sec-m-10.html#raid"><i class="fa fa-check"></i>RAID</a></li>
+<li class="chapter" data-level="" data-path="sec-m-10.html"><a href="sec-m-10.html#io-总线和控制器"><i class="fa fa-check"></i>I/O 总线和控制器</a></li>
+<li class="chapter" data-level="" data-path="sec-m-10.html"><a href="sec-m-10.html#sec-m-10-references"><i class="fa fa-check"></i>参考文献</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">计算机体系结构：量化研究方法</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="sec-m-5" class="section level2 hasAnchor" number="20.5">
+<h2><span class="header-section-number">M.5</span> 流水线与指令级并行的发展（第 3 章和附录 C、H）<a href="sec-m-5.html#sec-m-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="早期的流水线-cpu" class="section level3 unnumbered hasAnchor">
+<h3>早期的流水线 CPU<a href="sec-m-5.html#早期的流水线-cpu" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>一般认为，第一台通用的流水线处理器是 IBM 7030，即 Stretch。Stretch 是 IBM 704 的后继机，目标是速度达到 704 的 100 倍。这一目标远远超出当时的技术水平，是一次「延伸」（stretch），这台机器因此得名。按照计划，Stretch 用一条四级流水线把取指、译码和执行重叠起来，由此把速度提高到原来的 1.6 倍。Bloch［1959］和 Bucholtz［1962］介绍了它的设计和工程上的权衡，其中包括 ALU 旁路的使用。</p>
+<p>20 世纪 70 年代末和 80 年代初出现了一系列介绍流水线的综述，简单流水线所用的大部分术语和大多数基本技术都出自这些综述。这些综述包括 Keller［1975］、Ramamoorthy and Li［1977］和 Chen［1980］，以及 Kogge［1981］，后者是一本专讲流水线的书。Davidson 和他的同事［1971，1975］提出了流水线预约表的概念，用来设计带反馈的多周期流水线（Kogge［1981］也有介绍）。许多设计者在设计流水线或编写调度流水线的软件时，都会用到这些概念的某种变形。</p>
+<p>RISC 处理器在设计之初就考虑了实现和流水化的方便。20 世纪 80 年代初发表的几篇早期 RISC 论文，都试图定量分析简化指令系统带来的性能优势。不过，最好的分析是 Bhandarkar 和 Clark 在 1991 年发表的 VAX 实现与 MIPS 实现的比较（见<a href="sec-m-4.html#fig-m-1">图 M.1</a>），这时距第一批 RISC 论文发表已经过去 10 年。关于 RISC 在实现上的好处，人们争论了 10 年，这篇论文终于让最持怀疑态度的设计者也相信了 RISC 指令系统结构的优势。</p>
+<p>J. E. Smith 和他的同事写了许多论文，研究高速标量 CPU 的指令发射、异常处理和流水线深度。Kunkel 和 Smith［1986］评估了流水线开销和相关对最优流水线深度的影响，还精彩地讨论了锁存器的设计及其对流水线的影响。Smith 和 Pleszkun［1988］评估了保持精确异常的多种技术。Weiss 和 Smith［1984］评估了多种硬件流水线调度和指令发射技术。</p>
+<p>MIPS R4000 是最早的深度流水线微处理器之一，Killian［1991］和 Heinrich［1993］介绍了它。Alpha 的第一个实现（21064）的指令系统和整数流水线结构都与 R4000 相近，浮点部件的流水化程度更高。</p>
+</div>
+<div id="动态调度的引入" class="section level3 unnumbered hasAnchor">
+<h3>动态调度的引入<a href="sec-m-5.html#动态调度的引入" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>1964 年，CDC 交付了第一台 CDC 6600。CDC 6600 在许多方面都独树一帜：它引入了记分牌；它是第一个大量使用多个功能部件的处理器；它的外围处理器采用了多线程。当时人们已经认识到流水线与指令系统设计相互影响，因此 CDC 6600 采用简单的 load-store 型指令系统，以便于流水化。CDC 6600 还采用了先进的组装技术。Thornton［1964］介绍了它的流水线和 I/O 处理器的体系结构，其中包括乱序执行指令的概念。Thornton 的书［1970］从工艺到体系结构，对整个处理器作了精彩的描述，书中还有一篇 Cray 写的序言。（遗憾的是，这本书目前已经绝版。）CDC 6600 还有一个供 FORTRAN 编译器使用的指令调度程序，Thorlin［1967］对它作了介绍。</p>
+</div>
+<div id="ibm-36091一台里程碑式的计算机" class="section level3 unnumbered hasAnchor">
+<h3>IBM 360/91：一台里程碑式的计算机<a href="sec-m-5.html#ibm-36091一台里程碑式的计算机" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>IBM 360/91 引入了许多新概念，包括数据的标记、寄存器重命名、存储器冒险的动态检测，以及通用的前递。Tomasulo 算法见于他 1967 年的论文。Anderson、Sparacio 和 Tomasulo［1967］介绍了这台处理器的其他方面，包括转移预测的使用。360/91 的许多思想后来沉寂了将近 25 年，到 20 世纪 90 年代才重新得到广泛应用。遗憾的是，360/91 并不成功，只卖出了寥寥几台。它的设计复杂，推向市场的时间因此推迟，结果性能被 Model 85 超过。Model 85 是 IBM 第一台带 Cache 的处理器。</p>
+</div>
+<div id="转移预测方案" class="section level3 unnumbered hasAnchor">
+<h3>转移预测方案<a href="sec-m-5.html#转移预测方案" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>J. E. Smith［1981］介绍了 2 位的动态硬件转移预测方案。Ditzel 和 McLellan［1987］为 CRISP 设计了一种新颖的转移目标缓冲，它能实现转移折叠。我们讨论的相关预测器由 Pan、So 和 Rameh［1992］提出。Yeh 和 Patt［1992，1993］推广了相关的思想，提出了多级预测器：每条转移指令使用各自的转移历史，与 21264 中的局部历史预测器类似。McFarling 的竞争预测方案（他称之为组合预测器）见于他 1993 年的技术报告。近年来还有许多关于转移预测的论文，都以多级预测器和相关预测器思想的各种变形为基础。Kaeli 和 Emma［1991］介绍了返回地址预测，Evers et al.［1998］对多级预测器作了深入分析。第 3 章给出的数据来自 Skadron et al.［1999］。还有几种预测方案的效果可能比竞争预测器更好一些，Eden and Mudge［1998］和 Jimenez and Lin［2002］介绍了这类方法。</p>
+</div>
+<div id="多发射处理器的发展" class="section level3 unnumbered hasAnchor">
+<h3>多发射处理器的发展<a href="sec-m-5.html#多发射处理器的发展" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>IBM 在多发射方面做了开创性的工作。20 世纪 60 年代，IBM 在加利福尼亚开展了一个名为 ACS 的项目。这个项目包括：多发射的概念；一种动态调度的方案（不过它的机制比 Tomasulo 方案简单，使用后备寄存器）；沿转移的两条路径同时取指。项目最初的目标是做一种新的体系结构，接替 Stretch 并超越 CDC 6600/6800。ACS 在纽约启动，后来搬到加利福尼亚，又改为与 S/360 兼容，最终被取消。John Cocke 是这个团队的思想核心之一。团队里有一些 IBM 的老将，也有一批年轻的成员，其中许多人后来在 IBM 内外担任了其他重要角色，包括 Jack Bertram、Ed Sussenguth、Gene Amdahl、Herb Schorr、Fran Allen、Lynn Conway 和 Phil Dauber 等人。编译器小组发表了许多想法，在 IBM 以外影响很大；体系结构方面的思想当时却没有广泛传播。关于这个重要项目，能找到的最完整的资料在 www.cs.clemson.edu/~mark/acs.html，其中有对 ACS 老成员的访谈和指向其他资料的链接。Sussenguth［1999］是 ACS 的一篇很好的概述。</p>
+<p>真正进入市场的早期多发射处理器，大多采用 LIW 或 VLIW 的设计方法。Charlesworth［1981］介绍了 Floating Point Systems 公司的 AP-120B，这是最早的宽指令处理器之一，一条指令中包含多个操作。为了高效地使用这台处理器，Floating Point Systems 运用了软件流水的概念，既用在编译器中，也用在手工编写的汇编语言库中。这台处理器是附属处理器，因此通用处理器实现多发射时遇到的许多困难（如虚拟存储和异常处理）都可以不必考虑。</p>
+
+<p>早期的一些 VLIW 处理器（如 AP-120B 和 i860）用过一种有意思的流水线组织：操作要「推」过功能部件，结果在流水线末端「接住」。在这类处理器中，一个操作只有在后面（按顺序）有另一个操作推它时才会前进。此外，一条指令要为一条较早发射的指令指定目的地：这条新操作推入流水线时，那条较早的指令就从流水线中推出。这种做法的好处是，操作刚发射时不指定结果的目的地，等到真正写结果寄存器时才指定。两者分开以后，硬件就不必检测写后写（WAW）冒险和读后写（WAR）冒险。缺点是代码会变长：如果某个操作依赖一个仍在流水线中的操作，而眼下又不需要同类的其他操作，就可能要插入空操作，把结果推出来。除了这两种处理器，几乎所有设计者都没有采用「推入接出」做法，而是选择了自排空的流水线：目的地在发射的指令中指定，指令发射后无须再做什么就能执行完。看来，自排空流水线在代码密度和简化代码生成方面的好处，超过了那种较为特殊的结构的好处。</p>
+<p>20 世纪 80 年代中期，几个研究项目引入了某种形式的多发射。例如，斯坦福的 MIPS 处理器能在一条指令中放两个操作，不过这种体系结构的商业版本去掉了这一功能，主要是出于性能上的考虑。Fisher［1983］和他在耶鲁的同事提出构造一种指令非常宽（512 位）的处理器，并把这类处理器命名为 VLIW。这种处理器的代码用踪迹调度生成；踪迹调度最初是 Fisher［1981］为生成水平型微代码而开发的。耶鲁处理器上踪迹调度的实现见 Fisher 等人［1984］和 Ellis［1986］。</p>
+<p>IBM 虽然取消了 ACS，但 20 世纪 80 年代这一领域的研究仍很活跃。ACS 取消 10 多年后，John Cocke 提出了一种新的超标量处理器方案，由硬件动态地作出发射决策。20 世纪 80 年代中期，他和 Tilak Agerwala 在几次报告中介绍了其中的关键思想，并创造了<em>超标量</em>（superscalar）一词。他把这个设计称为 America，Agerwala 和 Cocke［1987］对它作了介绍。IBM Power1 体系结构（RS/6000 系列）就以这些思想为基础（见 Bakoglu 等人［1989］）。</p>
+<p>J. E. Smith［1984］和他在威斯康星的同事提出了解耦方法，它包括多发射和有限的动态流水线调度。这种处理器的一个关键特点是用队列保持某一类指令（如访存指令）之间的顺序，同时允许这类指令落后或超前于另一类指令。Smith 等人［1987］介绍的 Astronautics ZS-1 体现了这种方法，它用队列连接 load-store 部件和运算部件。Power2 的设计也以类似的方式使用队列。J. E. Smith［1989］还阐述了动态调度的优点，并把它与静态调度作了比较。</p>
+<p>推测的概念源于最初的 360/91，它实现了一种非常有限的推测。近来的处理器把 360/91 的动态调度技术与一个缓冲结合起来，以支持按序提交。Smith 和 Pleszkun［1988］研究了用缓冲保持精确中断，并阐述了重排序缓冲的概念。Sohi［1990］在此基础上加入重命名和动态调度，于是这一机制可以用于推测。Patt 和他的同事很早就倡导激进的重排序和推测。他们着重研究检查点和重启机制，并开创了一种称为 HPSm 的方法；HPSm 也是 Tomasulo 算法的一种扩展［Hwu and Patt 1986］。</p>
+<p>Smith、Johnson 和 Horowitz［1989］用重排序缓冲技术评估了推测在多发射处理器中的作用，目的是研究在推测和多发射的条件下，非科学计算代码中有多少可用的 ILP。Johnson［1990］随后出版了一本书，介绍一种推测式超标量处理器的设计。后来 Johnson 主持了 AMD K-5 的设计，K-5 是最早的推测式超标量处理器之一。</p>
+<p>在超标量发展的同时，商业界对 VLIW 方法的兴趣也在增长。Multiflow 处理器（见 Colwell 等人［1987］）以耶鲁提出的概念为基础，同时作了许多重要改进，让这种方法更加实用，其中之一是可控的存储缓冲，用来支持某种形式的推测。Multiflow 处理器卖出了 100 多台，但 Multiflow 公司最终还是失败了。失败的原因有多方面，包括：一是小公司推出新的指令系统本来就很困难；二是商用 RISC 微处理器带来了竞争，改变了小型机市场的经济格局。</p>
+<p>Cydrome 公司与 Multiflow 差不多同时成立，开发一种 VLIW 风格的处理器（见 Rau 等人［1989］），在商业上也没有成功。Dehnert、Hsu 和 Bratt［1989］阐述了 Cydrome Cydra 5 的体系结构和性能。Cydra 5 采用宽指令字，提供动态寄存器重命名，并对软件流水提供了额外的支持。它把硬件和软件独特地结合在一起，包括条件指令和寄存器轮转，目的都是挖掘 ILP。与 Multiflow 处理器相比，Cydrome 依赖更多的硬件，主要在向量风格的代码上取得了有竞争力的性能。Cydrome 最终遇到了与 Multiflow 类似的问题，在商业上没有成功。Multiflow 和 Cydrome 作为公司虽然都不成功，却培养出一批在挖掘 ILP 和先进编译技术方面经验丰富的人才，其中许多人后来把自己的经验和部分技术用到了更新的处理器中。Fisher 和 Rau［1993］编辑了一部全面的论文集，涵盖这两种重要处理器的硬件和软件。</p>
+<p>Rau 还提出了一种称为多周期调度（polycyclic scheduling）的调度技术，大多数软件流水方案都以它为基础（见 Rau、Glaeser 和 Picard［1982］）。Rau 的工作建立在 Davidson 及其同事更早的工作之上，后者研究的是如何为流水线处理器设计最优的硬件调度器。历史上的 LIW 处理器还有 Apollo DN 10000 和 Intel i860，两者都能同时发射一个浮点操作和一个整数操作。</p>
+</div>
+<div id="编译技术和支持调度的硬件" class="section level3 unnumbered hasAnchor">
+<h3>编译技术和支持调度的硬件<a href="sec-m-5.html#编译技术和支持调度的硬件" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>循环级并行和相关分析主要由伊利诺伊大学的 D. Kuck 和他的同事在 20 世纪 70 年代发展起来。他们还创造了「反相关」和「输出相关」这两个现在通用的术语，并提出了几种标准的相关测试，包括 GCD 测试和 Banerjee 测试。Banerjee 测试以 Uptal Banerjee 的名字命名，有多种变体。近来相关分析的研究集中于使用一系列精确测试，最后一步是一种称为 Fourier-Motzkin 的线性规划算法。D. Maydan 和 W. Pugh 都证明了，这样的精确测试序列是一种实用的解决办法。</p>
+<p>在发现和调度 ILP 方面，早期的许多工作都与前面介绍的 VLIW 处理器的发展有关。Lam［1988］提出了软件流水算法，并在 Warp 上评估了这些算法的效果；Warp 是一种为专用应用设计的宽指令字处理器。Weiss 和 Smith［1987］比较了在流水线处理器上调度代码的两种技术：软件流水和循环展开。Rau［1994］提出了模调度，用来解决软件流水循环中的问题，同时完成寄存器分配。</p>
+<p>对推测式代码调度的支持，人们在多种场合研究过。其中有几种处理器提供一种忽略异常的工作模式，于是可以更激进地调度 load 指令（如 MIPS TFP 处理器［Hsu 1994］）。有几个研究组探索了用硬件更积极地支持推测式代码调度。例如，Smith、Horowitz 和 Lam［1992］提出了 boosting 的概念：它包含支持推测的硬件设施，同时提供与 IA-64 和 Crusoe 中类似的检查和恢复机制。哨兵调度（sentinel scheduling）的思想由伊利诺伊大学和 HP 实验室的研究人员合作提出（见 Mahlke 等人［1992］），它也与 Crusoe 和 IA-64 体系结构都采用的「先推测、后检查」方法类似。</p>
+<p>20 世纪 90 年代初，伊利诺伊大学的 Wen-Mei Hwu 和他的同事开发了一个称为 IMPACT 的编译器框架（见 Chang 等人［1991］），用来研究多发射体系结构与编译技术之间的相互作用。这个项目产生了几项重要思想，包括：超块调度（见 Hwu 等人［1993］）；大量使用剖析信息来指导多种优化（如过程内联）；用一个专门的缓冲（类似于 ALAT 或程序控制的存储缓冲），在编译的辅助下检测访存冲突（见 Gallagher 等人［1994］）。他们还在 Mahlke 等人［1995］中研究了对谓词执行提供部分支持和完全支持在性能上的权衡。</p>
+<p>早期的 RISC 处理器都采用延迟转移。这种方案受微程序设计的启发，而延迟转移机制又启发了几项编译时转移预测的研究。McFarling 和 Hennessy［1986］定量比较了多种编译时和运行时转移预测方案。Fisher 和 Freudenberger［1992］以两次预测错误之间的距离为指标，评估了一系列编译时转移预测方案。Ball 和 Larus［1993］以及 Calder 等人［1997］介绍了根据收集到的程序行为进行静态预测的方案。</p>
+</div>
+<div id="epic-和-ia-64-的发展" class="section level3 unnumbered hasAnchor">
+<h3>EPIC 和 IA-64 的发展<a href="sec-m-5.html#epic-和-ia-64-的发展" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>EPIC 方法有两个源头：一是早先构造 LIW 和 VLIW 机器的尝试，特别是 Cydrome 和 Multiflow 的尝试；二是长期的编译器研究，这些公司失败以后，HP、伊利诺伊大学等地仍在继续这方面的工作。HP 的设计者从这些工作中得到启发，提出了一种 VLIW 风格的 64 位体系结构，作为 HP PA RISC 体系结构的后继。当时 Intel 正在寻找一种新的体系结构，以取代 x86（现在称为 IA-32）体系结构，并提供 64 位能力。1995 年，两家公司结成伙伴，共同设计一种新的体系结构 IA-64（见 Huck 等人［2000］），并开发基于它的处理器。第一款这样的处理器是 Itanium（见 Sharangpani 和 Arora［2000］）。2002 年，Intel 推出了第二代 IA-64 设计 Itanium 2（见 McNairy 和 Soltis［2003］，以及 McCormick 和 Knies［2002］）。</p>
+</div>
+<div id="ilp-的研究和提高-ilp-的思路" class="section level3 unnumbered hasAnchor">
+<h3>ILP 的研究和提高 ILP 的思路<a href="sec-m-5.html#ilp-的研究和提高-ilp-的思路" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>早期的一系列论文，包括 Tjaden 和 Flynn［1970］以及 Riseman 和 Foster［1972］，得出的结论是：如果不投入大量硬件，指令级能够得到的并行性很少。这些论文让多发射的吸引力在 10 多年里大打折扣。Nicolau 和 Fisher［1984］根据他们在踪迹调度方面的工作发表论文，断言科学计算程序中存在大量潜在的 ILP。</p>
+<p>此后，出现了许多研究可用 ILP 的工作。这些研究受到过批评，因为它们都预先假定了一定程度的硬件支持和编译技术。尽管如此，它们对确立预期、理解限制从何而来仍然有用。Wall 参与过几项这样的研究，包括 Jouppi 和 Wall［1989］以及 Wall［1991, 1993］。早期的研究被批评为过于保守（例如没有考虑推测），而最后这项研究是迄今为止对 ILP 最雄心勃勃的研究，也是 3.10 节数据的基础。Sohi 和 Vajapeyam［1989］测量了宽指令字处理器中可用的并行性。Smith、Johnson 和 Horowitz［1989］也用一种推测式超标量处理器研究了 ILP 的极限。他们在研究时预计，自己设定的处理器是合理设计的上限。然而，近来和即将推出的处理器可能至少和他们的处理器一样激进。Skadron 等人［1999］研究了一种与 2005 年最激进的处理器相当的处理器，分析了它的性能权衡和限制，得出的结论是：对整数程序而言，如果转移预测没有大幅改进，增大窗口没有意义。</p>
+<p>Lam 和 Wilson［1992］研究了推测带来的限制，并证明：如果允许处理器沿多个方向推测，还能获得额外的收益，但这需要不止一个 PC。（这类方案不可能超过完美推测所能达到的效果，但有助于缩小实际预测方案与完美预测之间的差距。）Wall 1993 年的研究对这种方法作了有限的评估（最多探索 8 条转移）。</p>
+</div>
+<div id="突破数据流极限" class="section level3 unnumbered hasAnchor">
+<h3>突破数据流极限<a href="sec-m-5.html#突破数据流极限" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>文献中探索过的另一种方法是值预测。有了值预测，处理器就可以根据数据值进行推测。关于值预测的应用已有不少研究。Lipasti 和 Shen 1996 年发表了两篇论文，评估了值预测的概念及其对挖掘 ILP 可能产生的影响。Calder、Reinman 和 Tullsen［1999］探索了选择性值预测的思想。Sodani 和 Sohi［1997］从重用指令所产生的值的角度研究了同一问题。Moshovos 等人［1997］证明，要通过值推测提高性能，重要的是决定何时对值进行推测，办法是跟踪这类推测过去是否准确。Moshovos 和 Sohi［1997］以及 Chrysos 和 Emer［1998］着重研究预测存储相关，并利用这些信息消除经由存储器的相关。较新的值预测应用研究有 González 和 González［1998］、Babbay 和 Mendelson［1998］以及 Calder、Reinman 和 Tullsen［1999］。这一领域目前非常活跃，每次会议都有新的成果发表。</p>
+</div>
+<div id="近年来的先进微处理器" class="section level3 unnumbered hasAnchor">
+<h3>近年来的先进微处理器<a href="sec-m-5.html#近年来的先进微处理器" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>1994 年和 1995 年，各大处理器厂商都发布了宽发射的超标量处理器（每个时钟发射 3 条或更多指令），包括：Intel Pentium Pro 和 Pentium II（这两种处理器的核心流水线结构相同，Colwell 和 Steck［1995］作了介绍）；AMD K-5、K-6 和 Athlon；Sun UltraSPARC（见 Lauterbach 和 Horel［1999］）；Alpha 21164（见 Edmondson 等人［1995］）和 21264（见 Kessler［1999］）；MIPS R10000 和 R12000（见 Yeager［1996］）；PowerPC 603、604 和 620（见 Diep、Nelson 和 Shen［1995］）；HP 8000（Kumar［1997］）。这十年的后期（1996—2000 年），其中许多处理器推出了第二代产品（如 Pentium III、AMD Athlon 和 Alpha 21264）。第二代产品的发射率与第一代相近，但能维持更低的 CPI，时钟频率也高得多。这些处理器都采用动态调度，而且几乎都支持推测。实际上，哪种方法最好取决于许多因素，包括实现工艺、存储层次、设计者的水平，以及用作基准测试的应用类型。</p>
+<p>2000 年到 2005 年，超标量处理器的发展以三种趋势为主：一是通过加深流水线获得更高的时钟频率（如 Pentium 4，见 Hinton 等人［2001］）；二是引入多线程，IBM 在 Power 4 中、Intel 在 Pentium 4 Extreme 中都引入了多线程；三是开始转向多核，先是 IBM 的 Power 4，然后是 AMD 的 Opteron（见 Keltcher 等人［2003］），最近是 Intel（见 Douglas［2005］）。</p>
+</div>
+<div id="多线程和同时多线程" class="section level3 unnumbered hasAnchor">
+<h3>多线程和同时多线程<a href="sec-m-5.html#多线程和同时多线程" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>多线程的概念可以追溯到最早的晶体管计算机之一 TX-2。TX-2 出名还有一个原因：Ivan Sutherland 在它上面开发了第一个计算机图形系统 Sketchpad。TX-2 由 MIT 林肯实验室建造，1959 年投入运行，它用多个线程支持快速的上下文切换，以处理 I/O 功能。Clark［1957］介绍了它的基本体系结构，Forgie［1957］介绍了它的 I/O 体系结构。CDC 6600 也采用了多线程：它的 I/O 处理器的体系结构就是一种细粒度多线程方案，在各线程之间交替调度。HEP 处理器是 Denelcor 公司设计的一种流水线多处理器，1982 年交付。它用细粒度多线程隐藏流水线延迟，也隐藏访问所有处理器共享的大容量存储器的延迟。HEP 没有 Cache，因此隐藏访存延迟至关重要。HEP 的主要设计者之一 Burton Smith 在 1978 年的一篇论文中介绍了 HEP 的体系结构，Jordan［1983］发表了对它的性能评估。TERA 处理器扩展了多线程的思想，Alverson 等人在 1992 年的一篇论文中介绍了它。Niagara 的多线程方法与 HEP 和 TERA 系统相似，但 Niagara 采用了 Cache，减少了靠线程隐藏延迟的需要。</p>
+<p>20 世纪 80 年代末和 90 年代初，研究者探索了粗粒度多线程（也称块多线程），把它作为容忍延迟的一种手段，特别是在多处理器环境中。Alewife 系统中的 SPARCLE 处理器就采用了这种方案：每当发生长延迟的异常事件（如延迟很长的 Cache 失效），就切换线程。Agarwal 等人在 1993 年的一篇论文中介绍了 SPARCLE。IBM Pulsar 处理器也采用了类似的思想。</p>
+<p>到 20 世纪 90 年代初，几个研究组已经得到两点关键认识。一是要获得最大的性能收益，必须采用细粒度多线程，因为在粗粒度方法中，线程切换和线程启动（例如用新线程的指令填满流水线）的开销抵消了大部分性能优势（见 Laudon、Gupta 和 Horowitz［1994］）。二是要有效利用大量功能部件，既需要 ILP，也需要线程级并行（TLP）。这些认识催生了几种把多线程与多发射结合起来的体系结构。Wolfe 和 Shen［1991］介绍了一种称为 XIMD 的体系结构，它对为 VLIW 处理器调度好的线程进行静态交替。Hirata 等人［1992］提出了一种面向媒体应用的处理器方案，把静态超标量流水线与多线程支持结合起来；他们报告了同时利用这两种并行性得到的加速比。Keckler 和 Dally［1992］针对具有多个功能部件的处理器，把 ILP 的静态调度和线程的动态调度结合起来。如何在 ILP 和 TLP 之间平衡地分配功能部件，以及如何调度这两种形式的并行，当时仍是悬而未决的问题。</p>
+<p>20 世纪 90 年代中期，人们已经清楚，动态调度的超标量处理器很快就会问世。于是，几个研究组提出利用动态调度能力，在运行时混合执行来自多个线程的指令。Yamamoto 等人［1994］似乎最早发表了这样的方案，但他们对多线程超标量体系结构的模拟采用了过于简单的假设。紧接着，Tullsen、Eggers 和 Levy［1995］给出了第一个符合实际的模拟评估，并创造了<em>同时多线程</em>（simultaneous multithreading）一词。这个研究组随后与业界的合作者一起，解决了 SMT 的许多悬而未决的问题。例如，Tullsen 等人［1996］讨论了调度 ILP 与调度 TLP 所面临的挑战。Lo 等人［1997］深入讨论了 SMT 的概念，并评估了它的性能潜力；Lo 等人［1998］评估了 SMT 处理器上的数据库性能。Tuck 和 Tullsen［2003］考察了 SMT 在 Pentium 4 上的性能。</p>
+<p>IBM Power4 引入了多线程（见 Tendler 等人［2002］），Power5 则采用了同时多线程。Mathis 等人［2005］研究了 Power5 中 SMT 的性能，Sinharoy 等人［2005］介绍了它的系统体系结构。</p>
+</div>
+<div id="sec-m-5-references" class="section level3 unnumbered hasAnchor">
+<h3>参考文献<a href="sec-m-5.html#sec-m-5-references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Agarwal, A., J. Kubiatowicz, D. Kranz, B.-H. Lim, D. Yeung, G. D’Souza, and M. Parkin [1993]. “Sparcle: An evolutionary processor design for large-scale multiprocessors,” IEEE Micro 13 (June), 48–61.</p>
+<p>Agerwala, T., and J. Cocke [1987]. High Performance Reduced Instruction Set Processors, Tech. Rep. RC12434, IBM Thomas Watson Research Center, Yorktown Heights, N.Y.</p>
+<p>Alverson, G., R. Alverson, D. Callahan, B. Koblenz, A. Porterfield, and B. Smith [1992]. “Exploiting heterogeneous parallelism on a multithreaded multiprocessor,” Proc. ACM/IEEE Conf. on Supercomputing, November 16–20, 1992, Minneapolis, Minn., 188–197.</p>
+<p>Anderson, D. W., F. J. Sparacio, and R. M. Tomasulo [1967]. “The IBM 360 Model 91: Processor philosophy and instruction handling,” IBM J. Research and Development 11:1 (January), 8–24.</p>
+<p>Austin, T. M., and G. Sohi [1992]. “Dynamic dependency analysis of ordinary programs,” Proc. 19th Annual Int’l. Symposium on Computer Architecture (ISCA), May 19–21, 1992, Gold Coast, Australia, 342–351.</p>
+<p>Babbay, F., and A. Mendelson [1998]. “Using value prediction to increase the power of speculative execution hardware,” ACM Trans. on Computer Systems 16:3 (August), 234–270.</p>
+<p>Bakoglu, H. B., G. F. Grohoski, L. E. Thatcher, J. A. Kaeli, C. R. Moore, D. P. Tattle, W. E. Male, W. R. Hardell, D. A. Hicks, M. Nguyen Phu, R. K. Montoye, W. T. Glover, and S. Dhawan [1989]. “IBM second-generation RISC processor organization,” Proc. IEEE Int’l. Conf. on Computer Design, October, Rye Brook, N.Y., 138–142.</p>
+<p>Ball, T., and J. Larus [1993]. “Branch prediction for free,” Proc. ACM SIGPLAN’93 Conference on Programming Language Design and Implementation (PLDI), June 23–25, 1993, Albuquerque, N.M., 300–313.</p>
+<p>Bhandarkar, D., and D. W. Clark [1991]. “Performance from architecture: Comparing a RISC and a CISC with similar hardware organizations,” Proc. Fourth Int’l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), April 8–11, 1991, Palo Alto, Calif., 310–319.</p>
+<p>Bhandarkar, D., and J. Ding [1997]. “Performance characterization of the Pentium Pro processor,” Proc. Third Int’l. Symposium on High Performance Computer Architecture, February 1–5, 1997, San Antonio, Tex., 288–297.</p>
+<p>Bloch, E. [1959]. “The engineering design of the Stretch computer,” Proc. Eastern Joint Computer Conf., December 1–3, 1959, Boston, Mass., 48–59.</p>
+<p>Bucholtz, W. [1962]. Planning a Computer System: Project Stretch, McGraw-Hill, New York.</p>
+<p>Calder, B., D. Grunwald, M. Jones, D. Lindsay, J. Martin, M. Mozer, and B. Zorn [1997]. “Evidence-based static branch prediction using machine learning,” ACM Trans. Program. Lang. Syst. 19:1, 188–222.</p>
+<p>Calder, B., G. Reinman, and D. M. Tullsen [1999]. “Selective value prediction,” Proc. 26th Annual Int’l. Symposium on Computer Architecture (ISCA), May 2–4, 1999, Atlanta, Ga.</p>
+<p>Chang, P. P., S. A. Mahlke, W. Y. Chen, N. J. Warter, and W. W. Hwu [1991]. “IMPACT: An architectural framework for multiple-instruction-issue processors,” Proc. 18th Annual Int’l. Symposium on Computer Architecture (ISCA), May 27–30, 1991, Toronto, Canada, 266–275.</p>
+<p>Charlesworth, A. E. [1981]. “An approach to scientific array processing: The architecture design of the AP-120B/FPS-164 family,” Computer 14:9 (September), 18–27.</p>
+<p>Chen, T. C. [1980]. “Overlap and parallel processing,” in Introduction to Computer Architecture, H. Stone, ed., Science Research Associates, Chicago, 427–486.</p>
+<p>Chrysos, G. Z., and J. S. Emer [1998]. “Memory dependence prediction using store sets,” Proc. 25th Annual Int’l. Symposium on Computer Architecture (ISCA), July 3–14, 1998, Barcelona, Spain, 142–153.</p>
+<p>Clark, D. W. [1987]. “Pipelining and performance in the VAX 8800 processor,” Proc. Second Int’l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 5–8, 1987, Palo Alto, Calif., 173–177.</p>
+<p>Clark, W. A. [1957]. “The Lincoln TX-2 computer development,” Proc. Western Joint Computer Conference, February 26–28, 1957, Los Angeles, 143–145.</p>
+<p>Colwell, R. P., and R. Steck [1995]. “A 0.6 μm BiCMOS processor with dynamic execution.” Proc. of IEEE Int’l. Symposium on Solid State Circuits (ISSCC), February 15–17, 1995, San Francisco, 176–177.</p>
+<p>Colwell, R. P., R. P. Nix, J. J. O’Donnell, D. B. Papworth, and P. K. Rodman [1987]. “A VLIW architecture for a trace scheduling compiler,” Proc. Second Int’l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 5–8, 1987, Palo Alto, Calif., 180–192.</p>
+<p>Cvetanovic, Z., and R. E. Kessler [2000]. “Performance analysis of the Alpha 21264-based Compaq ES40 system,” 27th Annual Int’l. Symposium on Computer Architecture (ISCA), June 10–14, 2000, Vancouver, Canada, 192–202.</p>
+<p>Davidson, E. S. [1971]. “The design and control of pipelined function generators,” Proc. IEEE Conf. on Systems, Networks, and Computers, January 19–21, 1971, Oaxtepec, Mexico, 19–21.</p>
+<p>Davidson, E. S., A. T. Thomas, L. E. Shar, and J. H. Patel [1975]. “Effective control for pipelined processors,” Proc. IEEE COMPCON, February 25–27, 1975, San Francisco, 181–184.</p>
+<p>Dehnert, J. C., P. Y.-T. Hsu, and J. P. Bratt [1989]. “Overlapped loop support on the Cydra 5,” Proc. Third Int’l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), April 3–6, 1989, Boston, Mass., 26–39.</p>
+<p>Diep, T. A., C. Nelson, and J. P. Shen [1995]. “Performance evaluation of the PowerPC 620 microarchitecture,” Proc. 22nd Annual Int’l. Symposium on Computer Architecture (ISCA), June 22–24, 1995, Santa Margherita, Italy.</p>
+<p>Ditzel, D. R., and H. R. McLellan [1987]. “Branch folding in the CRISP microprocessor: Reducing the branch delay to zero,” Proc. 14th Annual Int’l. Symposium on Computer Architecture (ISCA), June 2–5, 1987, Pittsburgh, Penn., 2–7.</p>
+<p>Douglas, J. [2005]. “Intel 8xx series and Paxville Xeon-MP Microprocessors,” paper presented at Hot Chips 17, August 14–16, 2005, Stanford University, Palo Alto, Calif.</p>
+<p>Eden, A., and T. Mudge [1998]. “The YAGS branch prediction scheme,” Proc. of the 31st Annual ACM/IEEE Int’l. Symposium on Microarchitecture, November 30–December 2, 1998, Dallas, Tex., 69–80.</p>
+<p>Edmondson, J. H., P. I. Rubinfield, R. Preston, and V. Rajagopalan [1995]. “Superscalar instruction execution in the 21164 Alpha microprocessor,” IEEE Micro 15:2, 33–43.</p>
+<p>Ellis, J. R. [1986]. Bulldog: A Compiler for VLIW Architectures, MIT Press, Cambridge, Mass.</p>
+<p>Emer, J. S., and D. W. Clark [1984]. “A characterization of processor performance in the VAX-11/780,” Proc. 11th Annual Int’l. Symposium on Computer Architecture (ISCA), June 5–7, 1984, Ann Arbor, Mich., 301–310.</p>
+<p>Evers, M., S. J. Patel, R. S. Chappell, and Y. N. Patt [1998]. “An analysis of correlation and predictability: What makes two-level branch predictors work,” Proc. 25th Annual Int’l. Symposium on Computer Architecture (ISCA), July 3–14, 1998, Barcelona, Spain, 52–61.</p>
+<p>Fisher, J. A. [1981]. “Trace scheduling: A technique for global microcode compaction,” IEEE Trans. on Computers 30:7 (July), 478–490.</p>
+<p>Fisher, J. A. [1983]. “Very long instruction word architectures and ELI-512,” 10th Annual Int’l. Symposium on Computer Architecture (ISCA), June 5–7, 1982, Stockholm, Sweden, 140–150.</p>
+<p>Fisher, J. A., and S. M. Freudenberger [1992]. “Predicting conditional branches from previous runs of a program,” Proc. Fifth Int’l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 12–15, 1992, Boston, 85–95.</p>
+<p>Fisher, J. A., and B. R. Rau [1993]. Journal of Supercomputing, January (special issue).</p>
+<p>Fisher, J. A., J. R. Ellis, J. C. Ruttenberg, and A. Nicolau [1984]. “Parallel processing: A smart compiler and a dumb processor,” Proc. SIGPLAN Conf. on Compiler Construction, June 17–22, 1984, Montreal, Canada, 11–16.</p>
+<p>Forgie, J. W. [1957]. “The Lincoln TX-2 input-output system,” Proc. Western Joint Computer Conference, February 26–28, 1957, Los Angeles, 156–160.</p>
+<p>Foster, C. C., and E. M. Riseman [1972]. “Percolation of code to enhance parallel dispatching and execution,” IEEE Trans. on Computers C-21:12 (December), 1411–1415.</p>
+<p>Gallagher, D. M., W. Y. Chen, S. A. Mahlke, J. C. Gyllenhaal, and W.W. Hwu [1994]. “Dynamic memory disambiguation using the memory conflict buffer,” Proc. Sixth Int’l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 4–7, San Jose, Calif., 183–193.</p>
+<p>González, J., and A. González [1998]. “Limits of instruction level parallelism with data speculation,” Proc. Vector and Parallel Processing (VECPAR) Conf., June 21–23, 1998, Porto, Portugal, 585–598.</p>
+<p>Heinrich, J. [1993]. MIPS R4000 User’s Manual, Prentice Hall, Englewood Cliffs, N.J.</p>
+<p>Hinton, G., D. Sager, M. Upton, D. Boggs, D. Carmean, A. Kyker, and P. Roussel [2001]. “The microarchitecture of the Pentium 4 processor,” Intel Technology Journal, February.</p>
+<p>Hirata, H., K. Kimura, S. Nagamine, Y. Mochizuki, A. Nishimura, Y. Nakase, and T. Nishizawa [1992]. “An elementary processor architecture with simultaneous instruction issuing from multiple threads,” Proc. 19th Annual Int’l. Symposium on Computer Architecture (ISCA), May 19–21, 1992, Gold Coast, Australia, 136–145.</p>
+
+<p>Hopkins, M. [2000]. “A critical look at IA-64: Massive resources, massive ILP, but can it deliver?” Microprocessor Report, February.</p>
+<p>Hsu, P. [1994]. “Designing the TFP microprocessor,” IEEE Micro 14:2 (April), 23–33.</p>
+<p>Huck, J. et al. [2000]. “Introducing the IA-64 Architecture” IEEE Micro, 20:5 (September–October), 12–23.</p>
+<p>Hwu, W.-M., and Y. Patt [1986]. “HPSm, a high performance restricted data flow architecture having minimum functionality,” 13th Annual Int’l. Symposium on Computer Architecture (ISCA), June 2–5, 1986, Tokyo, 297–307.</p>
+<p>Hwu, W. W., S. A. Mahlke, W. Y. Chen, P. P. Chang, N. J. Warter, R. A. Bringmann, R. O. Ouellette, R. E. Hank, T. Kiyohara, G. E. Haab, J. G. Holm, and D. M. Lavery [1993]. “The superblock: An effective technique for VLIW and superscalar compilation,” J. Supercomputing 7:1, 2 (March), 229–248.</p>
+<p>IBM. [1990]. “The IBM RISC System/6000 processor” (collection of papers), IBM J. Research and Development 34:1 (January).</p>
+<p>Jimenez, D. A., and C. Lin [2002]. “Neural methods for dynamic branch prediction,” ACM Trans. Computer Sys 20:4 (November), 369–397.</p>
+<p>Johnson, M. [1990]. Superscalar Microprocessor Design, Prentice Hall, Englewood Cliffs, N.J.</p>
+<p>Jordan, H. F. [1983]. “Performance measurements on HEP—a pipelined MIMD computer,” Proc. 10th Annual Int’l. Symposium on Computer Architecture (ISCA), June 5–7, 1982, Stockholm, Sweden, 207–212.</p>
+<p>Jouppi, N. P., and D. W. Wall [1989]. “Available instruction-level parallelism for superscalar and superpipelined processors,” Proc. Third Int’l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), April 3–6, 1989, Boston, 272–282.</p>
+<p>Kaeli, D. R., and P. G. Emma [1991]. “Branch history table prediction of moving target branches due to subroutine returns,” Proc. 18th Annual Int’l. Symposium on Computer Architecture (ISCA), May 27–30, 1991, Toronto, Canada, 34–42.</p>
+<p>Keckler, S. W., and W. J. Dally [1992]. “Processor coupling: Integrating compile time and runtime scheduling for parallelism,” Proc. 19th Annual Int’l. Symposium on Computer Architecture (ISCA), May 19–21, 1992, Gold Coast, Australia, 202–213.</p>
+<p>Keller, R. M. [1975]. “Look-ahead processors,” ACM Computing Surveys 7:4 (December), 177–195.</p>
+<p>Keltcher, C. N., K. J. McGrath, A. Ahmed, and P. Conway [2003]. “The AMD Opteron processor for multiprocessor servers,” IEEE Micro 23:2 (March–April), 66–76.</p>
+<p>Kessler, R. [1999]. “The Alpha 21264 microprocessor,” IEEE Micro 19:2 (March/April) 24–36.</p>
+<p>Killian, E. [1991]. “MIPS R4000 technical overview—64 bits/100 MHz or bust,” Hot Chips III Symposium Record, August 26–27, 1991, Stanford University, Palo Alto, Calif., 1.6–1.19.</p>
+<p>Kogge, P. M. [1981]. The Architecture of Pipelined Computers, McGraw-Hill, New York.</p>
+<p>Kumar, A. [1997]. “The HP PA-8000 RISC CPU,” IEEE Micro 17:2 (March/April).</p>
+<p>Kunkel, S. R., and J. E. Smith [1986]. “Optimal pipelining in supercomputers,” Proc. 13th Annual Int’l. Symposium on Computer Architecture (ISCA), June 2–5, 1986, Tokyo, 404–414.</p>
+<p>Lam, M. [1988]. “Software pipelining: An effective scheduling technique for VLIW processors,” SIGPLAN Conf. on Programming Language Design and Implementation, June 22–24, 1988, Atlanta, Ga., 318–328.</p>
+<p>Lam, M. S., and R. P. Wilson [1992]. “Limits of control flow on parallelism,” Proc. 19th Annual Int’l. Symposium on Computer Architecture (ISCA), May 19–21, 1992, Gold Coast, Australia, 46–57.</p>
+<p>Laudon, J., A. Gupta, and M. Horowitz [1994]. “Interleaving: A multithreading technique targeting multiprocessors and workstations,” Proc. Sixth Int’l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 4–7, San Jose, Calif., 308–318.</p>
+<p>Lauterbach, G., and T. Horel [1999]. “UltraSPARC-III: Designing third generation 64-bit performance,” IEEE Micro 19:3 (May/June).</p>
+<p>Lipasti, M. H., and J. P. Shen [1996]. “Exceeding the dataflow limit via value prediction,” Proc. 29th Int’l. Symposium on Microarchitecture, December 2–4, 1996, Paris, France.</p>
+<p>Lipasti, M. H., C. B. Wilkerson, and J. P. Shen [1996]. “Value locality and load value prediction,” Proc. Seventh Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 1–5, 1996, Cambridge, Mass., 138–147.</p>
+<p>Lo, J., L. Barroso, S. Eggers, K. Gharachorloo, H. Levy, and S. Parekh [1998]. “An analysis of database workload performance on simultaneous multithreaded processors,” Proc. 25th Annual Int’l. Symposium on Computer Architecture (ISCA), July 3–14, 1998, Barcelona, Spain, 39–50.</p>
+<p>Lo, J., S. Eggers, J. Emer, H. Levy, R. Stamm, and D. Tullsen [1997]. “Converting thread-level parallelism into instruction-level parallelism via simultaneous multithreading,” ACM Trans. on Computer Systems 15:2 (August), 322–354.</p>
+<p>Mahlke, S. A., W. Y. Chen, W.-M. Hwu, B. R. Rau, and M. S. Schlansker [1992]. “Sentinel scheduling for VLIW and superscalar processors,” Proc. Fifth Int’l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 12–15, 1992, Boston, 238–247.</p>
+<p>Mahlke, S. A., R. E. Hank, J. E. McCormick, D. I. August, and W. W. Hwu [1995]. “A comparison of full and partial predicated execution support for ILP processors,” Proc. 22nd Annual Int’l. Symposium on Computer Architecture (ISCA), June 22–24, 1995, Santa Margherita, Italy, 138–149.</p>
+<p>Mathis, H. M., A. E. Mercias, J. D. McCalpin, R. J. Eickemeyer, and S. R. Kunkel [2005]. “Characterization of the multithreading (SMT) efficiency in Power5,” IBM J. of Research and Development, 49:4/5 (July/September), 555–564.</p>
+<p>McCormick, J., and A. Knies [2002]. “A brief analysis of the SPEC CPU2000 benchmarks on the Intel Itanium 2 processor,” paper presented at Hot Chips 14, August 18–20, 2002, Stanford University, Palo Alto, Calif.</p>
+<p>McFarling, S. [1993]. Combining Branch Predictors, WRL Technical Note TN-36, Digital Western Research Laboratory, Palo Alto, Calif.</p>
+<p>McFarling, S., and J. Hennessy [1986]. “Reducing the cost of branches,” Proc. 13th Annual Int’l. Symposium on Computer Architecture (ISCA), June 2–5, 1986, Tokyo, 396–403.</p>
+<p>McNairy, C., and D. Soltis [2003]. “Itanium 2 processor microarchitecture,” IEEE Micro 23:2 (March–April), 44–55.</p>
+<p>Moshovos, A., and G. S. Sohi [1997]. “Streamlining inter-operation memory communication via data dependence prediction,” Proc. 30th Annual Int’l. Symposium on Microarchitecture, December 1–3, Research Triangle Park, N.C., 235–245.</p>
+<p>Moshovos, A., S. Breach, T. N. Vijaykumar, and G. S. Sohi [1997]. “Dynamic speculation and synchronization of data dependences,” Proc. 24th Annual Int’l. Symposium on Computer Architecture (ISCA), June 2–4, 1997, Denver, Colo.</p>
+<p>Nicolau, A., and J. A. Fisher [1984]. “Measuring the parallelism available for very long instruction word architectures,” IEEE Trans. on Computers C-33:11 (November), 968–976.</p>
+<p>Pan, S.-T., K. So, and J. T. Rameh [1992]. “Improving the accuracy of dynamic branch prediction using branch correlation,” Proc. Fifth Int’l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 12–15, 1992, Boston, 76–84.</p>
+<p>Postiff, M.A., D. A. Greene, G. S. Tyson, and T. N. Mudge [1999]. “The limits of instruction level parallelism in SPEC95 applications,” Computer Architecture News 27:1 (March), 31–40.</p>
+<p>Ramamoorthy, C. V., and H. F. Li [1977]. “Pipeline architecture,” ACM Computing Surveys 9:1 (March), 61–102.</p>
+<p>Rau, B. R. [1994]. “Iterative modulo scheduling: An algorithm for software pipelining loops,” Proc. 27th Annual Int’l. Symposium on Microarchitecture, November 30–December 2, 1994, San Jose, Calif., 63–74.</p>
+<p>Rau, B. R., C. D. Glaeser, and R. L. Picard [1982]. “Efficient code generation for horizontal architectures: Compiler techniques and architectural support,” Proc. Ninth Annual Int’l. Symposium on Computer Architecture (ISCA), April 26–29, 1982, Austin, Tex., 131–139.</p>
+<p>Rau, B. R., D. W. L. Yen, W. Yen, and R. A. Towle [1989]. “The Cydra 5 departmental supercomputer: Design philosophies, decisions, and trade-offs,” IEEE Computers 22:1 (January), 12–34.</p>
+<p>Riseman, E. M., and C. C. Foster [1972]. “Percolation of code to enhance paralleled dispatching and execution,” IEEE Trans. on Computers C-21:12 (December), 1411–1415.</p>
+<p>Rymarczyk, J. [1982]. “Coding guidelines for pipelined processors,” Proc. Symposium Architectural Support for Programming Languages and Operating Systems (ASPLOS), March 1–3, 1982, Palo Alto, Calif., 12–19.</p>
+<p>Sharangpani, H., and K. Arora [2000]. “Itanium Processor Microarchitecture,” IEEE Micro, 20:5 (September–October), 24–43.</p>
+<p>Sinharoy, B., R. N. Koala, J. M. Tendler, R. J. Eickemeyer, and J. B. Joyner [2005]. “POWER5 system microarchitecture,” IBM J. of Research and Development, 49:4–5, 505–521.</p>
+<p>Sites, R. [1979]. Instruction Ordering for the CRAY-1 Computer, Tech. Rep. 78-CS-023, Dept. of Computer Science, University of California, San Diego.</p>
+<p>Skadron, K., P. S. Ahuja, M. Martonosi, and D. W. Clark [1999]. “Branch prediction, instruction-window size, and cache size: Performance tradeoffs and simulation techniques,” IEEE Trans. on Computers, 48:11 (November).</p>
+<p>Smith, A., and J. Lee [1984]. “Branch prediction strategies and branch-target buffer design,” Computer 17:1 (January), 6–22.</p>
+<p>Smith, B. J. [1978]. “A pipelined, shared resource MIMD computer,” Proc. Int’l. Conf. on Parallel Processing (ICPP), August, Bellaire, Mich., 6–8.</p>
+<p>Smith, J. E. [1981]. “A study of branch prediction strategies,” Proc. Eighth Annual Int’l. Symposium on Computer Architecture (ISCA), May 12–14, 1981, Minneapolis, Minn., 135–148.</p>
+<p>Smith, J. E. [1984]. “Decoupled access/execute computer architectures,” ACM Trans. on Computer Systems 2:4 (November), 289–308.</p>
+<p>Smith, J. E. [1989]. “Dynamic instruction scheduling and the Astronautics ZS-1,” Computer 22:7 (July), 21–35.</p>
+<p>Smith, J. E., and A. R. Pleszkun [1988]. “Implementing precise interrupts in pipelined processors,” IEEE Trans. on Computers 37:5 (May), 562–573. (This paper is based on an earlier paper that appeared in Proc. 12th Annual Int’l. Symposium on Computer Architecture (ISCA), June 17–19, 1985, Boston, Mass.)</p>
+<p>Smith, J. E., G. E. Dermer, B. D. Vanderwarn, S. D. Klinger, C. M. Rozewski, D. L. Fowler, K. R. Scidmore, and J. P. Laudon [1987]. “The ZS-1 central processor,” Proc. Second Int’l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 5–8, 1987, Palo Alto, Calif., 199–204.</p>
+<p>Smith, M. D., M. Horowitz, and M. S. Lam [1992]. “Efficient superscalar performance through boosting,” Proc. Fifth Int’l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 12–15, 1992, Boston, 248–259.</p>
+<p>Smith, M. D., M. Johnson, and M. A. Horowitz [1989]. “Limits on multiple instruction issue,” Proc. Third Int’l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), April 3–6, 1989, Boston, 290–302.</p>
+<p>Sodani, A., and G. Sohi [1997]. “Dynamic instruction reuse,” Proc. 24th Annual Int’l. Symposium on Computer Architecture (ISCA), June 2–4, 1997, Denver, Colo.</p>
+<p>Sohi, G. S. [1990]. “Instruction issue logic for high-performance, interruptible, multiple functional unit, pipelined computers,” IEEE Trans. on Computers 39:3 (March), 349–359.</p>
+<p>Sohi, G. S., and S. Vajapeyam [1989]. “Tradeoffs in instruction format design for horizontal architectures,” Proc. Third Int’l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), April 3–6, 1989, Boston, 15–25.</p>
+<p>Sussenguth, E. [1999]. “IBM’s ACS-1 Machine,” IEEE Computer 22:11 (November).</p>
+<p>Tendler, J. M., J. S. Dodson, J. S. Fields, Jr., H. Le, and B. Sinharoy [2002]. “Power4 system microarchitecture,” IBM J. of Research and Development, 46:1, 5–26.</p>
+<p>Thorlin, J. F. [1967]. “Code generation for PIE (parallel instruction execution) computers,” Proc. Spring Joint Computer Conf., April 18–20, 1967, Atlantic City, N.J., 27.</p>
+<p>Thornton, J. E. [1964]. “Parallel operation in the Control Data 6600,” Proc. AFIPS Fall Joint Computer Conf., Part II, October 27–29, 1964, San Francisco, 26, 33–40.</p>
+<p>Thornton, J. E. [1970]. Design of a Computer, the Control Data 6600, Scott, Foresman, Glenview, Ill.</p>
+<p>Tjaden, G. S., and M. J. Flynn [1970]. “Detection and parallel execution of independent instructions,” IEEE Trans. on Computers C-19:10 (October), 889–895.</p>
+<p>Tomasulo, R. M. [1967]. “An efficient algorithm for exploiting multiple arithmetic units,” IBM J. Research and Development 11:1 (January), 25–33.</p>
+<p>Tuck, N., and D. Tullsen [2003]. “Initial observations of the simultaneous multithreading Pentium 4 processor,” Proc. 12th Int. Conf. on Parallel Architectures and Compilation Techniques (PACT’03), September 27–October 1, New Orleans, La., 26–34.</p>
+<p>Tullsen, D. M., S. J. Eggers, and H. M. Levy [1995]. “Simultaneous multithreading: Maximizing on-chip parallelism,” Proc. 22nd Annual Int’l. Symposium on Computer Architecture (ISCA), June 22–24, 1995, Santa Margherita, Italy, 392–403.</p>
+<p>Tullsen, D. M., S. J. Eggers, J. S. Emer, H. M. Levy, J. L. Lo, and R. L. Stamm [1996]. “Exploiting choice: Instruction fetch and issue on an implementable simultaneous multithreading processor,” Proc. 23rd Annual Int’l. Symposium on Computer Architecture (ISCA), May 22–24, 1996, Philadelphia, Penn., 191–202.</p>
+<p>Wall, D. W. [1991]. “Limits of instruction-level parallelism,” Proc. Fourth Int’l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), April 8–11, 1991, Palo Alto, Calif., 248–259.</p>
+<p>Wall, D. W. [1993]. Limits of Instruction-Level Parallelism, Research Rep. 93/6, Western Research Laboratory, Digital Equipment Corp., Palo Alto, Calif.</p>
+<p>Weiss, S., and J. E. Smith [1984]. “Instruction issue logic for pipelined supercomputers,” Proc. 11th Annual Int’l. Symposium on Computer Architecture (ISCA), June 5–7, 1984, Ann Arbor, Mich., 110–118.</p>
+<p>Weiss, S., and J. E. Smith [1987]. “A study of scalar compilation techniques for pipelined supercomputers,” Proc. Second Int’l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), October 5–8, 1987, Palo Alto, Calif., 105–109.</p>
+<p>Wilson, R. P., and M. S. Lam [1995]. “Efficient context-sensitive pointer analysis for C programs,” Proc. ACM SIGPLAN’95 Conf. on Programming Language Design and Implementation, June 18–21, 1995, La Jolla, Calif., 1–12.</p>
+<p>Wolfe, A., and J. P. Shen [1991]. “A variable instruction stream extension to the VLIW architecture,” Proc. Fourth Int’l. Conf. on Architectural Support for Programming Languages and Operating Systems (ASPLOS), April 8–11, 1991, Palo Alto, Calif., 2–14.</p>
+<p>Yamamoto, W., M. J. Serrano, A. R. Talcott, R. C. Wood, and M. Nemirosky [1994]. “Performance estimation of multistreamed, superscalar processors,” Proc. 27th Annual Hawaii Int’l. Conf. on System Sciences, January 4–7, 1994, Maui, 195–204.</p>
+<p>Yeager, K. [1996]. “The MIPS R10000 superscalar microprocessor,” IEEE Micro 16:2 (April), 28–40.</p>
+<p>Yeh, T., and Y. N. Patt [1992]. “Alternative implementations of two-level adaptive branch prediction,” Proc. 19th Annual Int’l. Symposium on Computer Architecture (ISCA), May 19–21, 1992, Gold Coast, Australia, 124–134.</p>
+<p>Yeh, T., and Y. N. Patt [1993]. “A comparison of dynamic branch predictors that use two levels of branch history,” Proc. 20th Annual Int’l. Symposium on Computer Architecture (ISCA), May 16–19, 1993, San Diego, Calif., 257–266.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="sec-m-4.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sec-m-6.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
